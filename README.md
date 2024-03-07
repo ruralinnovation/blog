@@ -10,4 +10,4 @@
 1. Create a new folder in the `posts` directory
 2. Add an `index.qmd` file (where your blog post will go) and a `thumbnail.png` file (an image that will appear with the post listing)
 3. Write your blog post. Commit your changes and push to main.
-4. To update the blog run `quarto publish gh-pages`.
+4. To update the blog, run `quarto publish gh-pages`.
