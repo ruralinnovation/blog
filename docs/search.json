@@ -1,26 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Recent posts",
-    "section": "",
-    "text": "Awesome jq and GeoJSON\n\n\n\n\n\n\n\n\n\n\n\nMar 10, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code."
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -33,5 +12,12 @@
     "title": "Awesome jq and GeoJSON",
     "section": "",
     "text": "Awesome jq and GeoJSON!\nIf like us your are maniplating a lot of GeoJSON and want a quick CLI tools to deal (filter and slice) them you should definitely give jq a try!\nYou can find plenty of great guides online but the documentation and the playground are always a good start.\nA quick disclaimer: we are using an UNIX shell to run it (zsh) if you are using powershell you will need to adapt the following commands.\nSadly few tutorials exist on it for GeoJSON and we hope that the few tricks we are going to show you will help you on your leaning journey.\nWe are using a GeoJSON with Vermont Census Blocks and attributes related to our works with broadband data.\nIt is not a deaply nested JSON but it is perfect to illustrate some very commun use cases. A quick check let us know that it is 94 MB. Not “that” big but still decent.\nFirst let see how many features does it has.\nWe can approximate that:\nwc -l data/vt-bb.geojson\n# 24618 data/vt-bb.geojson\nThis is close but here we are counting some rows at the top and bottom of the file that are not features (try head -n 5 and tail on it if you are curious).\nWell we can also use jq :\njq '.features | length' data/vt-bb.geojson\n# 24611\nThis is the correct number of blocks! How did that magic works? Let’s decompose it:\n\njq here we are calling jq like any other CLI tools\ndata/vt-bb.goejson is the path of our file as last argument\n'.features | length' this is a jq filter, remember we are in the shell and here whitespace have a meaning, not quoting it would mean that we have 4 arguments when you just have 2.\n\n.features will return the json array containing every faetures\n| will pipe the stream of features into a new filter\nlength is a builtin function that behave differently depending the object input, here with an array it will return the number of elements\n\n\nIt is always a good idea to start experimenting with smaller data so let’s do it:\njq '.features[0:5]'  data/vt-bb.geojson &gt; not_perfect_sample.geojson\nHere we asked for the [0 to 5[ (yes: [inclusive:exclusive]) features (ie the first 5) and it produces a valid JSON but if you inspect it you will see that we moved from the GeoJON to a JSON array.\njq '.' not_perfect_sample.geojson | head -n 4\n# [\n#   {\n#     \"type\": \"Feature\",\n#     \"properties\": {\n# to compare with :\njq '.' data/vt-bb.geojson | head -n 12/\n# {\n#   \"type\": \"FeatureCollection\",\n#   \"name\": \"sql_statement\",\n#   \"crs\": {\n#     \"type\": \"name\",\n#     \"properties\": {\n#       \"name\": \"urn:ogc:def:crs:EPSG::4269\"\n#     }\n#   },\n#   \"features\": [\n#     {\n#       \"type\": \"Feature\",\nWe used .features hence it returned the following value (here an array with all the features) but we loosed type, name, and crs.\nYou probably have noticed that . is using to return all the input as output but by default jq will prettify the JSON.\nIf we want to keep them we will need to be slighly more verbose:\njq '{type: .type , crs: .crs ,features: .features[0:10]}' data/vt-bb.geojson &gt; better_sample.geojson \nHere we introduced {} allowing you to build a JSON object. We then stick them together and send them to a new JSON with a proper type and crs (grabed from our original file).\nWe could just want the geometries of our census blocks:\njq '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}' better_sample.geojson &gt; sample_only_geom.geojson  \nHere we are streaming a filter on .features[] into a function that will delete all properties (del(.properties)) and this will be used as an array for features.\nWe will need to adjust it a bit for of data/vt-bb.geojson:\njq --compact-output  '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}'  data/vt-bb.geojson &gt; data/geom.geojson\n--compact-output will convert to a single line JSON (and saved space!). Now data/geom.geojson is 72MB.\nBut wait what if we just want the properties?\nFirst let’s get their keys:\ngetting all the key flattening converting to csv"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Recent posts",
+    "section": "",
+    "text": "Awesome jq and GeoJSON\n\n\n\n\n\n\n\n\n\n\n\nMar 10, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\nNo matching items"
   }
 ]
