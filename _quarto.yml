@@ -1,0 +1,26 @@
+project:
+  type: website
+
+website:
+  title: "Mapping, Data, and Analytics @ CORI"
+  search: false
+  favicon: assets/images/Logo-Mark_Black.png
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/ruralinnovation
+format:
+  html:
+    theme:
+      - litera
+      - styles.scss
+    mainfont: "Bitter"
+    fontcolor: "#121E22"
+    linkcolor: "#00835D"
+
+resources:
+- "assets/*"
+
+
+

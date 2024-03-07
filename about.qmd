@@ -1,0 +1,16 @@
+---
+title: "About"
+image: assets/images/Full-Logo_CORI_Black.svg
+about:
+  template: jolla
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com
+
+---
+
+The Mapping, Data, and Analytics (MDA) team at the Center on Rural Innovation (CORI) 
+conduct analysis and develop software to support rural participation in the modern economy.
+
+Want to collaborate on a project? Send us an email at <b>tech-team at ruralinnovation dot us</b>

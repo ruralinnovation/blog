@@ -1,0 +1,119 @@
+---
+title: "Awesome jq and GeoJSON"
+author: "Olivier Leroy"
+date: "2024-03-10"
+categories: [code, spatial data]
+---
+
+# Awesome jq and GeoJSON!
+
+If like us your are maniplating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) and want a quick CLI tools to deal (filter and slice) them you should definitely give `jq` a try!
+
+You can find plenty of great guides online but the [documentation](https://jqlang.github.io/jq/manual/) and the [playground](https://jqplay.org/) are always a good start.
+
+A quick disclaimer: we are using an UNIX shell to run it (zsh) if you are using powershell you will need to adapt the following commands.  
+
+Sadly few tutorials exist on it for `GeoJSON` and we hope that the few tricks we are going to show you will help you on your leaning journey. 
+
+We are using a GeoJSON with Vermont Census Blocks and attributes related to our works with broadband data. 
+
+It is not a deaply nested JSON but it is perfect to illustrate some very commun use cases.
+A quick check let us know that it is 94 MB. Not "that" big but still decent.
+
+First let see how many features does it has. 
+
+We can approximate that: 
+
+```bash
+wc -l data/vt-bb.geojson
+# 24618 data/vt-bb.geojson
+```
+
+This is close but here we are counting some rows at the top and bottom of the file that are not features (try `head -n 5` and `tail` on it if you are curious).
+
+Well we can also use `jq` :
+
+```bash
+jq '.features | length' data/vt-bb.geojson
+# 24611
+```
+
+This is the correct number of blocks! How did that magic works? Let's decompose it:
+
+- `jq` here we are calling jq like any other CLI tools 
+
+- `data/vt-bb.goejson` is the path of our file as last argument
+
+- `'.features | length'` this is a **jq filter**, remember we are in the shell and here whitespace have a meaning, not quoting it would mean that we have 4 arguments when you just have 2.
+
+    - `.features` will return the json array containing every faetures 
+  
+    - `|` will pipe the stream of features into a new filter
+
+    - `length` is a builtin function that behave differently depending the object input, here with an array it will return the number of elements 
+  
+
+It is always a good idea to start experimenting with smaller data so let's do it:
+
+```bash
+jq '.features[0:5]'  data/vt-bb.geojson > not_perfect_sample.geojson
+```
+
+Here we asked for the [0 to 5[ (yes: `[inclusive:exclusive]`) features (ie the first 5) and it produces a valid JSON but if you inspect it you will see that we moved from the GeoJON to a JSON array. 
+
+```bash
+jq '.' not_perfect_sample.geojson | head -n 4
+# [
+#   {
+#     "type": "Feature",
+#     "properties": {
+# to compare with :
+jq '.' data/vt-bb.geojson | head -n 12/
+# {
+#   "type": "FeatureCollection",
+#   "name": "sql_statement",
+#   "crs": {
+#     "type": "name",
+#     "properties": {
+#       "name": "urn:ogc:def:crs:EPSG::4269"
+#     }
+#   },
+#   "features": [
+#     {
+#       "type": "Feature",
+```
+We used `.features` hence it returned the following value (here an array with all the features) but we loosed `type`, `name`, and `crs`.
+
+You probably have noticed that `.` is using to return all the input as output but by default `jq` will *prettify* the JSON. 
+
+If we want to keep them we will need to be slighly more verbose:
+
+```bash
+jq '{type: .type , crs: .crs ,features: .features[0:10]}' data/vt-bb.geojson > better_sample.geojson 
+```
+Here we introduced `{}` allowing you to build a JSON object. We then stick them together and send them to a new JSON with a proper type and crs (grabed from our original file). 
+
+We could just want the geometries of our census blocks:
+
+```bash
+jq '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}' better_sample.geojson > sample_only_geom.geojson  
+```
+
+Here we are streaming a filter on `.features[]` into a function that will delete all properties (`del(.properties)`) and this will be used as an array for features. 
+
+We will need to adjust it a bit for of `data/vt-bb.geojson`: 
+
+```bash
+jq --compact-output  '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}'  data/vt-bb.geojson > data/geom.geojson
+```
+
+`--compact-output` will convert to a single line JSON (and saved space!). 
+Now `data/geom.geojson` is  72MB. 
+
+ But wait what if we just want the properties? 
+
+First let's get their keys:
+
+getting all the key 
+flattening
+converting to csv
