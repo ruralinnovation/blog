@@ -3,6 +3,7 @@ title: "Awesome jq and GeoJSON"
 author: "Olivier Leroy"
 date: "2024-03-10"
 categories: [code, spatial data]
+draft: true
 ---
 
 # Awesome jq and GeoJSON!
