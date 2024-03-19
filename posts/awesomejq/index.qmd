@@ -18,10 +18,12 @@ Sadly few tutorials exist on it for `GeoJSON` and we hope that the few tricks we
 
 We are using a GeoJSON with Vermont Census Blocks and attributes related to our works with broadband data. 
 
-It is not a deaply nested JSON but it is perfect to illustrate some very commun use cases.
+It is not a deaply nested JSON but it is perfect to illustrate some very communs use cases.
 A quick check let us know that it is 94 MB. Not "that" big but still decent.
 
 First let see how many features does it has. 
+
+TODO: should we consider using a geojson from just census? 
 
 We can approximate that: 
 
@@ -83,6 +85,7 @@ jq '.' data/vt-bb.geojson | head -n 12/
 #     {
 #       "type": "Feature",
 ```
+
 We used `.features` hence it returned the following value (here an array with all the features) but we loosed `type`, `name`, and `crs`.
 
 You probably have noticed that `.` is using to return all the input as output but by default `jq` will *prettify* the JSON. 
