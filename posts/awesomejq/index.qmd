@@ -3,12 +3,11 @@ title: "Awesome jq and GeoJSON"
 author: "Olivier Leroy"
 date: "2024-03-10"
 categories: [code, spatial data]
-draft: true
+image: thumbnail.png
 ---
 
-# Awesome jq and GeoJSON!
 
-If like us your are maniplating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) and want a quick CLI tools to deal (filter and slice) them you should definitely give `jq` a try!
+If you are manipulating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) features/objects and want a quick CLI tool to deal (filter and slice) them, you should definitely give `jq` a try!
 
 You can find plenty of great guides online but the [documentation](https://jqlang.github.io/jq/manual/) and the [playground](https://jqplay.org/) are always a good start.
 
@@ -16,19 +15,23 @@ You can find plenty of great guides online but the [documentation](https://jqlan
 ::: {.callout-note}
 ## Quick disclaimer: 
 
-we are using an UNIX shell to run it (zsh) if you are using powershell you will need to adapt the following commands.  
+We are using an UNIX shell to run it (zsh) if you are using powershell you will need to adapt the following commands.
 :::
 
-Sadly few tutorials exist on it for `GeoJSON` and we hope that the few tricks we are going to show you will help you on your leaning journey. 
+
+Sadly, there are not many tutorials that exist on using `jq` to manage objects in the `GeoJSON` family, so we hope that the few tricks we are going to show you will help you on your leaning journey.
 
 We are using a GeoJSON with Vermont Census Blocks and attributes related to our works with broadband data. 
 
-It is not a deaply nested JSON but it is perfect to illustrate some very communs use cases.
+It is not a deeply nested JSON but it is perfect to illustrate some very communs use cases.
 A quick check let us know that it is 94 MB. Not "that" big but still decent.
 
 First let see how many features does it has. 
 
-TODO: should we consider using a geojson from just census? 
+<!--
+TODO: should we consider using a geojson from just census?
+-->
+
 
 We can approximate that: 
 
