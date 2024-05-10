@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Mapping, Data, and Analytics @ CORI"
+  title: "Mapping & Data Analytics @ CORI"
   search: false
   favicon: assets/images/Logo-Mark_Black.png
   navbar:

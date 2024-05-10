@@ -2,7 +2,7 @@
 title: "Awesome jq and GeoJSON"
 author: "Olivier Leroy"
 date: "2024-03-10"
-categories: [code, spatial data]
+categories: [cli, code, geojson, json, spatial data]
 image: thumbnail.png
 ---
 
@@ -198,7 +198,7 @@ We have just explored the surface! `jq` can help to filter some specific feature
 
     - etc!
 
-`jq` is a generci tool for filtering json and lot of people are using by following teh JSON spec in geojson we can build on top of all their works!
+`jq` is a generic tool for filtering json and lot of people are using by following the JSON spec in geojson we can build on top of all their monumental work!
 
 
 
