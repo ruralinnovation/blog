@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Mapping, Data, and Analytics @ CORI"
+  title: "Mapping & Data Analytics @ CORI"
   search: false
   favicon: assets/images/Logo-Mark_Black.png
   navbar:
@@ -13,12 +13,16 @@ website:
         href: https://github.com/ruralinnovation
 format:
   html:
-    theme:
-      - litera
-      - styles.scss
+    theme: minty
+    css: styles.scss
     mainfont: "Bitter"
     fontcolor: "#121E22"
     linkcolor: "#00835D"
+    grid:
+      sidebar-width: 250px
+      body-width: 1100px
+      margin-width: 250px
+    toc: true
 
 resources:
 - "assets/*"

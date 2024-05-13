@@ -1,4 +1,4 @@
-# Data blog for the Mapping, Data, and Analytics team at the Center on Rural Innovation (CORI)
+# Data blog for the Mapping and Data Analytics team at the Center on Rural Innovation (CORI)
 
 ## Getting started
 
