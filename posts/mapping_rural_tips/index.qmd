@@ -1,0 +1,79 @@
+---
+title: "X tips for mapping rural data"
+author: "Camden Blatchly"
+date: "2024-05-24"
+categories: [code, sf, ggplot2, leaflet, spatial data]
+image: thumbnail.png
+---
+
+Mapping rural data is hard! Between sparse populations, inaccurate data, and 
+[determining what even counts as rural](https://ruralinnovation.us/blog/defining-rural-america/), mapping 
+rural data can be a minefield, but don't fear! In this blog post, I'll cover 
+X tips for mapping rural data that will prepare you to confidently tackle your next rural-centric 
+mapping project.  
+
+
+### Normalize your data  
+
+Because rural data is often only available for a handful of geographies 
+(e.g., county or tract), the results of statistical analyses 
+can significantly vary based on the scale and boundaries of the spatial units 
+used (a.k.a the [modifiable area unit problem](https://en.wikipedia.org/wiki/Modifiable_areal_unit_problem)). As such, 
+standardizing your data into rates or measures instead of raw counts, 
+such as using population density instead of total population, is especially useful 
+when mapping rural data.
+
+For example, take a look at the two maps below. The spatial trends of broadband service 
+are much clearer in the normalized version.
+
+<div style="display:flex; flex-wrap: wrap;">
+  <img style="width: 45%;" src="images/choropleth_unnormalized.png" alt="Unnormalized choropleth map">
+  <img style="width: 45%;" src="images/choropleth_normalized.png" alt="Normalized choropleth map">
+</div>
+
+
+### Use smaller geographical units when available  
+
+Because rural areas are sparsely populated, regions are often grouped together into 
+large geographic boundaries, obscuring nuances in spatial trends. When available, 
+consider plotting data a multiple geographic levels to better identify localized trends.
+
+### Separate rural and nonrural color scales  
+
+Mapping rural data means not mapping urban data. Considering urban and rural data 
+together often "flattens" rural trends. Rural areas are socioeconomically 
+distinct from urban areas and should be considered on their own.
+
+In the case where you want to look at both urban and rural values, consider 
+breaking them out into their own facets rather than plotting them together or 
+using two color scales.
+
+<img style="width: 90%;" src="images/choropleth-good-facet.png" alt="Facetted choropleth map">
+
+
+### Incorporate magnitude  
+
+Because the size of rural geographies is not related to the population within that 
+geography, it is often useful to add a measure of visual magnitude in order to 
+better highlight spatial concentrations. To that end, I recommend considering cartograms, 
+two variants of which you can see below.
+
+<div style="display:flex; flex-wrap: wrap;">
+  <img style="width: 45%; min-width: 300px;" src="images/cartogram_dorling_rural_pop.png" alt="Bubble map">
+  <img style="width: 45%; min-width: 300px;" src="images/cartogram_ncont_pct_rural_pop.png" alt="Cartogram">
+</div>
+
+### Use interactivity  
+
+Tooltips (i.e., the info boxes that appear when hovering over an element) are a 
+great way to provide users with additional content and can help convey a sense 
+of magnitude.
+
+### Consider non-map alternatives  
+
+Just because rural is a spatial concept doesn't mean that maps are always the best choice. 
+Consider using a swarm chart.
+
+
+
+
