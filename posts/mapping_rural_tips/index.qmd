@@ -10,7 +10,9 @@ Mapping rural data is hard! Between sparse populations, inaccurate data, and the
 
 ### 1. Normalize Your Data  
 
-Rural data often spans large, sparsely populated areas, and the results of statistical analyses can significantly vary based on the scale and boundaries of the spatial units used. This phenomenon is known as the modifiable areal unit problem. To address this, standardize your data into rates or measures instead of raw counts. For example, use population density rather than total population. Normalizing your data can make spatial trends clearer and more meaningful.
+Rural data often spans large, sparsely populated areas, and the results of statistical analyses can significantly vary based on the scale and boundaries of the spatial units used. This phenomenon is known as the Modifiable Areal Unit Problem (MAUP) [^openshaw]. To address this, standardize your data into rates or measures instead of raw counts. For example, use population density rather than total population. Normalizing your data can make spatial trends clearer and more meaningful.
+
+[^openshaw]: See Openshaw, 1983: [https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf](https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf)  
 
 Here's an illustration of this concept using broadband service data. The spatial trends are much clearer in the normalized map compared to the unnormalized version:
 
@@ -21,7 +23,9 @@ Here's an illustration of this concept using broadband service data. The spatial
 
 ### 2. Use Smaller Geographical Units When Available  
 
-In rural areas, data is often aggregated into large geographic units, which can obscure localized trends. When available, use smaller geographical units to capture more detail. This approach can reveal patterns that would otherwise be hidden in larger aggregations. Plotting data at multiple geographic levels can provide a more nuanced view of spatial trends.
+In rural areas, data is often aggregated into large geographic units, which can obscure localized trends. When available, use smaller geographical units to capture more detail. This approach can reveal patterns that would otherwise be hidden in larger aggregations. 
+
+Plotting data at multiple geographic levels can provide a more nuanced view of spatial trends.
 
 ### 3. Separate Rural and Nonrural Color Scales  
 
@@ -30,18 +34,27 @@ Rural and urban areas are socioeconomically distinct, and mapping them together 
 <img style="width: 90%;" src="images/choropleth-good-facet.png" alt="Facetted choropleth map">
 
 ### 4. Incorporate Magnitude
+
 The size of rural geographic units often does not correlate with the population within those units. To highlight spatial concentrations effectively, add a measure of visual magnitude. Cartograms are a useful tool for this purpose. Below are two variants: a bubble map and a cartogram, both of which adjust the size of geographic units to reflect population data.
 
 <div style="display:flex; flex-wrap: wrap;">
   <img style="width: 45%; min-width: 300px;" src="images/cartogram_dorling_rural_pop.png" alt="Bubble map">
   <img style="width: 45%; min-width: 300px;" src="images/cartogram_ncont_pct_rural_pop.png" alt="Cartogram">
 </div>
+
+<!-- which one do you recommand Camden? -->
+
 ### 5. Use Interactivity
+
 Interactivity, such as tooltips that appear when hovering over an element, can enhance your map by providing additional context and details. Tooltips can help convey a sense of magnitude and offer users a deeper understanding of the data.
+
+<!-- if you have a reference on tools tips or a good example from an other website/company it could be useful as a note, could just be https://leafletjs.com/reference.html#tooltip -->
 
 ### 6. Consider Non-Map Alternatives  
 
 While maps are powerful tools, they are not always the best choice for representing rural data. In some cases, alternative visualizations like swarm charts can more effectively convey your message. Don’t be afraid to think outside the map!  
+
+<!-- same I think when you are not providing an example it is good to provide a link (https://ruralinnovation.us/blog/equity-economic-opportunity-rural-america/ ?) , both of those two comments are "nice to have" but not needed --> 
 
 
 By implementing these tips, you can improve the clarity and accuracy of your rural data maps, making them more informative and actionable. Happy mapping!
