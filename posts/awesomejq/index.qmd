@@ -6,7 +6,8 @@ categories: [cli, code, geojson, json, spatial data]
 image: thumbnail.png
 ---
 
-If you are manipulating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) features/objects and want a quick CLI tool to filter and slice them, you should give `jq` a try! Since there are not many tutorials that exist on using `jq` to manage objects in the `GeoJSON` family, we hope that these few tricks will help you on your leaning journey.  
+If you are manipulating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) features/objects and want a quick CLI tool to filter and slice them, you should give `jq` a try! 
+Since there are not many tutorials that exist on using `jq` to manage objects in the `GeoJSON` family, we hope that these few tricks will help you on your leaning journey.  
 
 <!-- You can find plenty of great guides online, but the [documentation](https://jqlang.github.io/jq/manual/) and the [playground](https://jqplay.org/) are always a good start. -->
 
@@ -40,7 +41,7 @@ jq '.features | length' data/vt-bb.geojson
 # 24611
 ```
 
-This is the correct number of blocks! How did that magic work? Let's decompose it:
+This is the correct number of blocks! How did that magic work? Let's decompose our one-liner:
 
 - `jq` here we are calling jq like any other CLI tool
 
@@ -64,7 +65,7 @@ It is always a good idea to start experimenting with smaller data so let's start
 jq '.features[0:5]'  data/vt-bb.geojson > data/not_perfect_sample.geojson
 ```
 
-Here we asked for the [0 to 5[ (yes: `[inclusive:exclusive]`) features (i.e. the first 5) and it produces a valid JSON but if you inspect it you will see that we moved from GeoJSON to a JSON array. 
+Here we asked for the [0 to 5[ (yes: `[inclusive:exclusive]`) features (i.e. the first 5) and `jq` produces a valid JSON but if you inspect it you will see that we moved from GeoJSON to a JSON array. 
 
 ```bash
 jq '.' data/not_perfect_sample.geojson | head -n 4
@@ -74,7 +75,7 @@ jq '.' data/not_perfect_sample.geojson | head -n 4
 #     "properties": {
 # to compare with :
 jq '.' data/vt-bb.geojson | head -n 12/
-# {
+# { 
 #   "type": "FeatureCollection",
 #   "name": "sql_statement",
 #   "crs": {
@@ -88,7 +89,7 @@ jq '.' data/vt-bb.geojson | head -n 12/
 #       "type": "Feature",
 ```
 
-We used `.features` so it returned the following value (here an array with all the features) but we lost `type`, `name`, and `crs`.
+We used `.features` so `jq` returned the following value (here an array with all the features) but we lost `type`, `name`, and `crs`.
 
 You probably have noticed that `.` is used to return all the input as output but by default `jq` will *prettify* the JSON. 
 
@@ -111,7 +112,7 @@ jq '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}' bette
 
 Here we are streaming a filter on `.features[]` into a function that will delete all properties (`del(.properties)`) and this will be used as an array for features. 
 
-We will need to adjust it a bit for `data/vt-bb.geojson`: 
+We will need to adjust that code a bit for `data/vt-bb.geojson`: 
 
 ```bash
 jq --compact-output  '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}'  data/vt-bb.geojson > data/geom.geojson
@@ -145,7 +146,7 @@ jq '.features[0].properties | keys' data/better_sample.geojson
 
 #### Second make them into a csv
 
-Here we will need to buckle up a bit as it would become quite a big line:
+Here we will need to buckle up a bit as our code is becoming quite a big line:
 
 ```bash
 jq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_entries | map(.value))| @csv' data/better_sample.geojson > data/sample.csv
@@ -159,7 +160,7 @@ jq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_e
 
     * passing it to `to_entries` convert our object to multiple objects with "key" / "value" (see margin)
 
-    * finaly, `map(.value)` gets all "value" for every selected features
+    * finally, `map(.value)` gets all "value" for every selected features
 
 ::: {.column-margin}
 ```
@@ -179,8 +180,7 @@ jq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_e
 :::  
 
 
-- `@csv`  convert to a csv and we redirect the output later in `data/sample.csv`
-
+- Finally `@csv`  convert to a csv and we redirect the output later in `data/sample.csv`
 
 
 We have just explored the surface! `jq` can help to filter some specific features:
