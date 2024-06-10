@@ -190,13 +190,13 @@ jq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_e
 - `@csv`  convert to a csv and we redirect the output later in `data/sample.csv`
 
 
-We have just explored the surface! `jq` can help to filter some specific features: (
+We have just explored the surface! `jq` can help to filter some specific features: 
     
-    - every geometries "served" in our file?
+ - every geometries "served" in our file?
     
-    - the first node in every geometries)?
+ - the first node in every geometries)?
 
-    - etc!
+ - etc!
 
 `jq` is a generic tool for filtering json and lot of people are using by following the JSON spec in geojson we can build on top of all their monumental work!
 
