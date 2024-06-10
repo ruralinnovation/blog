@@ -1,6 +1,9 @@
 [
   {
     "listing": "/index.html",
-    "items": []
+    "items": [
+      "/posts/mapping_rural_tips/index.html",
+      "/posts/awesomejq/index.html"
+    ]
   }
 ]

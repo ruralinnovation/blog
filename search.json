@@ -4,13 +4,55 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "The Mapping, Data, and Analytics (MDA) team at the Center on Rural Innovation (CORI) conduct analysis and develop software to support rural participation in the modern economy.\nWant to collaborate on a project? Send us an email at tech-team at ruralinnovation dot us"
+    "text": "The Mapping and Data Analytics (MDA) team at the Center on Rural Innovation (CORI) conduct analysis and develop software to support rural participation in the modern economy.\nWant to collaborate on a project? Send us an email at tech-team at ruralinnovation dot us"
+  },
+  {
+    "objectID": "posts/mapping_rural_tips/index.html",
+    "href": "posts/mapping_rural_tips/index.html",
+    "title": "6 tips for mapping rural data",
+    "section": "",
+    "text": "Mapping rural data is hard! Between sparse populations, inaccurate data, and the challenge of defining what even counts as rural, creating accurate and meaningful maps can be a minefield. In this blog post, I’ll cover six tips for mapping rural data that will prepare you to confidently tackle your next rural-centric mapping project."
+  },
+  {
+    "objectID": "posts/mapping_rural_tips/index.html#footnotes",
+    "href": "posts/mapping_rural_tips/index.html#footnotes",
+    "title": "6 tips for mapping rural data",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nSee Openshaw, 1983: https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf↩︎"
+  },
+  {
+    "objectID": "posts/awesomejq/index.html",
+    "href": "posts/awesomejq/index.html",
+    "title": "Awesome jq and GeoJSON",
+    "section": "",
+    "text": "If you are manipulating a lot of GeoJSON features/objects and want a quick CLI tool to deal (filter and slice) them, you should definitely give jq a try!\nYou can find plenty of great guides online but the documentation and the playground are always a good start.\nSadly, there are not many tutorials that exist on using jq to manage objects in the GeoJSON family, so we hope that the few tricks we are going to show you will help you on your leaning journey.\nWe are using a GeoJSON with Vermont Census Blocks and attributes related to our works with broadband data.\nIt is not a deeply nested JSON but it is perfect to illustrate some very communs use cases. A quick check let us know that it is 94 MB. Not “that” big but still decent.\nFirst let see how many features does it has.\nWe can approximate that:\nThis is close but here we are counting some rows at the top and bottom of the file that are not features (try head -n 5 and tail on it if you are curious).\nWell we can also use jq :\nThis is the correct number of blocks! How did that magic works? Let’s decompose it:"
+  },
+  {
+    "objectID": "posts/awesomejq/index.html#jq-and-small-examples",
+    "href": "posts/awesomejq/index.html#jq-and-small-examples",
+    "title": "Awesome jq and GeoJSON",
+    "section": "jq and small examples",
+    "text": "jq and small examples\nIt is always a good idea to start experimenting with smaller data so let’s do it:\njq '.features[0:5]'  data/vt-bb.geojson &gt; data/not_perfect_sample.geojson\nHere we asked for the [0 to 5[ (yes: [inclusive:exclusive]) features (ie the first 5) and it produces a valid JSON but if you inspect it you will see that we moved from the GeoJON to a JSON array.\njq '.' data/not_perfect_sample.geojson | head -n 4\n# [\n#   {\n#     \"type\": \"Feature\",\n#     \"properties\": {\n# to compare with :\njq '.' data/vt-bb.geojson | head -n 12/\n# {\n#   \"type\": \"FeatureCollection\",\n#   \"name\": \"sql_statement\",\n#   \"crs\": {\n#     \"type\": \"name\",\n#     \"properties\": {\n#       \"name\": \"urn:ogc:def:crs:EPSG::4269\"\n#     }\n#   },\n#   \"features\": [\n#     {\n#       \"type\": \"Feature\",\nWe used .features hence it returned the following value (here an array with all the features) but we loosed type, name, and crs.\nYou probably have noticed that . is using to return all the input as output but by default jq will prettify the JSON.\nIf we want to keep them we will need to be slighly more verbose:\njq '{type: .type , crs: .crs ,features: .features[0:10]}' data/vt-bb.geojson &gt; data/better_sample.geojson \nHere we introduced {} allowing you to build a JSON object. We then “stick them” together and send them to a new JSON with a proper type and crs (grabed from our original file)."
+  },
+  {
+    "objectID": "posts/awesomejq/index.html#extracting-geometries",
+    "href": "posts/awesomejq/index.html#extracting-geometries",
+    "title": "Awesome jq and GeoJSON",
+    "section": "Extracting geometries!",
+    "text": "Extracting geometries!\nWe could just want the geometries of our census blocks:\njq '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}' better_sample.geojson &gt; sample_only_geom.geojson  \nHere we are streaming a filter on .features[] into a function that will delete all properties (del(.properties)) and this will be used as an array for features.\nWe will need to adjust it a bit for of data/vt-bb.geojson:\njq --compact-output  '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}'  data/vt-bb.geojson &gt; data/geom.geojson\n--compact-output will convert to a single line JSON (and saved space!). Now data/geom.geojson is 72MB."
+  },
+  {
+    "objectID": "posts/awesomejq/index.html#jq-please-give-me-a-data-frame",
+    "href": "posts/awesomejq/index.html#jq-please-give-me-a-data-frame",
+    "title": "Awesome jq and GeoJSON",
+    "section": "jq , please give me a data frame:",
+    "text": "jq , please give me a data frame:\nBut wait what if we just want the properties?\n\nFirst let’s get their keys:\nAt the top level if we do ..\njq `keys` data/better_sample.geojson\n#[\n#  \"crs\",\n#  \"features\",\n#  \"type\"\n]\n.. we get the keys for the first array. We need to go in the features object to get properties and pass it to the keys function. Here we went a bit lazy just asking for the first feature.\njq '.features[0].properties | keys' data/better_sample.geojson\n\n\nSecond make them into a csv\nHere we will need to buckle up a bit as it would become quite a big line:\njq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_entries | map(.value))| @csv' data/better_sample.geojson &gt; data/sample.csv\n\n(.features[0].properties | keys_unsorted) here nothing new we added parentheses to enforce precedence. We are getting the header of our csv\n(.features[].properties | to_entries | map(.value)) :\n\nwe are starting from all our properties (not the first one)\npassing it to to_entries convert our object to multiple objects with “key” / “value” (see margin)\nfinaly, map(.value) gets all “value” for every selected features\n\n\n\n\n{\n\"key\": \"state_abbr\",\n\"value\": \"VT\"\n},\n{\n\"key\": \"geoid_st\",\n\"value\": \"50\"\n},\n{\n\"key\": \"geoid_co\",\n\"value\": \"50005\"\n}\n\n@csv convert to a csv and we redirect the output later in data/sample.csv\n\nWe have just explored the surface! jq can help to filter some specific features: (\n- every geometries \"served\" in our file?\n\n- the first node in every geometries)?\n\n- etc!\njq is a generic tool for filtering json and lot of people are using by following the JSON spec in geojson we can build on top of all their monumental work!"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Recent posts",
     "section": "",
-    "text": "No matching items"
+    "text": "6 tips for mapping rural data\n\n\n\n\n\n\n\n\n\n\n\nMay 24, 2024\n\n\nCamden Blatchly\n\n\n\n\n\n\n\n\n\n\n\n\nAwesome jq and GeoJSON\n\n\n\n\n\n\n\n\n\n\n\nMar 10, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\nNo matching items"
   }
 ]

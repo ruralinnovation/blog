@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Mapping, Data, and Analytics @ CORI - Recent posts</title>
+<title>Mapping &amp; Data Analytics @ CORI - Recent posts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -63,9 +63,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: [{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: [],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -113,6 +113,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="styles.scss">
 </head>
 
 <body class="nav-fixed">
@@ -123,7 +124,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Mapping, Data, and Analytics @ CORI</span>
+    <span class="navbar-title">Mapping &amp; Data Analytics @ CORI</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -167,7 +168,9 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
@@ -181,7 +184,62 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-
+<div class="quarto-post image-right" data-index="0" data-categories="code,sf,ggplot2,leaflet,spatial data" data-listing-date-sort="1716523200000" data-listing-file-modified-sort="1718022319467" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="486">
+<div class="thumbnail">
+<p><a href="./posts/mapping_rural_tips/index.html" class="no-external"></a></p><a href="./posts/mapping_rural_tips/index.html" class="no-external">
+<p><img src="./posts/mapping_rural_tips/thumbnail.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/mapping_rural_tips/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/mapping_rural_tips/index.html" class="no-external">6 tips for mapping rural data</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/mapping_rural_tips/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/mapping_rural_tips/index.html" class="no-external">Mapping rural data is hard! Between sparse populations, inaccurate data, and the challenge of defining what even counts as rural, creating accurate and meaningful maps can…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/mapping_rural_tips/index.html" class="no-external">
+<div class="listing-date">
+May 24, 2024
+</div>
+<div class="listing-author">
+Camden Blatchly
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="cli,code,geojson,json,spatial data" data-listing-date-sort="1710046800000" data-listing-file-modified-sort="1717686051257" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="999">
+<div class="thumbnail">
+<p><a href="./posts/awesomejq/index.html" class="no-external"></a></p><a href="./posts/awesomejq/index.html" class="no-external">
+<p><img src="./posts/awesomejq/thumbnail.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/awesomejq/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/awesomejq/index.html" class="no-external">Awesome jq and GeoJSON</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/awesomejq/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/awesomejq/index.html" class="no-external">If you are manipulating a lot of <code>GeoJSON</code> features/objects and want a quick CLI tool to deal (filter and slice) them, you should definitely give <code>jq</code> a try!</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/awesomejq/index.html" class="no-external">
+<div class="listing-date">
+Mar 10, 2024
+</div>
+<div class="listing-author">
+Olivier Leroy
+</div>
+</a>
+</div>
+</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
@@ -266,6 +324,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ruralinnovation\.github\.io\/blog\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -300,7 +376,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
