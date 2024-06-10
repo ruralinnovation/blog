@@ -47,7 +47,7 @@ This is the correct number of blocks! How did that magic work? Let's decompose i
 - `data/vt-bb.geojson` is the path of our file as the last argument
 
 - `'.features | length'` is a **jq filter**. Remember, we are in the shell and whitespace has meaning. 
-Not quoting it would mean that we have 4 arguments when you just have 2.
+Not quoting it would mean that we have 4 arguments when we just have 2.
 
     - `.features` will return the json array containing every feature 
   
@@ -64,7 +64,7 @@ It is always a good idea to start experimenting with smaller data so let's start
 jq '.features[0:5]'  data/vt-bb.geojson > data/not_perfect_sample.geojson
 ```
 
-Here we asked for the [0 to 5[ (yes: `[inclusive:exclusive]`) features (i.e. the first 5) and it produces a valid JSON but if you inspect it you will see that we moved from the GeoJON to a JSON array. 
+Here we asked for the [0 to 5[ (yes: `[inclusive:exclusive]`) features (i.e. the first 5) and it produces a valid JSON but if you inspect it you will see that we moved from GeoJSON to a JSON array. 
 
 ```bash
 jq '.' data/not_perfect_sample.geojson | head -n 4
@@ -88,9 +88,9 @@ jq '.' data/vt-bb.geojson | head -n 12/
 #       "type": "Feature",
 ```
 
-We used `.features` hence it returned the following value (here an array with all the features) but we loosed `type`, `name`, and `crs`.
+We used `.features` so it returned the following value (here an array with all the features) but we lost `type`, `name`, and `crs`.
 
-You probably have noticed that `.` is using to return all the input as output but by default `jq` will *prettify* the JSON. 
+You probably have noticed that `.` is used to return all the input as output but by default `jq` will *prettify* the JSON. 
 
 If we want to keep them we will need to be slighly more verbose:
 
@@ -98,12 +98,12 @@ If we want to keep them we will need to be slighly more verbose:
 jq '{type: .type , crs: .crs ,features: .features[0:10]}' data/vt-bb.geojson > data/better_sample.geojson 
 ```
 
-Here we introduced `{}` allowing you to build a JSON object. We then "stick them" together and send them to a new JSON with a proper `type` and `crs` (grabed from our original file). 
+Here we introduced `{}` allowing you to build a JSON object. We then "stick them" together and send them to a new JSON with a proper `type` and `crs` (grabbed from our original file). 
 
 
 ## Extracting geometries!
 
-We could just want the geometries of our census blocks:
+If we just want the geometries of our census blocks:
 
 ```bash
 jq '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}' better_sample.geojson > sample_only_geom.geojson  
@@ -111,7 +111,7 @@ jq '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}' bette
 
 Here we are streaming a filter on `.features[]` into a function that will delete all properties (`del(.properties)`) and this will be used as an array for features. 
 
-We will need to adjust it a bit for of `data/vt-bb.geojson`: 
+We will need to adjust it a bit for `data/vt-bb.geojson`: 
 
 ```bash
 jq --compact-output  '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}'  data/vt-bb.geojson > data/geom.geojson
@@ -137,7 +137,7 @@ jq `keys` data/better_sample.geojson
 ]
 ```
 
- .. we get the keys for the first array. We need to go in the features object to get  `properties` and pass it to the `keys` function. Here we went a bit lazy just asking for the first feature.
+ .. we get the keys for the first array. We need to go in the features object to get  `properties` and pass it to the `keys` function. We are a bit lazy and just ask for the first feature.
 
 ```bash
 jq '.features[0].properties | keys' data/better_sample.geojson
@@ -182,7 +182,7 @@ jq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_e
 - `@csv`  convert to a csv and we redirect the output later in `data/sample.csv`
 
 
-We have just explored the surface! `jq` can help to filter some specific features: (
+We have just explored the surface! `jq` can help to filter some specific features:
     
     - every geometries "served" in our file?
     
@@ -190,7 +190,7 @@ We have just explored the surface! `jq` can help to filter some specific feature
 
     - etc!
 
-`jq` is a generic tool for filtering json and lot of people are using by following the JSON spec in geojson we can build on top of all their monumental work!
+`jq` is a generic tool for filtering json and lot of people are following the JSON spec in GeoJSON, so we can build on top of all their monumental work!
 
 
 
