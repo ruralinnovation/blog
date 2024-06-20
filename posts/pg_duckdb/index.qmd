@@ -6,6 +6,23 @@ categories: [cli, code, postgresql, duckDB]
 image: thumbnail.png
 ---
 
+<!-- maybe the first part is not needed --> 
+
+They are a lot of talks (righfully) on the use of [Apache Parquet](https://parquet.apache.org/), [Apache Arrow](https://arrow.apache.org/) and [DuckDB](https://duckdb.org/). 
+
+- **Apache Parquet** is an open source columnar file format storage designed for fast I/O
+
+- **Apache Arrow** is a standardization of an in-memory representation of the data: it allows "zero copy" (use of pointer at low level), it is an OLAP (Online Analytical Process) implementing deferred or lazy materilalization (optimize query for us)
+
+- **DuckDB** is an implementation, ie an engine, of an OLAP database. 
+
+Those three open source technologies and the amount of ressources that a personnal laptop has now have lowered the need of using a classic RDBMS for out of memory tasks (and in some cases maybe the need of using a distributed computing framework like Spark) for data science works. 
+
+Wait, should we drop our trusty Postgresql server? Probably not or at least not soone.  What we are seing right now is more extending traditional RDBMS ("Data Warehouse") with the use of some object storage (s3 as an example) to built an hybrid weirdly called a "data lakehouse". 
+
+In this blog post we would like to show how you can quickly convert one of your table from PostgreSQL to a parquet file that can be stored later in a S3 bucket for analysis. 
+
+
 Libraries needed: 
 
 ```{r}
@@ -20,8 +37,8 @@ DuckDB has a Postgres extension!
 ```{r}
 #| eval: false
 
-con <- DBI::dbConnect(duckdb())
-# install abd load PG extension
+con <- DBI::dbConnect(duckdb(), dbdir = "dec23.canard")
+# install and load PG extension
 DBI::dbExecute(con, "INSTALL postgres")
 DBI::dbExecute(con, "LOAD postgres")
 
@@ -38,7 +55,20 @@ attach_string <- sprintf(
   cred[1]
 )
 
- DBI::dbExecute(con, attach_string)
+DBI::dbExecute(con, attach_string)
+
+DBI::dbExecute(con, "COPY 
+  (SELECT frn, 
+          location_id, 
+          technology, 
+          max_advertised_download_speed,
+          max_advertised_upload_speed,
+          business_residential_code,
+          state_abbr,
+          block_geoid,
+          low_latency FROM db.staging.june23)
+  TO 'dec23' (FORMAT 'parquet', PARTITION_BY(state_abbr, technology))")
+
 
 DBI::dbDisconnect(con)
 ```
