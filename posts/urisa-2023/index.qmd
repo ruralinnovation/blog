@@ -21,6 +21,6 @@ The title of our presentation was **"Rural areas are overrepresented in unserved
 - The current BEAD definition of an "unserved area" is less suitable for rural areas than for urban areas.
 
 
-You can dig more into our presentation here: [https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide](https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide)!
+You can dig more into our presentation [HERE](https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide](https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide)!
 
 
