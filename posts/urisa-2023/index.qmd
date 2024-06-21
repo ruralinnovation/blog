@@ -10,17 +10,17 @@ image: thumbnail.png
 
 URISA or The **U**rban and **R**egional **I**nformation **S**ystems **A**ssociation is the main association for professionals in the GIS (Geographic information System) and geospatial space. 
 
-We were lucky to be selected to present a part of our works on broadband infrastructure in the main URISA conference: [GIS-Pro-2023, Columbus Ohio](https://gispro2023.sched.com/). 
+We were fortunate enough to be selected to present a portion of our work on broadband infrastructure at the main URISA conference [GIS-Pro-2023, Columbus Ohio](https://gispro2023.sched.com/). 
 
-Our presentations title was **"Rural areas are overrepresented in unserved areas and underestimated in statistics"** and we used FCC NBM data to show that:
+The title of our presentation was **"Rural areas are overrepresented in unserved areas and underestimated in statistics"** and we utilized FCC NBM data to demonstrate several points:
 
-- This new data set is an improvement versus the previous one (derived from F477)
+- The  new dataset (NBM) represents an improvement over the previous one (derived from F477).
 
-- Even if the gap between rural and non rural places was closing it was still significant
+- Despite the narrowing gap between rural and non-rural areas, significant disparities still exist.
 
-- the current BEAD definition of an "unserved area" is less appropriate for rural area than urban's one
+- The current BEAD definition of an "unserved area" is less suitable for rural areas than for urban areas.
 
 
-You can dig more into our presentation can be find here: [https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide](https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide)!
+You can dig more into our presentation here: [https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide](https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide)!
 
 
