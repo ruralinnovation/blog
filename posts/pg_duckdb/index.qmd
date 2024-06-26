@@ -4,6 +4,7 @@ author: "Olivier Leroy"
 date: "2024-07-14"
 categories: [cli, code, postgresql, duckDB]
 image: thumbnail.png
+draft: true
 ---
 
 Libraries needed: 
