@@ -1,0 +1,44 @@
+---
+title: "From elephant to duck!"
+author: "Olivier Leroy"
+date: "2024-07-14"
+categories: [cli, code, postgresql, duckDB]
+image: thumbnail.png
+---
+
+Libraries needed: 
+
+```{r}
+#| label: loading libraries 
+library(duckdb)
+```
+
+
+DuckDB has a Postgres extension! 
+
+
+```{r}
+#| eval: false
+
+con <- DBI::dbConnect(duckdb())
+# install abd load PG extension
+DBI::dbExecute(con, "INSTALL postgres")
+DBI::dbExecute(con, "LOAD postgres")
+
+# get credential from .pgpass
+pgpass <- readLines("~/.pgpass")
+
+cred <- unlist(strsplit(pgpass, ":"))
+
+attach_string <- sprintf(
+  "ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)",
+  cred[3],
+  cred[4],
+  cred[5],
+  cred[1]
+)
+
+ DBI::dbExecute(con, attach_string)
+
+DBI::dbDisconnect(con)
+```
