@@ -1,0 +1,21 @@
+---
+title: "Top 10 Venture Capital-Raising Micropolitan Areas"
+author: 
+  - "Brittany Kainen"
+date: "2024-07-03"
+categories: [SEC, Form D, Quarto, Venture Capital, Rural]
+image: thumbnail.png
+---
+
+Venture capital funding plays a pivotal role in bolstering a region's economy by catalyzing innovation, fostering job creation, and attracting talent. It injects vital funding into promising businesses with growth potential, enabling them to scale rapidly.  It holds immense promise for revitalizing Rural America's economy by empowering local entrepreneurs with the resources needed to innovate and grow. Though rural areas have traditionally been overlooked by investors, many entrepreneurs across Rural America have managed to access capital that is crucial to transforming their budding ideas into thriving businesses.
+
+To explore the venture capital landscape in Rural America, we can use the SEC's Form D to identify the amount of funding received by private businesses in micropolitan areas.  A micropolitan area, as defined by the U.S. Office of Management and Budget, is a region centered around an small urban cluster with a population between 10,000 and 50,000 people. These areas are smaller than metropolitan areas but still exhibit economic and social connections with nearby population centers, making micropolitans an ideal geography for observing venture capital dynamics in rural economies.    
+
+Here are the micropolitan areas that raised the most in venture capital funding per capita in 2022:
+
+<div style="display:flex; flex-wrap: wrap;">
+  <img style="width: 80%;" src="images/top10_vc_micropolitans.png" alt="Micro VC chart">
+  
+Each of these micropolitan areas (and many more!) demonstrates that rural communities are ripe with entrepreneurial spirit and offer investors an abundance of opportunities.  
+
+
