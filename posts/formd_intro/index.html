@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Olivier Leroy">
-<meta name="dcterms.date" content="2024-07-14">
+<meta name="author" content="Brittany Kainen">
+<meta name="dcterms.date" content="2024-07-01">
 
-<title>Mapping &amp; Data Analytics @ CORI - From elephant to duck!</title>
+<title>Mapping &amp; Data Analytics @ CORI - Using Form D to Estimate Venture Capital</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -128,12 +94,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">From elephant to duck!</h1>
+      <h1 class="title">Using Form D to Estimate Venture Capital</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">cli</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">postgresql</div>
-                <div class="quarto-category">duckDB</div>
+                <div class="quarto-category">SEC</div>
+                <div class="quarto-category">Form D</div>
+                <div class="quarto-category">Quarto</div>
+                <div class="quarto-category">Venture Capital</div>
               </div>
                   </div>
   </div>
@@ -144,14 +110,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Olivier Leroy </p>
+               <p>Brittany Kainen </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 14, 2024</p>
+        <p class="date">July 1, 2024</p>
       </div>
     </div>
     
@@ -172,34 +138,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Libraries needed:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>DuckDB has a Postgres extension!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(<span class="fu">duckdb</span>())</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install abd load PG extension</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"INSTALL postgres"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"LOAD postgres"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># get credential from .pgpass</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pgpass <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"~/.pgpass"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>cred <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(pgpass, <span class="st">":"</span>))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>attach_string <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)"</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">3</span>],</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">4</span>],</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">5</span>],</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">1</span>]</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a> DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, attach_string)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>The ability of private companies to raise capital serves as a crucial indicator of entrepreneurial activity. The Security and Exchange Commission’s Form D is a publicly available dataset published quarterly that allows researchers to explore the landscape of venture capital investment.</p>
+<p>The Securities Act of 1933 established the laws governing the sale of securities, including registration with the SEC and mandatory reporting of information that may be pertinent to the public’s investment decisions. Private companies wishing to raise capital from accredited investors may still do so under the exemption, “Regulation D.” Regulation D allows private companies to conduct fundraising rounds without registering with the SEC or regularly submitting information that is required for publicly traded companies. This exemption is the primary mechanism for early stage ventures to access funding. When a company raises capital under Regulation D, they must file a Form D, which includes basic information about the company and the fundraising round. This data allows analysts to better understand <em>who</em> is raising venture capital and <em>how much</em>.</p>
+<p>However, Form D data is often messy and riddled with human errors! Here are some tips on accessing and cleaning Form D data:</p>
+<p>Data going back to Q1 2008 can be downloaded directly from the <a href="https://www.sec.gov/about/dera_form-d">SEC website</a>. For a more streamlined process, we recommend accessing data in R using the dform package developed by Matt Rogers (download package from <a href="https://github.com/matthewjrogers/dform">matthewjrogers/dform</a>). This package allows users to load data by quarter from 2014 to present.</p>
+<p>If you download the Form D files directly through the SEC and sum the “TOTALAMOUNTSOLD” column the total amount of capital raised through Regulation D in 2022 would be approximately $10.4T, which dramatically overestimates the actual amount of venture capital raised that year. <a href="https://www.ey.com/en_us/insights/growth/q4-2022-venture-capital-investment-trends">Ernst &amp; Young</a> reported total US venture capital raised in 2022 at $209.4B, <a href="https://www.statista.com/statistics/277501/venture-capital-amount-invested-in-the-united-states-since-1995/#:~:text=Value%20of%20venture%20capital%20investment%20in%20the%20U.S.%202006%2D2022&amp;text=Although%20the%20companies%20lack%20the,nearly%20241%20billion%20U.S.%20dollars.">Statista</a> places it at $241B, and <a href="9https://dealroom.co/guides/usa">Dealroom</a> at $235B. This discrepancy is partly due to duplicate entries. The dform package takes a first pass at removing duplicates, reducing the total amount raised in 2022 to $4.9T. This figure still overestimates the amount of venture capital raised by US businesses in 2022. Therefore, once the data is accessed through dform, additional cleaning steps are necessary before the data can provide a realistic picture of the venture landscape.</p>
+<p>First, remove companies headquartered outside of the US. Removing these entries brings the estimate from $4.9T down to $3.7T.</p>
+<p>Next, retain only the latest amendment within a funding round. Companies may file amendments for various reasons. They may need to notify the SEC of additional capital raised within a single fundraising effort or for something as small as correcting a spelling error in a previous filing. Because “TOTALAMOUNTSOLD” is cumulative for a fundraising round, simply summing this column would double-count funds already accounted for in other entries. In order to count these dollars once and attribute the most up-to-date total to the round, we recommend keeping only the latest entry for each funding round. This brings the total down to about $3.67T.</p>
+<p>Finally, remove investment funds. Investment vehicles raising capital on the private market are also required to file a Form D. To distinguish these entities from startups or companies raising operational funds, we recommend separating them from the filings made by traditional businesses. We identify filings made by investment vehicles in the following ways:<br>
+1. The industry is reported as “Pooled Investment Fund”.<br>
+2. The field “ISPOOLEDINVESTMENTFUNDTYPE” is flagged as “TRUE”. Meaning, the purpose of this fundraising round was for a pooled investment fund.<br>
+3. The entity name contains the word “FUND”. This indicates that the entity is actually an investment fund.<br>
+4. The entity name contains the word “HOLDING”. This indicates that the entity is actually a holding company.<br>
+This brings the final estimate for the total amount of venture funding raised by US companies in 2022 down to about $233B.</p>
+<p>While other measures may further refine estimates based on Form D data, using the dform package and following these steps results in a final estimate consistent with other figures for 2022.</p>
 
 
 
