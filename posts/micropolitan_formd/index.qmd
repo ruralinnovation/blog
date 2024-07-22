@@ -4,7 +4,7 @@ author:
   - "Brittany Kainen"
 date: "2024-07-03"
 categories: [SEC, Form D, Quarto, Venture Capital, Rural]
-image: thumbnail.png
+image: images/top10_vc_micropolitans.png
 ---
 
 Venture capital funding plays a pivotal role in bolstering a region's economy by catalyzing innovation, fostering job creation, and attracting talent. It injects vital funding into promising businesses with growth potential, enabling them to scale rapidly.  It holds immense promise for revitalizing Rural America's economy by empowering local entrepreneurs with the resources needed to innovate and grow. Though rural areas have traditionally been overlooked by investors, many entrepreneurs across Rural America have managed to access capital that is crucial to transforming their budding ideas into thriving businesses.
