@@ -1,7 +1,9 @@
 .DS_Store
+.idea
 /.quarto/
 /_freeze/
 /_site/
 /data/
-#docs
+/docs/
+/node_modules
 .Rproj.user
