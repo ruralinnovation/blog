@@ -6,11 +6,15 @@ about:
   links:
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/ruralinnovation/
 
 ---
 
-The Mapping and Data Analytics (MDA) team at the Center on Rural Innovation (CORI)
-conduct analysis and develop software to support rural participation in the modern economy.
+The Center on Rural Innovation ([CORI](https://ruralinnovation.us/)) is a 501(c)(3) nonprofit organization partnering with rural leaders across the country to build tech economies that support scalable entrepreneurship and lead to more tech jobs in rural America.
 
-Want to collaborate on a project? Send us an email at <b>tech-team at ruralinnovation dot us</b>
+The *Mapping and Data Analytics* (MDA) team at CORI conducts provides data, analytics and visualizations to support rural participation in the tech economy through scalable entrepreneurship and tech job growth in rural America.
+
+We strive towards serving as the primary center of excellence advancing sustainable, economic opportunity and equity in rural America. We do this by providing expert spatial and statistical analysis, modernized visualization and tool development, credible technical subject matter expertise, and transparent documentation.
+
+Learn more about the MDA approach to Knowledge here:
+[Research, mapping, and data analytics](https://ruralinnovation.us/our-work/research_mapping/)

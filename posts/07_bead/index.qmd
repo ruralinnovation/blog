@@ -1,0 +1,39 @@
+---
+title: "Data equity and access for the Broadband Equity Access and Deployment (BEAD) Program"
+author:
+  - "John Hall"
+  - "Olivier Leroy"
+date: "2024-08-01"
+draft: true
+categories:
+  - access
+  - api
+  - bead
+  - broadband
+  - code
+  - FCC
+  - mapbox
+  - NBM
+  - spatial data
+image: images/whats-on-the-national-broadband-map-113023-1.png
+---
+
+A deep dive into CORI's BEAD tool...
+
+## Overview
+
+TODO: Synopsis... in this post we frame the problem, briefly explore the available public data and then share the data and applications that we have produced in order to help rural broadband providers maximize their access to this unprecedented availability of public and private investment funding.
+
+## The problem
+
+TODO: ...
+
+## The available data
+
+TODO: EDIT included content from ...
+
+{{< include proj-fcc-report/index.qmd >}}
+
+## The data that we're making available
+
+

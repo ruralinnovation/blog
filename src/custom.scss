@@ -1,0 +1,86 @@
+/*-- scss:defaults --*/
+$h2-font-size:          1.6rem !default;
+$headings-font-weight:  500 !default;
+
+/*-- scss:rules --*/
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, .3);
+}
+
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+//// Fonts
+//$font-family-serif: 'Bitter', serif;
+//$font-family-sans-serif: 'Roboto', sans-serif;
+
+///*-- scss:rules --*/
+//h1, h2, h3, h4, h5, h6 {
+//  font-family: $font-family-sans-serif;
+//}
+
+.navbar * a {
+  //font-family: $font-family-sans-serif;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+
+  &.nav-link {
+    font-variant: small-caps;
+  }
+
+  .navbar-title {
+    //font-family: $font-family-sans-serif;
+    font-weight: bold;
+  }
+
+  &:visited {
+    color: #fff !important;
+  }
+  &:hover {
+    color: #7a7a7a !important;
+    text-shadow: none;
+  }
+
+}
+
+div.quarto-title {
+  .title {
+    color: #fff !important;
+  }
+}
+
+// Override the about page styling
+div {
+
+  div.quarto-title {
+    .title {
+      color: #7a7a7a !important;
+    }
+  }
+
+  img.about-image {
+    object-fit: contain;
+
+    &.round {
+      border-radius: 0 !important;
+    }
+  }
+
+}
+
+div#quarto-content {
+
+  main#quarto-document-content {
+
+    p {
+      margin: 2.5% 7.5% 2.5% 0;
+
+      img {
+        margin: 0 3.75%;
+      }
+    }
+
+  }
+
+}

@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "!posts/07_bead/proj-fcc-report/*.qmd"
+    - "posts/07_bead/proj-fcc-report/index.qmd"
 
 website:
   title: "Mapping & Data Analytics @ CORI"
@@ -13,11 +17,13 @@ website:
         href: https://github.com/ruralinnovation
 format:
   html:
-    theme: minty
-    css: styles.scss
-    mainfont: "Bitter"
+    theme:
+      - minty
+      - src/custom.scss
+    css: assets/fonts.css
     fontcolor: "#121E22"
     linkcolor: "#00835D"
+    mainfont: "Bitter"
     grid:
       sidebar-width: 250px
       body-width: 1100px
