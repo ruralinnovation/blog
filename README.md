@@ -13,3 +13,8 @@
 4. Commit your changes and push a new remote branch (`git push -u origin YOUR_BRANCH_NAME`) to Github.
 5. Have another team member review your pull request.
 5. Merge your changes and then, to update the blog, run `quarto publish gh-pages`.
+
+
+## Communications with com's
+
+Link to G-drive: https://drive.google.com/drive/folders/1zkaHw8XEH0TPZExkmn-VOB1SITgXXPAd 
