@@ -7,12 +7,17 @@ project:
     - "posts/07_bead/proj-fcc-report/index.qmd"
 
 website:
-  title: "Mapping & Data Analytics @ CORI"
+  title: "Mapping & Data Analytics Blog @cori-risi"
   search: false
   favicon: assets/images/Logo-Mark_Black.png
   navbar:
+    logo-href: https://ruralinnovation.us/our-work/research_mapping/
+    left:
+      - href: index.qmd
+        text: Mapping & Data Analytics Blog
     right:
-      - about.qmd
+      - href: about.qmd
+        text: About
       - icon: github
         href: https://github.com/ruralinnovation
 format:

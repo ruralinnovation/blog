@@ -34,6 +34,14 @@ TODO: EDIT included content from ...
 
 {{< include proj-fcc-report/index.qmd >}}
 
-## The data that we're making available
+## Deep dive into our products
+
+[//]: # (- [Broadband Climate Risk Mitigation Tool]&#40;https://broadband-risk.ruralinnovation.us/&#41;)
+
+[//]: # (- [Interactive Rural Broadband Map]&#40;https://rural-broadband-map.ruralinnovation.us/&#41;,)
+
+### The data that we're making available
+
+[//]: # (CORI Data API BEAD endpoints)
 
 
