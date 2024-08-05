@@ -1,0 +1,34 @@
+{
+  "name": "@cori-risi/blog",
+  "version": "0.0.1",
+  "author": "Rural Innovation Strategies, Inc.",
+  "description": "Data blog for the Mapping and Data Analytics team at the Center on Rural Innovation (CORI)",
+  "license": "ISC",
+  "homepage": "https://ruralinnovation.github.io/blog/",
+  "keywords": [
+    "blog",
+    "documentation",
+    "quarto",
+    "public",
+    "publication",
+    "social",
+    "template",
+    "r"
+  ],
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^9.1.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ruralinnovation/wiki"
+  },
+  "scripts": {
+    "build": "npm run render",
+    "clean": "rm -rf _site/*",
+    "preview": "npm run render:mermaid && quarto render --output-dir _site && python -m http.server -d _site 3000",
+    "render": "quarto render --output-dir docs",
+    "render:mermaid": "mmdc -i assets/input.mmd -o assets/output.svg",
+    "test:mermaid": "mmdc -i assets/input.mmd -o assets/output.svg",
+    "mermaid": "mmdc"
+  }
+}
