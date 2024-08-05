@@ -1,0 +1,185 @@
+/*-- scss:defaults --*/
+$h2-font-size:          1.6rem !default;
+$headings-font-weight:  500 !default;
+
+/*-- scss:rules --*/
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, .3);
+}
+
+/*-- scss:defaults --*/
+
+//@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+//
+//// Fonts
+//$font-family-serif: 'Bitter', serif;
+//$font-family-sans-serif: 'Roboto', sans-serif;
+//
+///*-- scss:rules --*/
+//h1, h2, h3, h4, h5, h6 {
+//  font-family: $font-family-sans-serif;
+//}
+
+body {
+  background-color: #16343E !important;
+}
+
+nav.navbar {
+  //font-family: $font-family-sans-serif;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+
+  &.navbar-dark {
+    background-color: #16343E;
+
+    .navbar-brand {
+      min-width: 7em;
+      min-height: 3.5em;
+      background-image: url(assets/images/Full-Logo_CORI_Cream.svg);
+      background-size: calc(100% - 1em);
+      background-position: left top;
+      background-repeat: no-repeat;
+      padding-left: 0.5em;
+
+      .navbar-title {
+        display: none;
+      }
+    }
+  }
+
+  * a:visited {
+    color: #fff !important;
+  }
+  * a:hover {
+    color: #7a7a7a !important;
+    text-shadow: none;
+  }
+
+  * a.nav-link {
+    font-variant: small-caps;
+  }
+
+  * a .navbar-title {
+    //font-family: $font-family-sans-serif;
+    font-weight: bold;
+  }
+
+}
+
+div.quarto-title-banner {
+  background-color: #16343E;
+}
+
+div.quarto-title {
+  &, & .title, .title {
+    color: #fff;
+  }
+}
+
+header#title-block-header {
+  background-color: #FFF;
+  margin-bottom: 0;
+}
+
+div#listing-listing {
+  margin-top: 4em;
+}
+
+div#quarto-content {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  background-color:  #FFF;
+
+  & > * {
+    padding-top: 0;
+  }
+
+  nav#quarto-sidebar {
+    z-index: 2;
+
+    .mt-2.flex-shrink-0.align-items-center {
+      display: none;
+    }
+
+    .sidebar-menu-container {
+      padding-top: 1em;
+    }
+  }
+
+  // Override the about page styling
+  div.quarto-about-jolla {
+    margin-top: 0;
+
+    * a#github-profile-logo {
+      display: none;
+    }
+
+    img.about-image {
+      margin-bottom: -2.5em;
+      object-fit: contain;
+
+      &.round {
+        border-radius: 0 !important;
+      }
+
+    }
+
+    div.quarto-title {
+      .title {
+        color: #7a7a7a;
+      }
+    }
+
+    main#quarto-document-content {
+      margin-top: 0;
+
+      p {
+        text-align: justify;
+      }
+
+    }
+
+  }
+
+  //&.page-columns #quarto-margin-sidebar {
+  //  display: none;
+  //}
+
+  main#quarto-document-content {
+    margin-top: 0;
+
+    div.quarto-title .title, div.quarto-title .title {
+      color: #59666a;
+    }
+
+    code {
+      color: #00835D;
+    }
+
+    p {
+      margin: 2.5% 7.5% 2.5% 0;
+
+      img {
+        margin: 0 3.75%;
+      }
+    }
+
+    blockquote {
+      &, p {
+        margin: 0;
+      }
+
+    }
+
+  }
+
+  #redoc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #FFF;
+  }
+
+}
