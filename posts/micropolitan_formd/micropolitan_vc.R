@@ -64,7 +64,7 @@ DBI::dbDisconnect(con)
 
 form_d_clean <- form_d %>% 
   group_by(year, cik, entity_name, sale_date, offering_amount) %>% 
-  slice_max(amount_sold) %>% # take most recent of each amendment within a year
+  slice_max(accession_number) %>% # take most recent of each amendment within a year
   ungroup() %>% 
   filter(
     year %in% c(2022),
@@ -79,11 +79,12 @@ form_d_clean <- form_d %>%
     !grepl('Residential', industries),
     !grepl('REITS and Finance', industries),
     !grepl('Other Real Estate', industries)
-  )
+  ) %>% 
+  left_join(cbsa_pop %>% select(!cbsa_pop), by = c('year', 'geoid_co')) 
 
 # join datasets and calc VC per capita in 2022 ---------------------------------
 vc_per_cap <- form_d_clean %>% 
-  left_join(cbsa_pop %>% select(!cbsa_pop), by = c('year', 'geoid_co')) %>% 
+  # left_join(cbsa_pop %>% select(!cbsa_pop), by = c('year', 'geoid_co')) %>% 
   group_by(name_cbsa) %>% 
   summarise(
     amount_sold = sum(amount_sold, na.rm = TRUE),
@@ -99,8 +100,21 @@ vc_per_cap <- form_d_clean %>%
   arrange(desc(vc_per_capita)) %>% 
   slice_max(vc_per_capita, n = 10)
 
+vc_total <- form_d_clean %>% 
+  # left_join(cbsa_pop %>% select(!cbsa_pop), by = c('year', 'geoid_co')) %>% 
+  group_by(name_cbsa) %>% 
+  summarise(
+    amount_sold = sum(amount_sold, na.rm = TRUE)
+  ) %>% 
+  ungroup() %>% 
+  distinct() %>% 
+  arrange(desc(amount_sold)) %>% 
+  slice_max(amount_sold, n = 10)
+
 
 # Chart ------------------------------------------------------------------------
+
+## VC per Capita chart ---------------------------------------------------------
 
 fig <- vc_per_cap %>%
   ggplot2::ggplot(
@@ -162,12 +176,103 @@ fig <- vc_per_cap %>%
 Notes: Venture capital totals exclude Form D entries where the industry is flagged as coal mining, oil and gas, banking, construction, or real estate."
   )
 
-fig
+# fig
 
 
 cori.charts::save_plot(fig = fig,
                        chart_width = 9.5,
                        export_path = './posts/micropolitan_formd/images/top10_vc_micropolitans.png')
+
+
+## VC totals -------------------------------------------------------------------
+
+fig2 <- vc_total %>%
+  ggplot2::ggplot(
+    aes(
+      amount_sold,
+      # name_cbsa
+      # Make RIN communities appear in descending order
+      # based upon their population below the poverty level
+      reorder(name_cbsa, amount_sold)
+    )
+  ) +
+  # Set the bar color the the CORI "Emerald" color
+  ggplot2::geom_col(fill = cori_colors["Squash"]) +
+  # Add data labels to the bars
+  geom_text(
+    aes(
+      # You can adjust the scales function depending on the desired
+      # number format (e.g., percent, dollar, etc.)
+      label = scales::dollar(
+        amount_sold,
+        # accuracy determines what number to round to (e.g., accuracy = 0.01 will show 2 decimal places)
+        accuracy = 1,
+        scale = .000001,
+        suffix = "M"
+      )
+    ),
+    fontface = "bold",
+    # Provide spacing between the data label and the bar position
+    hjust = -.2,
+    # Data labels need to have their font family explicitly set to "Lato"
+    family = "Lato"
+  ) +
+  ggplot2::scale_x_continuous(
+    # labels determines whether tick labels are shown
+    labels = NULL,
+    # You can provide an expansion multiplier to the axis to ensure that
+    # data labels will have enough space
+    expand = expansion(mult = c(0, .25))
+  ) +
+  # Call the horizontal bar theme to pull in default CORI theming
+  theme_cori_horizontal_bars() +
+  # Override any defaults styles using the ggplot2::theme() function AFTER
+  # calling theme_cori_horizontal_bars()
+  ggplot2::theme(
+    # Set title fonts to Lato, as TT Hoves is unavailable
+    # Where possible, use TT Hoves for titles (default)
+    plot.title = element_text(family = "TT Hoves"),
+    plot.subtitle = element_text(family = "TT Hoves"),
+    # Remove x gridlines
+    panel.grid.major.x = element_blank()
+  ) +
+  # Provide Title, subtitle, etc.
+  ggplot2::labs(
+    title = "Micropolitan areas with the most venture capital funding in 2022",
+    y = NULL,
+    x = NULL,
+    caption = "Source: ACS 5-year estimates (2022), SEC Form D (2022)
+Notes: Venture capital totals exclude Form D entries where the industry is flagged as coal mining, oil and gas, banking, construction, or real estate."
+  )
+
+
+cori.charts::save_plot(fig = fig2,
+                       chart_width = 9.5,
+                       export_path = './posts/micropolitan_formd/images/top10_total_vc_micropolitans.png')
+
+
+
+# stats for blog post ----------------------------------------------------------
+
+total_micro_vc <- form_d_clean %>% 
+  group_by(name_cbsa) %>% 
+  summarise(
+    amount_sold = sum(amount_sold, na.rm = TRUE)
+  ) %>% 
+  ungroup() %>% 
+  distinct() %>% 
+  filter(amount_sold > 0) %>% 
+  mutate(top10_flag = ifelse(name_cbsa %in% vc_total$name_cbsa, 1, 0)) %>% 
+  group_by(top10_flag) %>% 
+  mutate(top10_total = sum(amount_sold, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate(
+    micro_total = sum(amount_sold, na.rm = TRUE),
+    pct_top10 = top10_total / micro_total
+  )
+
+
+# OLD ANALYSIS -----------------------------------------------------------------
 
 # googlesheets4::sheet_write(data = vc_per_cap,
 #                            ss = 'https://docs.google.com/spreadsheets/d/1NVc9gY9ZnDKqfzSjujScrcNvIc_sqwB4AAJNefSkwFQ/edit#gid=0',

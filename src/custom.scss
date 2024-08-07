@@ -25,27 +25,39 @@ body {
   background-color: #16343E !important;
 }
 
-nav.navbar {
-  //font-family: $font-family-sans-serif;
-  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+header#quarto-header {
+  background-color: #16343E;
 
-  &.navbar-dark {
-    background-color: #16343E;
+  nav.navbar {
+    //font-family: $font-family-sans-serif;
+    text-shadow: -1px -1px 0 rgba(0,0,0,.3);
 
-    .navbar-brand {
-      min-width: 7em;
-      min-height: 3.5em;
-      background-image: url(assets/images/Full-Logo_CORI_Cream.svg);
-      background-size: calc(100% - 1em);
-      background-position: left top;
-      background-repeat: no-repeat;
-      padding-left: 0.5em;
+    &[data-bs-theme="dark"] {
+      background-color: #16343E;
 
-      .navbar-title {
-        display: none;
+      .navbar-brand {
+        min-width: 7em;
+        min-height: 3.5em;
+        background-image: url(assets/images/Full-Logo_CORI_Cream.svg);
+        background-size: calc(100% - 1em);
+        background-position: left top;
+        background-repeat: no-repeat;
+        padding-left: 0.5em;
+
+        .navbar-title {
+          display: none;
+        }
+      }
+
+      .nav-link, .nav-link.active {
+        color: #FFF;
+
+        .menu-text {
+          color: #FFF;
+        }
       }
     }
-  }
+}
 
   * a:visited {
     color: #fff !important;

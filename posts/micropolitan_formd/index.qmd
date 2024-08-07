@@ -1,10 +1,10 @@
 ---
 title: "The top 10 micropolitan areas for raising venture capital"
-author: 
-  - "Brittany Kainen"
+author: "Brittany Kainen"
 date: "2024-07-03"
 categories: [SEC, Form D, Quarto, Venture Capital, Rural]
 image: images/top10_vc_micropolitans.png
+lightbox: true
 ---
 
 Venture capital funding plays a pivotal role in bolstering a region's economy by catalyzing innovation, fostering job creation, and attracting talent. 
@@ -13,13 +13,28 @@ Venture capital investment injects vital funding into promising businesses with 
 
 Though rural areas have traditionally been overlooked by investors, many rural entrepreneurs have managed to access capital that is crucial to transforming their budding ideas into thriving businesses.
 
-To explore the venture capital landscape in rural America, we can use the SEC's Form D to identify the amount of funding received by private businesses in micropolitan areas.  A micropolitan area, as defined by the U.S. Office of Management and Budget, is a region centered around a small urban cluster with a population between 10,000 and 50,000 people. These areas are smaller than metropolitan areas but still exhibit economic and social connections with nearby population centers, making micropolitans an ideal geography for observing venture capital dynamics in rural economies.    
+To explore the venture capital landscape in rural America, we can use the SEC's Form D to identify the amount of funding received by private businesses in micropolitan areas.  A micropolitan area, as defined by the U.S. Office of Management and Budget, is a region centered around a small urban cluster with a population between 10,000 and 50,000 people. These areas are smaller than metropolitan areas but still exhibit economic and social connections with nearby population centers, making micropolitans an ideal geography for observing venture capital dynamics in rural economies.
 
-Here are the micropolitan areas that raised the most in venture capital funding per capita in 2022:
 
-<div style="display:flex; flex-wrap: wrap;">
-  <img style="width: 80%;" src="images/top10_vc_micropolitans.png" alt="Micro VC chart">
-  
+::: {layout-ncol=2 layout-valign="top"}
+
+
+Here are the micropolitan areas that raised the most venture capital in 2022:
+
+And here are the micropolitan areas that raised the most in venture capital funding per capita in 2022:
+
+![Micro VC totals (click chart to enlarge)](images/top10_total_vc_micropolitans.png){.lightbox}
+
+![Micro VC chart (click chart to enlarge)](images/top10_vc_micropolitans.png){.lightbox}
+
+
+:::
+
+
+* Sheridan, Heber, and Jackson achieved these outcomes through an abundance of venture capital activity, while the others are driven by a couple companies with very large deals in 2022.
+* Of the 81 micropolitans that raised venture capital through Regulation D in 2022, the 10 that raised the most represent 84% of the $1.4 billion in funding that went to micropolitan areas.  
+* The 10 micropolitans with the most funding per capita varied widely by population size.  Grants, New Mexico, had the smallest population (11,620), while the population of Bozeman, Montana, (109,207) was much larger than the others on this list. Heber, Utah was the second-largest micropolitan area in the top 10 (68,075).
+
 Each of these micropolitan areas demonstrates that rural communities are ripe with entrepreneurial spirit and offer investors an abundance of opportunities.  
 
 If you’d like to dig deeper on the power of direct investment in rural startups, check out our seed fund, the [CORI Innovation Fund](https://www.corifund.com/), which has a growing portfolio of rural tech startups with high-growth potential. Or you can [connect](https://ruralinnovation.us/about/contact-us/) with our team directly to learn more!
