@@ -5,7 +5,7 @@
 1. [Download Quarto](https://quarto.org/docs/download/)
 2. Clone this repository
 
-## Creating a new blog post
+## Blog post workflow
 
 1. Create a new branch (`git branch -d YOUR_BRANCH_NAME`) and add a new folder in the `posts` directory.
 2. Add an `index.qmd` file (where your blog post will go) and a `thumbnail.png` file (an image that will appear with the post listing)
