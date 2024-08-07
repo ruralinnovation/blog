@@ -1,16 +1,61 @@
 ---
-title: "About"
+title: ""
 image: assets/images/Full-Logo_CORI_Black.svg
 about:
   template: jolla
   links:
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/ruralinnovation/
 
 ---
 
-The Mapping and Data Analytics (MDA) team at the Center on Rural Innovation (CORI)
-conduct analysis and develop software to support rural participation in the modern economy.
+<a id="github-profile-logo" href="https://ruralinnovation.us/" target="_blank"><img src="assets/images/Full-Logo_CORI_Cream.svg" alt="The Center on Rural Innovation" width="12%" align="left" /></a>
+<br />
 
-Want to collaborate on a project? Send us an email at <b>tech-team at ruralinnovation dot us</b>
+***
+
+The [Center on Rural Innovation (CORI)](https://ruralinnovation.us/){.external target="_blank"} is a 501(c)(3) nonprofit organization that partners with rural leaders across industries, across sectors and across the country to build tech economies that support scalable entrepreneurship and lead to more tech jobs in rural America.
+
+These repositories are maintained by the [*Mapping and Data Analytics* (MDA)](https://ruralinnovation.us/our-work/research_mapping/){.external target="_blank"} team at CORI/RISI. Our team provides data, analytics and visualizations to support rural participation in the digital economy through scalable entrepreneurship and tech job growth in rural America. We aim to provide a better understanding of the forces and trends affecting rural America as we help communities chart a path to opportunity and prosperity through the tech economy.
+
+We strive towards serving as the primary center of excellence advancing sustainable, economic opportunity and equity in rural America. We do this by providing expert spatial and statistical analysis, modernized visualization and tool development, credible technical subject matter expertise, and transparent documentation.
+
+Follow our work by reading [our blog](https://ruralinnovation.github.io/blog/){.external target="_blank"} and reviewing the following list of past projects:
+
+
+::: {layout-ncol=2 layout-valign="top"}
+
+
+**Broadband**<br />
+- [Broadband Equity Access and Deployment (BEAD) tool](https://rural-broadband-map.ruralinnovation.us/){.external target="_blank"}<br />
+- [Climate Risk Mapping](https://broadband-risk.ruralinnovation.us/){.external target="_blank"}
+
+**Research**<br />
+- [Rural Aperture Project](https://ruralinnovation.us/resources/reports/the-rural-aperture-project/){.external target="_blank"} (RWJF)<br />
+  - [Defining rural America](https://ruralinnovation.us/blog/defining-rural-america/){.external target="_blank"}<br />
+  - Who lives in rural America? [Part 1](https://ruralinnovation.us/blog/who-lives-in-rural-america-part-i/){.external target="_blank"} [Part 2](https://ruralinnovation.us/blog/who-lives-in-rural-america-part-2/){.external target="_blank"}<br />
+  - [The equity of economic opportunity in rural America](https://ruralinnovation.us/blog/equity-economic-opportunity-rural-america/){.external target="_blank"}
+
+**Rural Innovation Network**<br />
+- [Ascendium reports and data viz](https://ruralinnovation.us/resources/reports/report-rural-americas-tech-employment-landscape/){.external target="_blank"}<br />
+- [Economic Development (ERC) tool](https://erc-tool.ruralinnovation.us/){.external target="_blank"}
+
+**Rural Innovation Initiative**<br />
+- Tech Economy Diagnostic (TED)  <br />
+  (i.e., community assessment → [ERC tool](https://erc-tool.ruralinnovation.us/){.external target="_blank"})
+
+**Tech Entrepreneurship** <br />
+- [Feasibility studies](https://docs.google.com/document/d/1XcIts0l7weC1Kccw-hDSAQ1pj9FUyuaswAOZQP26UJM/edit#heading=h.ldyanhes5kq4){.external target="_blank"}<br />
+- Tech Talent Tracker → [ERC tool](https://erc-tool.ruralinnovation.us/){.external target="_blank"}<br />
+
+**Additional work**<br />
+- Economic Development Administration (EDA) reports<br />
+- Economic impact analysis<br />
+- [Multistate Workforce Analysis](https://drive.google.com/drive/folders/1hb6t9j9FDCxTCKikHqRKzuVPjUI3NCaQ){.external target="_blank"} - [example](https://docs.google.com/document/d/1-ikRrZv-zxDaKkM9lScsY5BMSZvTV7Fn/edit){.external target="_blank"}<br />
+- [Who Is Missing Analysis](https://drive.google.com/file/d/115CbNaxueucskWevb3BmWqz0Oe4gfrX2){.external target="_blank"}
+
+:::
+
+Learn more about the MDA approach to Knowledge here:
+[Research, mapping, and data analytics](https://ruralinnovation.us/our-work/research_mapping/){.external target="_blank"}
