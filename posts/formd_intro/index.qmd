@@ -1,7 +1,6 @@
 ---
 title: "Using SEC Form D to estimate venture capital"
-author: 
-  - "Brittany Kainen"
+author: "Brittany Kainen"
 date: "2024-07-01"
 categories: [SEC, Form D, Quarto, Venture Capital]
 image: thumbnail.png
@@ -11,7 +10,8 @@ The ability of private companies to raise capital serves as a crucial indicator 
 
 The Securities Act of 1933 established the laws governing the sale of securities, including registration with the SEC and mandatory reporting of information that may be pertinent to the public’s investment decisions. Private companies wishing to raise capital from accredited investors may still do so under the exemption, “Regulation D.” 
 
-#### **How Form D works**
+
+### How Form D works
 
 Regulation D allows private companies to conduct fundraising rounds without registering with the SEC or regularly submitting information that is required for publicly traded companies. This exemption is the primary mechanism for early-stage ventures to access funding. 
 
@@ -19,7 +19,8 @@ When a company raises capital under Regulation D, they must file a Form D, which
 
 However, Form D data is often messy and riddled with human errors. Here are some tips on accessing and cleaning Form D data.
 
-#### **Cleaning up Form D data**
+
+### Cleaning up Form D data
 
 Data going back to Q1 2008 can be downloaded directly from the [SEC website](https://www.sec.gov/about/dera_form-d).  For a more streamlined process, we recommend accessing data in R using the dform package developed by Matt Rogers (download package from [matthewjrogers/dform](https://github.com/matthewjrogers/dform)).  This allows users to load data by quarter from 2014 to present.  
 
@@ -35,13 +36,13 @@ Because "TOTALAMOUNTSOLD" is cumulative for a fundraising round, simply summing 
 
 Finally, remove investment funds.  Investment vehicles raising capital on the private market are also required to file a Form D.  To distinguish these entities from startups or companies raising operational funds, we recommend separating them from the filings made by traditional businesses.  We identify filings made by investment vehicles in the following ways:  
 
-1. The industry is reported as "Pooled Investment Fund."
+  1. The industry is reported as "Pooled Investment Fund."
 
-2. The field "ISPOOLEDINVESTMENTFUNDTYPE" is flagged as "TRUE."  This means the purpose of this fundraising round was for a pooled investment fund.  
+  2. The field "ISPOOLEDINVESTMENTFUNDTYPE" is flagged as "TRUE."  This means the purpose of this fundraising round was for a pooled investment fund.
 
-3. The entity name contains the word "FUND."  This indicates that the entity is actually an investment fund.  
+  3. The entity name contains the word "FUND."  This indicates that the entity is actually an investment fund.
 
-4. The entity name contains the word "HOLDING."  This indicates that the entity is actually a holding company.  
+  4. The entity name contains the word "HOLDING."  This indicates that the entity is actually a holding company.
 
 This brings the final estimate for the total amount of venture funding raised by U.S. companies in 2022 down to about $233B.  
 

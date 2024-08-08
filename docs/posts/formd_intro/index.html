@@ -143,8 +143,15 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-form-d-works" id="toc-how-form-d-works" class="nav-link active" data-scroll-target="#how-form-d-works">How Form D works</a></li>
+  <li><a href="#cleaning-up-form-d-data" id="toc-cleaning-up-form-d-data" class="nav-link" data-scroll-target="#cleaning-up-form-d-data">Cleaning up Form D data</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -155,14 +162,14 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 <p>The ability of private companies to raise capital serves as a crucial indicator of entrepreneurial activity. The Security and Exchange Commission’s Form D is a publicly available dataset published quarterly that allows researchers to explore the landscape of venture capital investment.</p>
 <p>The Securities Act of 1933 established the laws governing the sale of securities, including registration with the SEC and mandatory reporting of information that may be pertinent to the public’s investment decisions. Private companies wishing to raise capital from accredited investors may still do so under the exemption, “Regulation D.”</p>
-<section id="how-form-d-works" class="level4">
-<h4 class="anchored" data-anchor-id="how-form-d-works"><strong>How Form D works</strong></h4>
+<section id="how-form-d-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-form-d-works">How Form D works</h3>
 <p>Regulation D allows private companies to conduct fundraising rounds without registering with the SEC or regularly submitting information that is required for publicly traded companies. This exemption is the primary mechanism for early-stage ventures to access funding.</p>
 <p>When a company raises capital under Regulation D, they must file a Form D, which includes basic information about the company and the fundraising round. This data allows analysts to better understand who is raising venture capital and how much is invested.</p>
 <p>However, Form D data is often messy and riddled with human errors. Here are some tips on accessing and cleaning Form D data.</p>
 </section>
-<section id="cleaning-up-form-d-data" class="level4">
-<h4 class="anchored" data-anchor-id="cleaning-up-form-d-data"><strong>Cleaning up Form D data</strong></h4>
+<section id="cleaning-up-form-d-data" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-up-form-d-data">Cleaning up Form D data</h3>
 <p>Data going back to Q1 2008 can be downloaded directly from the <a href="https://www.sec.gov/about/dera_form-d">SEC website</a>. For a more streamlined process, we recommend accessing data in R using the dform package developed by Matt Rogers (download package from <a href="https://github.com/matthewjrogers/dform">matthewjrogers/dform</a>). This allows users to load data by quarter from 2014 to present.</p>
 <p>If you download the Form D files directly through the SEC and sum the “TOTALAMOUNTSOLD” column the total amount of capital raised through Regulation D in 2022 would be approximately $10.4 trillion, which dramatically overestimates the actual amount of venture capital raised that year. <a href="https://www.ey.com/en_us/insights/growth/q4-2022-venture-capital-investment-trends">Ernst &amp; Young</a> reported total U.S. venture capital raised in 2022 at $209.4 billion, <a href="https://www.statista.com/statistics/277501/venture-capital-amount-invested-in-the-united-states-since-1995/#:~:text=Value%20of%20venture%20capital%20investment%20in%20the%20U.S.%202006%2D2022&amp;text=Although%20the%20companies%20lack%20the,nearly%20241%20billion%20U.S.%20dollars.">Statista</a> places it at $241 billion, and <a href="9https://dealroom.co/guides/usa">Dealroom</a> at $235 billion.</p>
 <p>This discrepancy is partly due to duplicate entries. The dform package takes a first pass at removing duplicates, reducing the total amount raised in 2022 to $4.9 trilion. This figure still overestimates the amount of venture capital raised by U.S. businesses in 2022. Therefore, once the data is accessed through dform, additional cleaning steps are necessary before the data can provide a realistic picture of the venture landscape.</p>

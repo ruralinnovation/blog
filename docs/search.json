@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Recent posts",
     "section": "",
-    "text": "The top 10 micropolitan areas for raising venture capital\n\n\n\n\n\n\n\n\n\n\n\nJul 3, 2024\n\n\nBrittany Kainen\n\n\n\n\n\n\n\n\n\n\n\n\nUsing SEC Form D to estimate venture capital\n\n\n\n\n\n\n\n\n\n\n\nJul 1, 2024\n\n\nBrittany Kainen\n\n\n\n\n\n\n\n\n\n\n\n\nMDA’s URISA-2023 presentation\n\n\n\n\n\n\n\n\n\n\n\nJun 20, 2024\n\n\nOlivier Leroy, Drew Rosebush\n\n\n\n\n\n\n\n\n\n\n\n\n6 tips for mapping rural data\n\n\n\n\n\n\n\n\n\n\n\nMay 24, 2024\n\n\nCamden Blatchly\n\n\n\n\n\n\n\n\n\n\n\n\nAwesome jq and GeoJSON\n\n\n\n\n\n\n\n\n\n\n\nMar 10, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\nNo matching items"
+    "text": "The top 10 micropolitan areas for raising venture capital\n\n\n\n\n\n\n\n\n\n\n\nJul 3, 2024\n\n\nBrittany Kainen\n\n\n\n\n\n\n\n\n\n\n\n\nUsing SEC Form D to estimate venture capital\n\n\n\n\n\n\n\n\n\n\n\nJul 1, 2024\n\n\nBrittany Kainen\n\n\n\n\n\n\n\n\n\n\n\n\nMDA’s URISA-2023 presentation\n\n\n\n\n\n\n\n\n\n\n\nJun 20, 2024\n\n\nOlivier Leroy, Drew Rosebush\n\n\n\n\n\n\n\n\n\n\n\n\nSix tips for mapping rural data\n\n\n\n\n\n\n\n\n\n\n\nMay 24, 2024\n\n\nCamden Blatchly\n\n\n\n\n\n\n\n\n\n\n\n\nAwesome jq and GeoJSON\n\n\n\n\n\n\n\n\n\n\n\nMar 10, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -58,14 +58,14 @@
   {
     "objectID": "posts/mapping_rural_tips/index.html",
     "href": "posts/mapping_rural_tips/index.html",
-    "title": "6 tips for mapping rural data",
+    "title": "Six tips for mapping rural data",
     "section": "",
-    "text": "Mapping rural data is hard! Between sparse populations, inaccurate data, and the challenge of defining what even counts as rural, creating accurate and meaningful maps can be a minefield. In this blog post, I’ll cover six tips for mapping rural data that will prepare you to confidently tackle your next rural-centric mapping project."
+    "text": "Mapping rural data is hard! Between sparse populations, inaccurate data, and the challenge of defining what even counts as rural, creating accurate and meaningful maps can be a minefield. In this blog post, I’ll cover six tips for mapping rural data that will prepare you to confidently tackle your next rural-centric mapping project"
   },
   {
     "objectID": "posts/mapping_rural_tips/index.html#footnotes",
     "href": "posts/mapping_rural_tips/index.html#footnotes",
-    "title": "6 tips for mapping rural data",
+    "title": "Six tips for mapping rural data",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nSee Openshaw, 1983: https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf↩︎"
   },
