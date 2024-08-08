@@ -6,8 +6,8 @@ categories: [cli, code, geojson, json, spatial data]
 image: thumbnail.png
 ---
 
-If you are manipulating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) features/objects and want a quick CLI tool to filter and slice them, you should give `jq` a try! 
-Since there are not many tutorials that exist on using `jq` to manage objects in the `GeoJSON` family, we hope that these few tricks will help you on your leaning journey.  
+If you are manipulating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) eatures/objects and want a quick CLI tool to filter and slice them, you should give jq a try! 
+Since there are not many tutorials that exist on using jq to manage objects in the GeoJSON family, we hope that these few tricks will help you on your learning journey.
 
 <!-- You can find plenty of great guides online, but the [documentation](https://jqlang.github.io/jq/manual/) and the [playground](https://jqplay.org/) are always a good start. -->
 
@@ -17,11 +17,11 @@ Since there are not many tutorials that exist on using `jq` to manage objects in
 We are using a UNIX shell to run commands (zsh). If you are using powershell, you will need to adapt the following examples accordingly.
 :::
 
-In these examples, we are using a GeoJSON file of Vermont Census Blocks with attributes related to our work on broadband data. While it is not a deeply nested JSON, it is perfect to illustrate some common use cases.
+In these examples, we are using a GeoJSON file of Vermont census blocks with attributes related to our work on broadband data. While it is not a deeply nested JSON, it is perfect to illustrate some common use cases.
 
-A quick check lets us know that it is 94 MB. Not "that" big but still decent.
+A quick check lets us know that it is 94 MB. Not “that” big but still decent.
 
-First, lets see how many features it has. Here's how we can approximate that: 
+First, let's see how many features it has. Here’s how we can approximate that:
 
 <!--
 TODO: should we consider using a geojson from just census?
@@ -32,7 +32,7 @@ wc -l data/vt-bb.geojson
 # 24618 data/vt-bb.geojson
 ```
 
-This is a decent estimate, but we are counting some rows at the top and bottom of the file that are not features (try `head -n 5` and `tail` on it if you are curious).
+This is a decent estimate, but we are counting some rows at the top and bottom of the file that are not features (try head -n 5 and tail on it if you are curious).
 
 We can also use `jq`:
 
@@ -41,7 +41,7 @@ jq '.features | length' data/vt-bb.geojson
 # 24611
 ```
 
-This is the correct number of blocks! How did that magic work? Let's decompose our one-liner:
+This is the correct number of blocks! How did that magic work? Let’s decompose our one-liner:
 
 - `jq` here we are calling jq like any other CLI tool
 

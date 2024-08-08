@@ -196,7 +196,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>If you are manipulating a lot of <a href="https://en.wikipedia.org/wiki/GeoJSON"><code>GeoJSON</code></a> features/objects and want a quick CLI tool to filter and slice them, you should give <code>jq</code> a try! Since there are not many tutorials that exist on using <code>jq</code> to manage objects in the <code>GeoJSON</code> family, we hope that these few tricks will help you on your leaning journey.</p>
+<p>If you are manipulating a lot of <a href="https://en.wikipedia.org/wiki/GeoJSON"><code>GeoJSON</code></a> eatures/objects and want a quick CLI tool to filter and slice them, you should give jq a try! Since there are not many tutorials that exist on using jq to manage objects in the GeoJSON family, we hope that these few tricks will help you on your learning journey.</p>
 <!-- You can find plenty of great guides online, but the [documentation](https://jqlang.github.io/jq/manual/) and the [playground](https://jqplay.org/) are always a good start. -->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -211,15 +211,15 @@ Quick disclaimer:
 <p>We are using a UNIX shell to run commands (zsh). If you are using powershell, you will need to adapt the following examples accordingly.</p>
 </div>
 </div>
-<p>In these examples, we are using a GeoJSON file of Vermont Census Blocks with attributes related to our work on broadband data. While it is not a deeply nested JSON, it is perfect to illustrate some common use cases.</p>
+<p>In these examples, we are using a GeoJSON file of Vermont census blocks with attributes related to our work on broadband data. While it is not a deeply nested JSON, it is perfect to illustrate some common use cases.</p>
 <p>A quick check lets us know that it is 94 MB. Not “that” big but still decent.</p>
-<p>First, lets see how many features it has. Here’s how we can approximate that:</p>
+<p>First, let’s see how many features it has. Here’s how we can approximate that:</p>
 <!--
 TODO: should we consider using a geojson from just census?
 -->
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> data/vt-bb.geojson</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 24618 data/vt-bb.geojson</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This is a decent estimate, but we are counting some rows at the top and bottom of the file that are not features (try <code>head -n 5</code> and <code>tail</code> on it if you are curious).</p>
+<p>This is a decent estimate, but we are counting some rows at the top and bottom of the file that are not features (try head -n 5 and tail on it if you are curious).</p>
 <p>We can also use <code>jq</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jq</span> <span class="st">'.features | length'</span> data/vt-bb.geojson</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 24611</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
