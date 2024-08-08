@@ -50,17 +50,24 @@ header#quarto-header {
       }
 
       .nav-link, .nav-link.active {
-        color: #FFF;
 
-        .menu-text {
+        &:hover {
           color: #FFF;
+        }
+
+        .menu-text, i {
+          color: #FBF8E9;
+
+          &:hover {
+            color: #FFF;
+          }
         }
       }
     }
 }
 
   * a:visited {
-    color: #fff !important;
+    color: #FFF !important;
   }
   * a:hover {
     color: #7a7a7a !important;
