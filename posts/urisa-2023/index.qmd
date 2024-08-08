@@ -4,21 +4,22 @@ author:
   - "Olivier Leroy"
   - "Drew Rosebush"
 date: "2024-06-20"
-categories: [FCC, Quarto, URISA, presentation]
+categories: [FCC, Quarto, URISA, presentation, broadband]
 image: thumbnail.png
 ---
 
-URISA or The **U**rban and **R**egional **I**nformation **S**ystems **A**ssociation is the main association for professionals in the GIS (Geographic information System) and geospatial space. 
+The Urban and Regional Information Systems Association — better known as URISA — is the main association for professionals in the GIS and geospatial space.
 
-We were fortunate enough to be selected to present a portion of our work on broadband infrastructure at the main URISA conference [GIS-Pro-2023, Columbus Ohio](https://gispro2023.sched.com/). 
 
-The title of our presentation was **"Rural areas are overrepresented in unserved areas and underestimated in statistics"** and we utilized [FCC NBM data](https://broadbandmap.fcc.gov/home) to demonstrate several points:
+We were fortunate enough to be selected to present a portion of our work on broadband infrastructure at URISA’s annual conference [GIS-Pro-2023](https://gispro2023.sched.com/) last fall in Columbus, Ohio.
 
-- The  new dataset (NBM) represents an improvement over the previous one (derived from F477).
+Our presentation, “Rural areas are overrepresented in unserved areas and underestimated in statistics,” utilized [FCC NBM data](https://broadbandmap.fcc.gov/home) to demonstrate several points:
 
-- Despite the narrowing gap between rural and non-rural areas, significant disparities still exist.
+- The new dataset (NBM) represents an improvement over the previous one (derived from F477).
 
-- The current BEAD definition of an "unserved area" is less suitable for rural areas than for urban areas.
+- Despite the narrowing gap between rural and nonrural areas, significant disparities still exist.
+
+- The current BEAD definition of an “unserved area” is less suitable for rural areas than for urban areas.
 
 
 You can dig more into our presentation [HERE](https://ruralinnovation.github.io/conf_URISA_2023/#/title-slide)!
