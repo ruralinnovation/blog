@@ -1,9 +1,10 @@
-.DS_Store
-.idea
+*.DS_Store
+*.idea
+/.obsidian/
 /.quarto/
+/data/
 /_freeze/
 /_site/
-/data/
-/docs/
-/node_modules
+#docs
+node_modules
 .Rproj.user
