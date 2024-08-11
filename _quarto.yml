@@ -2,9 +2,7 @@ project:
   type: website
   output-dir: docs
   render:
-    - "*.qmd"
-    - "!posts/07_bead/proj-fcc-report/*.qmd"
-    - "posts/07_bead/proj-fcc-report/index.qmd"
+    - "!posts/06_bead/proj-fcc-report/about.qmd"
 
 website:
   title: "Mapping & Data Analytics Blog @cori-risi"

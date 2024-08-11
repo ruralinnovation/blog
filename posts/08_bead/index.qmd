@@ -1,0 +1,21 @@
+---
+title: "Data equity and access for the Broadband Equity Access and Deployment (BEAD) Program"
+author:
+  - "John Hall"
+  - "Olivier Leroy"
+date: "2024-08-01"
+draft: true
+categories:
+  - access
+  - api
+  - bead
+  - broadband
+  - code
+  - FCC
+  - mapbox
+  - NBM
+  - spatial data
+image: images/whats-on-the-national-broadband-map-113023-1.png
+---
+
+
