@@ -1,0 +1,8 @@
+---
+title: "Fast analytics on FCC (big) dataset"
+author: "Olivier Leroy"
+date: "2024-08-16"
+categories: [cli, code, duckDB, broadband]
+image: thumbnail.png
+---
+
