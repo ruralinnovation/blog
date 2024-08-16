@@ -1,10 +1,18 @@
 ---
 title: "Recent posts"
 listing:
-  contents: posts
+  contents:
+  - posts
+  - path: https://ruralinnovation.github.io/cori.data.fcc/
+    image: assets/images/Full-Logo_CORI_Black.svg
+    title: "CORI FCC package"
+    author: Olivier Leroy
+    description: "Amazing cori package"
+    date: "2024-08-16"
+    categories: [broadband]
   sort: "date desc"
   type: default
-  categories: false
+  categories: true
   sort-ui: false
   filter-ui: false
 page-layout: full
