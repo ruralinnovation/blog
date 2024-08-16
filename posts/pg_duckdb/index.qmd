@@ -6,9 +6,7 @@ categories: [cli, code, postgresql, duckDB]
 image: DuckDB_Postgre_SQL_Logo.png
 ---
 
-
-
-They are a lot of talks (righfully) on the use of [Apache Parquet](https://parquet.apache.org/), [Apache Arrow](https://arrow.apache.org/) and [DuckDB](https://duckdb.org/). 
+They are a lot of talks (righfully) on the use of [Apache Parquet](https://parquet.apache.org/), [Apache Arrow](https://arrow.apache.org/) and [DuckDB](https://duckdb.org/). Let's see an example on how they can be used to convert a table in a PostgresSQL database to a parquet file.
 
 <!-- maybe the first part is not needed
 
@@ -22,14 +20,11 @@ They are a lot of talks (righfully) on the use of [Apache Parquet](https://parqu
 
 Those three open source technologies and the amount of ressources that a personnal laptop has now have lowered the need of using a classic RDBMS for out of memory tasks (and in some cases maybe the need of using a distributed computing framework like Spark) for data science works. 
 
-Here we will sho you how to convert a table in postgreSQL (in short PG) into a parquet Hive partitioned data set that you can use duckDB and dplyr verbs on it.
-
-TODO: tldr of every steps
-
 ## Libraries and data (optional) needed: 
 
 ```{r}
 #| label: loading libraries 
+#| eval: false 
 library(duckdb)
 library(dplyr, warn.conflicts = FALSE)
 library(dbplyr, warn.conflicts = FALSE)
@@ -72,16 +67,16 @@ Well the magic is a 4 steps process:
 This will be wrapped in one function:
 
 ```{r}
-#| eval: true 
+#| eval: false 
 #| label: one simple function 
-
 # yes I am terrible at naming
 from_elephant_to_duck <- function(table_name, path_for_parquet, part1, part2) {
   # 1. Connect to duckDB
-  con <- DBI::dbConnect(duckdb(), dbdir = "dec23.canard")
+  con <- DBI::dbConnect(duckdb())
+  DBI::dbExecute(con,
+                 sprintf("SET temp_directory ='%s';", tempdir()))
   # cleaning up after the function
   on.exit(DBI::dbDisconnect(con), add = TRUE)
-  on.exit(file.remove("dec23.canard"), add = TRUE)
   
   # 2. install and load PG extension
   DBI::dbExecute(con, "INSTALL postgres")
@@ -112,14 +107,13 @@ from_elephant_to_duck <- function(table_name, path_for_parquet, part1, part2) {
 ```
 
 Deciding how to partition a parquet is a both a data and businness decisions. 
-Here `state_abbr` and `technology` are good tradeoff in having good overall size of parquets and fast access to reguraly needed data.
+Here `state_abbr` and `technology` are good tradeoff by having good overall size of parquets file and fast access to reguraly needed data.
 
-## Lets do it and do some quick comparisons!
+## Let's do it and do some quick comparisons!
 
 ```{r}
 #| eval: false 
-#| label: one simple function
-
+#| label: calling the function
 start <- Sys.time()
 from_elephant_to_duck("staging.dec23", "dec23", "state_abbr", "technology")
 end <- Sys.time()
@@ -140,9 +134,9 @@ du -sh dec23/
 Finaly, just for the pleasure let's run some quick query:
 
 ```{r}
-
+#| eval: false
 start <- Sys.time()
-con <- DBI::dbConnect(duckdb::duckdb(), shutdown = TRUE, dbdir = "fcc.canard")
+con <- DBI::dbConnect(duckdb::duckdb(), shutdown = TRUE, dbdir = tempdir())
 
 reading_string <-
   sprintf("read_parquet('%s/*/*/*.parquet', hive_partitioning = true)",
