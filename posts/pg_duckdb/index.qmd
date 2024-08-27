@@ -8,7 +8,7 @@ categories: [cli, code, postgresql, duckDB, broadband]
 image: DuckDB_Postgre_SQL_Logo.png
 ---
 
-They are a lot of talks (righfully) on the use of [Apache Parquet](https://parquet.apache.org/), [Apache Arrow](https://arrow.apache.org/) and [DuckDB](https://duckdb.org/). Let's see an example on how they can be used to convert a table in a PostgresSQL database to a parquet file.
+There are a lot of talks (ightfully) on the use of [Apache Parquet](https://parquet.apache.org/), [Apache Arrow](https://arrow.apache.org/) and [DuckDB](https://duckdb.org/). Let's see an example on how they can be used to convert a table in a PostgresSQL (PG) database to a parquet file.
 
 <!-- maybe the first part is not needed
 
@@ -20,7 +20,7 @@ They are a lot of talks (righfully) on the use of [Apache Parquet](https://parqu
 
  --> 
 
-Those three open source technologies and the amount of ressources that a personnal laptop has now have lowered the need of using a classic RDBMS for out of memory tasks (and in some cases maybe the need of using a distributed computing framework like Spark) for data science works. 
+Those three open source technologies and the amount of resources that a personal laptop has now have lowered the need of using a classic RDBMS for out of memory tasks (and in some cases maybe the need of using a distributed computing framework like Spark) for data science works. 
 
 ## Libraries and data (optional) needed: 
 
@@ -32,13 +32,13 @@ library(dplyr, warn.conflicts = FALSE)
 library(dbplyr, warn.conflicts = FALSE)
 ```
 
-We will use FCC NBM raw data with December 2023's release. You can learn more about on FCC [website](https://broadbandmap.fcc.gov/data-download).  
+We will use FCC NBM raw data with December 2023's release. You can learn more about it on the FCC [website](https://broadbandmap.fcc.gov/data-download).  
 
-The table we will be converting has a size of 102 GB (without indexes), has 888 176 676 rows and 12 columns and it is the results of importing around 440 CSVs.   
+The table we will be converting has a size of 102 GB (without indexes), has 888 176 676 rows and 12 columns and it is the result of importing around 440 CSVs.   
 
-## Geting your cerdentials
+## Getting your credentials
 
-The first step to connect to PG is geting your credentials. We are assumming here that you have a `.pgpass` file located in you home directory (`~/.pgpass`).
+The first step to connect to PG is getting your credentials. We are assuming here that you have a `.pgpass` file located in you home directory (`~/.pgpass`).
 
 The code below will assume that you have this [~/.pgpass](https://www.postgresql.org/docs/current/libpq-pgpass.html) set and that it contains one line. 
 
@@ -84,7 +84,7 @@ from_elephant_to_duck <- function(table_name, path_for_parquet, part1, part2) {
   DBI::dbExecute(con, "INSTALL postgres")
   DBI::dbExecute(con, "LOAD postgres")
 
-  # 3. Connect, "attach" tou your PG server
+  # 3. Connect, "attach" to your PG server
   attach_string <- sprintf(
     "ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)",
     cred["db"],
@@ -108,8 +108,8 @@ from_elephant_to_duck <- function(table_name, path_for_parquet, part1, part2) {
 }
 ```
 
-Deciding how to partition a parquet is a both a data and businness decisions. 
-Here `state_abbr` and `technology` are good tradeoff by having good overall size of parquets file and fast access to reguraly needed data.
+Deciding how to partition a parquet is both a data and business decision. 
+Here `state_abbr` and `technology` are a good tradeoff by having good overall size of parquets file and fast access to regularly needed data.
 
 ## Let's do it and do some quick comparisons!
 
@@ -125,7 +125,7 @@ end - start
 
 On a relatively recent Macbook with a wifi internet speed connection (probably the limiting factor here) it took a bit less than an hour to run `from_elephant_to_duck`.
 
-We can also compare our 102 GB to the size of parquet (ofc. PG offer additional perks!):
+We can also compare our 102 GB to the size of parquet files (ofc. PG offer additional perks!):
 
 ```{bash}
 #| eval: false 
@@ -133,7 +133,7 @@ du -sh dec23/
 # 14 G
 ```
 
-Finaly, just for the pleasure let's run some quick query:
+Finally, just for the pleasure let's run some quick query:
 
 ```{r}
 #| eval: false
@@ -175,4 +175,4 @@ DBI::dbDisconnect(con)
 file.remove("fcc.canard")
 ```
 
-Impresive isn't it! We will probably dig a bit deeper on those new technologies in more blog post! 
+Impressive isn't it! We will probably dig a bit deeper on those new technologies in more blog posts! 
