@@ -4,12 +4,11 @@ author: "Olivier Leroy"
 date: "2024-07-14"
 categories: [cli, code, postgresql, duckDB]
 image: thumbnail.png
-draft: true
 ---
 
 
 
-They are a lot of talks (righfully) on the use of [Apache Parquet](https://parquet.apache.org/), [Apache Arrow](https://arrow.apache.org/) and [DuckDB](https://duckdb.org/). 
+They are a lot of talks (rightfully) on the use of [Apache Parquet](https://parquet.apache.org/), [Apache Arrow](https://arrow.apache.org/) and [DuckDB](https://duckdb.org/).
 
 <!-- maybe the first part is not needed
 
@@ -21,7 +20,7 @@ They are a lot of talks (righfully) on the use of [Apache Parquet](https://parqu
 
  --> 
 
-Those three open source technologies and the amount of ressources that a personnal laptop has now have lowered the need of using a classic RDBMS for out of memory tasks (and in some cases maybe the need of using a distributed computing framework like Spark) for data science works. 
+Those three open source technologies and the amount of resources that a personal laptop has now have lowered the need of using a classic RDBMS for out of memory tasks (and in some cases maybe the need of using a distributed computing framework like Spark) for data science works.
 
 Here we will sho you how to convert a table in postgreSQL (in short PG) into a parquet Hive partitioned data set that you can use duckDB and dplyr verbs on it.
 

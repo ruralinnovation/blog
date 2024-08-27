@@ -1,10 +1,12 @@
 ---
 title: "Recent Posts"
 listing:
-  contents: posts
+  contents: "posts/*/index.qmd"
   sort: "date desc"
   type: default
   categories: false
+  exclude:
+    path: posts/07_bead/proj-fcc-report/index.qmd
   sort-ui: false
   filter-ui: false
 page-layout: full

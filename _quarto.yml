@@ -2,7 +2,20 @@ project:
   type: website
   output-dir: docs
   render:
-    - "!posts/06_bead/proj-fcc-report/about.qmd"
+    - "*.qmd"
+    - "**/*.qmd"
+    - "!posts/07_bead/proj-fcc-report/about.qmd"
+    - "!posts/07_bead/proj-fcc-report/fcc_funding.qmd"
+    - "!posts/07_bead/proj-fcc-report/FCC_provider_list.qmd"
+    - "!posts/07_bead/proj-fcc-report/hubb.qmd"
+    - "!posts/07_bead/proj-fcc-report/isp_eda.qmd"
+    - "!posts/07_bead/proj-fcc-report/metadata_raw_nbm.qmd"
+    - "!posts/07_bead/proj-fcc-report/ms-eda.qmd"
+    - "!posts/07_bead/proj-fcc-report/nbm_data.qmd"
+    - "!posts/07_bead/proj-fcc-report/ntia_test.qmd"
+    - "!posts/07_bead/proj-fcc-report/rdof.qmd"
+    - "!posts/07_bead/proj-fcc-report/road-eda.qmd"
+    - "!posts/07_bead/proj-fcc-report/zero_dl_up.qmd"
 
 website:
   title: "Mapping & Data Analytics Blog @cori-risi"
