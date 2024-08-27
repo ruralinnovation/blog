@@ -1,8 +1,10 @@
 ---
 title: "From elephant to duck!"
-author: "Olivier Leroy"
+author: 
+  - name: "Olivier Leroy"
+  - name: "John Hall"
 date: "2024-07-14"
-categories: [cli, code, postgresql, duckDB]
+categories: [cli, code, postgresql, duckDB, broadband]
 image: DuckDB_Postgre_SQL_Logo.png
 ---
 
