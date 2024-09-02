@@ -4,7 +4,7 @@ abstract: "How to drive data equity and access for rural places pursuing federal
 author:
   - "John Hall"
   - "Olivier Leroy"
-date: "2024-08-01"
+date: "2024-09-01"
 categories:
   - access
   - api
@@ -18,6 +18,7 @@ categories:
   - mapbox
   - NBM
   - spatial
+draft: true
 ---
 
 ## Overview
@@ -33,17 +34,9 @@ TODO: ...
 
 ### TODO: Intro to our products
 
-- TODO: ... [Rural Broadband Map](https://rural-broadband-map.ruralinnovation.us/),
--
-- TODO: ... [Broadband Climate Risk Mitigation Tool](https://broadband-risk.ruralinnovation.us/)
+  - TODO: ... [Rural Broadband Map](https://rural-broadband-map.ruralinnovation.us/),
+
+  - TODO: ... [Broadband Climate Risk Mitigation Tool](https://broadband-risk.ruralinnovation.us/)
 
 
-## TODO: The available data
-
-{{< include proj-fcc-report/index.qmd >}}
-
-### TODO: The data that we're making available
-
-TODO: How the CORI Data API backend organizes the data that is served to the Rural Broadband Map and Broadband Climate Risk apps.
-
-
+## TODO: Reference [Fast analytics on FCC (big) dataset](../fcc-duckdb)
