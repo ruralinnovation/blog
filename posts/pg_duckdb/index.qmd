@@ -1,8 +1,10 @@
 ---
 title: "From elephant to duck!"
-author: "Olivier Leroy"
+author:
+  - name: "Olivier Leroy"
+  - name: "John Hall"
 date: "2024-07-14"
-categories: [cli, code, postgresql, duckDB]
+categories: [cli, code, postgresql, duckDB, broadband]
 image: DuckDB_Postgre_SQL_Logo.png
 ---
 
@@ -78,7 +80,7 @@ from_elephant_to_duck <- function(table_name, path_for_parquet, part1, part2) {
   DBI::dbExecute(con, "INSTALL postgres")
   DBI::dbExecute(con, "LOAD postgres")
 
-  # 3. Connect, "attach" tou your PG server
+  # 3. Connect, "attach" to your PG server
   attach_string <- sprintf(
     "ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)",
     cred["db"],
@@ -121,7 +123,7 @@ end - start
 
 On a relatively recent Macbook with a wifi internet speed connection (probably the limiting factor here) it took a bit less than an hour to run `from_elephant_to_duck`.
 
-We can also compare our 102 GB to the size of parquet (ofc. PG offer additional perks!):
+We can also compare our 102 GB to the size of parquet files (ofc. PG offer additional perks!):
 
 ```{bash}
 #| eval: false 
