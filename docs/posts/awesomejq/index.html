@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.552">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Olivier Leroy">
 <meta name="dcterms.date" content="2024-03-10">
 
-<title>Mapping &amp; Data Analytics Blog @cori-risi - Awesome jq and GeoJSON</title>
+<title>Awesome jq and GeoJSON – Mapping &amp; Data Analytics Blog @cori-risi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -112,7 +112,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -134,7 +134,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -150,6 +150,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
                 <div class="quarto-category">geojson</div>
                 <div class="quarto-category">json</div>
                 <div class="quarto-category">spatial data</div>
+                <div class="quarto-category">broadband</div>
               </div>
                   </div>
   </div>
@@ -196,7 +197,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>If you are manipulating a lot of <a href="https://en.wikipedia.org/wiki/GeoJSON"><code>GeoJSON</code></a> eatures/objects and want a quick CLI tool to filter and slice them, you should give jq a try! Since there are not many tutorials that exist on using jq to manage objects in the GeoJSON family, we hope that these few tricks will help you on your learning journey.</p>
+<p>If you are manipulating a lot of <a href="https://en.wikipedia.org/wiki/GeoJSON"><code>GeoJSON</code></a> features/objects and want a quick CLI tool to filter and slice them, you should give jq a try! Since there are not many tutorials that exist on using jq to manage objects in the GeoJSON family, we hope that these few tricks will help you on your learning journey.</p>
 <!-- You can find plenty of great guides online, but the [documentation](https://jqlang.github.io/jq/manual/) and the [playground](https://jqplay.org/) are always a good start. -->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -229,9 +230,9 @@ TODO: should we consider using a geojson from just census?
 <li><p><code>data/vt-bb.geojson</code> is the path of our file as the last argument</p></li>
 <li><p><code>'.features | length'</code> is a <strong>jq filter</strong>. Remember, we are in the shell and whitespace has meaning. Not quoting it would mean that we have 4 arguments when we just have 2.</p>
 <ul>
-<li><p><code>.features</code> will return the json array containing every feature</p></li>
-<li><p><code>|</code> will pipe the stream of features into a new filter</p></li>
-<li><p><code>length</code> is a built-in function that behaves differently depending the object input. Given an array, it will return the number of elements</p></li>
+<li><code>.features</code> will return the json array containing every feature</li>
+<li><code>|</code> will pipe the stream of features into a new filter</li>
+<li><code>length</code> is a built-in function that behaves differently depending the object input. Given an array, it will return the number of elements</li>
 </ul></li>
 </ul>
 <section id="jq-and-small-examples" class="level2">
@@ -296,9 +297,9 @@ TODO: should we consider using a geojson from just census?
 <li><p><code>(.features[0].properties | keys_unsorted)</code> here nothing new we added parentheses to enforce precedence. We are getting the header of our csv</p></li>
 <li><p><code>(.features[].properties | to_entries | map(.value))</code> :</p>
 <ul>
-<li><p>we are starting from all our properties (not the first one)</p></li>
-<li><p>passing it to <code>to_entries</code> convert our object to multiple objects with “key” / “value” (see margin)</p></li>
-<li><p>finally, <code>map(.value)</code> gets all “value” for every selected features</p></li>
+<li>we are starting from all our properties (not the first one)</li>
+<li>passing it to <code>to_entries</code> convert our object to multiple objects with “key” / “value” (see margin)</li>
+<li>finally, <code>map(.value)</code> gets all “value” for every selected features</li>
 </ul></li>
 </ul>
 
@@ -320,9 +321,9 @@ TODO: should we consider using a geojson from just census?
 </ul>
 <p>We have just explored the surface! <code>jq</code> can help to filter some specific features:</p>
 <ul>
-<li><p>every geometries “served” in our file?</p></li>
-<li><p>the first node in every geometries)?</p></li>
-<li><p>etc!</p></li>
+<li>every geometries “served” in our file?</li>
+<li>the first node in every geometries)?</li>
+<li>etc!</li>
 </ul>
 <p><code>jq</code> is a generic tool for filtering json and lot of people are following the JSON spec in GeoJSON, so we can build on top of all their monumental work!</p>
 
@@ -366,18 +367,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -409,7 +399,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -417,7 +429,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

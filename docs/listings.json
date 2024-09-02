@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/pg_duckdb/index.html",
       "/posts/micropolitan_formd/index.html",
       "/posts/formd_intro/index.html",
       "/posts/urisa-2023/index.html",

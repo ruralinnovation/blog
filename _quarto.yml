@@ -51,7 +51,5 @@ resources:
 - "assets/*"
 
 execute:
-  freeze: auto
-
-
+  freeze: false
 

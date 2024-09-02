@@ -24,8 +24,8 @@
   },
   "scripts": {
     "build": "npm run render",
-    "clean": "rm -rf _site/*",
-    "preview": "npm run render:mermaid && quarto render --output-dir _site && python -m http.server -d _site 3000",
+    "clean": "rm -rf _freeze/* _site/*",
+    "preview": "npm run clean && npm run render:mermaid && quarto render --output-dir _site && python -m http.server -d _site 3000",
     "render": "quarto render --output-dir docs",
     "render:mermaid": "mmdc -i assets/input.mmd -o assets/output.svg",
     "test:mermaid": "mmdc -i assets/input.mmd -o assets/output.svg",

@@ -15,7 +15,7 @@ In this blog post, I’ll cover six tips for mapping rural data that will prepar
 
 Rural data often spans large, sparsely populated areas, and the results of statistical analyses can significantly vary based on the scale and boundaries of the spatial units used. This phenomenon is known as the Modifiable Areal Unit Problem (MAUP) [^openshaw]. To address this issue, standardize your data into rates or measures instead of raw counts (e.g., use population density rather than total population).
 
-[^openshaw]: See Openshaw, 1983: [https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf](https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf)  
+[^openshaw]: See Openshaw, 1983: [https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf](https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf){.external target="_blank"}
 
 Here's an illustration of this concept using broadband service data. The spatial trends are clearer and more meaningful in the normalized map compared to the unnormalized version:
 
