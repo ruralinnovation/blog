@@ -18,7 +18,7 @@ categories:
   - mapbox
   - NBM
   - spatial
-draft: true
+draft: false
 ---
 
 ## Overview
@@ -39,4 +39,4 @@ TODO: ...
   - TODO: ... [Broadband Climate Risk Mitigation Tool](https://broadband-risk.ruralinnovation.us/)
 
 
-## TODO: Reference [Fast analytics on FCC (big) dataset](../fcc-duckdb)
+## TODO: Reference [Fast analytics on FCC (big) dataset](../fcc-duckdb) ...
