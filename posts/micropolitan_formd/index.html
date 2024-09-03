@@ -9,7 +9,7 @@
 <meta name="author" content="Brittany Kainen">
 <meta name="dcterms.date" content="2024-07-03">
 
-<title>Mapping &amp; Data Analytics @ CORI - Top 10 Venture Capital-Raising Micropolitan Areas</title>
+<title>Mapping &amp; Data Analytics Blog @cori-risi - The top 10 micropolitan areas for raising venture capital</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -38,6 +38,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -53,9 +56,18 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-07QRVQQ5JK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
+</script>
 
 
-<link rel="stylesheet" href="../../styles.scss">
+<link rel="stylesheet" href="../../assets/fonts.css">
 </head>
 
 <body class="nav-fixed">
@@ -65,14 +77,20 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Mapping &amp; Data Analytics @ CORI</span>
+    <a class="navbar-brand" href="https://ruralinnovation.us/our-work/research_mapping/">
+    <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Mapping &amp; Data Analytics Blog</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
@@ -94,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Top 10 Venture Capital-Raising Micropolitan Areas</h1>
+      <h1 class="title">The top 10 micropolitan areas for raising venture capital</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">SEC</div>
                 <div class="quarto-category">Form D</div>
@@ -139,16 +157,57 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Venture capital funding plays a pivotal role in bolstering a region’s economy by catalyzing innovation, fostering job creation, and attracting talent. It injects vital funding into promising businesses with growth potential, enabling them to scale rapidly. It holds immense promise for revitalizing Rural America’s economy by empowering local entrepreneurs with the resources needed to innovate and grow. Though rural areas have traditionally been overlooked by investors, many entrepreneurs across Rural America have managed to access capital that is crucial to transforming their budding ideas into thriving businesses.</p>
-<p>To explore the venture capital landscape in Rural America, we can use the SEC’s Form D to identify the amount of funding received by private businesses in micropolitan areas. A micropolitan area, as defined by the U.S. Office of Management and Budget, is a region centered around an small urban cluster with a population between 10,000 and 50,000 people. These areas are smaller than metropolitan areas but still exhibit economic and social connections with nearby population centers, making micropolitans an ideal geography for observing venture capital dynamics in rural economies.</p>
-<p>Here are the micropolitan areas that raised the most in venture capital funding per capita in 2022:</p>
-<div style="display:flex; flex-wrap: wrap;">
-<p><img style="width: 80%;" src="images/top10_vc_micropolitans.png" alt="Micro VC chart"></p>
-<p>Each of these micropolitan areas (and many more!) demonstrates that rural communities are ripe with entrepreneurial spirit and offer investors an abundance of opportunities.</p>
+<p>Venture capital funding plays a pivotal role in bolstering a region’s economy by catalyzing innovation, fostering job creation, and attracting talent.</p>
+<p>Venture capital investment injects vital funding into promising businesses with growth potential, enabling them to scale rapidly. And it holds immense promise for revitalizing rural America’s economy by empowering local entrepreneurs with the resources needed to innovate and grow.</p>
+<p>Though rural areas have traditionally been overlooked by investors, many rural entrepreneurs have managed to access capital that is crucial to transforming their budding ideas into thriving businesses.</p>
+<p>To explore the venture capital landscape in rural America, we can use the SEC’s Form D to identify the amount of funding received by private businesses in micropolitan areas. A micropolitan area, as defined by the U.S. Office of Management and Budget, is a region centered around a small urban cluster with a population between 10,000 and 50,000 people. These areas are smaller than metropolitan areas but still exhibit economic and social connections with nearby population centers, making micropolitans an ideal geography for observing venture capital dynamics in rural economies.</p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>Here are the micropolitan areas that raised the most venture capital in 2022:</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>And here are the micropolitan areas that raised the most in venture capital funding per capita in 2022:</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/top10_total_vc_micropolitans.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Micro VC totals (click chart to enlarge)"><img src="images/top10_total_vc_micropolitans.png" class="img-fluid figure-img" alt="Micro VC totals (click chart to enlarge)"></a></p>
+<figcaption>Micro VC totals (click chart to enlarge)</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/top10_vc_micropolitans.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Micro VC chart (click chart to enlarge)"><img src="images/top10_vc_micropolitans.png" class="img-fluid figure-img" alt="Micro VC chart (click chart to enlarge)"></a></p>
+<figcaption>Micro VC chart (click chart to enlarge)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Sheridan, Heber, and Jackson achieved these outcomes through an abundance of venture capital activity, while the others are driven by a couple companies with very large deals in 2022.</li>
+<li>Of the 81 micropolitans that raised venture capital through Regulation D in 2022, the 10 that raised the most represent 84% of the $1.4 billion in funding that went to micropolitan areas.<br>
+</li>
+<li>The 10 micropolitans with the most funding per capita varied widely by population size. Grants, New Mexico, had the smallest population (11,620), while the population of Bozeman, Montana, (109,207) was much larger than the others on this list. Heber, Utah was the second-largest micropolitan area in the top 10 (68,075).</li>
+</ul>
+<p>Each of these micropolitan areas demonstrates that rural communities are ripe with entrepreneurial spirit and offer investors an abundance of opportunities.</p>
+<p>If you’d like to dig deeper on the power of direct investment in rural startups, check out our seed fund, the <a href="https://www.corifund.com/">CORI Innovation Fund</a>, which has a growing portfolio of rural tech startups with high-growth potential. Or you can <a href="https://ruralinnovation.us/about/contact-us/">connect</a> with our team directly to learn more!</p>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Micro VC totals (click chart to enlarge)</span>
+<span class="glightbox-desc lightbox-desc-2">Micro VC chart (click chart to enlarge)</span>
+</div>
 
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -559,6 +618,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

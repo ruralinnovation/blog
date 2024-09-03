@@ -9,7 +9,7 @@
 <meta name="author" content="Camden Blatchly">
 <meta name="dcterms.date" content="2024-05-24">
 
-<title>Mapping &amp; Data Analytics @ CORI - 6 tips for mapping rural data</title>
+<title>Mapping &amp; Data Analytics Blog @cori-risi - Six tips for mapping rural data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -38,6 +38,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -53,9 +56,18 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-07QRVQQ5JK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
+</script>
 
 
-<link rel="stylesheet" href="../../styles.scss">
+<link rel="stylesheet" href="../../assets/fonts.css">
 </head>
 
 <body class="nav-fixed">
@@ -65,14 +77,20 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Mapping &amp; Data Analytics @ CORI</span>
+    <a class="navbar-brand" href="https://ruralinnovation.us/our-work/research_mapping/">
+    <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Mapping &amp; Data Analytics Blog</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
@@ -94,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">6 tips for mapping rural data</h1>
+      <h1 class="title">Six tips for mapping rural data</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">sf</div>
@@ -134,12 +152,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#normalize-your-data" id="toc-normalize-your-data" class="nav-link active" data-scroll-target="#normalize-your-data">1. Normalize Your Data</a></li>
-  <li><a href="#use-smaller-geographic-units-when-available" id="toc-use-smaller-geographic-units-when-available" class="nav-link" data-scroll-target="#use-smaller-geographic-units-when-available">2. Use Smaller Geographic Units When Available</a></li>
-  <li><a href="#separate-rural-and-nonrural-color-scales" id="toc-separate-rural-and-nonrural-color-scales" class="nav-link" data-scroll-target="#separate-rural-and-nonrural-color-scales">3. Separate Rural and Nonrural Color Scales</a></li>
-  <li><a href="#incorporate-magnitude" id="toc-incorporate-magnitude" class="nav-link" data-scroll-target="#incorporate-magnitude">4. Incorporate Magnitude</a></li>
-  <li><a href="#use-interactivity" id="toc-use-interactivity" class="nav-link" data-scroll-target="#use-interactivity">5. Use Interactivity</a></li>
-  <li><a href="#consider-non-map-alternatives" id="toc-consider-non-map-alternatives" class="nav-link" data-scroll-target="#consider-non-map-alternatives">6. Consider Non-Map Alternatives</a></li>
+  <li><a href="#normalize-your-data" id="toc-normalize-your-data" class="nav-link active" data-scroll-target="#normalize-your-data">1. Normalize your data</a></li>
+  <li><a href="#use-smaller-geographic-units-when-available" id="toc-use-smaller-geographic-units-when-available" class="nav-link" data-scroll-target="#use-smaller-geographic-units-when-available">2. Use smaller geographic units when available</a></li>
+  <li><a href="#separate-rural-and-nonrural-color-scales" id="toc-separate-rural-and-nonrural-color-scales" class="nav-link" data-scroll-target="#separate-rural-and-nonrural-color-scales">3. Separate rural and nonrural color scales</a></li>
+  <li><a href="#incorporate-magnitude" id="toc-incorporate-magnitude" class="nav-link" data-scroll-target="#incorporate-magnitude">4. Incorporate magnitude</a></li>
+  <li><a href="#use-interactivity" id="toc-use-interactivity" class="nav-link" data-scroll-target="#use-interactivity">5. Use interactivity</a></li>
+  <li><a href="#consider-non-map-alternatives" id="toc-consider-non-map-alternatives" class="nav-link" data-scroll-target="#consider-non-map-alternatives">6. Consider non-map alternatives</a></li>
   </ul>
 </nav>
     </div>
@@ -150,38 +168,63 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Mapping rural data is hard! Between sparse populations, inaccurate data, and the challenge of defining what even counts as rural, creating accurate and meaningful maps can be a minefield. In this blog post, I’ll cover six tips for mapping rural data that will prepare you to confidently tackle your next rural-centric mapping project.</p>
+<p>Mapping rural data is hard! Between sparse populations, inaccurate data, and the challenge of defining what even counts as rural, creating accurate and meaningful maps can be a minefield. In this blog post, I’ll cover six tips for mapping rural data that will prepare you to confidently tackle your next rural-centric mapping project</p>
 <section id="normalize-your-data" class="level3">
-<h3 class="anchored" data-anchor-id="normalize-your-data">1. Normalize Your Data</h3>
+<h3 class="anchored" data-anchor-id="normalize-your-data">1. Normalize your data</h3>
 <p>Rural data often spans large, sparsely populated areas, and the results of statistical analyses can significantly vary based on the scale and boundaries of the spatial units used. This phenomenon is known as the Modifiable Areal Unit Problem (MAUP) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. To address this issue, standardize your data into rates or measures instead of raw counts (e.g., use population density rather than total population).</p>
 <p>Here’s an illustration of this concept using broadband service data. The spatial trends are clearer and more meaningful in the normalized map compared to the unnormalized version:</p>
-<div style="display:flex; flex-wrap: wrap;">
-<p><img style="width: 45%;" src="images/choropleth_unnormalized.png" alt="Unnormalized choropleth map"> <img style="width: 45%;" src="images/choropleth_normalized.png" alt="Normalized choropleth map"></p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2" data-fig-align="center">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><a href="images/choropleth_unnormalized.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Unnormalized choropleth map"><img src="images/choropleth_unnormalized.png" class="img-fluid" alt="Unnormalized choropleth map"></a><br>
+</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><a href="images/choropleth_normalized.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Normalized choropleth map"><img src="images/choropleth_normalized.png" class="img-fluid" alt="Normalized choropleth map"></a><br>
+</p>
+</div>
+</div>
 </div>
 </section>
 <section id="use-smaller-geographic-units-when-available" class="level3">
-<h3 class="anchored" data-anchor-id="use-smaller-geographic-units-when-available">2. Use Smaller Geographic Units When Available</h3>
+<h3 class="anchored" data-anchor-id="use-smaller-geographic-units-when-available">2. Use smaller geographic units when available</h3>
 <p>In rural areas, data is often aggregated into large geographic units, which can obscure localized trends. When available, use smaller geographic units to capture more detail. This approach can reveal patterns that would otherwise be hidden in larger aggregations.</p>
 </section>
 <section id="separate-rural-and-nonrural-color-scales" class="level3">
-<h3 class="anchored" data-anchor-id="separate-rural-and-nonrural-color-scales">3. Separate Rural and Nonrural Color Scales</h3>
+<h3 class="anchored" data-anchor-id="separate-rural-and-nonrural-color-scales">3. Separate rural and nonrural color scales</h3>
 <p>Rural and urban areas are socioeconomically distinct, and mapping them together can flatten rural trends. As such, consider using separate color scales for rural and urban areas. If you need to analyze both simultaneously, use facets to display them side by side rather than blending them into a single map. This method helps preserve the unique characteristics of each area.</p>
 </section>
 <section id="incorporate-magnitude" class="level3">
-<h3 class="anchored" data-anchor-id="incorporate-magnitude">4. Incorporate Magnitude</h3>
+<h3 class="anchored" data-anchor-id="incorporate-magnitude">4. Incorporate magnitude</h3>
 <p>The size of rural geographic units often does not correlate with the population within those units. To highlight spatial concentrations effectively, add a measure of visual magnitude. <a href="https://www.axismaps.com/guide/proportional-symbols">Proportional symbol maps</a>, <a href="https://www.axismaps.com/guide/dot-density">dot density maps</a>, and <a href="https://www.axismaps.com/guide/cartograms">non-contiguous cartograms</a> are useful tools for this purpose. Below are two variants: a bubble map and a cartogram, both of which adjust the size of geographic units to reflect population data.</p>
-<div style="display:flex; flex-wrap: wrap;">
-<p><img style="width: 45%; min-width: 300px;" src="images/cartogram_dorling_rural_pop.png" alt="Bubble map"> <img style="width: 45%; min-width: 300px;" src="images/cartogram_ncont_pct_rural_pop.png" alt="Cartogram"></p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2" data-fig-align="center">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><a href="images/cartogram_dorling_rural_pop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Bubble map"><img src="images/cartogram_dorling_rural_pop.png" class="img-fluid" alt="Bubble map"></a><br>
+</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><a href="images/cartogram_ncont_pct_rural_pop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Cartogram"><img src="images/cartogram_ncont_pct_rural_pop.png" class="img-fluid" alt="Cartogram"></a><br>
+</p>
+</div>
+</div>
 </div>
 </section>
 <section id="use-interactivity" class="level3">
-<h3 class="anchored" data-anchor-id="use-interactivity">5. Use Interactivity</h3>
+<h3 class="anchored" data-anchor-id="use-interactivity">5. Use interactivity</h3>
 <p>Interactivity, such as tooltips that appear when hovering over an element or informational panels that appear on click, can enhance your map by providing additional context and details. I recommend reading through <a href="https://www.axismaps.com/guide/map-interaction">Axis Maps guide to Map Interaction</a> to understand common conventions for interactive maps.</p>
 </section>
 <section id="consider-non-map-alternatives" class="level3">
-<h3 class="anchored" data-anchor-id="consider-non-map-alternatives">6. Consider Non-Map Alternatives</h3>
+<h3 class="anchored" data-anchor-id="consider-non-map-alternatives">6. Consider non-map alternatives</h3>
 <p>While maps are powerful tools, they are not always the best choice for representing rural data. In some cases, alternative visualizations like swarm charts can more effectively convey your message. Don’t be afraid to think outside the map!</p>
-<p>By implementing these tips, you can improve the clarity and accuracy of your rural data maps, making them more informative and actionable. Happy mapping!</p>
+<p>By implementing these tips, you can improve the clarity and accuracy of your rural data maps, making them more informative and actionable.</p>
+<p>Happy mapping!</p>
 
 
 </section>
@@ -190,7 +233,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>See Openshaw, 1983: <a href="https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf">https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>See Openshaw, 1983: <a href="https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf" class="external" target="_blank">https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -603,6 +646,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ruralinnovation.github.io/blog/about.html</loc>
-    <lastmod>2024-06-06T15:00:51.256Z</lastmod>
-  </url>
-  <url>
     <loc>https://ruralinnovation.github.io/blog/posts/urisa-2023/index.html</loc>
-    <lastmod>2024-07-22T14:44:43.236Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ruralinnovation.github.io/blog/posts/mapping_rural_tips/index.html</loc>
-    <lastmod>2024-06-10T12:25:19.467Z</lastmod>
+    <lastmod>2024-08-27T16:55:26.146Z</lastmod>
   </url>
   <url>
     <loc>https://ruralinnovation.github.io/blog/posts/micropolitan_formd/index.html</loc>
-    <lastmod>2024-07-22T14:53:33.077Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ruralinnovation.github.io/blog/posts/awesomejq/index.html</loc>
-    <lastmod>2024-06-10T15:20:29.661Z</lastmod>
+    <lastmod>2024-08-27T16:55:26.145Z</lastmod>
   </url>
   <url>
     <loc>https://ruralinnovation.github.io/blog/posts/formd_intro/index.html</loc>
-    <lastmod>2024-07-22T14:44:52.141Z</lastmod>
+    <lastmod>2024-08-27T16:55:26.139Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruralinnovation.github.io/blog/posts/awesomejq/index.html</loc>
+    <lastmod>2024-08-27T16:55:26.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruralinnovation.github.io/blog/about.html</loc>
+    <lastmod>2024-08-27T16:55:26.033Z</lastmod>
   </url>
   <url>
     <loc>https://ruralinnovation.github.io/blog/index.html</loc>
-    <lastmod>2024-04-01T13:53:28.969Z</lastmod>
+    <lastmod>2024-08-16T20:16:20.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruralinnovation.github.io/blog/posts/mapping_rural_tips/index.html</loc>
+    <lastmod>2024-09-03T16:53:33.254Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruralinnovation.github.io/blog/posts/pg_duckdb/index.html</loc>
+    <lastmod>2024-09-03T17:34:00.041Z</lastmod>
   </url>
 </urlset>
