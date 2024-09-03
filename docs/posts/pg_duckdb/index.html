@@ -2,14 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Olivier Leroy">
+<meta name="author" content="John Hall">
 <meta name="dcterms.date" content="2024-07-14">
 
-<title>From elephant to duck! – Mapping &amp; Data Analytics Blog @cori-risi</title>
+<title>Mapping &amp; Data Analytics Blog @cori-risi - From elephant to duck!</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -112,7 +113,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -134,7 +135,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -149,6 +150,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">postgresql</div>
                 <div class="quarto-category">duckDB</div>
+                <div class="quarto-category">broadband</div>
               </div>
                   </div>
   </div>
@@ -157,9 +159,10 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   <div class="quarto-title-meta">
 
       <div>
-      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-heading">Authors</div>
       <div class="quarto-title-meta-contents">
                <p>Olivier Leroy </p>
+               <p>John Hall </p>
             </div>
     </div>
       
@@ -188,7 +191,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#partitioning" id="toc-partitioning" class="nav-link" data-scroll-target="#partitioning">Partitioning</a></li>
   </ul></li>
-  <li><a href="#lets-do-it-and-do-some-quick-comparisons" id="toc-lets-do-it-and-do-some-quick-comparisons" class="nav-link" data-scroll-target="#lets-do-it-and-do-some-quick-comparisons">Let’s do it and do some quick comparisons!</a></li>
+  <li><a href="#lets-do-it-and-do-some-quick-comparisons" id="toc-lets-do-it-and-do-some-quick-comparisons" class="nav-link" data-scroll-target="#lets-do-it-and-do-some-quick-comparisons">Let’s do it and do some quick comparisons</a></li>
   </ul>
 </nav>
     </div>
@@ -199,13 +202,14 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>They are lots of talks (rightfully) on the use of <a href="https://parquet.apache.org/" class="external" target="_blank">Apache Parquet</a>, <a href="https://arrow.apache.org/" class="external" target="_blank">Apache Arrow</a> and <a href="https://duckdb.org/" class="external" target="_blank">DuckDB</a>. Let’s see an example of how they can be used to convert a table in a PostgresSQL database to a parquet file.</p>
+<p>There are a lot of conversations — understandably — on the use of <a href="https://parquet.apache.org/" class="external" target="_blank">Apache Parquet</a>, <a href="https://arrow.apache.org/" class="external" target="_blank">Apache Arrow</a> and <a href="https://duckdb.org/" class="external" target="_blank">DuckDB</a>.</p>
 <ul>
 <li><p><strong>Apache Parquet</strong> is an open source columnar file format storage designed for fast I/O</p></li>
 <li><p><strong>Apache Arrow</strong> is a standardization of an in-memory representation of the data: it allows “zero copy” (use of pointer at low level), it is an OLAP (Online Analytical Process) runtime, with deferred or lazy materialization (internally optimizes queries for us).</p></li>
 <li><p><strong>DuckDB</strong> is an implementation (i.e an engine) of an OLAP database.</p></li>
 </ul>
-<p>Those three open source technologies and the amount of resources that are now available inside a personal laptop have lowered the need of using a classic RDBMS for out of memory tasks (and in some cases maybe the need of using a distributed computing framework like Spark) for data science works.</p>
+<p>Those three open source technologies and the amount of resources that a personal laptop has now have lowered the need of using a classic RDBMS for out-of-memory-tasks for data science works, and in some cases maybe the need of using a distributed computing framework like Spark.</p>
+<p>Let’s see an example of how they can be used to convert a table in a PostgresSQL database to a parquet file:</p>
 <section id="libraries-and-data-optional-needed" class="level2">
 <h2 class="anchored" data-anchor-id="libraries-and-data-optional-needed">Libraries and data (optional) needed</h2>
 <div class="cell">
@@ -233,11 +237,11 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 </section>
 <section id="use-duckdb-magic-to-convert-it" class="level2">
 <h2 class="anchored" data-anchor-id="use-duckdb-magic-to-convert-it">Use DuckDB magic to convert it!</h2>
-<p>Well the magic is a 4 steps process:</p>
+<p>Well, the magic is a four-step steps process:</p>
 <ol type="1">
-<li>Connect to duckDB</li>
-<li>Get duckDB’s postgres extension</li>
-<li>Connect to DB (with the credential we have set)</li>
+<li>Connect to DuckDB</li>
+<li>Get DuckDB’s postgres extension</li>
+<li>Connect to your DB (with the credential we have set)</li>
 <li>Use DuckDB COPY specifying where and how you want it to be partitioned</li>
 </ol>
 <p>This will be wrapped in one function:</p>
@@ -255,7 +259,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"INSTALL postgres"</span>)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"LOAD postgres"</span>)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Connect, "attach" tou your PG server</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Connect, "attach" to your PG server</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  attach_string <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)"</span>,</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    cred[<span class="st">"db"</span>],</span>
@@ -276,7 +280,8 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, copy_string)</span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">invisible</span>(path_for_parquet))</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># not an improvement on this function will be to take cred has an argument</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="partitioning" class="level3">
 <h3 class="anchored" data-anchor-id="partitioning">Partitioning</h3>
@@ -284,7 +289,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 </section>
 </section>
 <section id="lets-do-it-and-do-some-quick-comparisons" class="level2">
-<h2 class="anchored" data-anchor-id="lets-do-it-and-do-some-quick-comparisons">Let’s do it and do some quick comparisons!</h2>
+<h2 class="anchored" data-anchor-id="lets-do-it-and-do-some-quick-comparisons">Let’s do it and do some quick comparisons</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">from_elephant_to_duck</span>(<span class="st">"staging.dec23"</span>, <span class="st">"dec23"</span>, <span class="st">"state_abbr"</span>, <span class="st">"technology"</span>)</span>
@@ -292,13 +297,13 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>end <span class="sc">-</span> start</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Time difference of 58.92108 mins</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>On a relatively recent Macbook with a wifi internet speed connection (probably the limiting factor here) it took a bit less than an hour to run <code>from_elephant_to_duck</code>.</p>
-<p>We can also compare our 102 GB to the size of parquet (ofc. PG offer additional perks!):</p>
+<p>On a relatively new MacBook with a wifi-internet-speed connection (probably the limiting factor here) it took a little less than an hour to run <code>from_elephant_to_duck</code>.</p>
+<p>We can also compare our 102 GB to the size of parquet files (ofc. PG offer additional perks!):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-sh</span> dec23/</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 14 G</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, just for the pleasure, let’s run some quick queries:</p>
+<p>Finally, just for the pleasure, let’s run a quick query:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="at">shutdown =</span> <span class="cn">TRUE</span>, <span class="at">dbdir =</span> <span class="fu">tempdir</span>())</span>
@@ -334,10 +339,9 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>end <span class="sc">-</span> start</span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Time difference of 4.262549 mins</span></span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(con)</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="fu">file.remove</span>(<span class="st">"fcc.canard"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Impressive isn’t it! We will probably dig a bit deeper on those new technologies in future blog posts!</p>
+<p>Impressive, isn’t it? We will probably dig a bit deeper on those new technologies in future blog posts, so check back soon!</p>
 
 
 </section>
@@ -378,7 +382,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -410,29 +425,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -440,7 +433,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

@@ -27,7 +27,7 @@ TODO: ... why the ability to analyze broadband data is so critical at this time 
 
 TODO: Extract some key takeaways from  our internal [FCC report](proj-fcc-report){target="_blank"} (see below) and add to this section...
 
-{{< include proj-fcc-report/index.qmd >}}
+<!-- {{< include proj-fcc-report/index.qmd >}} -->
 
 
 ## Tools for big broadband analytics
