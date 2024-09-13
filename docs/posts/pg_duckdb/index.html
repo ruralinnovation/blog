@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Olivier Leroy">
+<meta name="author" content="John Hall">
 <meta name="dcterms.date" content="2024-07-14">
 
 <title>Mapping &amp; Data Analytics Blog @cori-risi - From elephant to duck!</title>
@@ -149,6 +150,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">postgresql</div>
                 <div class="quarto-category">duckDB</div>
+                <div class="quarto-category">broadband</div>
               </div>
                   </div>
   </div>
@@ -157,9 +159,10 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   <div class="quarto-title-meta">
 
       <div>
-      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-heading">Authors</div>
       <div class="quarto-title-meta-contents">
                <p>Olivier Leroy </p>
+               <p>John Hall </p>
             </div>
     </div>
       
@@ -178,7 +181,19 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#libraries-and-data-optional-needed" id="toc-libraries-and-data-optional-needed" class="nav-link active" data-scroll-target="#libraries-and-data-optional-needed">Libraries and data (optional) needed</a></li>
+  <li><a href="#getting-your-credentials" id="toc-getting-your-credentials" class="nav-link" data-scroll-target="#getting-your-credentials">Getting your credentials</a></li>
+  <li><a href="#use-duckdb-magic-to-convert-it" id="toc-use-duckdb-magic-to-convert-it" class="nav-link" data-scroll-target="#use-duckdb-magic-to-convert-it">Use DuckDB magic to convert it!</a>
+  <ul class="collapse">
+  <li><a href="#partitioning" id="toc-partitioning" class="nav-link" data-scroll-target="#partitioning">Partitioning</a></li>
+  </ul></li>
+  <li><a href="#lets-do-it-and-do-some-quick-comparisons" id="toc-lets-do-it-and-do-some-quick-comparisons" class="nav-link" data-scroll-target="#lets-do-it-and-do-some-quick-comparisons">Let’s do it and do some quick comparisons</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -187,39 +202,149 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>Libraries needed:</p>
+<p>There are a lot of conversations — understandably — on the use of <a href="https://parquet.apache.org/" class="external" target="_blank">Apache Parquet</a>, <a href="https://arrow.apache.org/" class="external" target="_blank">Apache Arrow</a> and <a href="https://duckdb.org/" class="external" target="_blank">DuckDB</a>.</p>
+<ul>
+<li><p><strong>Apache Parquet</strong> is an open source columnar file format storage designed for fast I/O</p></li>
+<li><p><strong>Apache Arrow</strong> is a standardization of an in-memory representation of the data: it allows “zero copy” (use of pointer at low level), it is an OLAP (Online Analytical Process) runtime, with deferred or lazy materialization (internally optimizes queries for us).</p></li>
+<li><p><strong>DuckDB</strong> is an implementation (i.e an engine) of an OLAP database.</p></li>
+</ul>
+<p>Those three open source technologies and the amount of resources that a personal laptop has now have lowered the need of using a classic RDBMS for out-of-memory-tasks for data science works, and in some cases maybe the need of using a distributed computing framework like Spark.</p>
+<p>Let’s see an example of how they can be used to convert a table in a PostgresSQL database to a parquet file:</p>
+<section id="libraries-and-data-optional-needed" class="level2">
+<h2 class="anchored" data-anchor-id="libraries-and-data-optional-needed">Libraries and data (optional) needed</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: DBI</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dbplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>DuckDB has a Postgres extension!</p>
+<p>We will use FCC NBM raw data with December 2023’s release. You can learn more about on FCC <a href="https://broadbandmap.fcc.gov/data-download" class="external" target="_blank">website</a>.</p>
+<p>The table we will be converting has a size of 102 GB (without indexes), has 888,176,676 rows and 12 columns and it is the results of importing around 440 CSVs.</p>
+</section>
+<section id="getting-your-credentials" class="level2">
+<h2 class="anchored" data-anchor-id="getting-your-credentials">Getting your credentials</h2>
+<p>Since this exercise is all about converting data that is currently stored in PostgreSQL (using <code>R</code>), the first step in connecting to your PG database server is getting your credentials. We are assuming here that you have a <code>.pgpass</code> file located in your home directory (<code>~/.pgpass</code>).</p>
+<p>The code below will assume that you have this <a href="https://www.postgresql.org/docs/current/libpq-pgpass.html" class="external" target="_blank">~/.pgpass</a> set and that it contains a one-line connection string.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(<span class="fu">duckdb</span>())</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install abd load PG extension</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"INSTALL postgres"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"LOAD postgres"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># get credential from .pgpass</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>pgpass <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"~/.pgpass"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>cred <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(pgpass, <span class="st">":"</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>attach_string <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">3</span>],</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">4</span>],</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">5</span>],</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  cred[<span class="dv">1</span>]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a> DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, attach_string)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>get_cred <span class="ot">&lt;-</span> <span class="cf">function</span>(path_pgpass) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  pgpass <span class="ot">&lt;-</span> <span class="fu">readLines</span>(path_pgpass)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  cred <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(pgpass, <span class="st">":"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(cred) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"host"</span>, <span class="st">"port"</span>, <span class="st">"db"</span>, <span class="st">"user"</span>, <span class="st">"pwd"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cred)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>cred <span class="ot">&lt;-</span> <span class="fu">get_cred</span>(<span class="st">"~/.pgpass"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="use-duckdb-magic-to-convert-it" class="level2">
+<h2 class="anchored" data-anchor-id="use-duckdb-magic-to-convert-it">Use DuckDB magic to convert it!</h2>
+<p>Well, the magic is a four-step steps process:</p>
+<ol type="1">
+<li>Connect to DuckDB</li>
+<li>Get DuckDB’s postgres extension</li>
+<li>Connect to your DB (with the credential we have set)</li>
+<li>Use DuckDB COPY specifying where and how you want it to be partitioned</li>
+</ol>
+<p>This will be wrapped in one function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># yes I am terrible at naming</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>from_elephant_to_duck <span class="ot">&lt;-</span> <span class="cf">function</span>(table_name, path_for_parquet, part1, part2) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Connect to duckDB</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(<span class="fu">duckdb</span>())</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">sprintf</span>(<span class="st">"SET temp_directory ='%s';"</span>, <span class="fu">tempdir</span>()))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cleaning up after the function</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>(DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(con), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. install and load PG extension</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"INSTALL postgres"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, <span class="st">"LOAD postgres"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Connect, "attach" to your PG server</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  attach_string <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    cred[<span class="st">"db"</span>],</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    cred[<span class="st">"user"</span>],</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    cred[<span class="st">"pwd"</span>],</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    cred[<span class="st">"host"</span>]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, attach_string)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Copy to a parquet</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  copy_string <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"COPY </span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">    (SELECT * </span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">      FROM db.%s)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">    TO '%s' (FORMAT 'parquet', PARTITION_BY(%s, %s))"</span>, </span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    table_name, </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    path_for_parquet, </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    part1, part2)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  DBI<span class="sc">::</span><span class="fu">dbExecute</span>(con, copy_string)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">invisible</span>(path_for_parquet))</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># not an improvement on this function will be to take cred has an argument</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="partitioning">Partitioning</h3>
+<p>Deciding how to partition a parquet is both a data and business decisions. In this case, <code>state_abbr</code> and <code>technology</code> are good tradeoffs in terms of the overall size of each parquet file and the fast performance of common filtering and grouping operations on this data.</p>
+</section>
+</section>
+<section id="lets-do-it-and-do-some-quick-comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="lets-do-it-and-do-some-quick-comparisons">Let’s do it and do some quick comparisons</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">from_elephant_to_duck</span>(<span class="st">"staging.dec23"</span>, <span class="st">"dec23"</span>, <span class="st">"state_abbr"</span>, <span class="st">"technology"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>end <span class="sc">-</span> start</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Time difference of 58.92108 mins</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On a relatively new MacBook with a wifi-internet-speed connection (probably the limiting factor here) it took a little less than an hour to run <code>from_elephant_to_duck</code>.</p>
+<p>We can also compare our 102 GB to the size of parquet files (ofc. PG offer additional perks!):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-sh</span> dec23/</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 14 G</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, just for the pleasure, let’s run a quick query:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="at">shutdown =</span> <span class="cn">TRUE</span>, <span class="at">dbdir =</span> <span class="fu">tempdir</span>())</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>reading_string <span class="ot">&lt;-</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sprintf</span>(<span class="st">"read_parquet('%s/*/*/*.parquet', hive_partitioning = true)"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"dec23"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fcc <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">tbl</span>(con, reading_string)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># check number of row</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>fcc <span class="sc">|&gt;</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tot_rows =</span> <span class="fu">count</span>(location_id)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 1</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#    tot_rows</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#       &lt;dbl&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 888176676</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># let's start one a bit </span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># this will count every location_id by state_abbr and frn</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># that have low_latency</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> fcc <span class="sc">|&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(low_latency <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_location =</span>  <span class="fu">n_distinct</span>(location_id),</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(state_abbr, frn)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>rez_q1 <span class="ot">&lt;-</span> <span class="fu">collect</span>(q1)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>end <span class="sc">-</span> start</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Time difference of 4.262549 mins</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Impressive, isn’t it? We will probably dig a bit deeper on those new technologies in future blog posts, so check back soon!</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

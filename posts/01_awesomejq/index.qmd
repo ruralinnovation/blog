@@ -2,11 +2,11 @@
 title: "Awesome jq and GeoJSON"
 author: "Olivier Leroy"
 date: "2024-03-10"
-categories: [cli, code, geojson, json, spatial data]
+categories: [cli, code, geojson, json, spatial data, broadband]
 image: thumbnail.png
 ---
 
-If you are manipulating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) eatures/objects and want a quick CLI tool to filter and slice them, you should give jq a try! 
+If you are manipulating a lot of [`GeoJSON`](https://en.wikipedia.org/wiki/GeoJSON) features/objects and want a quick CLI tool to filter and slice them, you should give jq a try! 
 Since there are not many tutorials that exist on using jq to manage objects in the GeoJSON family, we hope that these few tricks will help you on your learning journey.
 
 <!-- You can find plenty of great guides online, but the [documentation](https://jqlang.github.io/jq/manual/) and the [playground](https://jqplay.org/) are always a good start. -->
@@ -44,16 +44,12 @@ jq '.features | length' data/vt-bb.geojson
 This is the correct number of blocks! How did that magic work? Let’s decompose our one-liner:
 
 - `jq` here we are calling jq like any other CLI tool
-
 - `data/vt-bb.geojson` is the path of our file as the last argument
-
 - `'.features | length'` is a **jq filter**. Remember, we are in the shell and whitespace has meaning. 
 Not quoting it would mean that we have 4 arguments when we just have 2.
 
     - `.features` will return the json array containing every feature 
-  
     - `|` will pipe the stream of features into a new filter
-
     - `length` is a built-in function that behaves differently depending the object input. Given an array, it will return the number of elements
   
 
@@ -153,13 +149,10 @@ jq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_e
 ```
 
 - `(.features[0].properties | keys_unsorted)` here nothing new we added parentheses to enforce precedence. We are getting the header of our csv
-
 - `(.features[].properties | to_entries | map(.value))` :
 
     * we are starting from all our properties (not the first one)
-
     * passing it to `to_entries` convert our object to multiple objects with "key" / "value" (see margin)
-
     * finally, `map(.value)` gets all "value" for every selected features
 
 ::: {.column-margin}
@@ -179,17 +172,12 @@ jq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_e
 ```
 :::  
 
-
 - Finally `@csv`  convert to a csv and we redirect the output later in `data/sample.csv`
-
 
 We have just explored the surface! `jq` can help to filter some specific features:
 
-    
- - every geometries "served" in our file?
-    
+ - every geometries "served" in our file? 
  - the first node in every geometries)?
-
  - etc!
 
 `jq` is a generic tool for filtering json and lot of people are following the JSON spec in GeoJSON, so we can build on top of all their monumental work!
