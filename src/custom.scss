@@ -104,14 +104,23 @@ header {
   .quarto-title-breadcrumbs .breadcrumb {
     //margin-bottom: .5em;
     //font-size: .9rem;
-    background-color: rgb(0, 131, 93);
+    //background-color: rgb(0, 131, 93);
+    background-color: rgba(163, 226, 181, 0.75);
+
+    li.breadcrumb-item::before {
+      //color: #FFFFFF;
+      color: rgb(89, 102, 106);
+    }
 
     li a {
-      color: #FFFFFF;
+      //color: #FFFFFF;
+      color: rgb(89, 102, 106);
     }
 
     li:last-of-type a {
-      color: #6cFF7d;
+      //color: #6cFF7d;
+      color: rgb(22, 52, 62);
+
     }
   }
 }
