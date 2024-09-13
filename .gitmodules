@@ -1,3 +1,6 @@
 [submodule "posts/fcc-duckdb/proj-fcc-report"]
 	path = posts/fcc-duckdb/proj-fcc-report
 	url = https://github.com/ruralinnovation/proj-fcc-report
+[submodule "prez/auber_2024"]
+	path = prez/auber_2024
+	url = git@github.com:ruralinnovation/prez_auber_2024.git
