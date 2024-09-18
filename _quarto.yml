@@ -3,10 +3,10 @@ project:
   output-dir: docs
   render:
     - "*.qmd"
-    - "!posts/07_bead/proj-fcc-report/*.qmd"
-    - "posts/07_bead/proj-fcc-report/index.qmd"
-    - "!posts/fcc-duckdb/proj-fcc-report/*.qmd"
-    - "posts/fcc-duckdb/proj-fcc-report/index.qmd"
+    - "!posts/07_fcc-duckdb/proj-fcc-report/*.qmd"
+    - "posts/07_fcc-duckdb/proj-fcc-report/index.qmd"
+    - "!posts/09_bead/proj-fcc-report/*.qmd"
+    - "posts/09_bead/proj-fcc-report/index.qmd"
 
 website:
   title: "Mapping & Data Analytics Blog @cori-risi"
@@ -21,8 +21,11 @@ website:
     right:
       - href: about.qmd
         text: About
+      - href: presentations.qmd
+        text: Presentations
       - icon: github
         href: https://github.com/ruralinnovation
+
 format:
   html:
     theme:

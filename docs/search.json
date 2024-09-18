@@ -1,77 +1,182 @@
 [
   {
-    "objectID": "posts/pg_duckdb/index.html",
-    "href": "posts/pg_duckdb/index.html",
+    "objectID": "posts/06_pg_duckdb/index.html",
+    "href": "posts/06_pg_duckdb/index.html",
     "title": "From elephant to duck!",
     "section": "",
     "text": "There are a lot of conversations — understandably — on the use of Apache Parquet, Apache Arrow and DuckDB.\nThose three open source technologies and the amount of resources that a personal laptop has now have lowered the need of using a classic RDBMS for out-of-memory-tasks for data science works, and in some cases maybe the need of using a distributed computing framework like Spark.\nLet’s see an example of how they can be used to convert a table in a PostgresSQL database to a parquet file:"
   },
   {
-    "objectID": "posts/pg_duckdb/index.html#libraries-and-data-optional-needed",
-    "href": "posts/pg_duckdb/index.html#libraries-and-data-optional-needed",
+    "objectID": "posts/06_pg_duckdb/index.html#libraries-and-data-optional-needed",
+    "href": "posts/06_pg_duckdb/index.html#libraries-and-data-optional-needed",
     "title": "From elephant to duck!",
     "section": "Libraries and data (optional) needed",
     "text": "Libraries and data (optional) needed\n\nlibrary(duckdb)\nlibrary(dplyr, warn.conflicts = FALSE)\nlibrary(dbplyr, warn.conflicts = FALSE)\n\nWe will use FCC NBM raw data with December 2023’s release. You can learn more about on FCC website.\nThe table we will be converting has a size of 102 GB (without indexes), has 888,176,676 rows and 12 columns and it is the results of importing around 440 CSVs."
   },
   {
-    "objectID": "posts/pg_duckdb/index.html#getting-your-credentials",
-    "href": "posts/pg_duckdb/index.html#getting-your-credentials",
+    "objectID": "posts/06_pg_duckdb/index.html#getting-your-credentials",
+    "href": "posts/06_pg_duckdb/index.html#getting-your-credentials",
     "title": "From elephant to duck!",
     "section": "Getting your credentials",
     "text": "Getting your credentials\nSince this exercise is all about converting data that is currently stored in PostgreSQL (using R), the first step in connecting to your PG database server is getting your credentials. We are assuming here that you have a .pgpass file located in your home directory (~/.pgpass).\nThe code below will assume that you have this ~/.pgpass set and that it contains a one-line connection string.\n\nget_cred &lt;- function(path_pgpass) {\n  pgpass &lt;- readLines(path_pgpass)\n  cred &lt;- unlist(strsplit(pgpass, \":\"))\n  names(cred) &lt;- c(\"host\", \"port\", \"db\", \"user\", \"pwd\")\n  return(cred)\n}\n\ncred &lt;- get_cred(\"~/.pgpass\")"
   },
   {
-    "objectID": "posts/pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
-    "href": "posts/pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
+    "objectID": "posts/06_pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
+    "href": "posts/06_pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
     "title": "From elephant to duck!",
     "section": "Use DuckDB magic to convert it!",
     "text": "Use DuckDB magic to convert it!\nWell, the magic is a four-step steps process:\n\nConnect to DuckDB\nGet DuckDB’s postgres extension\nConnect to your DB (with the credential we have set)\nUse DuckDB COPY specifying where and how you want it to be partitioned\n\nThis will be wrapped in one function:\n\n# yes I am terrible at naming\nfrom_elephant_to_duck &lt;- function(table_name, path_for_parquet, part1, part2) {\n  # 1. Connect to duckDB\n  con &lt;- DBI::dbConnect(duckdb())\n  DBI::dbExecute(con,\n                 sprintf(\"SET temp_directory ='%s';\", tempdir()))\n  # cleaning up after the function\n  on.exit(DBI::dbDisconnect(con), add = TRUE)\n  \n  # 2. install and load PG extension\n  DBI::dbExecute(con, \"INSTALL postgres\")\n  DBI::dbExecute(con, \"LOAD postgres\")\n\n  # 3. Connect, \"attach\" to your PG server\n  attach_string &lt;- sprintf(\n    \"ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)\",\n    cred[\"db\"],\n    cred[\"user\"],\n    cred[\"pwd\"],\n    cred[\"host\"]\n  )\n  DBI::dbExecute(con, attach_string)\n\n  # 4. Copy to a parquet\n  copy_string &lt;- sprintf(\"COPY \n    (SELECT * \n      FROM db.%s)\n    TO '%s' (FORMAT 'parquet', PARTITION_BY(%s, %s))\", \n    table_name, \n    path_for_parquet, \n    part1, part2)\n  DBI::dbExecute(con, copy_string)\n\n  return(invisible(path_for_parquet))\n}\n# not an improvement on this function will be to take cred has an argument\n\n\nPartitioning\nDeciding how to partition a parquet is both a data and business decisions. In this case, state_abbr and technology are good tradeoffs in terms of the overall size of each parquet file and the fast performance of common filtering and grouping operations on this data."
   },
   {
-    "objectID": "posts/pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
-    "href": "posts/pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
+    "objectID": "posts/06_pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
+    "href": "posts/06_pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
     "title": "From elephant to duck!",
     "section": "Let’s do it and do some quick comparisons",
     "text": "Let’s do it and do some quick comparisons\n\nstart &lt;- Sys.time()\nfrom_elephant_to_duck(\"staging.dec23\", \"dec23\", \"state_abbr\", \"technology\")\nend &lt;- Sys.time()\nend - start\n# Time difference of 58.92108 mins\n\nOn a relatively new MacBook with a wifi-internet-speed connection (probably the limiting factor here) it took a little less than an hour to run from_elephant_to_duck.\nWe can also compare our 102 GB to the size of parquet files (ofc. PG offer additional perks!):\n\ndu -sh dec23/\n# 14 G\n\nFinally, just for the pleasure, let’s run a quick query:\n\nstart &lt;- Sys.time()\ncon &lt;- DBI::dbConnect(duckdb::duckdb(), shutdown = TRUE, dbdir = tempdir())\n\nreading_string &lt;-\n  sprintf(\"read_parquet('%s/*/*/*.parquet', hive_partitioning = true)\",\n          \"dec23\")\nfcc &lt;- dplyr::tbl(con, reading_string)\n\n# check number of row\nfcc |&gt; \n  summarize(tot_rows = count(location_id)) |&gt; \n  collect()\n\n# A tibble: 1 × 1\n#    tot_rows\n#       &lt;dbl&gt;\n# 1 888176676\n\n# let's start one a bit \nstart &lt;- Sys.time()\n# this will count every location_id by state_abbr and frn\n# that have low_latency\nstart &lt;- Sys.time()\nq1 &lt;- fcc |&gt;\n  filter(low_latency == TRUE) |&gt; \n  summarize(\n    count_location =  n_distinct(location_id),\n    .by = c(state_abbr, frn)\n  )\n\nrez_q1 &lt;- collect(q1)\nend - start\n# Time difference of 4.262549 mins\n\nDBI::dbDisconnect(con)\n\nImpressive, isn’t it? We will probably dig a bit deeper on those new technologies in future blog posts, so check back soon!"
   },
   {
-    "objectID": "posts/micropolitan_formd/index.html",
-    "href": "posts/micropolitan_formd/index.html",
+    "objectID": "prez/urisa_2023/index.html#our-slides-are-online",
+    "href": "prez/urisa_2023/index.html#our-slides-are-online",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Our slides are online:",
+    "text": "Our slides are online:\nSlides realized in Quarto hosted in GitHub\nData stack: SQL (PostgreSQL), R with DBI, targets, ggplot2 and “in house” packages\n\n\n\n\n\nhttps://ruralinnovation.github.io/conf_URISA_2023/#/title-slide"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#who-are-we",
+    "href": "prez/urisa_2023/index.html#who-are-we",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Who are we?",
+    "text": "Who are we?\n\n\n\nOlivier 🇨🇵 Senior Data Engineer\n\n\nDrew 🇺🇸 Lead Data Scientist\n\n\n@drew"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#center-on-rural-innovation-cori",
+    "href": "prez/urisa_2023/index.html#center-on-rural-innovation-cori",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Center On Rural Innovation (CORI)",
+    "text": "Center On Rural Innovation (CORI)\nAdvancing economic prosperity in rural America through the creation of inclusive tech economy ecosystem that support scalable entrepreneurship and tech job creation\n\n\nLearn more at: https://ruralinnovation.us/\n\n\nWhere does Broadband stand in CORI goals Here the focus is Broadband is an ingredient of tech ecosystem\nFCC staff estimates:\nWhy we like it:\n\nDataset provided for both 2010 and 2020 US census boundaries\nFCC provides their methodology and codes\nSame institution that NBM and F477\nProvides estimates for housing units"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#defining-rural",
+    "href": "prez/urisa_2023/index.html#defining-rural",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Defining Rural",
+    "text": "Defining Rural\n\n\n“Rural” refers to the “nonmetro plus” definition: includes all nonmetro counties and all tracts classified as RUCA 4 or higher.\nUSDA’s Rural-Urban Community Area (RUCA) codes categorize rural areas by population density, urbanization, and daily commuting.\nMore nuanced rural definition, classifying rural places along a continuum.\nCombining definitions: better encapsulates places that are rural in character.\n\n\n\n\n\n\n\nFor more information see Defining rural America: The consequences of how we count.\n\n\n@drew"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#historical-and-new-data-context",
+    "href": "prez/urisa_2023/index.html#historical-and-new-data-context",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Historical and new data context",
+    "text": "Historical and new data context\n\nFederal Communications Commission: FCC\nForm 477: F477\nNational Broadband Map: NBM\nUnserved: less than 25/3 Mbps downloads/uploads\n\n\n\n\n\nF477\nNBM\n\n\n\n\nUS Census Boundaries\n2010\n2020\n\n\nType of recording\nself declarative\nself declarative\n\n\nGranularity\nCensus block\nLocations\n\n\nServices\nMobile/Fixed\nMobile/Fixed\n\n\nReleases\n2014-2021\n2022 - Ongoing\n\n\n\nF477: “at least one” rule\nNBM’s BEAD definitions for Unserved area: an area in which not less than 80 percent of broadband-serviceable locations are unserved locations.\n\nsome BB defs here should we add an iframe of some FCC NBM localisation?\n@drew is it 2014?\nat least one rule: if one ISP said he was present with 25/3 in a census block then all location in that block was “Served”"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#whats-on-the-table",
+    "href": "prez/urisa_2023/index.html#whats-on-the-table",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "What’s on the table",
+    "text": "What’s on the table\n\n\nBroadband Equity Access and Deployment (BEAD) Program provides $42.45B to expand high-speed internet access by planning, infrastructure deployment, and adoption programs\nMinimum BEAD allocations range from $25M (US territories) to $100M (states and Puerto Rico)\nRemaining BEAD allocations vary across states depending on the number and concentration of unserved locations\n\n\n\n\n\ndrew\n\n\nSource: PEW / State specific funding"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#bead-priorities",
+    "href": "prez/urisa_2023/index.html#bead-priorities",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "BEAD Priorities",
+    "text": "BEAD Priorities\n\n\nCoverage\nPrimary goal is to extend broadband internet service (≥ 25Mbps/3Mbps) to all\nTechnology\nPrioritizes projects designed to provide fiber connectivity directly to the end user\nAffordability\nPrioritizes projects that aim at improving affordability of service\n\n\n\n\n\nSource: BEAD NOFO"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#workflow-from-fcc-to-our-products",
+    "href": "prez/urisa_2023/index.html#workflow-from-fcc-to-our-products",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Workflow: From FCC to our products",
+    "text": "Workflow: From FCC to our products\n\n\n\n\n\n%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Bitter'}}}%%\nflowchart LR\n    A1[FCC Website] --&gt; B1[Server]\n    A2[TIGER Census block] --&gt; C2\n    subgraph Ingestion\n    direction TB\n    B1--&gt; B2[Data Wrangling]\n    B2--&gt; B3[Populate source DB]\n    end\n    subgraph Transform\n    direction TB\n    C1[Remove Sat.]--&gt; C2[Count Services]\n    C2 --&gt; C3[Blocks DB]\n    end\n    subgraph Serving\n    direction TB\n    D1[Prod. Server] --&gt; D2[Analytic Tables]\n    end\n    Ingestion --&gt; Transform\n    C3 --&gt; D1\n    D1--&gt; E1[Tools: &lt;Br&gt; Public CH &lt;BR&gt; Internal BCAT]\n    D2--&gt; E1\n    D2 --&gt; E4[Data team &lt;BR&gt; Broadband team]\n    D2 --&gt; E5[URISA]\n    click E1 \"https://broadband-risk.ruralinnovation.us/\" _parent\n    click E5 \"https://ruralinnovation.github.io/conf_URISA_2023/#/workflow-from-fcc-to-our-products\" _parent\n    style Ingestion fill:#fff\n    style Transform fill:#fff\n    style Serving fill:#fff\n\n\n\n\n\n\n\nTwo releases per year (but 7 versions of Dec. 2022 releases)\n440 files for 11GB zipped (Fixed)\nThis presentation uses FCC staff estimates\n\n\n\nTools used: Shell (Bash) with GNU tools (make, csvkit, sed) and GDAL / SQL (PostgreSQL/PostGIS) / A bit of R (ease some processes)"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#results-at-the-us-level",
+    "href": "prez/urisa_2023/index.html#results-at-the-us-level",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Results: At the US level",
+    "text": "Results: At the US level\n\nNot Reported - UnservedFiber access - 100/20 MBps\n\n\n\n\n\n\n\n\n\n\n@olivier"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#rural-areas-overrepresented-in-poor-quality-broadband",
+    "href": "prez/urisa_2023/index.html#rural-areas-overrepresented-in-poor-quality-broadband",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Rural areas Overrepresented in poor quality broadband!",
+    "text": "Rural areas Overrepresented in poor quality broadband!\n\nNBMF477\n\n\n\n\n\n\n\n\n\n\n@olivier Observation about f477 -&gt; NBM in US is similar in rural but “amplifed”\nRural has a worth bb access: * more Not Reported / Unserved. * less coverage, especialy fiber."
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#rural-areas-underestimated-in-statistics",
+    "href": "prez/urisa_2023/index.html#rural-areas-underestimated-in-statistics",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Rural Areas underestimated in statistics",
+    "text": "Rural Areas underestimated in statistics\n\nPicking a 50% threshold can help close the gap!"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#conclusions",
+    "href": "prez/urisa_2023/index.html#conclusions",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Conclusions",
+    "text": "Conclusions\n\n\n\n\n\n\n\nWhile nonrural access to broadband has exceeded 94% since 2014, rural broadband access stood at just 65% in 2014 and only reached 92% in 2020.\n\n\n\nOverall great improvement in data quality and better understanding on what is happening on the ground (is it enough?)\nRural areas are still overrepresented in poor quality broadband\nRural areas are systematically underestimated by data definitions\n\n\n\n\n@drew even if we use the tabulate 2010 2020 we will face some issues: where are the locations in % covered of x 2020 or y 2020 block"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#next-steps",
+    "href": "prez/urisa_2023/index.html#next-steps",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Next steps",
+    "text": "Next steps\nWhat are we measuring? An improvement on coverage, an improvement on data quality or both?\n\n\nGetting better at counting people (use Housing Units, Microsoft building footprint, ACS)\nGetting better at estimating locations (optimize the cost of building broadband infrastructure)\n\n\nIndividual can provides ground level recording from their location (challenges)\nFabric data\nUpcoming FCC updates (API?)\n\n\nSharing our results: Providing a reproducible way for others to explore FCC data at scale"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#contacts",
+    "href": "prez/urisa_2023/index.html#contacts",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Contacts",
+    "text": "Contacts\n\n\nOlivier Leroy\n📧: olivier.leroy@ruralinnovations\nLinkedIn\n\nDrew Rosebush\n📧: drew.rosebush@ruralinnovation.us\nLinkedIn\n\n\n\n\nWebsite: https://ruralinnovation.us\nLinkedIn | Twitter | Facebook | Instagram | YouTube"
+  },
+  {
+    "objectID": "prez/urisa_2023/index.html#check-out-our-bead-climate-tool",
+    "href": "prez/urisa_2023/index.html#check-out-our-bead-climate-tool",
+    "title": "Extending Broadband to Underserved Areas",
+    "section": "Check out our BEAD Climate Tool",
+    "text": "Check out our BEAD Climate Tool\n\n\n\n\n\n\nhttps://broadband-risk.ruralinnovation.us/#about"
+  },
+  {
+    "objectID": "posts/05_micropolitan_formd/index.html",
+    "href": "posts/05_micropolitan_formd/index.html",
     "title": "The top 10 micropolitan areas for raising venture capital",
     "section": "",
     "text": "Venture capital funding plays a pivotal role in bolstering a region’s economy by catalyzing innovation, fostering job creation, and attracting talent.\nVenture capital investment injects vital funding into promising businesses with growth potential, enabling them to scale rapidly. And it holds immense promise for revitalizing rural America’s economy by empowering local entrepreneurs with the resources needed to innovate and grow.\nThough rural areas have traditionally been overlooked by investors, many rural entrepreneurs have managed to access capital that is crucial to transforming their budding ideas into thriving businesses.\nTo explore the venture capital landscape in rural America, we can use the SEC’s Form D to identify the amount of funding received by private businesses in micropolitan areas. A micropolitan area, as defined by the U.S. Office of Management and Budget, is a region centered around a small urban cluster with a population between 10,000 and 50,000 people. These areas are smaller than metropolitan areas but still exhibit economic and social connections with nearby population centers, making micropolitans an ideal geography for observing venture capital dynamics in rural economies.\n\n\n\n\n\n\nHere are the micropolitan areas that raised the most venture capital in 2022:\n\n\nAnd here are the micropolitan areas that raised the most in venture capital funding per capita in 2022:\n\n\n\n\n\n\n\nMicro VC totals (click chart to enlarge)\n\n\n\n\n\n\n\nMicro VC chart (click chart to enlarge)\n\n\n\n\n\n\nSheridan, Heber, and Jackson achieved these outcomes through an abundance of venture capital activity, while the others are driven by a couple companies with very large deals in 2022.\nOf the 81 micropolitans that raised venture capital through Regulation D in 2022, the 10 that raised the most represent 84% of the $1.4 billion in funding that went to micropolitan areas.\n\nThe 10 micropolitans with the most funding per capita varied widely by population size. Grants, New Mexico, had the smallest population (11,620), while the population of Bozeman, Montana, (109,207) was much larger than the others on this list. Heber, Utah was the second-largest micropolitan area in the top 10 (68,075).\n\nEach of these micropolitan areas demonstrates that rural communities are ripe with entrepreneurial spirit and offer investors an abundance of opportunities.\nIf you’d like to dig deeper on the power of direct investment in rural startups, check out our seed fund, the CORI Innovation Fund, which has a growing portfolio of rural tech startups with high-growth potential. Or you can connect with our team directly to learn more!"
   },
   {
-    "objectID": "posts/formd_intro/index.html",
-    "href": "posts/formd_intro/index.html",
-    "title": "Using SEC Form D to estimate venture capital",
+    "objectID": "posts/03_urisa-2023/index.html",
+    "href": "posts/03_urisa-2023/index.html",
+    "title": "MDA’s URISA-2023 presentation",
     "section": "",
-    "text": "The ability of private companies to raise capital serves as a crucial indicator of entrepreneurial activity. The Security and Exchange Commission’s Form D is a publicly available dataset published quarterly that allows researchers to explore the landscape of venture capital investment.\nThe Securities Act of 1933 established the laws governing the sale of securities, including registration with the SEC and mandatory reporting of information that may be pertinent to the public’s investment decisions. Private companies wishing to raise capital from accredited investors may still do so under the exemption, “Regulation D.”\n\nHow Form D works\nRegulation D allows private companies to conduct fundraising rounds without registering with the SEC or regularly submitting information that is required for publicly traded companies. This exemption is the primary mechanism for early-stage ventures to access funding.\nWhen a company raises capital under Regulation D, they must file a Form D, which includes basic information about the company and the fundraising round. This data allows analysts to better understand who is raising venture capital and how much is invested.\nHowever, Form D data is often messy and riddled with human errors. Here are some tips on accessing and cleaning Form D data.\n\n\nCleaning up Form D data\nData going back to Q1 2008 can be downloaded directly from the SEC website. For a more streamlined process, we recommend accessing data in R using the dform package developed by Matt Rogers (download package from matthewjrogers/dform). This allows users to load data by quarter from 2014 to present.\nIf you download the Form D files directly through the SEC and sum the “TOTALAMOUNTSOLD” column the total amount of capital raised through Regulation D in 2022 would be approximately $10.4 trillion, which dramatically overestimates the actual amount of venture capital raised that year. Ernst & Young reported total U.S. venture capital raised in 2022 at $209.4 billion, Statista places it at $241 billion, and Dealroom at $235 billion.\nThis discrepancy is partly due to duplicate entries. The dform package takes a first pass at removing duplicates, reducing the total amount raised in 2022 to $4.9 trilion. This figure still overestimates the amount of venture capital raised by U.S. businesses in 2022. Therefore, once the data is accessed through dform, additional cleaning steps are necessary before the data can provide a realistic picture of the venture landscape.\nFirst, eliminate companies headquartered outside of the U.S. Removing these entries brings the estimate from $4.9 trillion down to $3.7 trillion.\nNext, retain only the latest amendment within a funding round. Companies may file amendments for various reasons. They may need to notify the SEC of additional capital raised within a single fundraising effort or for something as small as correcting a spelling error in a previous filing.\nBecause “TOTALAMOUNTSOLD” is cumulative for a fundraising round, simply summing this column would double-count funds already accounted for in other entries. In order to count these dollars once and attribute the most up-to-date total to the round, we recommend keeping only the latest entry for each funding round. This brings the total down to about $3.67 trillion.\nFinally, remove investment funds. Investment vehicles raising capital on the private market are also required to file a Form D. To distinguish these entities from startups or companies raising operational funds, we recommend separating them from the filings made by traditional businesses. We identify filings made by investment vehicles in the following ways:\n\nThe industry is reported as “Pooled Investment Fund.”\nThe field “ISPOOLEDINVESTMENTFUNDTYPE” is flagged as “TRUE.” This means the purpose of this fundraising round was for a pooled investment fund.\nThe entity name contains the word “FUND.” This indicates that the entity is actually an investment fund.\nThe entity name contains the word “HOLDING.” This indicates that the entity is actually a holding company.\n\nThis brings the final estimate for the total amount of venture funding raised by U.S. companies in 2022 down to about $233B.\nWhile other measures may further refine estimates based on Form D data, using the dform package and following these steps results in a final estimate consistent with other figures for 2022."
+    "text": "The Urban and Regional Information Systems Association — better known as URISA — is the main association for professionals in the GIS and geospatial space.\nWe were fortunate enough to be selected to present a portion of our work on broadband infrastructure at URISA’s annual conference GIS-Pro-2023 last fall in Columbus, Ohio.\nOur presentation, “Rural areas are overrepresented in unserved areas and underestimated in statistics,” utilized FCC NBM data to demonstrate several points:\n\nThe new dataset (NBM) represents an improvement over the previous one (derived from F477).\nDespite the narrowing gap between rural and nonrural areas, significant disparities still exist.\nThe current BEAD definition of an “unserved area” is less suitable for rural areas than for urban areas.\n\nYou can dig more into our presentation HERE!"
   },
   {
-    "objectID": "posts/awesomejq/index.html",
-    "href": "posts/awesomejq/index.html",
+    "objectID": "posts/01_awesomejq/index.html",
+    "href": "posts/01_awesomejq/index.html",
     "title": "Awesome jq and GeoJSON",
     "section": "",
     "text": "If you are manipulating a lot of GeoJSON features/objects and want a quick CLI tool to filter and slice them, you should give jq a try! Since there are not many tutorials that exist on using jq to manage objects in the GeoJSON family, we hope that these few tricks will help you on your learning journey.\nIn these examples, we are using a GeoJSON file of Vermont census blocks with attributes related to our work on broadband data. While it is not a deeply nested JSON, it is perfect to illustrate some common use cases.\nA quick check lets us know that it is 94 MB. Not “that” big but still decent.\nFirst, let’s see how many features it has. Here’s how we can approximate that:\nThis is a decent estimate, but we are counting some rows at the top and bottom of the file that are not features (try head -n 5 and tail on it if you are curious).\nWe can also use jq:\nThis is the correct number of blocks! How did that magic work? Let’s decompose our one-liner:"
   },
   {
-    "objectID": "posts/awesomejq/index.html#jq-and-small-examples",
-    "href": "posts/awesomejq/index.html#jq-and-small-examples",
+    "objectID": "posts/01_awesomejq/index.html#jq-and-small-examples",
+    "href": "posts/01_awesomejq/index.html#jq-and-small-examples",
     "title": "Awesome jq and GeoJSON",
     "section": "jq and small examples",
     "text": "jq and small examples\nIt is always a good idea to start experimenting with smaller data so let’s start there:\njq '.features[0:5]'  data/vt-bb.geojson &gt; data/not_perfect_sample.geojson\nHere we asked for the [0 to 5[ (yes: [inclusive:exclusive]) features (i.e. the first 5) and jq produces a valid JSON but if you inspect it you will see that we moved from GeoJSON to a JSON array.\njq '.' data/not_perfect_sample.geojson | head -n 4\n# [\n#   {\n#     \"type\": \"Feature\",\n#     \"properties\": {\n# to compare with :\njq '.' data/vt-bb.geojson | head -n 12/\n# { \n#   \"type\": \"FeatureCollection\",\n#   \"name\": \"sql_statement\",\n#   \"crs\": {\n#     \"type\": \"name\",\n#     \"properties\": {\n#       \"name\": \"urn:ogc:def:crs:EPSG::4269\"\n#     }\n#   },\n#   \"features\": [\n#     {\n#       \"type\": \"Feature\",\nWe used .features so jq returned the following value (here an array with all the features) but we lost type, name, and crs.\nYou probably have noticed that . is used to return all the input as output but by default jq will prettify the JSON.\nIf we want to keep them we will need to be slighly more verbose:\njq '{type: .type , crs: .crs ,features: .features[0:10]}' data/vt-bb.geojson &gt; data/better_sample.geojson \nHere we introduced {} allowing you to build a JSON object. We then “stick them” together and send them to a new JSON with a proper type and crs (grabbed from our original file)."
   },
   {
-    "objectID": "posts/awesomejq/index.html#extracting-geometries",
-    "href": "posts/awesomejq/index.html#extracting-geometries",
+    "objectID": "posts/01_awesomejq/index.html#extracting-geometries",
+    "href": "posts/01_awesomejq/index.html#extracting-geometries",
     "title": "Awesome jq and GeoJSON",
     "section": "Extracting geometries!",
     "text": "Extracting geometries!\nIf we just want the geometries of our census blocks:\njq '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}' better_sample.geojson &gt; sample_only_geom.geojson  \nHere we are streaming a filter on .features[] into a function that will delete all properties (del(.properties)) and this will be used as an array for features.\nWe will need to adjust that code a bit for data/vt-bb.geojson:\njq --compact-output  '{type: .type , crs: .crs ,features: [.features[] | del(.properties)]}'  data/vt-bb.geojson &gt; data/geom.geojson\n--compact-output will convert to a single line JSON (and saved space!). Now data/geom.geojson is 72MB."
   },
   {
-    "objectID": "posts/awesomejq/index.html#jq-please-give-me-a-data-frame",
-    "href": "posts/awesomejq/index.html#jq-please-give-me-a-data-frame",
+    "objectID": "posts/01_awesomejq/index.html#jq-please-give-me-a-data-frame",
+    "href": "posts/01_awesomejq/index.html#jq-please-give-me-a-data-frame",
     "title": "Awesome jq and GeoJSON",
     "section": "jq , please give me a data frame:",
     "text": "jq , please give me a data frame:\nBut wait what if we just want the properties?\n\nFirst let’s get their keys:\nAt the top level if we do ..\njq `keys` data/better_sample.geojson\n#[\n#  \"crs\",\n#  \"features\",\n#  \"type\"\n]\n.. we get the keys for the first array. We need to go in the features object to get properties and pass it to the keys function. We are a bit lazy and just ask for the first feature.\njq '.features[0].properties | keys' data/better_sample.geojson\n\n\nSecond make them into a csv\nHere we will need to buckle up a bit as our code is becoming quite a big line:\njq -r '(.features[0].properties | keys_unsorted), (.features[].properties | to_entries | map(.value))| @csv' data/better_sample.geojson &gt; data/sample.csv\n\n(.features[0].properties | keys_unsorted) here nothing new we added parentheses to enforce precedence. We are getting the header of our csv\n(.features[].properties | to_entries | map(.value)) :\n\nwe are starting from all our properties (not the first one)\npassing it to to_entries convert our object to multiple objects with “key” / “value” (see margin)\nfinally, map(.value) gets all “value” for every selected features\n\n\n\n\n{\n\"key\": \"state_abbr\",\n\"value\": \"VT\"\n},\n{\n\"key\": \"geoid_st\",\n\"value\": \"50\"\n},\n{\n\"key\": \"geoid_co\",\n\"value\": \"50005\"\n}\n\nFinally @csv convert to a csv and we redirect the output later in data/sample.csv\n\nWe have just explored the surface! jq can help to filter some specific features:\n\nevery geometries “served” in our file?\nthe first node in every geometries)?\netc!\n\njq is a generic tool for filtering json and lot of people are following the JSON spec in GeoJSON, so we can build on top of all their monumental work!"
@@ -86,29 +191,127 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Recent posts",
+    "title": "Recent Posts",
     "section": "",
     "text": "From elephant to duck!\n\n\n\n\n\n\n\n\n\n\n\nJul 14, 2024\n\n\nOlivier Leroy, John Hall\n\n\n\n\n\n\n\n\n\n\n\n\nThe top 10 micropolitan areas for raising venture capital\n\n\n\n\n\n\n\n\n\n\n\nJul 3, 2024\n\n\nBrittany Kainen\n\n\n\n\n\n\n\n\n\n\n\n\nUsing SEC Form D to estimate venture capital\n\n\n\n\n\n\n\n\n\n\n\nJul 1, 2024\n\n\nBrittany Kainen\n\n\n\n\n\n\n\n\n\n\n\n\nMDA’s URISA-2023 presentation\n\n\n\n\n\n\n\n\n\n\n\nJun 20, 2024\n\n\nOlivier Leroy, Drew Rosebush\n\n\n\n\n\n\n\n\n\n\n\n\nSix tips for mapping rural data\n\n\n\n\n\n\n\n\n\n\n\nMay 24, 2024\n\n\nCamden Blatchly\n\n\n\n\n\n\n\n\n\n\n\n\nAwesome jq and GeoJSON\n\n\n\n\n\n\n\n\n\n\n\nMar 10, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/mapping_rural_tips/index.html",
-    "href": "posts/mapping_rural_tips/index.html",
+    "objectID": "posts/02_mapping_rural_tips/index.html",
+    "href": "posts/02_mapping_rural_tips/index.html",
     "title": "Six tips for mapping rural data",
     "section": "",
     "text": "Mapping rural data is hard! Between sparse populations, inaccurate data, and the challenge of defining what even counts as rural, creating accurate and meaningful maps can be a minefield. In this blog post, I’ll cover six tips for mapping rural data that will prepare you to confidently tackle your next rural-centric mapping project"
   },
   {
-    "objectID": "posts/mapping_rural_tips/index.html#footnotes",
-    "href": "posts/mapping_rural_tips/index.html#footnotes",
+    "objectID": "posts/02_mapping_rural_tips/index.html#footnotes",
+    "href": "posts/02_mapping_rural_tips/index.html#footnotes",
     "title": "Six tips for mapping rural data",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nSee Openshaw, 1983: https://quantile.info/wp-content/uploads/2014/09/38-maup-openshaw.pdf↩︎"
   },
   {
-    "objectID": "posts/urisa-2023/index.html",
-    "href": "posts/urisa-2023/index.html",
-    "title": "MDA’s URISA-2023 presentation",
+    "objectID": "posts/04_formd_intro/index.html",
+    "href": "posts/04_formd_intro/index.html",
+    "title": "Using SEC Form D to estimate venture capital",
     "section": "",
-    "text": "The Urban and Regional Information Systems Association — better known as URISA — is the main association for professionals in the GIS and geospatial space.\nWe were fortunate enough to be selected to present a portion of our work on broadband infrastructure at URISA’s annual conference GIS-Pro-2023 last fall in Columbus, Ohio.\nOur presentation, “Rural areas are overrepresented in unserved areas and underestimated in statistics,” utilized FCC NBM data to demonstrate several points:\n\nThe new dataset (NBM) represents an improvement over the previous one (derived from F477).\nDespite the narrowing gap between rural and nonrural areas, significant disparities still exist.\nThe current BEAD definition of an “unserved area” is less suitable for rural areas than for urban areas.\n\nYou can dig more into our presentation HERE!"
+    "text": "The ability of private companies to raise capital serves as a crucial indicator of entrepreneurial activity. The Security and Exchange Commission’s Form D is a publicly available dataset published quarterly that allows researchers to explore the landscape of venture capital investment.\nThe Securities Act of 1933 established the laws governing the sale of securities, including registration with the SEC and mandatory reporting of information that may be pertinent to the public’s investment decisions. Private companies wishing to raise capital from accredited investors may still do so under the exemption, “Regulation D.”\n\nHow Form D works\nRegulation D allows private companies to conduct fundraising rounds without registering with the SEC or regularly submitting information that is required for publicly traded companies. This exemption is the primary mechanism for early-stage ventures to access funding.\nWhen a company raises capital under Regulation D, they must file a Form D, which includes basic information about the company and the fundraising round. This data allows analysts to better understand who is raising venture capital and how much is invested.\nHowever, Form D data is often messy and riddled with human errors. Here are some tips on accessing and cleaning Form D data.\n\n\nCleaning up Form D data\nData going back to Q1 2008 can be downloaded directly from the SEC website. For a more streamlined process, we recommend accessing data in R using the dform package developed by Matt Rogers (download package from matthewjrogers/dform). This allows users to load data by quarter from 2014 to present.\nIf you download the Form D files directly through the SEC and sum the “TOTALAMOUNTSOLD” column the total amount of capital raised through Regulation D in 2022 would be approximately $10.4 trillion, which dramatically overestimates the actual amount of venture capital raised that year. Ernst & Young reported total U.S. venture capital raised in 2022 at $209.4 billion, Statista places it at $241 billion, and Dealroom at $235 billion.\nThis discrepancy is partly due to duplicate entries. The dform package takes a first pass at removing duplicates, reducing the total amount raised in 2022 to $4.9 trilion. This figure still overestimates the amount of venture capital raised by U.S. businesses in 2022. Therefore, once the data is accessed through dform, additional cleaning steps are necessary before the data can provide a realistic picture of the venture landscape.\nFirst, eliminate companies headquartered outside of the U.S. Removing these entries brings the estimate from $4.9 trillion down to $3.7 trillion.\nNext, retain only the latest amendment within a funding round. Companies may file amendments for various reasons. They may need to notify the SEC of additional capital raised within a single fundraising effort or for something as small as correcting a spelling error in a previous filing.\nBecause “TOTALAMOUNTSOLD” is cumulative for a fundraising round, simply summing this column would double-count funds already accounted for in other entries. In order to count these dollars once and attribute the most up-to-date total to the round, we recommend keeping only the latest entry for each funding round. This brings the total down to about $3.67 trillion.\nFinally, remove investment funds. Investment vehicles raising capital on the private market are also required to file a Form D. To distinguish these entities from startups or companies raising operational funds, we recommend separating them from the filings made by traditional businesses. We identify filings made by investment vehicles in the following ways:\n\nThe industry is reported as “Pooled Investment Fund.”\nThe field “ISPOOLEDINVESTMENTFUNDTYPE” is flagged as “TRUE.” This means the purpose of this fundraising round was for a pooled investment fund.\nThe entity name contains the word “FUND.” This indicates that the entity is actually an investment fund.\nThe entity name contains the word “HOLDING.” This indicates that the entity is actually a holding company.\n\nThis brings the final estimate for the total amount of venture funding raised by U.S. companies in 2022 down to about $233B.\nWhile other measures may further refine estimates based on Form D data, using the dform package and following these steps results in a final estimate consistent with other figures for 2022."
+  },
+  {
+    "objectID": "presentations.html",
+    "href": "presentations.html",
+    "title": "MDA Presentations",
+    "section": "",
+    "text": "Working with Primary data\n\n\ncori.data.fcc:: an example of data as code\n\n\n\n\n\n\n\n\nOct 20, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\n\n\n\n\n\n\nExtending Broadband to Underserved Areas\n\n\nHow rural areas are overrepresented in unserved areas and underestimated in statistics\n\n\n\n\n\n\n\n\nOct 18, 2023\n\n\nOlivier Leroy & Drew Rosebush\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#cori",
+    "href": "prez/auber_2024/index.html#cori",
+    "title": "Working with Primary data",
+    "section": "CORI",
+    "text": "CORI\n\nMe\nCORI"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#me",
+    "href": "prez/auber_2024/index.html#me",
+    "title": "Working with Primary data",
+    "section": "Me",
+    "text": "Me"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#our-needs",
+    "href": "prez/auber_2024/index.html#our-needs",
+    "title": "Working with Primary data",
+    "section": "Our needs",
+    "text": "Our needs\nConnect humanity project\nBead tools"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#previous-workflow",
+    "href": "prez/auber_2024/index.html#previous-workflow",
+    "title": "Working with Primary data",
+    "section": "Previous workflow:",
+    "text": "Previous workflow:\n\nWhat FCC data look like in the wild\nOur previous ingestion process\nLimits of it"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#manual-v.s.",
+    "href": "prez/auber_2024/index.html#manual-v.s.",
+    "title": "Working with Primary data",
+    "section": "Manual v.s. …",
+    "text": "Manual v.s. …\n\n\nVideo\n\n🔁 Repeat for every state\n\n🔁 Repeat for every version\n\n🔴 Error prone\n\n\n\nnum_files &lt;- get_nbm_available() |&gt;\n  dplyr::filter(release == \"June 30, 2023\" &\n                data_type == \"Fixed Broadband\" &\n                data_category == \"Nationwide\") |&gt;\n  nrow()\n\nfiles_dl &lt;- length(list.files(dir,\n                              pattern = \"*.zip\"))\n\nidentical(num_files, files_dl)\n# TRUE"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#automated",
+    "href": "prez/auber_2024/index.html#automated",
+    "title": "Working with Primary data",
+    "section": "… Automated",
+    "text": "… Automated\n\n\n\nVisualCode\n\n\nVideo\n\n\n\nlibrary(cori.data.fcc)\n\ndir &lt;- \"data_swamp/nbm/\"\n\nget_nbm_release()\n\nnbm_data &lt;- get_nbm_available()\n\nsystem(sprintf(\"mkdir -p %s\", dir))\n\ndl_nbm(\n  path_to_dl = \"data_swamp/nbm\",\n  release_date = \"June 30, 2023\",\n  data_type = \"Fixed Broadband\",\n  data_category = \"Nationwide\",\n)\n\n\n\n\n\n\nnum_files &lt;- get_nbm_available() |&gt;\n  dplyr::filter(release == \"June 30, 2023\" &\n                data_type == \"Fixed Broadband\" &\n                data_category == \"Nationwide\") |&gt;\n  nrow()\n\nfiles_dl &lt;- length(list.files(dir,\n                              pattern = \"*.zip\"))\n\nidentical(num_files, files_dl)\n# TRUE"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#new-technologies",
+    "href": "prez/auber_2024/index.html#new-technologies",
+    "title": "Working with Primary data",
+    "section": "New technologies",
+    "text": "New technologies\n\nDuckDB and S3\nParquet and interoperability"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#packaging-code-and-data",
+    "href": "prez/auber_2024/index.html#packaging-code-and-data",
+    "title": "Working with Primary data",
+    "section": "Packaging code and data",
+    "text": "Packaging code and data\n\ninternally developed packages are […] extra expert team members.1\n\nhttps://milesmcbain.xyz/posts/data-analysis-reuse/"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#download-files",
+    "href": "prez/auber_2024/index.html#download-files",
+    "title": "Working with Primary data",
+    "section": "Download files",
+    "text": "Download files"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#use-cori-curated-files",
+    "href": "prez/auber_2024/index.html#use-cori-curated-files",
+    "title": "Working with Primary data",
+    "section": "Use CORI curated files",
+    "text": "Use CORI curated files"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#custom",
+    "href": "prez/auber_2024/index.html#custom",
+    "title": "Working with Primary data",
+    "section": "Custom",
+    "text": "Custom\n\nIsp over time?\nStates level analysis?"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#references",
+    "href": "prez/auber_2024/index.html#references",
+    "title": "Working with Primary data",
+    "section": "References",
+    "text": "References\nTODO:\nMcBain (2024, March 11). Before I Sleep: Patterns and anti-patterns of data analysis reuse. Retrieved from https://milesmcbain.com/posts/data-analysis-reuse/\nhttps://www.emilyriederer.com/post/team-of-packages/#collaboration"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#contacts",
+    "href": "prez/auber_2024/index.html#contacts",
+    "title": "Working with Primary data",
+    "section": "Contacts",
+    "text": "Contacts\nWebsite: https://ruralinnovation.us\nLinkedIn | Twitter | Facebook | Instagram | YouTube"
   }
 ]
