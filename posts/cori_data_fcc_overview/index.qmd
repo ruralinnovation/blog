@@ -1,0 +1,209 @@
+---
+title: "3 cool ways to use our new FCC R package"
+author: "Camden Blatchly"
+editor: visual
+---
+
+
+```{r, warning=FALSE, message=FALSE, include=FALSE}
+
+library(cori.data.fcc)
+library(dplyr)
+library(sf)
+library(ggplot2)
+library(cori.charts)
+library(basemapR)
+library(here)
+
+cori.charts::load_fonts()
+
+i_am("posts/cori_data_fcc_overview/index.qmd")
+
+```
+
+Here at the Center on Rural Innovation, we spend a lot of time thinking about 
+broadband and broadband data. We've created [detailed interactive maps of broadband service](https://rural-broadband-map.ruralinnovation.us/), produced [research on the economic impacts of broadband on rural areas](https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/), and helped states and regions develop more equitable and effective
+[broadband strategies](https://ruralinnovationstrategies.com/capabilities/broadband-consulting/). Now, we're excited to share `cori.data.fcc`, an R package which makes Federal 
+Communication Commission (FCC) broadband data 
+releases more accessible than ever before.
+
+In this blog post, I'll cover three ways you can make use of our package to 
+better understand broadband access and gaps.
+
+## 1. View broadband service in your area
+
+`cori.data.fcc` makes it easy to quickly pull data on broadband service for 
+your area. In particular, using the `get_nbm_bl` function, you can access a 
+CORI-opinionated version of the National Broadband Map's latest release at the 
+Census block level for any U.S. county. 
+
+In the example below, I pull NBM data for the "Northeast Kingdom" of Vermont, 
+a region consisting of Caledonia, Essex, and Orleans counties, and then 
+bind them together.
+
+```{r, message=FALSE, warning=FALSE}
+
+caledonia_co_nbm <- get_nbm_bl(geoid_co = "50005")
+essex_co_nbm <- get_nbm_bl(geoid_co = "50009")
+orleans_co_nbm <- get_nbm_bl(geoid_co = "50019")
+
+nek_nbm <- bind_rows(
+  caledonia_co_nbm,
+  essex_co_nbm,
+  orleans_co_nbm
+)
+
+```
+
+Here's what the data looks like:
+
+```{r}
+
+glimpse(nek_nbm)
+
+```
+
+Next, we can pull spatial data using the `tigris` package to help us 
+visualize the NBM data.
+
+```{r, message=FALSE, warning=FALSE}
+
+# Load all Vermont Census blocks
+vt_blocks <- tigris::blocks("VT", progress_bar = FALSE)
+
+# Load the Place boundary for the town of St. Johnsbury, VT
+vt_places <- tigris::places(state = "VT", progress_bar = FALSE)
+stj_vt <- vt_places %>% filter(GEOID == "5062125")
+
+```
+
+
+We're going to take a look at broadband service in the town of 
+St. Johnsbury, VT - one of the main towns in the region. To do so, we 
+can filter to blocks that intersect with St. Johnsbury's place boundary and 
+then combine this data with NBM data to calculate the percent of locations 
+in each block in St. Johnsbury that have 100/20 Mbps service, the FCC 
+service benchmark for high speed broadband.
+
+```{r, message=FALSE, warning=FALSE}
+
+stj_vt_blocks <- vt_blocks %>%
+  filter(lengths(st_intersects(., stj_vt)) > 0)
+
+stj_vt_bb_blocks <- inner_join(
+    stj_vt_blocks,
+    nek_nbm,
+    by = c("GEOID20" = "geoid_bl")
+  ) %>%
+  mutate(
+    pct_100_20 = cnt_100_20 / cnt_total_locations
+  )
+
+```
+
+
+Now that we've prepared our data, we can map it using `ggplot` to get 
+a sense of the spatial trends of broadband access in St. Johnsbury.
+
+```{r, message=FALSE, warning=FALSE}
+
+bbox <- st_bbox(stj_vt_bb_blocks) %>%
+      fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)
+
+fig <- ggplot(data = stj_vt_bb_blocks) +
+  base_map(
+    bbox,
+    increase_zoom = 3,
+    basemap = 'voyager'
+  ) +
+  geom_sf(aes(fill = pct_100_20), color = "white", linewidth = .1, alpha = 0.8) +
+  scale_fill_cori(
+    discrete = FALSE,
+    palette = "ctg3gn",
+    labels = scales::label_percent()
+  ) +
+  coord_sf(
+    expand = TRUE, 
+    xlim = c(bbox['xmin'], bbox['xmax']), 
+    ylim = c(bbox['ymin'], bbox['ymax'])
+  ) +
+  theme_cori_map() +
+  theme(
+    legend.key.width = unit(50, "pt"),
+  ) + 
+  labs(
+    title = "Broadband service in St. Johnsbury, VT",
+    subtitle = "Percent of locations with access to 100/20 Mbps service by census block",
+    caption = "Data source: FCC National Broadband Map\nMap source: © OpenStreetMap contributors © CARTO"
+  )
+
+save_plot(fig, here("posts/cori_data_fcc_overview/images/st_j_bb_service.png"), chart_height = 8)
+
+```
+
+<img style="width: 100%;" src="images/st_j_bb_service.png" alt="Map of broadband service in St. Johnsbury, VT" >
+
+
+
+```{r}
+
+vt_477 <- get_f477("VT", frn = "all")
+
+```
+
+
+```{r}
+
+nek_bb_frn <- "0031871197"
+
+nek_service <- vt_477  %>%
+  filter(FRN == nek_bb_frn) %>%
+  mutate(
+    Date = as.character(Date)
+  )
+
+
+nek_service_blocks <- left_join(
+    nek_service,
+    vt_blocks,
+    by = c("BlockCode" = "GEOID20")
+  ) %>%
+  left_join(
+    .,
+    nek_nbm,
+    by = c("BlockCode" = "geoid_bl")
+  ) %>%
+  mutate(
+    pct_100_20 = cnt_100_20 / cnt_total_locations
+  ) %>%
+  sf::st_as_sf()
+
+# Next step: Map all these blocks with a basemap to show to Footprint for NEK Community Broadband
+
+```
+
+
+```{r}
+
+fig <- ggplot(data = nek_service_blocks) +
+  base_map(
+    st_bbox(nek_service_blocks),
+    increase_zoom = 3,
+    basemap = 'voyager'
+  ) +
+  geom_sf(aes(fill = pct_100_20), color = "black", linewidth = 0.25, alpha = .5) +
+  scale_fill_cori(
+    discrete = FALSE,
+    palette = "ctg3gn",
+    labels = scales::label_percent()
+  ) +
+  theme_cori_map() +
+  theme(
+    legend.key.width = unit(40, "pt")
+  ) +
+  labs(title = "NEK Broadband Footprint")
+
+fig
+
+
+```
