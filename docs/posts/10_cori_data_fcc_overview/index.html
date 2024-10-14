@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Camden Blatchly">
+<meta name="dcterms.date" content="2024-10-14">
 
 <title>Mapping &amp; Data Analytics Blog @cori-risi - 2 cool uses of the cori.data.fcc package</title>
 <style>
@@ -143,7 +144,14 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">2 cool uses of the cori.data.fcc package</h1>
-                      </div>
+                                <div class="quarto-categories">
+                <div class="quarto-category">FCC</div>
+                <div class="quarto-category">broadband</div>
+                <div class="quarto-category">sf</div>
+                <div class="quarto-category">ggplot2</div>
+                <div class="quarto-category">spatial data</div>
+              </div>
+                  </div>
   </div>
     
   
@@ -156,6 +164,12 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
             </div>
     </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 14, 2024</p>
+      </div>
+    </div>
     
       
     </div>
@@ -170,7 +184,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#view-broadband-service-in-your-area" id="toc-view-broadband-service-in-your-area" class="nav-link active" data-scroll-target="#view-broadband-service-in-your-area">1. View broadband service in your area</a></li>
-  <li><a href="#view-internet-service-provider-isp-footprints" id="toc-view-internet-service-provider-isp-footprints" class="nav-link" data-scroll-target="#view-internet-service-provider-isp-footprints">1. View Internet Service Provider (ISP) footprints</a></li>
+  <li><a href="#view-internet-service-provider-isp-footprints" id="toc-view-internet-service-provider-isp-footprints" class="nav-link" data-scroll-target="#view-internet-service-provider-isp-footprints">2. View Internet Service Provider (ISP) footprints</a></li>
   </ul>
 </nav>
     </div>
@@ -393,24 +407,28 @@ $ release                                 &lt;date&gt; 2023-12-01, 2023-12-01, 2
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>nek_locations_fiber <span class="sc">/</span> nek_locations_total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Turns out only 11.5% of locations have fiber access in the Northeast Kingdom.</p>
+<p>Turns out only <strong>11.5%</strong> of locations have fiber access in the Northeast Kingdom.</p>
 </section>
 <section id="view-internet-service-provider-isp-footprints" class="level2">
-<h2 class="anchored" data-anchor-id="view-internet-service-provider-isp-footprints">1. View Internet Service Provider (ISP) footprints</h2>
+<h2 class="anchored" data-anchor-id="view-internet-service-provider-isp-footprints">2. View Internet Service Provider (ISP) footprints</h2>
 <p>We can also use <code>cori.data.fcc</code> to understand ISP presence in an area. Let’s begin by pulling data for the state of Vermont.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vt_477 <span class="ot">&lt;-</span> <span class="fu">get_f477</span>(<span class="st">"VT"</span>, <span class="at">frn =</span> <span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pulling all Form 477 for the state of Vermont</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vt_477 <span class="ot">&lt;-</span> <span class="fu">get_f477</span>(<span class="st">"VT"</span>, <span class="at">frn =</span> <span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In this example, I’m interested in seeing the footprint for <a href="https://nekbroadband.org/">NEK Broadband</a>, a community non-profit bringing high-speed broadband to the Northeast Kingdom.</p>
 <p>Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data we can filter using this unique FRN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nek_bb_frn <span class="ot">&lt;-</span> <span class="st">"0031871197"</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nek_bb_frn <span class="ot">&lt;-</span> <span class="st">"0031871197"</span> <span class="co"># This number can be found using cori.data.fcc::fcc_provider</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>nek_service <span class="ot">&lt;-</span> vt_477  <span class="sc">%&gt;%</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FRN <span class="sc">==</span> nek_bb_frn) <span class="sc">%&gt;%</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Date =</span> <span class="fu">as.character</span>(Date)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also have filtered using the frn argument: </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># nek_477 &lt;- get_f477("VT", frn = "0031871197") </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here’s what the Form 477 data looks like for NEK Broadband:</p>
 <div class="cell">
