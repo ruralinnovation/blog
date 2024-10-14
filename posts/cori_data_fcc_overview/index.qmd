@@ -14,7 +14,9 @@ library(cori.charts)
 library(basemapR)
 library(here)
 
-cori.charts::load_fonts()
+sysfonts::font_add_google("Lato")
+showtext::showtext_auto()
+showtext::showtext_opts(dpi = 300)
 
 i_am("posts/cori_data_fcc_overview/index.qmd")
 
@@ -54,7 +56,7 @@ glimpse(nek_nbm)
 
 Next, we can pull spatial data using the `tigris` package to help us visualize the NBM data.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 # Load all Vermont Census blocks
 vt_blocks <- tigris::blocks("VT", progress_bar = FALSE)
@@ -67,7 +69,7 @@ stj_vt <- vt_places %>% filter(GEOID == "5062125")
 
 We're going to take a look at broadband service in the town of St. Johnsbury, VT - one of the main towns in the region. To do so, we can filter to blocks that intersect with St. Johnsbury's place boundary and then combine this data with NBM data to calculate the percent of locations in each block in St. Johnsbury that have 100/20 Mbps service, the FCC service benchmark for high speed broadband.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 stj_vt_blocks <- vt_blocks %>%
   filter(lengths(st_intersects(., stj_vt)) > 0)
@@ -85,7 +87,7 @@ stj_vt_bb_blocks <- inner_join(
 
 Now that we've prepared our data, we can map it using `ggplot` to get a sense of the spatial trends of broadband access in St. Johnsbury.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 bbox <- st_bbox(stj_vt_bb_blocks) %>%
       fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)
@@ -126,7 +128,7 @@ save_plot(fig, here("posts/cori_data_fcc_overview/images/st_j_bb_service.png"), 
 
 We can also easily plot broadband service data for the entire Northeast Kingdom.
 
-```{r}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 # Get Census block BB data for the Northeast Kingdom
 nek_bb_blocks <- inner_join(
     vt_blocks,
@@ -146,7 +148,7 @@ vt_places_centroids <- vt_places %>%
 
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 bbox <- st_bbox(nek_bb_blocks) %>%
       fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)
@@ -190,7 +192,7 @@ save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_bb_service.png"), c
 
 We can also explore broadband access by technology, such as fiber, cable, and fixed wireless.
 
-```{r}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 fig <- ggplot(data = nek_bb_blocks) +
   base_map(
@@ -233,7 +235,7 @@ Fiber service is pretty rare! Only a handful of towns have access.
 
 We can easily generate some summary statistics to see what percent of locations in the region have fiber access.
 
-```{r}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 # Calculate share of locations with access to fiber
 nek_locations_total <- nek_bb_blocks %>% 
@@ -250,13 +252,12 @@ nek_locations_fiber / nek_locations_total
 
 Turns out only 11.5% of locations have fiber access in the Northeast Kingdom.
 
-## 1. View Internet Service Provider (ISP) footprints
+## 2. View Internet Service Provider (ISP) footprints
 
 We can also use `cori.data.fcc` to understand ISP presence in an area. Let's 
 begin by pulling data for the state of Vermont.
 
-```{r}
-
+```{r, message=FALSE, warning=FALSE}
 
 vt_477 <- get_f477("VT", frn = "all")
 
@@ -269,7 +270,7 @@ bringing high-speed broadband to the Northeast Kingdom.
 Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data 
 we can filter using this unique FRN.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 
 nek_bb_frn <- "0031871197"
 
@@ -284,7 +285,7 @@ nek_service <- vt_477  %>%
 
 Here's what the Form 477 data looks like for NEK Broadband:
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 
 glimpse(nek_service)
 
@@ -292,7 +293,7 @@ glimpse(nek_service)
 
 To map the data, we can once again join in with Census blocks from TIGRIS.
 
-```{r}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 nek_service_blocks <- left_join(
     nek_service,
@@ -313,10 +314,7 @@ nek_service_blocks <- left_join(
 ```
 
 
-```{r}
-# 
-# bbox <- st_bbox(nek_service_blocks) %>%
-#       fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 fig <- ggplot(data = nek_service_blocks) +
   base_map(
@@ -344,7 +342,7 @@ save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_broadband_footprint
 We can also examine what service NEK Broadband is reported to be providing.
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 
 fig <- ggplot(data = nek_service_blocks) +
   base_map(
