@@ -1,10 +1,12 @@
 ---
-title: "2 cool uses of the cori.data.fcc package"
+title: "2 cool uses of the cori.data.fcc R package"
 author: "Camden Blatchly"
 editor: visual
+date: "2024-10-14"
+categories: [FCC, broadband, sf, ggplot2, spatial data]
 ---
 
-```{r, warning=FALSE, message=FALSE, include=FALSE}
+```{r setup, warning=FALSE, message=FALSE, include=FALSE}
 
 library(cori.data.fcc)
 library(dplyr)
@@ -18,11 +20,11 @@ sysfonts::font_add_google("Lato")
 showtext::showtext_auto()
 showtext::showtext_opts(dpi = 300)
 
-i_am("posts/cori_data_fcc_overview/index.qmd")
+i_am("posts/10_cori_data_fcc_overview/index.qmd")
 
 ```
 
-Here at the Center on Rural Innovation, we spend a lot of time thinking about broadband data. We've created [detailed interactive maps of broadband service](https://rural-broadband-map.ruralinnovation.us/), produced [research on the economic impacts of broadband on rural areas](https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/), and helped states and regions develop more equitable and effective [broadband strategies](https://ruralinnovationstrategies.com/capabilities/broadband-consulting/). Now, we're excited to share `cori.data.fcc`, an R package which makes Federal Communication Commission (FCC) broadband data releases more accessible than ever before.
+Here at the Center on Rural Innovation, we spend a lot of time thinking about broadband data. We've created [detailed interactive maps of broadband service](https://rural-broadband-map.ruralinnovation.us/), produced [research on the economic impacts of broadband on rural areas](https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/), and helped states and regions develop more equitable and effective [broadband strategies](https://ruralinnovationstrategies.com/capabilities/broadband-consulting/). Now, we're excited to share [`cori.data.fcc`](https://ruralinnovation.github.io/cori.data.fcc/), an R package which makes Federal Communication Commission (FCC) broadband data releases more accessible than ever before.
 
 In this blog post, I'll cover two ways you can make use of our package to better understand broadband access and gaps.
 
@@ -32,7 +34,7 @@ In this blog post, I'll cover two ways you can make use of our package to better
 
 In the example below, I pull NBM data for the "Northeast Kingdom" of Vermont, a region consisting of Caledonia, Essex, and Orleans counties, and then bind them together.
 
-```{r, message=FALSE, warning=FALSE}
+```{r dl_county, message=FALSE, warning=FALSE}
 
 caledonia_co_nbm <- get_nbm_bl(geoid_co = "50005")
 essex_co_nbm <- get_nbm_bl(geoid_co = "50009")
@@ -48,15 +50,21 @@ nek_nbm <- bind_rows(
 
 Here's what the data looks like:
 
-```{r}
+```{r glimpse}
 
 glimpse(nek_nbm)
 
 ```
 
-Next, we can pull spatial data using the `tigris` package to help us visualize the NBM data.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+::: {.callout-tip}
+ if you are curious of what those columns means you can use `get_fcc_dictionary("nbm_block")`
+:::
+
+
+Next, we can pull spatial data using the [`tigris`](https://github.com/walkerke/tigris) package to help us visualize the NBM data.
+
+```{r tigris, message=FALSE, warning=FALSE, eval=FALSE}
 
 # Load all Vermont Census blocks
 vt_blocks <- tigris::blocks("VT", progress_bar = FALSE)
@@ -69,7 +77,7 @@ stj_vt <- vt_places %>% filter(GEOID == "5062125")
 
 We're going to take a look at broadband service in the town of St. Johnsbury, VT - one of the main towns in the region. To do so, we can filter to blocks that intersect with St. Johnsbury's place boundary and then combine this data with NBM data to calculate the percent of locations in each block in St. Johnsbury that have 100/20 Mbps service, the FCC service benchmark for high speed broadband.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r intersect, message=FALSE, warning=FALSE, eval=FALSE}
 
 stj_vt_blocks <- vt_blocks %>%
   filter(lengths(st_intersects(., stj_vt)) > 0)
@@ -87,7 +95,7 @@ stj_vt_bb_blocks <- inner_join(
 
 Now that we've prepared our data, we can map it using `ggplot` to get a sense of the spatial trends of broadband access in St. Johnsbury.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r bb_service, message=FALSE, warning=FALSE, eval=FALSE}
 
 bbox <- st_bbox(stj_vt_bb_blocks) %>%
       fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)
@@ -128,7 +136,8 @@ save_plot(fig, here("posts/cori_data_fcc_overview/images/st_j_bb_service.png"), 
 
 We can also easily plot broadband service data for the entire Northeast Kingdom.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r bb_nek_wrangle, message=FALSE, warning=FALSE, eval=FALSE}
+
 # Get Census block BB data for the Northeast Kingdom
 nek_bb_blocks <- inner_join(
     vt_blocks,
@@ -148,7 +157,8 @@ vt_places_centroids <- vt_places %>%
 
 ```
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+
+```{r map_bb_nek, message=FALSE, warning=FALSE, eval=FALSE}
 
 bbox <- st_bbox(nek_bb_blocks) %>%
       fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)
@@ -166,7 +176,8 @@ fig <- ggplot(data = nek_bb_blocks) +
     labels = scales::label_percent(),
     reverse = T
   ) +
-  geom_sf_label(data = vt_places_centroids, aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
+  geom_sf_label(data = vt_places_centroids, 
+                aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
   coord_sf(
     expand = TRUE, 
     xlim = c(bbox['xmin'], bbox['xmax']), 
@@ -192,7 +203,7 @@ save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_bb_service.png"), c
 
 We can also explore broadband access by technology, such as fiber, cable, and fixed wireless.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r fiber_nek, message=FALSE, warning=FALSE, eval=FALSE}
 
 fig <- ggplot(data = nek_bb_blocks) +
   base_map(
@@ -207,7 +218,8 @@ fig <- ggplot(data = nek_bb_blocks) +
     labels = scales::label_percent(),
     reverse = T
   ) +
-  geom_sf_label(data = vt_places_centroids, aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
+  geom_sf_label(data = vt_places_centroids, 
+                aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
   coord_sf(
     expand = TRUE, 
     xlim = c(bbox['xmin'], bbox['xmax']), 
@@ -235,7 +247,7 @@ Fiber service is pretty rare! Only a handful of towns have access.
 
 We can easily generate some summary statistics to see what percent of locations in the region have fiber access.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r percent_fiber, message=FALSE, warning=FALSE, eval=FALSE}
 
 # Calculate share of locations with access to fiber
 nek_locations_total <- nek_bb_blocks %>% 
@@ -250,15 +262,16 @@ nek_locations_fiber / nek_locations_total
 
 ```
 
-Turns out only 11.5% of locations have fiber access in the Northeast Kingdom.
+Turns out only **11.5%** locations have fiber access in the Northeast Kingdom.
 
 ## 2. View Internet Service Provider (ISP) footprints
 
 We can also use `cori.data.fcc` to understand ISP presence in an area. Let's 
 begin by pulling data for the state of Vermont.
 
-```{r, message=FALSE, warning=FALSE}
+```{r f477, message=FALSE, warning=FALSE}
 
+# Pulling all Form 477 for the state of Vermont
 vt_477 <- get_f477("VT", frn = "all")
 
 ```
@@ -267,12 +280,12 @@ In this example, I'm interested in seeing the footprint for
 [NEK Broadband](https://nekbroadband.org/), a community non-profit 
 bringing high-speed broadband to the Northeast Kingdom.
 
-Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data 
+Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data. 
 we can filter using this unique FRN.
 
-```{r, message=FALSE, warning=FALSE}
+```{r filter_nek, message=FALSE, warning=FALSE}
 
-nek_bb_frn <- "0031871197"
+nek_bb_frn <- "0031871197" # This number can be found using cori.data.fcc::fcc_provider
 
 nek_service <- vt_477  %>%
   filter(FRN == nek_bb_frn) %>%
@@ -280,20 +293,27 @@ nek_service <- vt_477  %>%
     Date = as.character(Date)
   )
 
+# We could also have filtered using the frn argument: 
+# nek_477 <- get_f477("VT", frn = "0031871197") 
+
 ```
 
 
 Here's what the Form 477 data looks like for NEK Broadband:
 
-```{r, message=FALSE, warning=FALSE}
+```{r gimpse_f477, message=FALSE, warning=FALSE}
 
 glimpse(nek_service)
 
 ```
 
+::: {.callout-tip}
+Use `get_fcc_dictionary("f477")` to get a description!
+:::
+
 To map the data, we can once again join in with Census blocks from TIGRIS.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r wrangling_nek, message=FALSE, warning=FALSE, eval=FALSE}
 
 nek_service_blocks <- left_join(
     nek_service,
@@ -314,7 +334,7 @@ nek_service_blocks <- left_join(
 ```
 
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r nek_bb, message=FALSE, warning=FALSE, eval=FALSE}
 
 fig <- ggplot(data = nek_service_blocks) +
   base_map(
@@ -341,8 +361,7 @@ save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_broadband_footprint
 
 We can also examine what service NEK Broadband is reported to be providing.
 
-
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r nek_service, message=FALSE, warning=FALSE, eval=FALSE}
 
 fig <- ggplot(data = nek_service_blocks) +
   base_map(
