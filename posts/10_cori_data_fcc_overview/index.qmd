@@ -1,5 +1,5 @@
 ---
-title: "2 cool uses of the cori.data.fcc package"
+title: "2 cool uses of the cori.data.fcc R package"
 author: "Camden Blatchly"
 editor: visual
 date: "2024-10-14"
@@ -24,7 +24,7 @@ i_am("posts/10_cori_data_fcc_overview/index.qmd")
 
 ```
 
-Here at the Center on Rural Innovation, we spend a lot of time thinking about broadband data. We've created [detailed interactive maps of broadband service](https://rural-broadband-map.ruralinnovation.us/), produced [research on the economic impacts of broadband on rural areas](https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/), and helped states and regions develop more equitable and effective [broadband strategies](https://ruralinnovationstrategies.com/capabilities/broadband-consulting/). Now, we're excited to share `cori.data.fcc`, an R package which makes Federal Communication Commission (FCC) broadband data releases more accessible than ever before.
+Here at the Center on Rural Innovation, we spend a lot of time thinking about broadband data. We've created [detailed interactive maps of broadband service](https://rural-broadband-map.ruralinnovation.us/), produced [research on the economic impacts of broadband on rural areas](https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/), and helped states and regions develop more equitable and effective [broadband strategies](https://ruralinnovationstrategies.com/capabilities/broadband-consulting/). Now, we're excited to share [`cori.data.fcc`](https://ruralinnovation.github.io/cori.data.fcc/), an R package which makes Federal Communication Commission (FCC) broadband data releases more accessible than ever before.
 
 In this blog post, I'll cover two ways you can make use of our package to better understand broadband access and gaps.
 
@@ -56,9 +56,15 @@ glimpse(nek_nbm)
 
 ```
 
-Next, we can pull spatial data using the `tigris` package to help us visualize the NBM data.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+::: {.callout-tip}
+ if you are curious of what those columns means you can use `get_fcc_dictionary("nbm_block")`
+:::
+
+
+Next, we can pull spatial data using the [`tigris`](https://github.com/walkerke/tigris) package to help us visualize the NBM data.
+
+```{r tigris, message=FALSE, warning=FALSE, eval=FALSE}
 
 # Load all Vermont Census blocks
 vt_blocks <- tigris::blocks("VT", progress_bar = FALSE)
@@ -89,7 +95,7 @@ stj_vt_bb_blocks <- inner_join(
 
 Now that we've prepared our data, we can map it using `ggplot` to get a sense of the spatial trends of broadband access in St. Johnsbury.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r bb_service, message=FALSE, warning=FALSE, eval=FALSE}
 
 bbox <- st_bbox(stj_vt_bb_blocks) %>%
       fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)
@@ -170,7 +176,8 @@ fig <- ggplot(data = nek_bb_blocks) +
     labels = scales::label_percent(),
     reverse = T
   ) +
-  geom_sf_label(data = vt_places_centroids, aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
+  geom_sf_label(data = vt_places_centroids, 
+                aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
   coord_sf(
     expand = TRUE, 
     xlim = c(bbox['xmin'], bbox['xmax']), 
@@ -211,7 +218,8 @@ fig <- ggplot(data = nek_bb_blocks) +
     labels = scales::label_percent(),
     reverse = T
   ) +
-  geom_sf_label(data = vt_places_centroids, aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
+  geom_sf_label(data = vt_places_centroids, 
+                aes(label = NAME), size = 2, color = "black", family = "Lato", fontface = "bold") +  
   coord_sf(
     expand = TRUE, 
     xlim = c(bbox['xmin'], bbox['xmax']), 
@@ -254,7 +262,7 @@ nek_locations_fiber / nek_locations_total
 
 ```
 
-Turns out only **11.5%** of locations have fiber access in the Northeast Kingdom.
+Turns out only **11.5%** locations have fiber access in the Northeast Kingdom.
 
 ## 2. View Internet Service Provider (ISP) footprints
 
@@ -272,7 +280,7 @@ In this example, I'm interested in seeing the footprint for
 [NEK Broadband](https://nekbroadband.org/), a community non-profit 
 bringing high-speed broadband to the Northeast Kingdom.
 
-Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data 
+Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data. 
 we can filter using this unique FRN.
 
 ```{r filter_nek, message=FALSE, warning=FALSE}
@@ -298,6 +306,10 @@ Here's what the Form 477 data looks like for NEK Broadband:
 glimpse(nek_service)
 
 ```
+
+::: {.callout-tip}
+Use `get_fcc_dictionary("f477")` to get a description!
+:::
 
 To map the data, we can once again join in with Census blocks from TIGRIS.
 
