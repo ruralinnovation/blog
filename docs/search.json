@@ -1,38 +1,157 @@
 [
   {
-    "objectID": "posts/06_pg_duckdb/index.html",
-    "href": "posts/06_pg_duckdb/index.html",
-    "title": "From elephant to duck!",
-    "section": "",
-    "text": "There are a lot of conversations — understandably — on the use of Apache Parquet, Apache Arrow and DuckDB.\nThose three open source technologies and the amount of resources that a personal laptop has now have lowered the need of using a classic RDBMS for out-of-memory-tasks for data science works, and in some cases maybe the need of using a distributed computing framework like Spark.\nLet’s see an example of how they can be used to convert a table in a PostgresSQL database to a parquet file:"
+    "objectID": "prez/auber_2024/index.html#overview",
+    "href": "prez/auber_2024/index.html#overview",
+    "title": "[TITLE TBD]",
+    "section": "Overview",
+    "text": "Overview\n\nIntroduction \nResearch using the latest broadband service data\nChallenges to using the latest broadband service data i.e., More data more problems\nOur broadband data package: cori.data.fcc i.e., How we accelerate innovation by making this complex, ever-changing broadband data more accessible and usable for research"
   },
   {
-    "objectID": "posts/06_pg_duckdb/index.html#libraries-and-data-optional-needed",
-    "href": "posts/06_pg_duckdb/index.html#libraries-and-data-optional-needed",
-    "title": "From elephant to duck!",
-    "section": "Libraries and data (optional) needed",
-    "text": "Libraries and data (optional) needed\n\nlibrary(duckdb)\nlibrary(dplyr, warn.conflicts = FALSE)\nlibrary(dbplyr, warn.conflicts = FALSE)\n\nWe will use FCC NBM raw data with December 2023’s release. You can learn more about on FCC website.\nThe table we will be converting has a size of 102 GB (without indexes), has 888,176,676 rows and 12 columns and it is the results of importing around 440 CSVs."
+    "objectID": "prez/auber_2024/index.html#hi-im-olivier-a-senior-data-engineer-at-cori",
+    "href": "prez/auber_2024/index.html#hi-im-olivier-a-senior-data-engineer-at-cori",
+    "title": "[TITLE TBD]",
+    "section": "👋 Hi, I’m Olivier, a Senior Data Engineer at CORI",
+    "text": "👋 Hi, I’m Olivier, a Senior Data Engineer at CORI\nWorking with source data—often referred to as “big”, “messy”, “unstructured” data—is a growing challenge\n\nSource: Harvard Business Review\nSocials: LinkedIn | Mastodon | Personal Website\n\n\nI find ways to add structure and meaning to data so that it can effectively inform the work of the organization’s analysts, researchers and community managers."
   },
   {
-    "objectID": "posts/06_pg_duckdb/index.html#getting-your-credentials",
-    "href": "posts/06_pg_duckdb/index.html#getting-your-credentials",
-    "title": "From elephant to duck!",
-    "section": "Getting your credentials",
-    "text": "Getting your credentials\nSince this exercise is all about converting data that is currently stored in PostgreSQL (using R), the first step in connecting to your PG database server is getting your credentials. We are assuming here that you have a .pgpass file located in your home directory (~/.pgpass).\nThe code below will assume that you have this ~/.pgpass set and that it contains a one-line connection string.\n\nget_cred &lt;- function(path_pgpass) {\n  pgpass &lt;- readLines(path_pgpass)\n  cred &lt;- unlist(strsplit(pgpass, \":\"))\n  names(cred) &lt;- c(\"host\", \"port\", \"db\", \"user\", \"pwd\")\n  return(cred)\n}\n\ncred &lt;- get_cred(\"~/.pgpass\")"
+    "objectID": "prez/auber_2024/index.html#coris-mission",
+    "href": "prez/auber_2024/index.html#coris-mission",
+    "title": "[TITLE TBD]",
+    "section": "CORI’s Mission",
+    "text": "CORI’s Mission"
   },
   {
-    "objectID": "posts/06_pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
-    "href": "posts/06_pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
-    "title": "From elephant to duck!",
-    "section": "Use DuckDB magic to convert it!",
-    "text": "Use DuckDB magic to convert it!\nWell, the magic is a four-step steps process:\n\nConnect to DuckDB\nGet DuckDB’s postgres extension\nConnect to your DB (with the credential we have set)\nUse DuckDB COPY specifying where and how you want it to be partitioned\n\nThis will be wrapped in one function:\n\n# yes I am terrible at naming\nfrom_elephant_to_duck &lt;- function(table_name, path_for_parquet, part1, part2) {\n  # 1. Connect to duckDB\n  con &lt;- DBI::dbConnect(duckdb())\n  DBI::dbExecute(con,\n                 sprintf(\"SET temp_directory ='%s';\", tempdir()))\n  # cleaning up after the function\n  on.exit(DBI::dbDisconnect(con), add = TRUE)\n  \n  # 2. install and load PG extension\n  DBI::dbExecute(con, \"INSTALL postgres\")\n  DBI::dbExecute(con, \"LOAD postgres\")\n\n  # 3. Connect, \"attach\" to your PG server\n  attach_string &lt;- sprintf(\n    \"ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)\",\n    cred[\"db\"],\n    cred[\"user\"],\n    cred[\"pwd\"],\n    cred[\"host\"]\n  )\n  DBI::dbExecute(con, attach_string)\n\n  # 4. Copy to a parquet\n  copy_string &lt;- sprintf(\"COPY \n    (SELECT * \n      FROM db.%s)\n    TO '%s' (FORMAT 'parquet', PARTITION_BY(%s, %s))\", \n    table_name, \n    path_for_parquet, \n    part1, part2)\n  DBI::dbExecute(con, copy_string)\n\n  return(invisible(path_for_parquet))\n}\n# not an improvement on this function will be to take cred has an argument\n\n\nPartitioning\nDeciding how to partition a parquet is both a data and business decisions. In this case, state_abbr and technology are good tradeoffs in terms of the overall size of each parquet file and the fast performance of common filtering and grouping operations on this data."
+    "objectID": "prez/auber_2024/index.html#what-broadband-means-to-rural-america",
+    "href": "prez/auber_2024/index.html#what-broadband-means-to-rural-america",
+    "title": "[TITLE TBD]",
+    "section": "What Broadband means to Rural America",
+    "text": "What Broadband means to Rural America\n\nWe believe that small towns are home to big ideas — and combining new models of economic development with strategic investments in new infrastructure can empower rural communities across the U.S. to participate in and benefit from the nation’s growing tech economy.\n\nBroadband knowledge is an important part of our work\n\nBroadband data is used extensively in our work to provide critical support to secure funding, develop infrastructure, and implement the programs needed to unlock the potential of rural America."
   },
   {
-    "objectID": "posts/06_pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
-    "href": "posts/06_pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
-    "title": "From elephant to duck!",
-    "section": "Let’s do it and do some quick comparisons",
-    "text": "Let’s do it and do some quick comparisons\n\nstart &lt;- Sys.time()\nfrom_elephant_to_duck(\"staging.dec23\", \"dec23\", \"state_abbr\", \"technology\")\nend &lt;- Sys.time()\nend - start\n# Time difference of 58.92108 mins\n\nOn a relatively new MacBook with a wifi-internet-speed connection (probably the limiting factor here) it took a little less than an hour to run from_elephant_to_duck.\nWe can also compare our 102 GB to the size of parquet files (ofc. PG offer additional perks!):\n\ndu -sh dec23/\n# 14 G\n\nFinally, just for the pleasure, let’s run a quick query:\n\nstart &lt;- Sys.time()\ncon &lt;- DBI::dbConnect(duckdb::duckdb(), shutdown = TRUE, dbdir = tempdir())\n\nreading_string &lt;-\n  sprintf(\"read_parquet('%s/*/*/*.parquet', hive_partitioning = true)\",\n          \"dec23\")\nfcc &lt;- dplyr::tbl(con, reading_string)\n\n# check number of row\nfcc |&gt; \n  summarize(tot_rows = count(location_id)) |&gt; \n  collect()\n\n# A tibble: 1 × 1\n#    tot_rows\n#       &lt;dbl&gt;\n# 1 888176676\n\n# let's start one a bit \nstart &lt;- Sys.time()\n# this will count every location_id by state_abbr and frn\n# that have low_latency\nstart &lt;- Sys.time()\nq1 &lt;- fcc |&gt;\n  filter(low_latency == TRUE) |&gt; \n  summarize(\n    count_location =  n_distinct(location_id),\n    .by = c(state_abbr, frn)\n  )\n\nrez_q1 &lt;- collect(q1)\nend - start\n# Time difference of 4.262549 mins\n\nDBI::dbDisconnect(con)\n\nImpressive, isn’t it? We will probably dig a bit deeper on those new technologies in future blog posts, so check back soon!"
+    "objectID": "prez/auber_2024/index.html#our-broadband-apps-in-the-wild",
+    "href": "prez/auber_2024/index.html#our-broadband-apps-in-the-wild",
+    "title": "[TITLE TBD]",
+    "section": "Our broadband apps in the wild",
+    "text": "Our broadband apps in the wild\n\n\nRural Broadband Mapping Tool\n\n\nBroadband Climate Risk Mitigation Tool\n\n\n\nNeed speaker notes with short and sweet takeaways for these two apps"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#our-broadband-research-from-ideation-to-report",
+    "href": "prez/auber_2024/index.html#our-broadband-research-from-ideation-to-report",
+    "title": "[TITLE TBD]",
+    "section": "Our broadband research: from ideation to report",
+    "text": "Our broadband research: from ideation to report"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#broadband-research-derived-from-cori-data-work",
+    "href": "prez/auber_2024/index.html#broadband-research-derived-from-cori-data-work",
+    "title": "[TITLE TBD]",
+    "section": "Broadband research derived from CORI data work",
+    "text": "Broadband research derived from CORI data work\n\n\n\nBeyond connectivity: The role of broadband in rural economic growth and resilience Weinstein, A., Erouart, M., & Dewbury, A. (2024) Beyond Connectivity: The role of broadband in rural economic growth and resilience. Center on Rural Innovation. https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/\nThe Fibre Broadband Housing Premium Across Three US States Whitacre, B. (2024). The fibre broadband housing premium across three US States. Regional Studies, Regional Science, 11(1), 38–62. https://doi.org/10.1080/21681376.2024.2305951"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#new-findings-from-broadband-research",
+    "href": "prez/auber_2024/index.html#new-findings-from-broadband-research",
+    "title": "[TITLE TBD]",
+    "section": "New findings from Broadband Research",
+    "text": "New findings from Broadband Research\n\n“Broadband access is increasingly recognized as essential infrastructure in today’s economy, with the ability to connect residents and businesses to economic opportunities nationwide”\n\n\nRural counties with high broadband utilization experience:\n\nSignificantly higher business growth rates\nIncreased self-employment growth rates\nHigher per-capita income growth rates\nStronger GDP growth rates\n\n\n\nWeinstein, A., Erouart, M., & Dewbury, A. (2024)\n\n\n\nBroadband access can have a transformative impact on economic growth and resilience, but our research found that access alone is insufficient\nBroadband utilization is a key metric, encompassing both adoption rates and effective leveraging of infrastructure"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#as-data-experts-solve-data-on-behalf-of-the-researchers",
+    "href": "prez/auber_2024/index.html#as-data-experts-solve-data-on-behalf-of-the-researchers",
+    "title": "[TITLE TBD]",
+    "section": "as data experts: solve data on behalf of the researchers",
+    "text": "as data experts: solve data on behalf of the researchers\n\n\n\n\n\nFederal Communications Commission (FCC)\n\n\n\n\n\n\n\nForm 477\nNational Broadband Map\n\n\n\n\nUS Census Boundaries\n2010\n2020\n\n\nGranularity\nCensus blocks\nLocations\n\n\nTimeframe\n2014-2021\n2022 - Ongoing\n\n\nReleases\ntwice a year\ntwice a year[^version]\n\n\nRecords\n416,447,807\n3,488,191,994\n\n\nSize\n400MB/year\n22GB/year\n\n\n\n\n\nBig messy data\nRecquire domain knowledge\nEvolving data landscape\n\n\n\n\n\nAgency in charge of regulating “everything” communications\nTheir data landscape is evolving fast (now they have a platform!)\n\nHow to work with constant change upstream?\nThese datasets are voluminous, involving hundreds of files, especially for the Form 477 data which covers ISP data since 2014\nFCC releases lack “guard rails” in terms of data quality and consistency. In addition to publishing very meager change logs (based on CostQuest’s pre-release/proprietary updates), issues include multiple encodings, erroneous values, and limited quality control\nAnalysis of the National Broadband Map (NBM) data reveals inconsistencies and potential errors in key identifiers like the FCC Registration Number (FRN), Provider ID, and Brand Name: * Different FRNs and Provider IDs are used for the same ISP (“EATEL Corp.”) The same Provider ID is associated with different FRNs (Acentek). Multiple FRNs exist for well-known ISPs like Windstream and AT&T."
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#how-you-would-use-the-fccs-dataplatform",
+    "href": "prez/auber_2024/index.html#how-you-would-use-the-fccs-dataplatform",
+    "title": "[TITLE TBD]",
+    "section": "How you would use the FCC’s data/platform…",
+    "text": "How you would use the FCC’s data/platform…\n\n\nVideo\n\n\n🔁 Repeat for every State (56)\n🔁 Repeat for every version (??)\n🔴 Error prone (500 hundred clicks)"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#as-a-broadband-researcher",
+    "href": "prez/auber_2024/index.html#as-a-broadband-researcher",
+    "title": "[TITLE TBD]",
+    "section": "As a broadband researcher,",
+    "text": "As a broadband researcher,\n\nI wish I didn’t have to manually download FCC data\nI wish I could share my analysis (and code) with colleagues\nI wish I could easily perform quality checks on the raw FCC data\n\n… I wish I had more time to do the interesting research and analysis"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#light-from-positconf-slack-is-buzzing",
+    "href": "prez/auber_2024/index.html#light-from-positconf-slack-is-buzzing",
+    "title": "[TITLE TBD]",
+    "section": "💡 Light from posit::conf, Slack is buzzing!",
+    "text": "💡 Light from posit::conf, Slack is buzzing!\nWorkshop on DuckDB (Parquet / Arrow / OLAP)\n\n\n\n\n\n\nWarning\n\n\nContains real slack messages with typos!"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#data-packaged-as-code",
+    "href": "prez/auber_2024/index.html#data-packaged-as-code",
+    "title": "[TITLE TBD]",
+    "section": "… data packaged as code",
+    "text": "… data packaged as code\n\n\nAddress Data Challenges\n\n\nData is packaged as code to simplify data access, reduce errors, and promote collaboration.\nLow-level data transformations are codified: easy for others to reproduce.\n\n\nAccelerate Innovation\n\n\nBroadband data is packaged so that researchers can focus on analysis and insights, not data wrangling.\n\n\nUnlock Deeper Insights Faster\n\n\ncori.data.fcc provides fast access to granular details, essential for understanding broadband challenges across multiple geographic scales.\n\n\n\n\npackages can act like team members such as the IT Guy, Analyst, Tech Lead, or Project Manager.\n\n\n\npromote collaboration: open source, more value from our codes, start discussion with upstream, USAC"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#how-it-works",
+    "href": "prez/auber_2024/index.html#how-it-works",
+    "title": "[TITLE TBD]",
+    "section": "… how it works",
+    "text": "… how it works\n\n\n\nVisualCode\n\n\nVideo\n\n\n\nlibrary(cori.data.fcc)\n\ndir &lt;- \"data_swamp/nbm/\"\n\nget_nbm_release()\n\nnbm_data &lt;- get_nbm_available()\n\nsystem(sprintf(\"mkdir -p %s\", dir))\n\ndl_nbm(\n  path_to_dl = \"data_swamp/nbm\",\n  release_date = \"June 30, 2023\",\n  data_type = \"Fixed Broadband\",\n  data_category = \"Nationwide\",\n)\n# part to check if dl was successful\nnum_files &lt;- get_nbm_available() |&gt;\n  dplyr::filter(release == \"June 30, 2023\" &\n                data_type == \"Fixed Broadband\" &\n                data_category == \"Nationwide\") |&gt;\n  nrow()\n\nfiles_dl &lt;- length(list.files(dir,\n                              pattern = \"*.zip\"))\n\nidentical(num_files, files_dl)\n# TRUE\n\n\n\n\n\n\n \n\n\n\nAdded DuckDB\nCreated quality checks to reduce errors\nComplexity is handled in our upstream process and abstracted so that users can focus on what brings value!\n\n\n\nDuckDB unlocked in-process analytics, so access to a database management system/server is no longer required in order to explore and use the data"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#how-to-use-the-package-choose-your-own-adventure",
+    "href": "prez/auber_2024/index.html#how-to-use-the-package-choose-your-own-adventure",
+    "title": "[TITLE TBD]",
+    "section": "How to use the package > Choose your own adventure!",
+    "text": "How to use the package &gt; Choose your own adventure!\n\n\nBroadband data at the census block (or tract, county, etc.) level is perfect for my research:                 Download the transformed data for NBM from CORI (ISP / County)\nI need to inspect the source (raw) data: Download raw data files directly from the FCC\nI need source data but working with hundreds of CSV is not for me: Download raw data as tables from CORI (NBM / Form 477)\nThe guides linked above can help you with each step!"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#broadband-service-in-the-northeast-kingdom",
+    "href": "prez/auber_2024/index.html#broadband-service-in-the-northeast-kingdom",
+    "title": "[TITLE TBD]",
+    "section": "Broadband service in the Northeast Kingdom",
+    "text": "Broadband service in the Northeast Kingdom\n\n\n\nVisualCode\n\n\n\n\n\n\nlibrary(cori.data.fcc); library(dplyr); library(sf); library(tigris)\nlibrary(ggplot2); library(cori.charts); library(basemapR)\n\ncori.charts::load_fonts()\n\ncaledonia_co_nbm &lt;- cori.data.fcc::get_nbm_bl(geoid_co = \"50005\")\nessex_co_nbm &lt;- cori.data.fcc::get_nbm_bl(geoid_co = \"50009\")\norleans_co_nbm &lt;- cori.data.fcc::get_nbm_bl(geoid_co = \"50019\")\n\nnek_nbm &lt;- dplyr::bind_rows(caledonia_co_nbm, essex_co_nbm, orleans_co_nbm)\n\n# tigris to get places and block\nvt_blocks &lt;- tigris::blocks(\"VT\", progress_bar = FALSE)\nvt_places &lt;- tigris::places(state = \"VT\", progress_bar = FALSE)\n\n# wrangling\nnek_bb_blocks &lt;- inner_join(\n    vt_blocks,\n    nek_nbm,\n    by = c(\"GEOID20\" = \"geoid_bl\")\n  ) |&gt;\n  mutate(\n    pct_100_20 = cnt_100_20 / cnt_total_locations,\n    pct_fiber = cnt_fiber_locations / cnt_total_locations\n  )\n\n# Get major NEK Place centroids for map labeling\nvt_places_centroids &lt;- vt_places[lengths(sf::st_intersects(vt_places, nek_bb_blocks)) &gt; 0, ] |&gt;\n  st_centroid()\n\n# Map\nbbox &lt;- sf::st_bbox(nek_bb_blocks) |&gt;\n        cori.charts::fit_bbox_to_aspect_ratio(target_aspect_ratio = 2)\n\nfig &lt;- ggplot(data = nek_bb_blocks) +\n  base_map(\n    bbox,\n    increase_zoom = 3,\n    basemap = 'voyager'\n  ) +\n  geom_sf(aes(fill = pct_100_20), color = \"dimgray\", linewidth = 0.1, alpha = 0.9) +\n  scale_fill_cori(\n    discrete = FALSE,\n    palette = \"ctg2pu\",\n    labels = scales::label_percent(),\n    reverse = T\n  ) +\n  geom_sf_label(data = vt_places_centroids, aes(label = NAME), size = 2, color = \"black\", family = \"Lato\", fontface = \"bold\") +\n  coord_sf(\n    expand = TRUE,\n    xlim = c(bbox['xmin'], bbox['xmax']),\n    ylim = c(bbox['ymin'], bbox['ymax'])\n  ) +\n  theme_cori_map() +\n  theme(\n    legend.key.width = unit(50, \"pt\")\n  ) +\n  labs(\n    title = \"Broadband service in the Northeast Kingdom\",\n    subtitle = \"Percent of locations with access to 100/20 Mbps service by census block\",\n    caption = \"Data source: 2023 FCC National Broadband Map\\nMap source: © OpenStreetMap contributors © CARTO\",\n    x = NULL,\n    y = NULL\n  )\n\n\n\n\n\n\n \n\n\n\nBetter services closer to “main street” (and worst farther…)\n3 lines of codes to get the data\nUse census blocks: easy match with other data sources (ACS, BEA, etc ..)"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#northeast-kingdom-only-11.5-of-locations-have-fiber",
+    "href": "prez/auber_2024/index.html#northeast-kingdom-only-11.5-of-locations-have-fiber",
+    "title": "[TITLE TBD]",
+    "section": "Northeast Kingdom: only 11.5% of locations have fiber",
+    "text": "Northeast Kingdom: only 11.5% of locations have fiber\n\n\n\nVisualCode\n\n\n\n\n\n\nfig &lt;- ggplot(data = nek_bb_blocks) +\n  base_map(\n    bbox,\n    increase_zoom = 3,\n    basemap = 'voyager'\n  ) +\n  geom_sf(aes(fill = pct_fiber), color = \"dimgray\", linewidth = 0.1, alpha = 0.6) +\n  scale_fill_cori(\n    discrete = FALSE,\n    palette = \"ctg2pu\",\n    labels = scales::label_percent(),\n    reverse = T\n  ) +\n  geom_sf_label(data = vt_places_centroids, aes(label = NAME), size = 2, color = \"black\", family = \"Lato\", fontface = \"bold\") +\n  coord_sf(\n    expand = TRUE,\n    xlim = c(bbox['xmin'], bbox['xmax']),\n    ylim = c(bbox['ymin'], bbox['ymax'])\n  ) +\n  theme_cori_map() +\n  theme(\n    legend.key.width = unit(50, \"pt\"),\n  ) +\n  labs(\n    title = \"Fiber access in the Northeast Kingdom\",\n    subtitle = \"Percent of locations with access to fiber by census block\",\n    caption = \"Data source: 2023 FCC National Broadband Map\\nMap source: © OpenStreetMap contributors © CARTO\",\n    x = NULL,\n    y = NULL\n  )\n\n\n\n\n\n\n \n\n\n\nOnly 11.5% of locations have fiber access in the Northeast Kingdom\n6/25 ISP are providing Fiber\nLeading ISP here is small ISP, non-profit: NEK broadband"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#what-are-each-isp-competitors-in-ohio",
+    "href": "prez/auber_2024/index.html#what-are-each-isp-competitors-in-ohio",
+    "title": "[TITLE TBD]",
+    "section": "What are each ISP competitors in Ohio?",
+    "text": "What are each ISP competitors in Ohio?\n\n\n\nVisualCode\n\n\n\n\n\n\n\n\n\n\n\nlibrary(tigris);library(cori.data.fcc);library(igraph);library(dplyr)\nlibrary(crosstalk);library(DT);library(threejs)\n\noh &lt;- tigris::counties(state = \"39\") # tigris is a great example of data as code\n\ntalk_to_me &lt;- function(x) {\n    message(sprintf(\"Love Ohio: %s\", x))\n    cori.data.fcc::get_nbm_bl(x)\n}\noh_nbm &lt;- lapply(oh$GEOID, talk_to_me) |&gt; dplyr::bind_rows()\n\noh2_nbm &lt;- oh_nbm[!is.na(oh_nbm$combo_frn), ]\n\nod_me &lt;- function(x) {\n\n  temp &lt;- oh2_nbm[x, \"array_frn\"][[1]]\n  geoid_bl &lt;- oh2_nbm[x, \"geoid_bl\"]\n  if (length(temp) == 1L)\n  {\n    return(data.frame(V1 = temp, V2 = NA, geoid_bl = geoid_bl))\n  }\n  bob &lt;- as.data.frame(t(combn(temp, 2)))\n  bob$geoid_bl &lt;- geoid_bl\n  return(bob)\n}\n\nod &lt;- lapply(1:nrow(oh2_nbm), od_me) |&gt; dplyr::bind_rows()\nod &lt;- od[!is.na(od$V2),]\n\nbob &lt;- rbind(data.frame(frn = od$V1, geoid_bl = od$geoid_bl),\n             data.frame(frn = od$V2, geoid_bl = od$geoid_bl))\n\ncnt_bl &lt;- summarise(bob, cnt_bl = n_distinct(geoid_bl), cnt_rel = n(), .by = frn)\n\nod &lt;- od[!is.na(od$V2),]\n\nod$combo &lt;- paste(od$V1, od$V2, sep = \" - \")\nod$count &lt;- 1\n\nrel &lt;- od |&gt; dplyr::summarize(n = sum(count), .by = combo)\ngive_me_from &lt;- function(x) unlist(strsplit(x, \" - \"))[1]\ngive_me_to &lt;- function(x) unlist(strsplit(x, \" - \"))[2]\nrel$from &lt;- sapply(rel$combo , give_me_from)\nrel$to &lt;- sapply(rel$combo, give_me_to)\n\nfcc_slim &lt;- cori.data.fcc::fcc_provider[, c(\"frn\", \"provider_name\")]\nfrn &lt;- data.frame( frn = unique(c(rel$from, rel$to)))\nfrn &lt;- merge(frn, fcc_slim, by.x = \"frn\", by.y = \"frn\")\nfrn &lt;- merge(frn, cnt_bl, by.x = \"frn\", by.y = \"frn\")\n\noh_graph &lt;- graph_from_data_frame(rel[,c(\"from\", \"to\")], directed = FALSE, vertices = frn)\n\noh_graph &lt;- graph_from_data_frame(rel[,c(\"from\", \"to\")], directed = FALSE, vertices = frn)\n\ndraw_me_a_graph &lt;- function(x, ...) {\n  threejs::graphjs(x,\n          vertex.label = V(x)$provider_name,\n          vertex.color = rep(2, vcount(x)),\n          vertex.size = .1,\n          edge.color = \"grey\",\n          edge.width = 3, ...)\n}\n\ng &lt;- draw_me_a_graph(oh_graph, brush=TRUE)\npoints3d(g, vertices(g), color=\"black\", pch=V(oh_graph)$provider_name, size=1.5)\n\n\n\n\n\n\n \n\n\n\n1321 ISP operating in Ohio\nProviders competiting in all Ohio are at the core\nProviders with few competitors are at the edges\ncori.data.fcc support spatial and graph data"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#how-to-get-the-package",
+    "href": "prez/auber_2024/index.html#how-to-get-the-package",
+    "title": "[TITLE TBD]",
+    "section": "How to get the package",
+    "text": "How to get the package\nThe source code is hosted on GitHub (Version control)\nYou need the R package {remotes}.\n\ninstall.packages(\"remotes\")\nremotes::install_github(\"ruralinnovation/cori.data.fcc\")\n\n🚧 Check the version you have and see what new versions are available 🚧\n\npackageVersion(\"cori.data.fcc\")\n\n[1] '0.0.1'"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#summary-data-is-only-useful-if-you-can-effectively-use-it.",
+    "href": "prez/auber_2024/index.html#summary-data-is-only-useful-if-you-can-effectively-use-it.",
+    "title": "[TITLE TBD]",
+    "section": "Summary: Data is only useful if you can effectively use it.",
+    "text": "Summary: Data is only useful if you can effectively use it.\n\n\nData packages are abstracting the pain\nData packages can give more power (especialy )!\nIn emerging field: Easier to capitalize/build on it\nWe need those extra “team members”"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#slides-are-online",
+    "href": "prez/auber_2024/index.html#slides-are-online",
+    "title": "[TITLE TBD]",
+    "section": "Slides are online:",
+    "text": "Slides are online:\n\nBuilt with R and cori.data.fcc\nCreated by Quarto (format: revealjs)\nHosted and deployed on GitHub https://ruralinnovation.github.io/prez_auber_2024/"
+  },
+  {
+    "objectID": "prez/auber_2024/index.html#contacts",
+    "href": "prez/auber_2024/index.html#contacts",
+    "title": "[TITLE TBD]",
+    "section": "Contacts",
+    "text": "Contacts\nWebsite: https://ruralinnovation.us\nLinkedIn | Twitter | Facebook | Instagram | YouTube"
   },
   {
     "objectID": "prez/urisa_2023/index.html#our-slides-are-online",
@@ -221,97 +340,41 @@
     "href": "presentations.html",
     "title": "MDA Presentations",
     "section": "",
-    "text": "Working with Primary data\n\n\ncori.data.fcc:: an example of data as code\n\n\n\n\n\n\n\n\nOct 20, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\n\n\n\n\n\n\nExtending Broadband to Underserved Areas\n\n\nHow rural areas are overrepresented in unserved areas and underestimated in statistics\n\n\n\n\n\n\n\n\nOct 18, 2023\n\n\nOlivier Leroy & Drew Rosebush\n\n\n\n\n\n\nNo matching items"
+    "text": "Beyond Raw Data\n\n\nStreamlining Broadband Insights with cori.data.fcc\n\n\n\n\n\n\n\n\nOct 20, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\n\n\n\n\n\n\nData Innovation\n\n\nAccelerating Broadband Analysis with cori.data.fcc\n\n\n\n\n\n\n\n\nOct 20, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\n\n\n\n\n\n\n[TITLE TBD]\n\n\ncori.data.fcc:: an example of data as code\n\n\n\n\n\n\n\n\nOct 20, 2024\n\n\nOlivier Leroy\n\n\n\n\n\n\n\n\n\n\n\n\nExtending Broadband to Underserved Areas\n\n\nHow rural areas are overrepresented in unserved areas and underestimated in statistics\n\n\n\n\n\n\n\n\nOct 18, 2023\n\n\nOlivier Leroy & Drew Rosebush\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "prez/auber_2024/index.html#cori",
-    "href": "prez/auber_2024/index.html#cori",
-    "title": "Working with Primary data",
-    "section": "CORI",
-    "text": "CORI\n\nMe\nCORI"
+    "objectID": "posts/06_pg_duckdb/index.html",
+    "href": "posts/06_pg_duckdb/index.html",
+    "title": "From elephant to duck!",
+    "section": "",
+    "text": "There are a lot of conversations — understandably — on the use of Apache Parquet, Apache Arrow and DuckDB.\nThose three open source technologies and the amount of resources that a personal laptop has now have lowered the need of using a classic RDBMS for out-of-memory-tasks for data science works, and in some cases maybe the need of using a distributed computing framework like Spark.\nLet’s see an example of how they can be used to convert a table in a PostgresSQL database to a parquet file:"
   },
   {
-    "objectID": "prez/auber_2024/index.html#me",
-    "href": "prez/auber_2024/index.html#me",
-    "title": "Working with Primary data",
-    "section": "Me",
-    "text": "Me"
+    "objectID": "posts/06_pg_duckdb/index.html#libraries-and-data-optional-needed",
+    "href": "posts/06_pg_duckdb/index.html#libraries-and-data-optional-needed",
+    "title": "From elephant to duck!",
+    "section": "Libraries and data (optional) needed",
+    "text": "Libraries and data (optional) needed\n\nlibrary(duckdb)\nlibrary(dplyr, warn.conflicts = FALSE)\nlibrary(dbplyr, warn.conflicts = FALSE)\n\nWe will use FCC NBM raw data with December 2023’s release. You can learn more about on FCC website.\nThe table we will be converting has a size of 102 GB (without indexes), has 888,176,676 rows and 12 columns and it is the results of importing around 440 CSVs."
   },
   {
-    "objectID": "prez/auber_2024/index.html#our-needs",
-    "href": "prez/auber_2024/index.html#our-needs",
-    "title": "Working with Primary data",
-    "section": "Our needs",
-    "text": "Our needs\nConnect humanity project\nBead tools"
+    "objectID": "posts/06_pg_duckdb/index.html#getting-your-credentials",
+    "href": "posts/06_pg_duckdb/index.html#getting-your-credentials",
+    "title": "From elephant to duck!",
+    "section": "Getting your credentials",
+    "text": "Getting your credentials\nSince this exercise is all about converting data that is currently stored in PostgreSQL (using R), the first step in connecting to your PG database server is getting your credentials. We are assuming here that you have a .pgpass file located in your home directory (~/.pgpass).\nThe code below will assume that you have this ~/.pgpass set and that it contains a one-line connection string.\n\nget_cred &lt;- function(path_pgpass) {\n  pgpass &lt;- readLines(path_pgpass)\n  cred &lt;- unlist(strsplit(pgpass, \":\"))\n  names(cred) &lt;- c(\"host\", \"port\", \"db\", \"user\", \"pwd\")\n  return(cred)\n}\n\ncred &lt;- get_cred(\"~/.pgpass\")"
   },
   {
-    "objectID": "prez/auber_2024/index.html#previous-workflow",
-    "href": "prez/auber_2024/index.html#previous-workflow",
-    "title": "Working with Primary data",
-    "section": "Previous workflow:",
-    "text": "Previous workflow:\n\nWhat FCC data look like in the wild\nOur previous ingestion process\nLimits of it"
+    "objectID": "posts/06_pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
+    "href": "posts/06_pg_duckdb/index.html#use-duckdb-magic-to-convert-it",
+    "title": "From elephant to duck!",
+    "section": "Use DuckDB magic to convert it!",
+    "text": "Use DuckDB magic to convert it!\nWell, the magic is a four-step steps process:\n\nConnect to DuckDB\nGet DuckDB’s postgres extension\nConnect to your DB (with the credential we have set)\nUse DuckDB COPY specifying where and how you want it to be partitioned\n\nThis will be wrapped in one function:\n\n# yes I am terrible at naming\nfrom_elephant_to_duck &lt;- function(table_name, path_for_parquet, part1, part2) {\n  # 1. Connect to duckDB\n  con &lt;- DBI::dbConnect(duckdb())\n  DBI::dbExecute(con,\n                 sprintf(\"SET temp_directory ='%s';\", tempdir()))\n  # cleaning up after the function\n  on.exit(DBI::dbDisconnect(con), add = TRUE)\n  \n  # 2. install and load PG extension\n  DBI::dbExecute(con, \"INSTALL postgres\")\n  DBI::dbExecute(con, \"LOAD postgres\")\n\n  # 3. Connect, \"attach\" to your PG server\n  attach_string &lt;- sprintf(\n    \"ATTACH 'dbname=%s user=%s password=%s host=%s' AS db (TYPE POSTGRES, READ_ONLY)\",\n    cred[\"db\"],\n    cred[\"user\"],\n    cred[\"pwd\"],\n    cred[\"host\"]\n  )\n  DBI::dbExecute(con, attach_string)\n\n  # 4. Copy to a parquet\n  copy_string &lt;- sprintf(\"COPY \n    (SELECT * \n      FROM db.%s)\n    TO '%s' (FORMAT 'parquet', PARTITION_BY(%s, %s))\", \n    table_name, \n    path_for_parquet, \n    part1, part2)\n  DBI::dbExecute(con, copy_string)\n\n  return(invisible(path_for_parquet))\n}\n# not an improvement on this function will be to take cred has an argument\n\n\nPartitioning\nDeciding how to partition a parquet is both a data and business decisions. In this case, state_abbr and technology are good tradeoffs in terms of the overall size of each parquet file and the fast performance of common filtering and grouping operations on this data."
   },
   {
-    "objectID": "prez/auber_2024/index.html#manual-v.s.",
-    "href": "prez/auber_2024/index.html#manual-v.s.",
-    "title": "Working with Primary data",
-    "section": "Manual v.s. …",
-    "text": "Manual v.s. …\n\n\nVideo\n\n🔁 Repeat for every state\n\n🔁 Repeat for every version\n\n🔴 Error prone\n\n\n\nnum_files &lt;- get_nbm_available() |&gt;\n  dplyr::filter(release == \"June 30, 2023\" &\n                data_type == \"Fixed Broadband\" &\n                data_category == \"Nationwide\") |&gt;\n  nrow()\n\nfiles_dl &lt;- length(list.files(dir,\n                              pattern = \"*.zip\"))\n\nidentical(num_files, files_dl)\n# TRUE"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#automated",
-    "href": "prez/auber_2024/index.html#automated",
-    "title": "Working with Primary data",
-    "section": "… Automated",
-    "text": "… Automated\n\n\n\nVisualCode\n\n\nVideo\n\n\n\nlibrary(cori.data.fcc)\n\ndir &lt;- \"data_swamp/nbm/\"\n\nget_nbm_release()\n\nnbm_data &lt;- get_nbm_available()\n\nsystem(sprintf(\"mkdir -p %s\", dir))\n\ndl_nbm(\n  path_to_dl = \"data_swamp/nbm\",\n  release_date = \"June 30, 2023\",\n  data_type = \"Fixed Broadband\",\n  data_category = \"Nationwide\",\n)\n\n\n\n\n\n\nnum_files &lt;- get_nbm_available() |&gt;\n  dplyr::filter(release == \"June 30, 2023\" &\n                data_type == \"Fixed Broadband\" &\n                data_category == \"Nationwide\") |&gt;\n  nrow()\n\nfiles_dl &lt;- length(list.files(dir,\n                              pattern = \"*.zip\"))\n\nidentical(num_files, files_dl)\n# TRUE"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#new-technologies",
-    "href": "prez/auber_2024/index.html#new-technologies",
-    "title": "Working with Primary data",
-    "section": "New technologies",
-    "text": "New technologies\n\nDuckDB and S3\nParquet and interoperability"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#packaging-code-and-data",
-    "href": "prez/auber_2024/index.html#packaging-code-and-data",
-    "title": "Working with Primary data",
-    "section": "Packaging code and data",
-    "text": "Packaging code and data\n\ninternally developed packages are […] extra expert team members.1\n\nhttps://milesmcbain.xyz/posts/data-analysis-reuse/"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#download-files",
-    "href": "prez/auber_2024/index.html#download-files",
-    "title": "Working with Primary data",
-    "section": "Download files",
-    "text": "Download files"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#use-cori-curated-files",
-    "href": "prez/auber_2024/index.html#use-cori-curated-files",
-    "title": "Working with Primary data",
-    "section": "Use CORI curated files",
-    "text": "Use CORI curated files"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#custom",
-    "href": "prez/auber_2024/index.html#custom",
-    "title": "Working with Primary data",
-    "section": "Custom",
-    "text": "Custom\n\nIsp over time?\nStates level analysis?"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#references",
-    "href": "prez/auber_2024/index.html#references",
-    "title": "Working with Primary data",
-    "section": "References",
-    "text": "References\nTODO:\nMcBain (2024, March 11). Before I Sleep: Patterns and anti-patterns of data analysis reuse. Retrieved from https://milesmcbain.com/posts/data-analysis-reuse/\nhttps://www.emilyriederer.com/post/team-of-packages/#collaboration"
-  },
-  {
-    "objectID": "prez/auber_2024/index.html#contacts",
-    "href": "prez/auber_2024/index.html#contacts",
-    "title": "Working with Primary data",
-    "section": "Contacts",
-    "text": "Contacts\nWebsite: https://ruralinnovation.us\nLinkedIn | Twitter | Facebook | Instagram | YouTube"
+    "objectID": "posts/06_pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
+    "href": "posts/06_pg_duckdb/index.html#lets-do-it-and-do-some-quick-comparisons",
+    "title": "From elephant to duck!",
+    "section": "Let’s do it and do some quick comparisons",
+    "text": "Let’s do it and do some quick comparisons\n\nstart &lt;- Sys.time()\nfrom_elephant_to_duck(\"staging.dec23\", \"dec23\", \"state_abbr\", \"technology\")\nend &lt;- Sys.time()\nend - start\n# Time difference of 58.92108 mins\n\nOn a relatively new MacBook with a wifi-internet-speed connection (probably the limiting factor here) it took a little less than an hour to run from_elephant_to_duck.\nWe can also compare our 102 GB to the size of parquet files (ofc. PG offer additional perks!):\n\ndu -sh dec23/\n# 14 G\n\nFinally, just for the pleasure, let’s run a quick query:\n\nstart &lt;- Sys.time()\ncon &lt;- DBI::dbConnect(duckdb::duckdb(), shutdown = TRUE, dbdir = tempdir())\n\nreading_string &lt;-\n  sprintf(\"read_parquet('%s/*/*/*.parquet', hive_partitioning = true)\",\n          \"dec23\")\nfcc &lt;- dplyr::tbl(con, reading_string)\n\n# check number of row\nfcc |&gt; \n  summarize(tot_rows = count(location_id)) |&gt; \n  collect()\n\n# A tibble: 1 × 1\n#    tot_rows\n#       &lt;dbl&gt;\n# 1 888176676\n\n# let's start one a bit \nstart &lt;- Sys.time()\n# this will count every location_id by state_abbr and frn\n# that have low_latency\nstart &lt;- Sys.time()\nq1 &lt;- fcc |&gt;\n  filter(low_latency == TRUE) |&gt; \n  summarize(\n    count_location =  n_distinct(location_id),\n    .by = c(state_abbr, frn)\n  )\n\nrez_q1 &lt;- collect(q1)\nend - start\n# Time difference of 4.262549 mins\n\nDBI::dbDisconnect(con)\n\nImpressive, isn’t it? We will probably dig a bit deeper on those new technologies in future blog posts, so check back soon!"
   }
 ]

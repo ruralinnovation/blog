@@ -13,7 +13,7 @@
 
   <meta name="author" content="Olivier Leroy">
   <meta name="dcterms.date" content="2024-10-20">
-  <title>Mapping &amp; Data Analytics Blog @cori-risi – Working with Primary data</title>
+  <title>Mapping &amp; Data Analytics Blog @cori-risi – [TITLE TBD]</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -397,13 +397,25 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+  <script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+  <script src="../../site_libs/threejs-111/three.min.js"></script>
+  <script src="../../site_libs/threejs-111/Detector.js"></script>
+  <script src="../../site_libs/threejs-111/Projector.js"></script>
+  <script src="../../site_libs/threejs-111/CanvasRenderer.js"></script>
+  <script src="../../site_libs/threejs-111/TrackballControls.js"></script>
+  <script src="../../site_libs/threejs-111/StateOrbitControls.js"></script>
+  <script src="../../site_libs/scatterplotThree-binding-0.3.3/scatterplotThree.js"></script>
+  <link href="../../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+  <script src="../../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Working with Primary data</h1>
+  <h1 class="title">[TITLE TBD]</h1>
   <p class="subtitle"><code>cori.data.fcc</code>:: an example of data as code</p>
 
 <div class="quarto-title-authors">
@@ -419,165 +431,820 @@ Olivier Leroy
 
   <p class="date">2024-10-20</p>
 </section>
-<section id="cori" class="slide level2">
-<h2>CORI</h2>
-<ul>
-<li>Me</li>
-<li>CORI</li>
-</ul>
+<section id="overview" class="slide level2">
+<h2>Overview</h2>
+<ol type="I">
+<li><span style="font-size: 125%;"><strong>Introduction</strong></span> <img data-src="assets/images/overview.png" class="quarto-figure quarto-figure-right"></li>
+<li><span style="font-size: 125%;"><strong>Research using the latest broadband service data</strong></span></li>
+<li><span style="font-size: 125%;"><strong>Challenges to using the latest broadband service data</strong></span> <br><em>i.e., More data more problems</em></li>
+<li><span style="font-size: 125%;"><strong>Our broadband data package: <code>cori.data.fcc</code></strong></span> <br><em>i.e., How we accelerate innovation by making this complex,</em> <br><em>ever-changing broadband data more accessible and usable for research</em></li>
+</ol>
 </section>
-<section id="me" class="slide level2">
-<h2>Me</h2>
+<section id="hi-im-olivier-a-senior-data-engineer-at-cori" class="slide level2">
+<h2><span class="emoji" data-emoji="wave">👋</span> Hi, I’m Olivier, a Senior Data Engineer at CORI</h2>
+<p>Working with source data—often referred to as “big”, “messy”, “unstructured” data—is a growing challenge</p>
+
+<img data-src="assets/images/hbrsexiestjob.png" width="800" class="r-stretch quarto-figure-center"><p class="caption">Source: <a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century">Harvard Business Review</a></p><ul>
+<li>Socials: <a href="https://www.linkedin.com/in/olivier-leroy-r/">LinkedIn</a> | <a href="https://fosstodon.org/@defuneste">Mastodon</a> | <a href="https://branchtwigleaf.com/about.html">Personal Website</a></li>
+</ul>
+<aside class="notes">
+<p>I find ways to add structure and meaning to data so that it can effectively inform the work of the organization’s analysts, researchers and community managers.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="coris-mission" class="slide level2">
+<h2>CORI’s Mission</h2>
+
+<img data-src="assets/images/cori-mission-slide-8.png" class="r-stretch"></section>
+<section id="what-broadband-means-to-rural-america" class="slide level2">
+<h2>What Broadband means to Rural America</h2>
+<ul>
+<li>We believe that <strong>small towns</strong> are home to <strong>big ideas</strong> — and combining new models of economic development with strategic investments in <strong>new infrastructure</strong> can <strong>empower rural communities</strong> across the U.S. to participate in and benefit from the nation’s growing <strong>tech economy</strong>.</li>
+</ul>
+<h3 id="broadband-knowledge-is-an-important-part-of-our-work">Broadband knowledge is an important part of our work</h3>
+<ul>
+<li>Broadband data is used extensively in our work to provide critical support to secure funding, develop infrastructure, and implement the programs needed to unlock the potential of rural America.</li>
+</ul>
 </section>
 <section>
-<section id="fccs-data" class="title-slide slide level1 center">
-<h1>FCC’s Data</h1>
+<section id="out-of-necessity-we-had-to-become-experts-in-broadband-data" class="title-slide slide level1 center">
+<h1>Out of necessity we had to become experts in broadband data</h1>
 
 </section>
-<section id="our-needs" class="slide level2">
-<h2>Our needs</h2>
-<p>Connect humanity project</p>
-<p>Bead tools</p>
-</section>
-<section id="previous-workflow" class="slide level2">
-<h2>Previous workflow:</h2>
-<ul>
-<li>What FCC data look like in the wild</li>
-<li>Our previous ingestion process</li>
-<li>Limits of it</li>
-</ul>
-</section>
-<section id="manual-v.s." class="slide level2">
-<h2>Manual v.s. …</h2>
+<section id="our-broadband-apps-in-the-wild" class="slide level2">
+<h2>Our broadband apps in the wild</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
-<p><video data-src="img/manual_fcc.mov" controls=""><a href="img/manual_fcc.mov">Video</a></video></p>
-<ul>
-<li><span class="emoji" data-emoji="repeat">🔁</span> Repeat for every state<br>
-</li>
-<li><span class="emoji" data-emoji="repeat">🔁</span> Repeat for every version<br>
-</li>
-<li><span class="emoji" data-emoji="red_circle">🔴</span> Error prone</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>num_files <span class="ot">&lt;-</span> <span class="fu">get_nbm_available</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-2"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(release <span class="sc">==</span> <span class="st">"June 30, 2023"</span> <span class="sc">&amp;</span></span>
-<span id="cb1-3"><a></a>                data_type <span class="sc">==</span> <span class="st">"Fixed Broadband"</span> <span class="sc">&amp;</span></span>
-<span id="cb1-4"><a></a>                data_category <span class="sc">==</span> <span class="st">"Nationwide"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a></a>  <span class="fu">nrow</span>()</span>
-<span id="cb1-6"><a></a></span>
-<span id="cb1-7"><a></a>files_dl <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">list.files</span>(dir,</span>
-<span id="cb1-8"><a></a>                              <span class="at">pattern =</span> <span class="st">"*.zip"</span>))</span>
-<span id="cb1-9"><a></a></span>
-<span id="cb1-10"><a></a><span class="fu">identical</span>(num_files, files_dl)</span>
-<span id="cb1-11"><a></a><span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="column" style="width:54%;">
+<p><a href="https://rural-broadband-map.ruralinnovation.us/" class="external" target="_blank">Rural Broadband Mapping Tool</a></p>
+<p><img data-src="assets/images/small_bead_tool.gif"></p>
+</div><div class="column" style="width:44%;">
+<p><a href="https://broadband-risk.ruralinnovation.us/" class="external" target="_blank">Broadband Climate Risk Mitigation Tool</a></p>
+<p><img data-src="assets/images/bb_climate_2.png"></p>
+</div></div>
+<aside class="notes">
+<p><em>Need speaker notes with short and sweet takeaways for these two apps</em></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="our-broadband-research-from-ideation-to-report" class="slide level2">
+<h2>Our broadband research: from ideation to report</h2>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p><img data-src="assets/images/ideation.png"></p>
+</div><div class="column fragment" style="width:50%;">
+<p><img data-src="assets/images/report_slide.png" style="width:50.0%"></p>
 </div></div>
 </section>
-<section id="automated" class="slide level2">
-<h2>… Automated</h2>
+<section id="broadband-research-derived-from-cori-data-work" class="slide level2">
+<h2>Broadband research derived from CORI data work</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p><strong><a href="https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/">Beyond connectivity: The role of broadband in rural economic growth and resilience</a></strong> <br>Weinstein, A., Erouart, M., &amp; Dewbury, A. (2024) Beyond Connectivity: The role of broadband in rural economic growth and resilience. Center on Rural Innovation. <a href="https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/">https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/</a></p></li>
+<li><p><strong><a href="https://www.tandfonline.com/doi/full/10.1080/21681376.2024.2305951#abstract">The Fibre Broadband Housing Premium Across Three US States</a></strong> <br>Whitacre, B. (2024). The fibre broadband housing premium across three US States. Regional Studies, Regional Science, 11(1), 38–62. <a href="https://www.tandfonline.com/doi/full/10.1080/21681376.2024.2305951#abstract">https://doi.org/10.1080/21681376.2024.2305951</a></p></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="assets/images/presenting_beyond_connectivity.png" style="width:75.0%"></p>
+</div></div>
+</section>
+<section id="new-findings-from-broadband-research" class="slide level2">
+<h2>New findings from Broadband Research</h2>
+<blockquote>
+<p><em>“Broadband access is increasingly recognized as essential infrastructure in today’s economy, with the</em> <em>ability to connect residents and businesses to economic opportunities nationwide”</em></p>
+</blockquote>
+<ul>
+<li>Rural counties with high broadband utilization experience:
+<ul>
+<li>Significantly higher business growth rates</li>
+<li>Increased self-employment growth rates</li>
+<li>Higher per-capita income growth rates</li>
+<li>Stronger GDP growth rates</li>
+</ul></li>
+</ul>
+<p style="padding-right: 10%; text-align: right">
+Weinstein, A., Erouart, M., &amp; Dewbury, A. (2024)
+</p>
+<aside class="notes">
+<ul>
+<li>Broadband access can have a transformative impact on economic growth and resilience, <br>but our research found that <em>access alone is insufficient</em></li>
+<li>Broadband utilization is a key metric, encompassing both adoption rates and effective leveraging of infrastructure</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="broadband-research-is-evolving-and-so-is-the-data" class="title-slide slide level1 center">
+<h1>Broadband research is evolving<br>… and so is the data!</h1>
+<!--
+- **Data Volume and Complexity**
+  <br />Sheer size of the data can overwhelm traditional data processing tools and techniques
+- **Lack of Data Quality and Consistency**
+  <br />Data duplication, inconsistencies in naming conventions, and data entry errors are widespread problems in data sources, requiring careful cleaning and validation
+- **Non-existent change process**
+  <br />General lack feedback/interaction cycle between researches and data providers
+  ## Federal Communications Commission ([FCC](https://www.fcc.gov/))
+-->
+</section>
+<section id="as-data-experts-solve-data-on-behalf-of-the-researchers" class="slide level2">
+<h2>as data experts: solve data on behalf of the researchers</h2>
+<div class="columns">
+<div class="column fragment" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/images/fcc-seal-rgb-2020.svg"></p>
+<figcaption>Federal Communications Commission (<a href="https://www.fcc.gov/">FCC</a>)</figcaption>
+</figure>
+</div>
+</div><div class="column fragment" style="width:70%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th><a href="https://www.fcc.gov/economics-analytics/industry-analysis-division/form-477-resources">Form 477</a></th>
+<th><a href="https://broadbandmap.fcc.gov/home" data-white-space="nowrap">National Broadband Map</a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>US Census Boundaries</td>
+<td>2010</td>
+<td>2020</td>
+</tr>
+<tr class="even">
+<td>Granularity</td>
+<td>Census blocks</td>
+<td><a href="https://broadbandmap.fcc.gov/location-summary/fixed?version=dec2022&amp;location_id=1350199199&amp;addr1=390+MORGAN+ST&amp;addr2=OBERLIN%2C+OH+44074&amp;zoom=15.00&amp;vlon=-82.231744&amp;vlat=41.287448&amp;br=r&amp;speed=25_3&amp;tech=1_2_3_4_5_6_7_8">Locations</a></td>
+</tr>
+<tr class="odd">
+<td>Timeframe</td>
+<td>2014-2021</td>
+<td>2022 - <em>Ongoing</em></td>
+</tr>
+<tr class="even">
+<td>Releases</td>
+<td><strong>twice a year</strong></td>
+<td><strong>twice a year[^version]</strong></td>
+</tr>
+<tr class="odd">
+<td>Records</td>
+<td><strong>416,447,807</strong></td>
+<td><strong>3,488,191,994</strong></td>
+</tr>
+<tr class="even">
+<td>Size</td>
+<td><strong>400MB/year</strong></td>
+<td><strong>22GB/year</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<ul>
+<li><p>Big messy data</p></li>
+<li><p>Recquire domain knowledge</p></li>
+<li><p>Evolving data landscape</p></li>
+</ul>
+</div>
+</div></div>
+<aside class="notes">
+<ul>
+<li><p>Agency in charge of regulating “everything” communications</p></li>
+<li><p>Their data landscape is evolving fast (now they have a <a href="https://opendata.fcc.gov/">platform</a>!)</p></li>
+</ul>
+<p>How to work with constant change upstream?</p>
+<p>These datasets are voluminous, involving hundreds of files, especially for the Form 477 data which covers ISP data since 2014</p>
+<p>FCC releases lack “guard rails” in terms of data quality and consistency. In addition to publishing very meager change logs (based on CostQuest’s pre-release/proprietary updates), issues include multiple encodings, erroneous values, and limited quality control</p>
+<p>Analysis of the National Broadband Map (NBM) data reveals inconsistencies and potential errors in key identifiers like the FCC Registration Number (FRN), Provider ID, and Brand Name: * Different FRNs and Provider IDs are used for the same ISP (“EATEL Corp.”) The same Provider ID is associated with different FRNs (Acentek). Multiple FRNs exist for well-known ISPs like Windstream and AT&amp;T.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="how-you-would-use-the-fccs-dataplatform" class="slide level2">
+<h2>How you would use the FCC’s data/platform…</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><video data-src="assets/manual_fcc.mov" controls=""><a href="assets/manual_fcc.mov">Video</a></video></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><span class="emoji" data-emoji="repeat">🔁</span> Repeat for every State (56)</li>
+<li><span class="emoji" data-emoji="repeat">🔁</span> Repeat for every version (??)</li>
+<li><span class="emoji" data-emoji="red_circle">🔴</span> Error prone (500 hundred clicks)</li>
+</ul>
+</div></div>
+<!--
+## … Automation with code …
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+
+
+
+::: {.cell}
+
+```{.bash .cell-code}
+# [...]
+# Download all FCC data needed
+all : dirs dl_file list_file
+
+include config.mk
+
+## dirs:    Create specific dirs to download data
+dirs : config.mk
+    @pwd
+    @mkdir -p $(DATA_PATH)
+    echo "create $(DATA_PATH)"
+
+## dl_file: Create a list of files availiable, download them
+dl_file : $(CSV_SRC) get_csv_dl.R
+    Rscript get_csv_dl.R $(CSV_SRC)
+    Rscript list_file_dl.R $(DATA_PATH) $(CSV_SRC)
+.PHONY : dl_file
+
+## list_file: Create a list of downloaded file
+list_file : list_file_dl.R $(CSV_SRC)
+    Rscript report_dl.R $(DATA_PATH)
+.PHONY : list_file
+
+# [...]
+```
+:::
+
+
+
+
+:::
+
+::: {.column width="50%" .fragment}
+
+- New projects -> New specs
+
+#### **Challenge**: copy/pasting and maintaining X **similar** code sources {.fragment}
+
+- Spoiler: Not everyone likes SQL
+
+#### **Challenge**: make it more accessible {.fragment}
+
+- Out of memory lead to processing data transformations in DB (PostgreSQL)
+
+#### **Challenge**: Slow, lack of reactivity {.fragment}
+
+:::
+
+::::
+
+::: {.notes}
+... this boilerplate was initially copy-and-pasted from project to project.
+:::
+-->
+</section>
+<section id="as-a-broadband-researcher" class="slide level2">
+<h2>As a broadband researcher,</h2>
+<ul>
+<li><p>I wish I didn’t have to manually download FCC data</p></li>
+<li><p>I wish I could share my analysis (and code) with colleagues</p></li>
+<li><p>I wish I could easily perform quality checks on the raw FCC data</p></li>
+</ul>
+<p>… I wish I had more time to do the interesting research and analysis</p>
+</section>
+<section id="light-from-positconf-slack-is-buzzing" class="slide level2">
+<h2><span class="emoji" data-emoji="bulb">💡</span> Light from <a href="https://posit.co/conference/">posit::conf</a>, Slack is buzzing!</h2>
+<p>Workshop on DuckDB (<a href="https://parquet.apache.org/">Parquet</a> / <a href="https://arrow.apache.org/">Arrow</a> / <a href="https://en.wikipedia.org/wiki/Online_analytical_processing">OLAP</a>)</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Contains real slack messages with typos!</p>
+</div>
+</div>
+</div>
+<div class="r-stack fragment">
+<p><img data-src="assets/images/asap_1.png" class="fragment fade-up"></p>
+<p><img data-src="assets/images/asap_2.png" class="fragment fade-up"></p>
+<p><img data-src="assets/images/asap_3.png" class="fragment fade-up"></p>
+<p><img data-src="assets/images/asap_4.png" class="fragment fade-up"></p>
+<p><img data-src="assets/images/asap_5.png" class="fragment fade-up"></p>
+<p><img data-src="assets/images/asap_6.png" class="fragment fade-up"></p>
+<p><img data-src="assets/images/asap_7.png" class="fragment fade-up"></p>
+</div>
+</section></section>
+<section>
+<section id="cori.data.fcc" class="title-slide slide level1 center">
+<h1><code>cori.data.fcc</code></h1>
+
+</section>
+<section id="data-packaged-as-code" class="slide level2">
+<h2>… data packaged as code</h2>
+<div>
+<ol type="1">
+<li class="fragment"><strong>Address Data Challenges</strong><br></li>
+</ol>
+<ul>
+<li class="fragment">Data is packaged as code to simplify data access, reduce errors, and promote collaboration.</li>
+<li class="fragment">Low-level data transformations are codified: easy for others to reproduce.</li>
+</ul>
+<ol start="2" type="1">
+<li class="fragment"><strong>Accelerate Innovation</strong><br></li>
+</ol>
+<ul>
+<li class="fragment">Broadband data is packaged so that researchers can focus on analysis and insights, not data wrangling.</li>
+</ul>
+<ol start="3" type="1">
+<li class="fragment"><strong>Unlock Deeper Insights Faster</strong><br></li>
+</ol>
+<ul>
+<li class="fragment"><code>cori.data.fcc</code> provides fast access to granular details, essential for understanding broadband challenges across multiple geographic scales.</li>
+</ul>
+</div>
+<div class="fragment">
+<blockquote>
+<p><a href="https://www.emilyriederer.com/post/team-of-packages/#collaboration">packages can act like team members such as the <strong>IT Guy</strong>, <strong>Analyst</strong>, Tech Lead, or Project Manager</a>.</p>
+</blockquote>
+</div>
+<aside class="notes">
+<p>promote collaboration: open source, more value from our codes, start discussion with upstream, USAC</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="how-it-works" class="slide level2">
+<h2>… how it works</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Visual</a></li><li><a href="#tabset-1-2">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
-<p><video data-src="img/dl_nbm_smaller.mov" controls=""><a href="img/dl_nbm_smaller.mov">Video</a></video></p>
+<p><video data-src="assets/dl_nbm_smaller.mov" controls=""><a href="assets/dl_nbm_smaller.mov">Video</a></video></p>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(cori.data.fcc)</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>dir <span class="ot">&lt;-</span> <span class="st">"data_swamp/nbm/"</span></span>
-<span id="cb2-4"><a></a></span>
-<span id="cb2-5"><a></a><span class="fu">get_nbm_release</span>()</span>
-<span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a>nbm_data <span class="ot">&lt;-</span> <span class="fu">get_nbm_available</span>()</span>
-<span id="cb2-8"><a></a></span>
-<span id="cb2-9"><a></a><span class="fu">system</span>(<span class="fu">sprintf</span>(<span class="st">"mkdir -p %s"</span>, dir))</span>
-<span id="cb2-10"><a></a></span>
-<span id="cb2-11"><a></a><span class="fu">dl_nbm</span>(</span>
-<span id="cb2-12"><a></a>  <span class="at">path_to_dl =</span> <span class="st">"data_swamp/nbm"</span>,</span>
-<span id="cb2-13"><a></a>  <span class="at">release_date =</span> <span class="st">"June 30, 2023"</span>,</span>
-<span id="cb2-14"><a></a>  <span class="at">data_type =</span> <span class="st">"Fixed Broadband"</span>,</span>
-<span id="cb2-15"><a></a>  <span class="at">data_category =</span> <span class="st">"Nationwide"</span>,</span>
-<span id="cb2-16"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(cori.data.fcc)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>dir <span class="ot">&lt;-</span> <span class="st">"data_swamp/nbm/"</span></span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a><span class="fu">get_nbm_release</span>()</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a>nbm_data <span class="ot">&lt;-</span> <span class="fu">get_nbm_available</span>()</span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a><span class="fu">system</span>(<span class="fu">sprintf</span>(<span class="st">"mkdir -p %s"</span>, dir))</span>
+<span id="cb1-10"><a></a></span>
+<span id="cb1-11"><a></a><span class="fu">dl_nbm</span>(</span>
+<span id="cb1-12"><a></a>  <span class="at">path_to_dl =</span> <span class="st">"data_swamp/nbm"</span>,</span>
+<span id="cb1-13"><a></a>  <span class="at">release_date =</span> <span class="st">"June 30, 2023"</span>,</span>
+<span id="cb1-14"><a></a>  <span class="at">data_type =</span> <span class="st">"Fixed Broadband"</span>,</span>
+<span id="cb1-15"><a></a>  <span class="at">data_category =</span> <span class="st">"Nationwide"</span>,</span>
+<span id="cb1-16"><a></a>)</span>
+<span id="cb1-17"><a></a><span class="co"># part to check if dl was successful</span></span>
+<span id="cb1-18"><a></a>num_files <span class="ot">&lt;-</span> <span class="fu">get_nbm_available</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-19"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(release <span class="sc">==</span> <span class="st">"June 30, 2023"</span> <span class="sc">&amp;</span></span>
+<span id="cb1-20"><a></a>                data_type <span class="sc">==</span> <span class="st">"Fixed Broadband"</span> <span class="sc">&amp;</span></span>
+<span id="cb1-21"><a></a>                data_category <span class="sc">==</span> <span class="st">"Nationwide"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-22"><a></a>  <span class="fu">nrow</span>()</span>
+<span id="cb1-23"><a></a></span>
+<span id="cb1-24"><a></a>files_dl <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">list.files</span>(dir,</span>
+<span id="cb1-25"><a></a>                              <span class="at">pattern =</span> <span class="st">"*.zip"</span>))</span>
+<span id="cb1-26"><a></a></span>
+<span id="cb1-27"><a></a><span class="fu">identical</span>(num_files, files_dl)</span>
+<span id="cb1-28"><a></a><span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>num_files <span class="ot">&lt;-</span> <span class="fu">get_nbm_available</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(release <span class="sc">==</span> <span class="st">"June 30, 2023"</span> <span class="sc">&amp;</span></span>
-<span id="cb3-3"><a></a>                data_type <span class="sc">==</span> <span class="st">"Fixed Broadband"</span> <span class="sc">&amp;</span></span>
-<span id="cb3-4"><a></a>                data_category <span class="sc">==</span> <span class="st">"Nationwide"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a></a>  <span class="fu">nrow</span>()</span>
-<span id="cb3-6"><a></a></span>
-<span id="cb3-7"><a></a>files_dl <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">list.files</span>(dir,</span>
-<span id="cb3-8"><a></a>                              <span class="at">pattern =</span> <span class="st">"*.zip"</span>))</span>
-<span id="cb3-9"><a></a></span>
-<span id="cb3-10"><a></a><span class="fu">identical</span>(num_files, files_dl)</span>
-<span id="cb3-11"><a></a><span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>
+&nbsp;
+</p>
+<p><br></p>
+<ul>
+<li><p>Added DuckDB</p></li>
+<li><p>Created quality checks to reduce errors</p></li>
+<li><p>Complexity is handled in our <strong>upstream</strong> process and <strong>abstracted</strong> so that users can focus on what brings <strong>value</strong>!</p></li>
+</ul>
 </div></div>
+<aside class="notes">
+<p>DuckDB unlocked in-process analytics, so access to a database management system/server is no longer required in order to explore and use the data</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<!--
+## What is packaged code?
+
+### Code that works outside of "my" computer
+
+- Code that works seamlessly on any system with the necessary dependencies
+  <br />in this case the R programming language/runtime and…
+- Essential R packages, including
+  - `dplyr`
+  - `duckdb`
+  - `paws` (AWS S3 access)
+
+
+### Benefits from the language ecosystem
+
+- Testing and Validation:
+  <br />tested in GitHub runner: it does not just work on my computer!
+- Documentation and Examples
+- Website to share/distribute code + data + documentation
+-->
+</section>
+<section id="how-to-use-the-package-choose-your-own-adventure" class="slide level2">
+<h2>How to use the package &gt; Choose your own adventure!</h2>
+<div>
+<ul>
+<li class="fragment"><p><em>Broadband data at the census block (or tract, county, etc.) level is perfect for my research</em>: <span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span> <br><strong>Download the transformed data for NBM from CORI (<a href="https://ruralinnovation.github.io/cori.data.fcc/reference/get_frn_nbm_bl.html">ISP</a> / <a href="https://ruralinnovation.github.io/cori.data.fcc/reference/get_county_nbm_raw.html">County</a>)</strong></p></li>
+<li class="fragment"><p><em>I need to inspect the source (raw) data</em>: <br><strong>Download raw data <a href="https://ruralinnovation.github.io/cori.data.fcc/articles/Check_and_download_NBM_data.html">files directly from the FCC</a></strong></p></li>
+<li class="fragment"><p><em>I need source data but working with hundreds of CSV is not for me</em>: <br><strong>Download raw data as tables from CORI (<a href="https://ruralinnovation.github.io/cori.data.fcc/reference/get_county_nbm_raw.html">NBM</a> / <a href="https://ruralinnovation.github.io/cori.data.fcc/reference/get_f477.html">Form 477</a>)</strong></p></li>
+<li class="fragment"><p>The guides linked above can help you with each step!</p></li>
+</ul>
+</div>
+<!--
+##  Packaging code > Extra team member :construction_worker:
+
+
+
+>  [...] developed packages are [...] extra expert team members.[^dataanalysisreuse]
+
+[^emily]: [https://www.emilyriederer.com/post/team-of-packages/#collaboration](https://www.emilyriederer.com/post/team-of-packages/#collaboration)
+
+[^dataanalysisreuse]: [https://milesmcbain.xyz/posts/data-analysis-reuse/](https://milesmcbain.xyz/posts/data-analysis-reuse/)
+
+
+## Packaging code > Increase speed to innovation / insight
+
+- Functions designed to get data and load it in your environment
+
+- **Capitalize on it**!
+
+  * New project that is requiring [FCC staff block estimates](https://www.fcc.gov/staff-block-estimates) -> add it!
+-->
 </section></section>
 <section>
-<section id="cori.data.fcc" class="title-slide slide level1 center">
-<h1>cori.data.fcc</h1>
+<section id="examples-use-cases" class="title-slide slide level1 center">
+<h1>Examples use cases</h1>
 
 </section>
-<section id="new-technologies" class="slide level2">
-<h2>New technologies</h2>
+<section id="broadband-service-in-the-northeast-kingdom" class="slide level2">
+<h2>Broadband service in the Northeast Kingdom</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Visual</a></li><li><a href="#tabset-2-2">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<p><img data-src="assets/images/nek_bb_service.png"></p>
+</div>
+<div id="tabset-2-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="6,7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(cori.data.fcc); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(sf); <span class="fu">library</span>(tigris)</span>
+<span id="cb2-2"><a></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(cori.charts); <span class="fu">library</span>(basemapR)</span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a>cori.charts<span class="sc">::</span><span class="fu">load_fonts</span>()</span>
+<span id="cb2-5"><a></a></span>
+<span id="cb2-6"><a></a>caledonia_co_nbm <span class="ot">&lt;-</span> cori.data.fcc<span class="sc">::</span><span class="fu">get_nbm_bl</span>(<span class="at">geoid_co =</span> <span class="st">"50005"</span>)</span>
+<span id="cb2-7"><a></a>essex_co_nbm <span class="ot">&lt;-</span> cori.data.fcc<span class="sc">::</span><span class="fu">get_nbm_bl</span>(<span class="at">geoid_co =</span> <span class="st">"50009"</span>)</span>
+<span id="cb2-8"><a></a>orleans_co_nbm <span class="ot">&lt;-</span> cori.data.fcc<span class="sc">::</span><span class="fu">get_nbm_bl</span>(<span class="at">geoid_co =</span> <span class="st">"50019"</span>)</span>
+<span id="cb2-9"><a></a></span>
+<span id="cb2-10"><a></a>nek_nbm <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(caledonia_co_nbm, essex_co_nbm, orleans_co_nbm)</span>
+<span id="cb2-11"><a></a></span>
+<span id="cb2-12"><a></a><span class="co"># tigris to get places and block</span></span>
+<span id="cb2-13"><a></a>vt_blocks <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">blocks</span>(<span class="st">"VT"</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-14"><a></a>vt_places <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">places</span>(<span class="at">state =</span> <span class="st">"VT"</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-15"><a></a></span>
+<span id="cb2-16"><a></a><span class="co"># wrangling</span></span>
+<span id="cb2-17"><a></a>nek_bb_blocks <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(</span>
+<span id="cb2-18"><a></a>    vt_blocks,</span>
+<span id="cb2-19"><a></a>    nek_nbm,</span>
+<span id="cb2-20"><a></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"GEOID20"</span> <span class="ot">=</span> <span class="st">"geoid_bl"</span>)</span>
+<span id="cb2-21"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-22"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-23"><a></a>    <span class="at">pct_100_20 =</span> cnt_100_20 <span class="sc">/</span> cnt_total_locations,</span>
+<span id="cb2-24"><a></a>    <span class="at">pct_fiber =</span> cnt_fiber_locations <span class="sc">/</span> cnt_total_locations</span>
+<span id="cb2-25"><a></a>  )</span>
+<span id="cb2-26"><a></a></span>
+<span id="cb2-27"><a></a><span class="co"># Get major NEK Place centroids for map labeling</span></span>
+<span id="cb2-28"><a></a>vt_places_centroids <span class="ot">&lt;-</span> vt_places[<span class="fu">lengths</span>(sf<span class="sc">::</span><span class="fu">st_intersects</span>(vt_places, nek_bb_blocks)) <span class="sc">&gt;</span> <span class="dv">0</span>, ] <span class="sc">|&gt;</span></span>
+<span id="cb2-29"><a></a>  <span class="fu">st_centroid</span>()</span>
+<span id="cb2-30"><a></a></span>
+<span id="cb2-31"><a></a><span class="co"># Map</span></span>
+<span id="cb2-32"><a></a>bbox <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(nek_bb_blocks) <span class="sc">|&gt;</span></span>
+<span id="cb2-33"><a></a>        cori.charts<span class="sc">::</span><span class="fu">fit_bbox_to_aspect_ratio</span>(<span class="at">target_aspect_ratio =</span> <span class="dv">2</span>)</span>
+<span id="cb2-34"><a></a></span>
+<span id="cb2-35"><a></a>fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nek_bb_blocks) <span class="sc">+</span></span>
+<span id="cb2-36"><a></a>  <span class="fu">base_map</span>(</span>
+<span id="cb2-37"><a></a>    bbox,</span>
+<span id="cb2-38"><a></a>    <span class="at">increase_zoom =</span> <span class="dv">3</span>,</span>
+<span id="cb2-39"><a></a>    <span class="at">basemap =</span> <span class="st">'voyager'</span></span>
+<span id="cb2-40"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb2-41"><a></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> pct_100_20), <span class="at">color =</span> <span class="st">"dimgray"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>, <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb2-42"><a></a>  <span class="fu">scale_fill_cori</span>(</span>
+<span id="cb2-43"><a></a>    <span class="at">discrete =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-44"><a></a>    <span class="at">palette =</span> <span class="st">"ctg2pu"</span>,</span>
+<span id="cb2-45"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(),</span>
+<span id="cb2-46"><a></a>    <span class="at">reverse =</span> T</span>
+<span id="cb2-47"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb2-48"><a></a>  <span class="fu">geom_sf_label</span>(<span class="at">data =</span> vt_places_centroids, <span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">family =</span> <span class="st">"Lato"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span></span>
+<span id="cb2-49"><a></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb2-50"><a></a>    <span class="at">expand =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-51"><a></a>    <span class="at">xlim =</span> <span class="fu">c</span>(bbox[<span class="st">'xmin'</span>], bbox[<span class="st">'xmax'</span>]),</span>
+<span id="cb2-52"><a></a>    <span class="at">ylim =</span> <span class="fu">c</span>(bbox[<span class="st">'ymin'</span>], bbox[<span class="st">'ymax'</span>])</span>
+<span id="cb2-53"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb2-54"><a></a>  <span class="fu">theme_cori_map</span>() <span class="sc">+</span></span>
+<span id="cb2-55"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-56"><a></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">50</span>, <span class="st">"pt"</span>)</span>
+<span id="cb2-57"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb2-58"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-59"><a></a>    <span class="at">title =</span> <span class="st">"Broadband service in the Northeast Kingdom"</span>,</span>
+<span id="cb2-60"><a></a>    <span class="at">subtitle =</span> <span class="st">"Percent of locations with access to 100/20 Mbps service by census block"</span>,</span>
+<span id="cb2-61"><a></a>    <span class="at">caption =</span> <span class="st">"Data source: 2023 FCC National Broadband Map</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
+<span id="cb2-62"><a></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb2-63"><a></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb2-64"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>
+&nbsp;
+</p>
+<p><br></p>
 <ul>
-<li>DuckDB and S3</li>
-<li>Parquet and interoperability</li>
+<li><p>Better services closer to “main street” (and worst farther…)</p></li>
+<li><p>3 lines of codes to get the data</p></li>
+<li><p>Use census blocks: easy match with other data sources (ACS, BEA, etc ..)</p></li>
 </ul>
+</div></div>
 </section>
-<section id="packaging-code-and-data" class="slide level2">
-<h2>Packaging code and data</h2>
-<blockquote>
-<p>internally developed packages are […] extra expert team members.<sup>1</sup></p>
-</blockquote>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>https://milesmcbain.xyz/posts/data-analysis-reuse/</p></li></ol></aside></section></section>
-<section>
-<section id="examples-of-uses-cases" class="title-slide slide level1 center">
-<h1>Examples of uses cases</h1>
-
-</section>
-<section id="download-files" class="slide level2">
-<h2>Download files</h2>
-</section>
-<section id="use-cori-curated-files" class="slide level2">
-<h2>Use CORI curated files</h2>
-</section>
-<section id="custom" class="slide level2">
-<h2>Custom</h2>
+<section id="northeast-kingdom-only-11.5-of-locations-have-fiber" class="slide level2">
+<h2>Northeast Kingdom: only 11.5% of locations have fiber</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Visual</a></li><li><a href="#tabset-3-2">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<p><img data-src="assets/images/nek_fiber_service.png"></p>
+</div>
+<div id="tabset-3-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nek_bb_blocks) <span class="sc">+</span></span>
+<span id="cb3-2"><a></a>  <span class="fu">base_map</span>(</span>
+<span id="cb3-3"><a></a>    bbox,</span>
+<span id="cb3-4"><a></a>    <span class="at">increase_zoom =</span> <span class="dv">3</span>,</span>
+<span id="cb3-5"><a></a>    <span class="at">basemap =</span> <span class="st">'voyager'</span></span>
+<span id="cb3-6"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb3-7"><a></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> pct_fiber), <span class="at">color =</span> <span class="st">"dimgray"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a></a>  <span class="fu">scale_fill_cori</span>(</span>
+<span id="cb3-9"><a></a>    <span class="at">discrete =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-10"><a></a>    <span class="at">palette =</span> <span class="st">"ctg2pu"</span>,</span>
+<span id="cb3-11"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(),</span>
+<span id="cb3-12"><a></a>    <span class="at">reverse =</span> T</span>
+<span id="cb3-13"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb3-14"><a></a>  <span class="fu">geom_sf_label</span>(<span class="at">data =</span> vt_places_centroids, <span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">family =</span> <span class="st">"Lato"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span></span>
+<span id="cb3-15"><a></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb3-16"><a></a>    <span class="at">expand =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-17"><a></a>    <span class="at">xlim =</span> <span class="fu">c</span>(bbox[<span class="st">'xmin'</span>], bbox[<span class="st">'xmax'</span>]),</span>
+<span id="cb3-18"><a></a>    <span class="at">ylim =</span> <span class="fu">c</span>(bbox[<span class="st">'ymin'</span>], bbox[<span class="st">'ymax'</span>])</span>
+<span id="cb3-19"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb3-20"><a></a>  <span class="fu">theme_cori_map</span>() <span class="sc">+</span></span>
+<span id="cb3-21"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-22"><a></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">50</span>, <span class="st">"pt"</span>),</span>
+<span id="cb3-23"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb3-24"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-25"><a></a>    <span class="at">title =</span> <span class="st">"Fiber access in the Northeast Kingdom"</span>,</span>
+<span id="cb3-26"><a></a>    <span class="at">subtitle =</span> <span class="st">"Percent of locations with access to fiber by census block"</span>,</span>
+<span id="cb3-27"><a></a>    <span class="at">caption =</span> <span class="st">"Data source: 2023 FCC National Broadband Map</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
+<span id="cb3-28"><a></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-29"><a></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb3-30"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>
+&nbsp;
+</p>
+<p><br></p>
 <ul>
-<li>Isp over time?</li>
-<li>States level analysis?</li>
+<li><p>Only 11.5% of locations have fiber access in the Northeast Kingdom</p></li>
+<li><p>6/25 ISP are providing Fiber</p></li>
+<li><p>Leading ISP here is small ISP, non-profit: NEK broadband</p></li>
 </ul>
+</div></div>
 </section>
-<section id="references" class="slide level2">
-<h2>References</h2>
-<p>TODO:</p>
-<p>McBain (2024, March 11). Before I Sleep: Patterns and anti-patterns of data analysis reuse. Retrieved from https://milesmcbain.com/posts/data-analysis-reuse/</p>
-<p>https://www.emilyriederer.com/post/team-of-packages/#collaboration</p>
+<section id="what-are-each-isp-competitors-in-ohio" class="slide level2">
+<h2>What are each ISP competitors in Ohio?</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Visual</a></li><li><a href="#tabset-4-2">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell">
+<div class="cell-output-display">
+<div class="scatterplotThree html-widget html-fill-item" id="htmlwidget-5f3a0a5315989e4eb490" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5f3a0a5315989e4eb490">{"x":{"NROW":121,"height":null,"width":null,"axis":false,"numticks":[6,6,6],"xticklabs":null,"yticklabs":null,"zticklabs":null,"color":[["#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#DF536B","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000"]],"size":[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5],"stroke":"black","flipy":true,"grid":false,"renderer":"auto","signif":8,"bg":"white","cexsymbols":1,"xlim":[-1,1],"ylim":[-1,1],"zlim":[-1,1],"axisscale":[1,1,1],"pch":["@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","Cox Communications, Inc","Ottoville Mutual Telephone Company","Telephone Service Company","SYCAMORE TELEPHONE COMPANY","The Champaign Telephone Company","W A T C H TV Company","The Ohio Bell Telephone Company","The Chillicothe Telephone Co","Pymatuning Independent Telephone Company","U.S. TelePacific Corp. d/b/a TPx Communications","Farmers Mutual Telephone Company","The Ridgeville Telephone Company","jefferson county cable, inc","Buckeye Cablevision, Inc.","Armstrong Utilities, Inc.","COMCAST CABLE COMMUNICATIONS, LLC","TSC Communications, Inc.","Cable Co-op","Buckeye TeleSystem, Inc.","Bascom Advanced Services, Inc. dba Bascom Long Distance","Bascom Mutual Telephone Company","THE NOVA TELEPHONE COMPANY","THE MCCLURE TELEPHONE COMPANY, INC.","Ayersville Telephone Company","THE NEW KNOXVILLE TELEPHONE COMPANY","Doylestown Telephone Company","ARTHUR MUTUAL TELEPHONE COMPANY","Wabash Mutual Telephone Company","Buckland Telephone Co.","The Fort Jennings Telephone Co.","Kalida Telephone Co., Inc.","Kit Carson Electric Cooperative Inc.","TDS TELECOMMUNICATIONS LLC","Fusion, LLC","Wabash Communications, Inc.","COMMUNITY ANTENNA SERVICE, INC.","Windstream Ohio, LLC","Windstream Pennsylvania, LLC","Windstream Western Reserve, LLC","CT Communications Network, Inc.","Vaughnsville Telephone Company","BRYAN MUNICIPAL UTILITIES","Fusion Cloud Services, LLC","Glandorf Telephone Co. ,Inc","Benton Ridge Telephone Co","Pattersonville Telephone Company","Minford Telephone Company","The Middle Point Home Telephone Company","OGDEN TELEPHONE COMPANY","Sherwood Mutual Telephone Association, Inc.","THE CONNEAUT TELEPHONE COMPANY","Massillon Cable TV, Inc.","AT&T Corp.","Southern Ohio Communication Services Inc","Nelsonville TV Cable, Inc.","T-Mobile USA, Inc.","Mediacom Communications Corporation","US Signal Company, LLC","KEPS TECHNOLOGIES INC","Internet Consulting Services, LLC","Hotwire Communications, Ltd.","FJ Communications, Inc.","Doylestown Communications, Inc. d/b/a Heritage Telephone Company d/b/a Ohio.net Internet Providers","Cincinnati Bell Extended Territories LLC","Cincinnati Bell Telephone Company LLC","City of Wadsworth","Netrix, LLC","Independents Fiber Network, LLC","Unite Private Networks, L.L.C.","bright.net north Inc","Cogeco US Finance, LLC","SAA bright.net","Consolidated Smart Broadband Systems, LLC","MetaLINK Technologies, Inc.","Amplex Electric, Inc.","JB-Nets","Zayo Group, LLC","ALTIUS Communications LLC","Rtec Communications, Inc.","McClure Communications Corporation","DMCI Broadband, LLC","Imagine Networks","New Era Broadband, LLC","Cellco Partnership","WAVELINC COMMUNICATIONS","CSC Holdings LLC","Cogent Communications Group","North Coast Wireless Communications","Crystal Broadband Networks","Community Fiber Solutions Incorporated","S-Net Communications, Inc.","Agile Networks","Xclutel, LLC","Speedwavz LLP","NetFortris Acquisition Co., Inc.","Midwest Energy Cooperative, Inc. d/b/a Midwest  Energy & Communications","Smart Way Communications, LLC","Block Line Systems, LLC","Metronet Holdings, LLC","City of Hudson","Mercury Wireless Indiana, LLC","GLW Broadband Inc","Xiber, LLC","Charter Communications, Inc.","Juvilex Communications, LLC","City of Fairlawn","Zito West Holding, LLC","Skymesh, Inc.","Everstream Solutions LLC","Consolidated Fiber, Inc.","GreatWave Broadband Services","DigitalC","Little Miami Gig","Point Broadband Fiber Holding, LLC","Frontier Communications Parent, Inc.","DSI Management Holdings, LLC","PCs for People","Connect Holding, LLC","Lit Fiber LLC","Hanson Communications of Ohio, LLC","OMNI FIBER, LLC"],"elementId":"ZWOIWOXYZn","from":[[5,5,5,55,55,74,5,19,19,19,5,19,32,32,5,19,55,74,5,19,32,32,55,74,83,5,19,52,52,5,19,32,55,74,83,91,5,6,6,6,6,6,6,52,52,5,6,19,20,20,20,5,6,18,18,18,18,83,91,5,5,19,19,73,73,74,73,73,32,32,55,73,18,18,18,6,6,6,52,52,5,6,73,83,91,98,5,6,13,13,13,13,13,13,13,13,18,18,32,19,52,55,74,13,13,55,83,44,44,44,44,44,6,44,5,91,103,6,52,5,44,55,73,74,83,89,19,18,5,55,73,83,91,103,73,103,117,18,114,52,89,89,5,16,16,16,16,16,5,40,40,40,40,16,16,40,5,34,34,34,34,34,34,5,28,28,28,28,16,2,2,2,2,2,2,2,5,61,61,61,61,61,34,6,70,70,70,52,55,6,52,70,83,91,103,55,6,33,33,33,33,33,6,15,15,15,15,15,15,33,6,55,56,56,52,6,9,9,9,6,38,38,38,38,38,55,103,83,52,6,91,38,38,9,83,113,52,103,91,55,6,64,64,55,52,64,18,15,5,6,5,52,63,63,63,63,55,63,5,52,60,60,60,6,64,5,56,56,55,64,67,67,63,64,9,9,55,83,91,103,15,52,52,6,63,54,54,54,54,6,38,38,52,55,83,85,85,85,85,33,108,6,6,52,55,68,68,68,68,42,42,42,42,46,46,46,46,46,46,46,52,53,53,53,53,53,82,82,82,82,7,7,7,7,7,52,52,82,83,96,96,91,113,96,55,26,26,26,26,26,26,36,36,36,36,36,55,71,71,71,36,49,49,49,49,49,71,36,26,67,67,67,5,5,26,32,5,5,49,71,5,49,55,71,73,83,56,56,56,49,91,5,36,16,16,16,6,6,6,16,26,52,1,1,1,1,1,1,1,32,36,73,79,79,79,55,79,73,78,78,78,78,74,36,36,22,22,22,22,22,22,79,22,11,11,11,11,69,55,69,69,69,11,10,10,10,10,55,10,10,10,18,18,69,69,10,10,10,67,67,10,10,23,23,23,23,5,23,73,95,95,83,13,13,18,36,91,48,48,48,36,55,55,73,83,91,103,117,78,78,11,18,95,32,6,5,55,83,91,93,5,55,83,91,112,103,5,116,18,4,4,4,4,4,4,4,5,39,39,39,39,39,14,14,14,14,37,14,14,14,8,8,8,8,8,38,6,14,55,83,91,56,56,85,7,6,6,51,51,52,6,88,51,51,88,55,51,51,85,51,6,75,75,14,14,5,19,83,5,19,87,5,19,84,83,84,84,84,87,84,84,87,5,84,108,52,55,87,87,3,3,3,3,3,3,9,9,38,38,56,1,5,47,47,47,47,32,47,34,47,1,1,100,100,7,7,6,36,5,14,100,52,100,108,55,52,87,52,14,14,14,55,83,91,100,109,103,4,39,4,36,5,6,52,81,81,36,81,4,39,4,39,51,51,51,51,15,15,14,14,96,51,51,25,25,25,25,25,25,6,25,25,52,55,62,62,62,62,51,14,96,62,74,114,74,74,18,18,13,18,12,12,12,12,12,5,15,15,55,52,54,54,54,6,5,24,24,24,24,24,6,24,24,36,6,67,24,36,36,98,81,81,56,56,5,6,52,55,83,91,103,70,70,112,52,108,5,109,52,83,90,90,109,52,55,83,86,86,86,70,6,5,27,27,27,27,27,34,27,24,24,24,5,82,82,55,67,67,24,100,107,63,14,21,21,21,21,21,21,21,6,13,6,13,58,58,52,58,74,18,55,18,58,13,18,57,57,57,57,13,58,6,13,18,58,74,83,6,55,58,6,13,18,58,74,76,76,76,76,98,13,18,58,68,58,73,52,58,13,18,56,10,10,91,97,13,13,52,55,50,50,50,50,50,50,38,38,50,83,103,52,55,91,108,106,106,16,16,106,37,37,50,37,37,37,37,14,37,106,38,16,108,77,77,77,77,55,5,77,56,114,6,83,103,76,18,51,76,18,14,14,15,9,5,96,76,76,14,108,93,70,13,13,6,6,76,63,18,33,18,36,87,108,36,36,17,17,17,17,17,17,14,17,17,14,17,17,33,36,36,52,55,83,87,91,101,101,0,0,0,70,0,0,0,0,101,9,9,9,9,14,14,14,83,91,114,55,101,87,18,11,10,10,71,69,71,23,23,23,49,49,56,78,49,18,71,26,23,44,23,12,12,12,38,6,12,15,56,56,19,56,63,86,15,94,6,28,2,16,2,2,16,2,16,16,28,28,2,24,5,16,33,16,34,24,89,85,64,55,64,83,102,64,33,64,64,52,114,45,45,45,45,45,45,45,38,15,51,6,7,7,6,35,35,35,35,35,35,35,83,35,35,52,16,36,52,16,52,55,64,66,66,66,31,31,31,31,31,31,74,16,32,5,30,30,30,30,1,1,30,5,30,43,43,43,43,43,32,43,5,9,9,18,30,18,18,30,30,40,1,5,29,29,29,29,29,29,29,38,82,85,56,6,57,57,57,57,57,70,70,76,86,56,6,52,55,72,72,6,70,91,9,102,6,52,70,6,52,55,59,59,59,59,59,70,108,18,56,33,56,74,58,68,58,13,67,67,20,20,20,20,20,18,20,3,3,20,71,71,73,80,80,80,55,80,80,5,41,41,41,41,41,41,41,41,18,5,41,93,93,5,0,6,52,55,83,91,103,0,70,0,0,9,9,9,33,6,52,55,83,91,92,92,108,18,15,15,57,6,55,83,103,111,115,0,33,9,18,0,38,33,15,0,9,0,0,0,6,9,42,42,33,76,91,52,68,94,63,67,18,32,32,56,32,36,52,105,105,55,33,91,6,52,83,103,104,76,18,105,9,38,38,52,55,83,99,91,99,99,38,94,94,24,24,14,52,87,52,55,65,65,65,65,65,65,103,14,14,56,108,18,105,65,65,52,3,3,3,6,3,27,27,27,24,16,27,18,18,15,15,15]],"to":[[55,74,83,74,83,83,19,55,74,83,32,32,55,74,117,117,117,117,91,91,83,91,91,91,91,52,52,55,74,103,103,103,103,103,103,103,6,19,52,55,74,83,103,83,103,20,20,20,83,103,55,18,18,19,55,83,103,117,117,73,114,73,114,74,114,114,83,91,117,73,73,103,32,74,91,32,73,91,73,91,98,98,98,98,98,103,13,13,18,52,55,73,74,83,91,103,52,73,52,98,98,98,98,19,98,114,114,55,73,83,91,74,44,103,44,114,114,114,114,89,89,89,89,89,89,91,44,98,119,119,119,119,119,119,117,117,119,117,117,117,103,117,16,73,55,83,91,119,40,55,73,83,91,103,117,117,34,73,83,91,103,114,117,28,83,91,103,117,18,5,16,55,83,103,117,91,61,73,83,91,103,117,55,70,83,103,91,70,70,108,108,108,108,108,108,108,33,52,55,83,103,91,15,52,55,83,91,103,108,108,56,56,83,103,56,9,52,83,103,38,52,55,83,103,106,106,106,106,106,106,106,91,108,55,113,117,113,113,113,113,113,83,103,64,64,91,64,64,64,64,63,63,83,103,114,91,63,64,60,60,83,103,114,63,114,56,64,91,67,67,83,103,117,117,64,91,116,116,116,116,116,116,119,116,119,55,83,91,117,117,114,85,85,85,85,103,114,91,117,38,117,85,68,68,68,83,91,103,108,52,55,83,103,83,103,55,91,52,114,53,53,55,83,114,91,103,83,91,114,103,114,91,103,83,52,82,96,96,96,103,114,96,114,113,96,36,55,71,73,83,91,55,71,73,83,91,71,73,83,91,49,71,73,83,91,55,103,103,103,71,73,91,71,36,32,71,26,49,114,114,100,100,100,100,100,100,71,73,100,103,100,67,67,32,71,26,16,26,71,52,52,71,5,32,55,71,73,83,91,114,79,79,83,91,117,79,103,78,83,91,103,117,79,74,117,73,83,91,79,74,114,114,103,73,83,91,55,73,69,83,91,103,103,11,55,73,103,78,83,91,69,69,78,78,117,117,67,78,69,78,18,22,55,73,83,91,23,44,95,103,117,95,117,78,36,78,95,73,95,117,95,95,120,120,120,120,120,120,95,120,117,120,114,64,53,93,93,93,93,117,112,112,112,112,117,112,116,117,112,5,39,83,91,103,112,117,39,83,91,103,112,117,52,55,83,117,83,91,103,108,83,91,103,52,117,117,14,94,94,94,94,85,117,108,53,88,51,52,88,88,96,96,91,96,91,88,55,85,96,114,75,91,83,75,114,87,87,87,120,120,120,84,84,114,84,91,103,87,91,117,120,114,108,108,114,84,84,117,103,5,19,83,91,84,117,84,117,96,56,96,47,47,55,73,83,91,47,117,47,103,61,117,114,103,113,55,36,52,14,100,117,100,108,120,87,87,108,120,87,120,109,109,109,109,109,117,109,55,55,36,39,81,81,81,103,83,81,91,67,67,114,114,83,117,120,108,51,117,51,96,117,103,87,52,55,83,103,91,108,25,117,62,62,62,83,103,117,91,62,62,108,108,120,120,87,108,114,108,114,87,91,114,38,83,96,96,114,96,81,54,114,113,103,54,24,55,83,91,103,98,24,52,36,98,67,98,67,100,114,114,114,98,98,114,107,107,107,107,107,107,107,114,112,114,112,112,109,114,109,90,109,114,112,86,86,86,91,103,114,117,109,27,34,83,91,117,103,100,100,34,100,117,82,100,117,82,100,117,107,107,117,98,21,83,87,91,52,114,55,103,58,58,100,100,100,83,58,74,100,58,58,100,103,57,57,58,83,100,103,108,108,97,97,97,97,97,97,57,57,98,76,76,76,76,76,83,98,103,108,108,68,68,68,74,73,108,57,114,56,56,58,13,74,97,103,69,36,76,76,55,83,91,103,52,108,50,110,110,110,110,110,110,110,110,108,110,38,106,117,50,103,106,91,38,52,117,37,55,119,119,108,119,83,91,103,117,77,77,114,119,119,105,105,105,91,51,76,96,96,15,18,18,14,15,120,114,120,84,109,103,87,87,120,120,87,87,112,70,117,33,70,116,116,87,108,52,55,83,91,103,114,70,70,117,17,108,87,36,116,101,101,101,101,101,101,103,114,52,55,103,101,6,36,83,91,108,36,87,101,114,101,36,118,118,118,118,118,118,118,101,71,71,114,117,71,78,71,117,103,56,78,78,114,117,71,120,117,120,71,26,15,55,51,51,12,52,38,74,120,108,63,113,113,98,103,119,55,28,28,56,24,24,18,34,114,114,34,114,114,33,33,114,89,89,89,114,106,86,102,102,102,103,108,64,85,76,102,116,52,83,91,96,55,114,103,112,112,112,112,56,70,35,83,85,91,103,52,38,55,88,114,117,67,36,93,93,93,66,66,66,83,91,103,52,64,83,91,103,55,119,74,44,30,32,73,83,91,18,30,55,43,43,73,55,83,91,103,43,117,9,43,73,119,103,30,67,67,40,103,29,29,55,73,83,91,30,61,117,82,85,113,70,86,70,76,86,91,108,76,86,86,108,108,72,72,72,83,91,102,102,102,70,108,94,94,94,59,59,59,70,83,91,103,108,113,113,113,113,87,87,84,120,120,117,67,74,114,91,74,84,117,52,20,32,103,20,120,95,80,80,100,83,114,80,103,91,80,71,73,103,83,114,55,117,56,41,41,91,114,112,70,108,115,115,115,115,115,115,116,116,9,33,33,108,116,116,92,92,92,92,92,103,108,115,86,76,86,116,111,111,111,111,116,116,70,115,38,38,38,70,70,70,115,18,15,18,76,42,42,91,108,76,116,111,111,116,108,67,113,63,112,56,112,63,42,105,108,115,105,105,105,104,104,104,104,105,105,105,114,105,116,99,99,99,99,103,99,116,108,94,99,116,33,108,33,118,105,65,65,83,91,103,108,87,118,118,105,56,118,118,118,118,114,76,75,55,114,52,84,6,55,73,114,27,27,89,24,34,24,27,34]],"lwd":3,"linealpha":0.3,"center":true,"main":[""],"brush":true,"lcol":["#BEBEBE"],"labels":["Cox Communications, Inc","Ottoville Mutual Telephone Company","Telephone Service Company","SYCAMORE TELEPHONE COMPANY","The Champaign Telephone Company","W A T C H TV Company","The Ohio Bell Telephone Company","The Chillicothe Telephone Co","Pymatuning Independent Telephone Company","U.S. TelePacific Corp. d/b/a TPx Communications","Farmers Mutual Telephone Company","The Ridgeville Telephone Company","jefferson county cable, inc","Buckeye Cablevision, Inc.","Armstrong Utilities, Inc.","COMCAST CABLE COMMUNICATIONS, LLC","TSC Communications, Inc.","Cable Co-op","Buckeye TeleSystem, Inc.","Bascom Advanced Services, Inc. dba Bascom Long Distance","Bascom Mutual Telephone Company","THE NOVA TELEPHONE COMPANY","THE MCCLURE TELEPHONE COMPANY, INC.","Ayersville Telephone Company","THE NEW KNOXVILLE TELEPHONE COMPANY","Doylestown Telephone Company","ARTHUR MUTUAL TELEPHONE COMPANY","Wabash Mutual Telephone Company","Buckland Telephone Co.","The Fort Jennings Telephone Co.","Kalida Telephone Co., Inc.","Kit Carson Electric Cooperative Inc.","TDS TELECOMMUNICATIONS LLC","Fusion, LLC","Wabash Communications, Inc.","COMMUNITY ANTENNA SERVICE, INC.","Windstream Ohio, LLC","Windstream Pennsylvania, LLC","Windstream Western Reserve, LLC","CT Communications Network, Inc.","Vaughnsville Telephone Company","BRYAN MUNICIPAL UTILITIES","Fusion Cloud Services, LLC","Glandorf Telephone Co. ,Inc","Benton Ridge Telephone Co","Pattersonville Telephone Company","Minford Telephone Company","The Middle Point Home Telephone Company","OGDEN TELEPHONE COMPANY","Sherwood Mutual Telephone Association, Inc.","THE CONNEAUT TELEPHONE COMPANY","Massillon Cable TV, Inc.","AT&T Corp.","Southern Ohio Communication Services Inc","Nelsonville TV Cable, Inc.","T-Mobile USA, Inc.","Mediacom Communications Corporation","US Signal Company, LLC","KEPS TECHNOLOGIES INC","Internet Consulting Services, LLC","Hotwire Communications, Ltd.","FJ Communications, Inc.","Doylestown Communications, Inc. d/b/a Heritage Telephone Company d/b/a Ohio.net Internet Providers","Cincinnati Bell Extended Territories LLC","Cincinnati Bell Telephone Company LLC","City of Wadsworth","Netrix, LLC","Independents Fiber Network, LLC","Unite Private Networks, L.L.C.","bright.net north Inc","Cogeco US Finance, LLC","SAA bright.net","Consolidated Smart Broadband Systems, LLC","MetaLINK Technologies, Inc.","Amplex Electric, Inc.","JB-Nets","Zayo Group, LLC","ALTIUS Communications LLC","Rtec Communications, Inc.","McClure Communications Corporation","DMCI Broadband, LLC","Imagine Networks","New Era Broadband, LLC","Cellco Partnership","WAVELINC COMMUNICATIONS","CSC Holdings LLC","Cogent Communications Group","North Coast Wireless Communications","Crystal Broadband Networks","Community Fiber Solutions Incorporated","S-Net Communications, Inc.","Agile Networks","Xclutel, LLC","Speedwavz LLP","NetFortris Acquisition Co., Inc.","Midwest Energy Cooperative, Inc. d/b/a Midwest  Energy & Communications","Smart Way Communications, LLC","Block Line Systems, LLC","Metronet Holdings, LLC","City of Hudson","Mercury Wireless Indiana, LLC","GLW Broadband Inc","Xiber, LLC","Charter Communications, Inc.","Juvilex Communications, LLC","City of Fairlawn","Zito West Holding, LLC","Skymesh, Inc.","Everstream Solutions LLC","Consolidated Fiber, Inc.","GreatWave Broadband Services","DigitalC","Little Miami Gig","Point Broadband Fiber Holding, LLC","Frontier Communications Parent, Inc.","DSI Management Holdings, LLC","PCs for People","Connect Holding, LLC","Lit Fiber LLC","Hanson Communications of Ohio, LLC","OMNI FIBER, LLC","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],"options":true,"alpha":[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"vertices":[[0.029283476,-0.46227491,0.43683403,-0.38906742,0.4368125,0.46220915,-0.20713157,-0.09223722600000001,0.88082892,-0.29517017,-0.16177534,0.7356487,-0.56488429,-0.060609391,0.81914358,-0.35046519,-0.03736736,0.43047315,0.085729322,-0.27239053,0.14882684,-0.2919323,-0.23992665,-0.53577881,0.0042435872,-0.38697943,1,-0.44230751,-0.34685255,0.42257784,0.26834646,0.31568735,0.0027682201,-0.45964788,0.30579229,-0.32545648,0.76608311,-0.42844801,0.0085373745,0.20574519,0.040123288,-0.090698348,-0.0017507621,-0.40053708,0.15554846,-0.20328221,-0.2890355,0.090533287,-0.45363666,-0.12739624,0.39879078,-0.79333062,-0.37982225,-0.15019605,0.11920971,-0.059839759,0.19143132,-0.46398768,0.019230799,0.12920261,0.049949383,0.13662665,0.52227006,0.5685192100000001,-0.36347736,0.5727606,0.71911699,0.3286911,0.29619889,0.17233086,0.40324385,0.46868538,-0.54273472,-0.16537287,0.49384294,0.23030851,-0.4340631,-0.47367408,0.032397277,0.096506592,0.70645186,-0.81873842,0.061870852,0.48062093,-0.82595768,-0.10148299,0.67890659,-0.62141398,0.41034454,0.59750476,-0.7032797,0.32117874,0.20251626,-0.59343262,-0.74052069,0.70456208,-0.43097636,0.15016655,0.37896118,-0.38123903,-0.43346539,0.3215164,-0.68282194,0.10068128,0.48094286,-0.64588823,-0.40029397,-0.22440646,-0.15606676,-0.063982569,0.39126299,-0.43716172,-0.45205437,-0.38284689,0.0014474609,-0.45252632,-0.012539285,-0.39738095,0.061379442,0.78597943,-0.63963233,0.45944817,0.021732796,0.32142635,0.36030482,0.27789725,-0.5760096099999999,-0.69367598,0.43396044,-0.98982578,0.17577848,0.17272473,-0.007730383,0.28851503,0.57177556,0.32822742,-0.7602521800000001,0.46841014,0.6503498,-0.3452511,-0.3996026,-0.90081788,0.25964079,0.3979357,-0.17471053,1,0.07666060500000001,-0.45738114,0.24378997,-0.074896289,0.013827544,-0.67564599,-0.28718582,0.29742507,-0.38823031,-0.17282466,-0.039182927,-0.37406102,0.21222487,0.046277917,-0.36570562,-0.50882551,0.68536383,-0.26078384,-0.18810435,-0.16923645,-0.13987339,0.16818187,0.0030349892,-0.042998989,0.041024726,0.71306508,-0.18163493,0.021511912,0.44701668,0.013241569,-0.11713259,-0.13917326,-0.8325814499999999,-0.051889767,-0.8457248000000001,-0.49228504,0.81982285,-0.7889721,0.43931926,0.43787967,-0.2756064,-0.51647107,-0.39737465,0.068508915,0.072624627,0.012950714,-0.27627824,-0.33813125,0.39828114,-0.36047727,-0.6117234499999999,0.16404392,-0.97735255,-0.54458174,0.1928527,-0.16018383,0.12536712,0.12491317,0.21323197,-0.22080246,-0.36707144,0.031434877,0.43696154,-0.21244505,-0.09753287099999999,-0.3995508,0.0073749048,0.020931584,0.25280329,0.22599743,-0.58647894,-0.88906587,-0.00011837467,-0.24532503,0.25701042,0.25468444,0.21727631,0.07112854,0.19907076,0.62103469,-0.84435443,0.099951072,0.31720693,-0.35481477,0.078844861,0.45795567,0.29843738,-0.22719332,-0.067740935,0.27231215,-0.17994664,0.47506187,0.2446,0.5560917399999999,-0.25993232,0.25394672,0.71548053,0.031840713,-0.29710308,0.83764834,0.43284365,-0.31688859,0.6354493,-0.088411934,-0.14995115,0.12413486,-0.61416777,-0.1587836,0.21824382,0.18278497,-0.30447449,-0.21623009,0.6487575799999999,-0.257911,0.27389011,-0.26032233,-0.32306996,0.15527143,1,-0.50137237,-0.0049008607,-0.49448354,0.15540163,0.65684071,0.19015297,0.047627038,-1,-0.064189525,-0.18717855,0.21920005,0.69383794,-0.59893756,0.32175505,-1,-0.18813808,0.2850881,-0.018690607,-0.81793063,-0.0035809852,-0.036550588,0.39881216,0.10003878,0.50891515,-0.31258676,0.17279148,0.9290472400000001,0.021628797,-0.16914098,0.31193284,-0.04883229,0.33925446,-0.48908021,-0.69751417,-0.18578509,-0.22641145,0.0054222246,0.277256,0.21756005,-0.28330491,0.52700062,-0.2477048,-0.589104,0.65610916,-0.10972705,-0.20866484,0.21214686,0.20133972,-1,-0.046405152,0.16119954,-0.6023649599999999,0.32715883,-0.043704233,-0.42981275,-0.30841918,-0.91439395,-0.3432478,0.46430224,-0.035310422,-0.35420032,0.10109801,-0.28406038,-0.14516572,-0.35449295,0.45330365,-0.63118447,-0.1303707,0.25659426,-0.57004429,0.65750239,-0.55482542,-0.17551484,0.066755363,0.39498684,-0.13500822,-0.23407457,-0.0005528706,-0.08629966999999999,0.20015964,0.026176242,-0.6868017,0.42386183,-0.11144536,-0.55214782,0.19147204,-0.19222034,-0.0062927981,0.18849378,0.38393584,-0.45895331,0.37688157,0.22789527,-0.045564967,-0.13772145,-0.087464768,-0.052295062,-0.09162806900000001,0.029283476,-0.46227491,0.43683403,-0.38906742,0.4368125,0.46220915,-0.20713157,-0.09223722600000001,0.88082892,-0.29517017,-0.16177534,0.7356487,-0.56488429,-0.060609391,0.81914358,-0.35046519,-0.03736736,0.43047315,0.085729322,-0.27239053,0.14882684,-0.2919323,-0.23992665,-0.53577881,0.0042435872,-0.38697943,1,-0.44230751,-0.34685255,0.42257784,0.26834646,0.31568735,0.0027682201,-0.45964788,0.30579229,-0.32545648,0.76608311,-0.42844801,0.0085373745,0.20574519,0.040123288,-0.090698348,-0.0017507621,-0.40053708,0.15554846,-0.20328221,-0.2890355,0.090533287,-0.45363666,-0.12739624,0.39879078,-0.79333062,-0.37982225,-0.15019605,0.11920971,-0.059839759,0.19143132,-0.46398768,0.019230799,0.12920261,0.049949383,0.13662665,0.52227006,0.5685192100000001,-0.36347736,0.5727606,0.71911699,0.3286911,0.29619889,0.17233086,0.40324385,0.46868538,-0.54273472,-0.16537287,0.49384294,0.23030851,-0.4340631,-0.47367408,0.032397277,0.096506592,0.70645186,-0.81873842,0.061870852,0.48062093,-0.82595768,-0.10148299,0.67890659,-0.62141398,0.41034454,0.59750476,-0.7032797,0.32117874,0.20251626,-0.59343262,-0.74052069,0.70456208,-0.43097636,0.15016655,0.37896118,-0.38123903,-0.43346539,0.3215164,-0.68282194,0.10068128,0.48094286,-0.64588823,-0.40029397,-0.22440646,-0.15606676,-0.063982569,0.39126299,-0.43716172,-0.45205437,-0.38284689,0.0014474609,-0.45252632,-0.012539285,-0.39738095,0.061379442,0.78597943,-0.63963233,0.45944817,0.021732796,0.32142635,0.36030482,0.27789725,-0.5760096099999999,-0.69367598,0.43396044,-0.98982578,0.17577848,0.17272473,-0.007730383,0.28851503,0.57177556,0.32822742,-0.7602521800000001,0.46841014,0.6503498,-0.3452511,-0.3996026,-0.90081788,0.25964079,0.3979357,-0.17471053,1,0.07666060500000001,-0.45738114,0.24378997,-0.074896289,0.013827544,-0.67564599,-0.28718582,0.29742507,-0.38823031,-0.17282466,-0.039182927,-0.37406102,0.21222487,0.046277917,-0.36570562,-0.50882551,0.68536383,-0.26078384,-0.18810435,-0.16923645,-0.13987339,0.16818187,0.0030349892,-0.042998989,0.041024726,0.71306508,-0.18163493,0.021511912,0.44701668,0.013241569,-0.11713259,-0.13917326,-0.8325814499999999,-0.051889767,-0.8457248000000001,-0.49228504,0.81982285,-0.7889721,0.43931926,0.43787967,-0.2756064,-0.51647107,-0.39737465,0.068508915,0.072624627,0.012950714,-0.27627824,-0.33813125,0.39828114,-0.36047727,-0.6117234499999999,0.16404392,-0.97735255,-0.54458174,0.1928527,-0.16018383,0.12536712,0.12491317,0.21323197,-0.22080246,-0.36707144,0.031434877,0.43696154,-0.21244505,-0.09753287099999999,-0.3995508,0.0073749048,0.020931584,0.25280329,0.22599743,-0.58647894,-0.88906587,-0.00011837467,-0.24532503,0.25701042,0.25468444,0.21727631,0.07112854,0.19907076,0.62103469,-0.84435443,0.099951072,0.31720693,-0.35481477,0.078844861,0.45795567,0.29843738,-0.22719332,-0.067740935,0.27231215,-0.17994664,0.47506187,0.2446,0.5560917399999999,-0.25993232,0.25394672,0.71548053,0.031840713,-0.29710308,0.83764834,0.43284365,-0.31688859,0.6354493,-0.088411934,-0.14995115,0.12413486,-0.61416777,-0.1587836,0.21824382,0.18278497,-0.30447449,-0.21623009,0.6487575799999999,-0.257911,0.27389011,-0.26032233,-0.32306996,0.15527143,1,-0.50137237,-0.0049008607,-0.49448354,0.15540163,0.65684071,0.19015297,0.047627038,-1,-0.064189525,-0.18717855,0.21920005,0.69383794,-0.59893756,0.32175505,-1,-0.18813808,0.2850881,-0.018690607,-0.81793063,-0.0035809852,-0.036550588,0.39881216,0.10003878,0.50891515,-0.31258676,0.17279148,0.9290472400000001,0.021628797,-0.16914098,0.31193284,-0.04883229,0.33925446,-0.48908021,-0.69751417,-0.18578509,-0.22641145,0.0054222246,0.277256,0.21756005,-0.28330491,0.52700062,-0.2477048,-0.589104,0.65610916,-0.10972705,-0.20866484,0.21214686,0.20133972,-1,-0.046405152,0.16119954,-0.6023649599999999,0.32715883,-0.043704233,-0.42981275,-0.30841918,-0.91439395,-0.3432478,0.46430224,-0.035310422,-0.35420032,0.10109801,-0.28406038,-0.14516572,-0.35449295,0.45330365,-0.63118447,-0.1303707,0.25659426,-0.57004429,0.65750239,-0.55482542,-0.17551484,0.066755363,0.39498684,-0.13500822,-0.23407457,-0.0005528706,-0.08629966999999999,0.20015964,0.026176242,-0.6868017,0.42386183,-0.11144536,-0.55214782,0.19147204,-0.19222034,-0.0062927981,0.18849378,0.38393584,-0.45895331,0.37688157,0.22789527,-0.045564967,-0.13772145,-0.087464768,-0.052295062,-0.09162806900000001]],"xticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"yticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"zticklab":["1.00","0.60","0.20","-0.20","-0.60","-1.00"],"xtick":[0,0.2,0.4,0.6000000000000001,0.8,1],"ytick":[0,0.2,0.4,0.6000000000000001,0.8,1],"ztick":[0,0.2,0.4,0.6000000000000001,0.8,1],"axislength":[1,1,1]},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="8,46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(tigris);<span class="fu">library</span>(cori.data.fcc);<span class="fu">library</span>(igraph);<span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a></a><span class="fu">library</span>(crosstalk);<span class="fu">library</span>(DT);<span class="fu">library</span>(threejs)</span>
+<span id="cb4-3"><a></a></span>
+<span id="cb4-4"><a></a>oh <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">counties</span>(<span class="at">state =</span> <span class="st">"39"</span>) <span class="co"># tigris is a great example of data as code</span></span>
+<span id="cb4-5"><a></a></span>
+<span id="cb4-6"><a></a>talk_to_me <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-7"><a></a>    <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Love Ohio: %s"</span>, x))</span>
+<span id="cb4-8"><a></a>    cori.data.fcc<span class="sc">::</span><span class="fu">get_nbm_bl</span>(x)</span>
+<span id="cb4-9"><a></a>}</span>
+<span id="cb4-10"><a></a>oh_nbm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(oh<span class="sc">$</span>GEOID, talk_to_me) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>()</span>
+<span id="cb4-11"><a></a></span>
+<span id="cb4-12"><a></a>oh2_nbm <span class="ot">&lt;-</span> oh_nbm[<span class="sc">!</span><span class="fu">is.na</span>(oh_nbm<span class="sc">$</span>combo_frn), ]</span>
+<span id="cb4-13"><a></a></span>
+<span id="cb4-14"><a></a>od_me <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-15"><a></a></span>
+<span id="cb4-16"><a></a>  temp <span class="ot">&lt;-</span> oh2_nbm[x, <span class="st">"array_frn"</span>][[<span class="dv">1</span>]]</span>
+<span id="cb4-17"><a></a>  geoid_bl <span class="ot">&lt;-</span> oh2_nbm[x, <span class="st">"geoid_bl"</span>]</span>
+<span id="cb4-18"><a></a>  <span class="cf">if</span> (<span class="fu">length</span>(temp) <span class="sc">==</span> <span class="dv">1</span>L)</span>
+<span id="cb4-19"><a></a>  {</span>
+<span id="cb4-20"><a></a>    <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">V1 =</span> temp, <span class="at">V2 =</span> <span class="cn">NA</span>, <span class="at">geoid_bl =</span> geoid_bl))</span>
+<span id="cb4-21"><a></a>  }</span>
+<span id="cb4-22"><a></a>  bob <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(<span class="fu">combn</span>(temp, <span class="dv">2</span>)))</span>
+<span id="cb4-23"><a></a>  bob<span class="sc">$</span>geoid_bl <span class="ot">&lt;-</span> geoid_bl</span>
+<span id="cb4-24"><a></a>  <span class="fu">return</span>(bob)</span>
+<span id="cb4-25"><a></a>}</span>
+<span id="cb4-26"><a></a></span>
+<span id="cb4-27"><a></a>od <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(oh2_nbm), od_me) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>()</span>
+<span id="cb4-28"><a></a>od <span class="ot">&lt;-</span> od[<span class="sc">!</span><span class="fu">is.na</span>(od<span class="sc">$</span>V2),]</span>
+<span id="cb4-29"><a></a></span>
+<span id="cb4-30"><a></a>bob <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">data.frame</span>(<span class="at">frn =</span> od<span class="sc">$</span>V1, <span class="at">geoid_bl =</span> od<span class="sc">$</span>geoid_bl),</span>
+<span id="cb4-31"><a></a>             <span class="fu">data.frame</span>(<span class="at">frn =</span> od<span class="sc">$</span>V2, <span class="at">geoid_bl =</span> od<span class="sc">$</span>geoid_bl))</span>
+<span id="cb4-32"><a></a></span>
+<span id="cb4-33"><a></a>cnt_bl <span class="ot">&lt;-</span> <span class="fu">summarise</span>(bob, <span class="at">cnt_bl =</span> <span class="fu">n_distinct</span>(geoid_bl), <span class="at">cnt_rel =</span> <span class="fu">n</span>(), <span class="at">.by =</span> frn)</span>
+<span id="cb4-34"><a></a></span>
+<span id="cb4-35"><a></a>od <span class="ot">&lt;-</span> od[<span class="sc">!</span><span class="fu">is.na</span>(od<span class="sc">$</span>V2),]</span>
+<span id="cb4-36"><a></a></span>
+<span id="cb4-37"><a></a>od<span class="sc">$</span>combo <span class="ot">&lt;-</span> <span class="fu">paste</span>(od<span class="sc">$</span>V1, od<span class="sc">$</span>V2, <span class="at">sep =</span> <span class="st">" - "</span>)</span>
+<span id="cb4-38"><a></a>od<span class="sc">$</span>count <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb4-39"><a></a></span>
+<span id="cb4-40"><a></a>rel <span class="ot">&lt;-</span> od <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">sum</span>(count), <span class="at">.by =</span> combo)</span>
+<span id="cb4-41"><a></a>give_me_from <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">unlist</span>(<span class="fu">strsplit</span>(x, <span class="st">" - "</span>))[<span class="dv">1</span>]</span>
+<span id="cb4-42"><a></a>give_me_to <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">unlist</span>(<span class="fu">strsplit</span>(x, <span class="st">" - "</span>))[<span class="dv">2</span>]</span>
+<span id="cb4-43"><a></a>rel<span class="sc">$</span>from <span class="ot">&lt;-</span> <span class="fu">sapply</span>(rel<span class="sc">$</span>combo , give_me_from)</span>
+<span id="cb4-44"><a></a>rel<span class="sc">$</span>to <span class="ot">&lt;-</span> <span class="fu">sapply</span>(rel<span class="sc">$</span>combo, give_me_to)</span>
+<span id="cb4-45"><a></a></span>
+<span id="cb4-46"><a></a>fcc_slim <span class="ot">&lt;-</span> cori.data.fcc<span class="sc">::</span>fcc_provider[, <span class="fu">c</span>(<span class="st">"frn"</span>, <span class="st">"provider_name"</span>)]</span>
+<span id="cb4-47"><a></a>frn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">frn =</span> <span class="fu">unique</span>(<span class="fu">c</span>(rel<span class="sc">$</span>from, rel<span class="sc">$</span>to)))</span>
+<span id="cb4-48"><a></a>frn <span class="ot">&lt;-</span> <span class="fu">merge</span>(frn, fcc_slim, <span class="at">by.x =</span> <span class="st">"frn"</span>, <span class="at">by.y =</span> <span class="st">"frn"</span>)</span>
+<span id="cb4-49"><a></a>frn <span class="ot">&lt;-</span> <span class="fu">merge</span>(frn, cnt_bl, <span class="at">by.x =</span> <span class="st">"frn"</span>, <span class="at">by.y =</span> <span class="st">"frn"</span>)</span>
+<span id="cb4-50"><a></a></span>
+<span id="cb4-51"><a></a>oh_graph <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(rel[,<span class="fu">c</span>(<span class="st">"from"</span>, <span class="st">"to"</span>)], <span class="at">directed =</span> <span class="cn">FALSE</span>, <span class="at">vertices =</span> frn)</span>
+<span id="cb4-52"><a></a></span>
+<span id="cb4-53"><a></a>oh_graph <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(rel[,<span class="fu">c</span>(<span class="st">"from"</span>, <span class="st">"to"</span>)], <span class="at">directed =</span> <span class="cn">FALSE</span>, <span class="at">vertices =</span> frn)</span>
+<span id="cb4-54"><a></a></span>
+<span id="cb4-55"><a></a>draw_me_a_graph <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb4-56"><a></a>  threejs<span class="sc">::</span><span class="fu">graphjs</span>(x,</span>
+<span id="cb4-57"><a></a>          <span class="at">vertex.label =</span> <span class="fu">V</span>(x)<span class="sc">$</span>provider_name,</span>
+<span id="cb4-58"><a></a>          <span class="at">vertex.color =</span> <span class="fu">rep</span>(<span class="dv">2</span>, <span class="fu">vcount</span>(x)),</span>
+<span id="cb4-59"><a></a>          <span class="at">vertex.size =</span> .<span class="dv">1</span>,</span>
+<span id="cb4-60"><a></a>          <span class="at">edge.color =</span> <span class="st">"grey"</span>,</span>
+<span id="cb4-61"><a></a>          <span class="at">edge.width =</span> <span class="dv">3</span>, ...)</span>
+<span id="cb4-62"><a></a>}</span>
+<span id="cb4-63"><a></a></span>
+<span id="cb4-64"><a></a>g <span class="ot">&lt;-</span> <span class="fu">draw_me_a_graph</span>(oh_graph, <span class="at">brush=</span><span class="cn">TRUE</span>)</span>
+<span id="cb4-65"><a></a><span class="fu">points3d</span>(g, <span class="fu">vertices</span>(g), <span class="at">color=</span><span class="st">"black"</span>, <span class="at">pch=</span><span class="fu">V</span>(oh_graph)<span class="sc">$</span>provider_name, <span class="at">size=</span><span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>
+&nbsp;
+</p>
+<p><br></p>
+<ul>
+<li><p>1321 ISP operating in Ohio</p></li>
+<li><p>Providers competiting in all Ohio are at the core</p></li>
+<li><p>Providers with few competitors are at the edges</p></li>
+<li><p><code>cori.data.fcc</code> support spatial and graph data</p></li>
+</ul>
+</div></div>
+</section>
+<section id="how-to-get-the-package" class="slide level2">
+<h2>How to get the package</h2>
+<p>The source code is hosted on <a href="https://github.com/ruralinnovation/cori.data.fcc">GitHub</a> (Version control)</p>
+<p>You need the R package <a href="https://remotes.r-lib.org/">{remotes}</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span>
+<span id="cb5-2"><a></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ruralinnovation/cori.data.fcc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><span class="emoji" data-emoji="construction">🚧</span> Check the version you have and see what new versions are available <span class="emoji" data-emoji="construction">🚧</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">packageVersion</span>(<span class="st">"cori.data.fcc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] '0.0.1'</code></pre>
+</div>
+</div>
+</section>
+<section id="summary-data-is-only-useful-if-you-can-effectively-use-it." class="slide level2">
+<h2>Summary: Data is only useful if you can <strong>effectively</strong> use it.</h2>
+<div>
+<ul>
+<li class="fragment"><p>Data packages are abstracting the pain</p></li>
+<li class="fragment"><p>Data packages can give more power (especialy )!</p></li>
+<li class="fragment"><p>In emerging field: Easier to <strong>capitalize/build</strong> on it</p></li>
+<li class="fragment"><p>We need those extra “team members”</p></li>
+</ul>
+</div>
+</section>
+<section id="slides-are-online" class="slide level2">
+<h2>Slides are online:</h2>
+<ul>
+<li><p>Built with R and <a href="https://ruralinnovation.github.io/cori.data.fcc/" class="external" target="_blank">cori.data.fcc</a></p></li>
+<li><p>Created by <a href="https://quarto.org/">Quarto</a> (format: revealjs)</p></li>
+<li><p>Hosted and deployed on <a href="https://github.com/ruralinnovation/conf_URISA_2023">GitHub</a><br> <a href="https://ruralinnovation.github.io/prez_auber_2024/#/title-slide" class="external" target="_blank">https://ruralinnovation.github.io/prez_auber_2024/</a></p></li>
+</ul>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/images/qr.svg" class="quarto-figure quarto-figure-center" height="300"></p>
+</figure>
+</div>
 </section>
 <section id="contacts" class="slide level2">
 <h2>Contacts</h2>
 <p>Website: <a href="https://ruralinnovation.us">https://ruralinnovation.us</a></p>
 <p><a href="https://www.linkedin.com/company/11099658">LinkedIn</a> | <a href="https://twitter.com/Ruralinno">Twitter</a> | <a href="https://www.facebook.com/RuralInno/">Facebook</a> | <a href="https://www.instagram.com/ruralinno/">Instagram</a> | <a href="https://www.youtube.com/channel/UCyqbtSrv4Nad9vVv4dQptcA">YouTube</a></p>
+</section></section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank you!</h1>
 
 <div class="quarto-auto-generated-content">
-<p><img src="img/CORI_Logo.png" class="slide-logo"></p>
+<p><img src="assets/images/CORI_Logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
 </div>
-</section></section>
-
+</section>
     </div>
   </div>
 

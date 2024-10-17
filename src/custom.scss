@@ -4,7 +4,7 @@ $headings-font-weight:  500 !default;
 
 /*-- scss:rules --*/
 h1, h2, h3, h4, h5, h6 {
-  text-shadow: -1px -1px 0 rgba(0, 0, 0, .3);
+  //text-shadow: -1px -1px 0 rgba(0, 0, 0, .3);
 }
 
 /*-- scss:defaults --*/
@@ -64,7 +64,7 @@ header#quarto-header {
         }
       }
     }
-}
+  }
 
   * a:visited {
     color: #FFF !important;
@@ -85,19 +85,40 @@ header#quarto-header {
 
 }
 
-div.quarto-title-banner {
-  background-color: #16343E;
-}
-
-div.quarto-title {
-  &, & .title, .title {
-    color: #fff;
+header {
+  &#title-block-header {
+    background-color: #FFF;
+    margin-bottom: 0px;
+    padding-bottom: 20px;
   }
-}
 
-header#title-block-header {
-  background-color: #FFF;
-  margin-bottom: 0;
+  .quarto-title-banner {
+    background-color: #16343E;
+  }
+
+  .breadcrumb > li + li::before {
+    color: #015c41 !important;
+    margin-top: .2rem;
+  }
+
+  .quarto-title-breadcrumbs .breadcrumb {
+    //margin-bottom: .5em;
+    //font-size: .9rem;
+    //background-color: rgb(0, 131, 93);
+    background-color: #A3E1B5;
+
+    li a {
+      color: #015c41;
+      font-size: .95rem;
+    }
+
+    li:last-of-type a {
+      //color: #6cFF7d;
+      color: #16343E;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
 }
 
 div#listing-listing {
@@ -124,6 +145,11 @@ div#quarto-content {
     .sidebar-menu-container {
       padding-top: 1em;
     }
+
+    ul > li {
+      margin-left: 8px;
+    }
+
   }
 
   // Override the about page styling
@@ -168,8 +194,22 @@ div#quarto-content {
   main#quarto-document-content {
     margin-top: 0;
 
-    div.quarto-title .title, div.quarto-title .title {
-      color: #59666a;
+    //div.quarto-document-content {
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 200%;
+    }
+    //}
+
+    div.quarto-title {
+      &, & .title, .title {
+        //color: #fff;
+        color: #59666a;
+      }
+
+      h1 {
+        font-size: 225%;
+        padding-top: 20px;
+      }
     }
 
     code {
@@ -177,6 +217,7 @@ div#quarto-content {
     }
 
     p {
+      font-family: "Montserrat", "Bitter", serif;
       margin: 2.5% 7.5% 2.5% 0;
 
       img {
