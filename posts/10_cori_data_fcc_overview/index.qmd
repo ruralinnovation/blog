@@ -1,8 +1,8 @@
 ---
-title: "2 cool uses of the cori.data.fcc R package"
+title: "3 cool uses of the cori.data.fcc package"
 author: "Camden Blatchly"
 editor: visual
-date: "2024-10-14"
+date: "2024-11-11"
 categories: [FCC, broadband, sf, ggplot2, spatial data]
 ---
 
@@ -26,7 +26,7 @@ i_am("posts/10_cori_data_fcc_overview/index.qmd")
 
 Here at the Center on Rural Innovation, we spend a lot of time thinking about broadband data. We've created [detailed interactive maps of broadband service](https://rural-broadband-map.ruralinnovation.us/), produced [research on the economic impacts of broadband on rural areas](https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/), and helped states and regions develop more equitable and effective [broadband strategies](https://ruralinnovationstrategies.com/capabilities/broadband-consulting/). Now, we're excited to share [`cori.data.fcc`](https://ruralinnovation.github.io/cori.data.fcc/), an R package which makes Federal Communication Commission (FCC) broadband data releases more accessible than ever before.
 
-In this blog post, I'll cover two ways you can make use of our package to better understand broadband access and gaps.
+In this blog post, I'll cover three ways you can make use of our package to better understand broadband access and gaps.
 
 ## 1. View broadband service in your area
 
@@ -128,7 +128,7 @@ fig <- ggplot(data = stj_vt_bb_blocks) +
     caption = "Data source: 2023 FCC National Broadband Map\nMap source: © OpenStreetMap contributors © CARTO"
   )
 
-save_plot(fig, here("posts/cori_data_fcc_overview/images/st_j_bb_service.png"), chart_height = 8)
+save_plot(fig, here("posts/10_cori_data_fcc_overview/images/st_j_bb_service.png"), chart_height = 8)
 
 ```
 
@@ -195,7 +195,7 @@ fig <- ggplot(data = nek_bb_blocks) +
     y = NULL
   )
 
-save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_bb_service.png"), chart_height = 8)
+save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_bb_service.png"), chart_height = 8)
 
 ```
 
@@ -237,7 +237,7 @@ fig <- ggplot(data = nek_bb_blocks) +
     y = NULL
   )
 
-save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_fiber_service.png"), chart_height = 8)
+save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_fiber_service.png"), chart_height = 8)
 
 ```
 
@@ -352,7 +352,7 @@ fig <- ggplot(data = nek_service_blocks) +
     caption = "Data source: 2021 FCC Form 477\nMap source: © OpenStreetMap contributors © CARTO",
   )
 
-save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_broadband_footprint.png"), chart_height = 8.25)
+save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_broadband_footprint.png"), chart_height = 8.25)
 
 
 ```
@@ -388,7 +388,7 @@ fig <- ggplot(data = nek_service_blocks) +
     caption = "Data source: 2021 FCC Form 477\nMap source: © OpenStreetMap contributors © CARTO",
   )
 
-save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_broadband_fiber_service.png"), chart_height = 9)
+save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_broadband_fiber_service.png"), chart_height = 9)
 
 
 ```
@@ -396,6 +396,108 @@ save_plot(fig, here("posts/cori_data_fcc_overview/images/nek_broadband_fiber_ser
 <img src="images/nek_broadband_fiber_service.png" alt="Map of NEK Broadband fiber service" style="width: 100%;"/>
 
 
+## 3. Compare service over time
+
+Finally, we can use `cori.data.fcc` to see how reported broadband service 
+levels vary over time.
+
+To do so, we will use the `get_county_nbm_raw` function to load data for 
+Caledonia County, VT from the 2022 and 2023 December NBM releases.
+
+```{r caledonia_county_data, message=FALSE, warning=FALSE, eval=FALSE}
+
+# See what NBM releases are available
+available_releases <- get_nbm_release()
+
+caledonia_2023 <- get_county_nbm_raw("50005", frn = "all", release = "2023-12-01") %>%
+  mutate(year = 2023)
+caledonia_2022 <- get_county_nbm_raw("50005", frn = "all", release = "2022-12-01") %>%
+  mutate(year = 2022)
+
+caledonia_combined <- bind_rows(
+  caledonia_2022,
+  caledonia_2023
+)
+
+```
+
+The raw county data reports the service levels at each broadband serviceable 
+location. To create block totals, we will need to do some aggregation 
+calculations.
+
+```{r caledonia_county_calcs, message=FALSE, warning=FALSE, eval=FALSE}
+
+# Calculate the percent of locations with at least 100/20 Mbps service
+caledonia_chg <- caledonia_combined %>%
+  mutate(
+    has_100_20_service = ifelse(
+      max_advertised_download_speed >= 100 &
+      max_advertised_upload_speed >= 20,
+      1,
+      0
+    )
+  ) %>%
+  group_by(geoid_bl, year) %>%
+  summarise(
+    count_100_20 = sum(has_100_20_service, na.rm = T),
+    count_total = n()
+  ) %>%
+  mutate(
+    pct_100_20 = count_100_20 / count_total
+  ) %>%
+  select(geoid_bl, pct_100_20, year)
+
+# Combine with tigris spatial data to get our data ready for mapping
+caledonia_blocks <- tigris::blocks("50", county = "005")
+
+chrt_dta <- left_join(
+    caledonia_chg,
+    caledonia_blocks,
+    by = c("geoid_bl" = "GEOID20")
+  ) %>%
+  sf::st_as_sf()
+
+
+```
+
+Now our data is ready to map!
+
+```{r caledonia_county_chart, message=FALSE, warning=FALSE, eval=FALSE}
+
+fig <- ggplot(data = chrt_dta) +
+  base_map(
+    st_bbox(chrt_dta),
+    increase_zoom = 3,
+    basemap = 'voyager'
+  ) +
+  geom_sf(aes(fill = pct_100_20), color = "black", linewidth = .05, alpha = .7) +
+  scale_fill_cori(
+    discrete = FALSE,
+    palette = "ctg2pu",
+    labels = scales::label_percent(),
+    reverse = TRUE
+  ) +
+  theme_cori_map() +
+  theme(
+    legend.key.width = unit(40, "pt"),
+    strip.text = element_text(face = "bold", size = 12)
+  ) +
+  labs(
+    title = "Caledonia County broaband service over time",
+    subtitle = "Percent of locations with 100/20 Mbps broadband service, by Census block",
+    x = NULL,
+    y = NULL,
+    caption = "Data source: 2022 and 2023 FCC NBM\nMap source: © OpenStreetMap contributors © CARTO",
+  ) +
+  facet_wrap(~year, ncol = 2)
+
+save_plot(fig, here("posts/10_cori_data_fcc_overview/images/caledonia_broadband_100_20_service.png"), chart_height = 8.5)
+
+```
+
+<img src="images/caledonia_broadband_100_20_service.png" alt="Map of Caledonia 100/20 service from 2022 to 2023" style="width: 100%;"/>
+
+Wow! Reported access to 100/20 Mbps has increased a lot between the two releases.
+
 There's a lot more to discover in the package, so I highly recommend you 
 check out the [reference documentation](https://ruralinnovation.github.io/cori.data.fcc/reference/index.html).
-
