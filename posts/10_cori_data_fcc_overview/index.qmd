@@ -432,31 +432,37 @@ caledonia_chg <- caledonia_combined %>%
   mutate(
     has_100_20_service = ifelse(
       max_advertised_download_speed >= 100 &
-      max_advertised_upload_speed >= 20,
+        max_advertised_upload_speed >= 20,
       1,
       0
-    )
+    )) %>%
+  mutate(
+    good_location = ifelse(has_100_20_service == 1, location_id, NA) 
   ) %>%
   group_by(geoid_bl, year) %>%
   summarise(
-    count_100_20 = sum(has_100_20_service, na.rm = T),
-    count_total = n()
+    # number of services that has 100/20
+    count_100_20_prev = sum(has_100_20_service, na.rm = TRUE),
+    # number of locations that has 100/20
+    count_100_20 = n_distinct(good_location, na.rm = TRUE),
+    # number of location 
+    count_total = n_distinct(location_id),
+    # number of services
+    n_services = n()
   ) %>%
   mutate(
     pct_100_20 = count_100_20 / count_total
   ) %>%
-  select(geoid_bl, pct_100_20, year)
+  select(geoid_bl, count_100_20_prev, count_100_20, count_total, n_services, pct_100_20, year)
 
 # Combine with tigris spatial data to get our data ready for mapping
 caledonia_blocks <- tigris::blocks("50", county = "005")
 
 chrt_dta <- left_join(
-    caledonia_chg,
-    caledonia_blocks,
-    by = c("geoid_bl" = "GEOID20")
-  ) %>%
-  sf::st_as_sf()
-
+  caledonia_blocks,
+  caledonia_chg,
+  by = c("GEOID20" = "geoid_bl")
+)
 
 ```
 
