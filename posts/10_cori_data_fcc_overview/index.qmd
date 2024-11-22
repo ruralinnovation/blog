@@ -425,6 +425,8 @@ caledonia_chg <- caledonia_combined %>%
   mutate(
     valid_100_20_location = ifelse(has_100_20_service == 1, location_id, NA) 
   ) %>%
+  # Filter out satellite coverage which overstates service levels
+  dplyr::filter(!technology %in% c("61", "60")) %>%
   group_by(geoid_bl, year) %>%
   summarise(
     # number of locations that have 100/20 service
@@ -487,7 +489,5 @@ save_plot(fig, here("posts/10_cori_data_fcc_overview/images/caledonia_broadband_
 ```
 
 <img src="images/caledonia_broadband_100_20_service.png" alt="Map of Caledonia 100/20 service from 2022 to 2023" style="width: 100%;"/>
-
-Wow! Reported access to 100/20 Mbps has increased a lot between the two releases.
 
 There's a lot more to discover in the package, so I highly recommend you check out the [reference documentation](https://ruralinnovation.github.io/cori.data.fcc/reference/index.html) and give it a try yourself.
