@@ -196,7 +196,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>Here at the Center on Rural Innovation, we spend a lot of time thinking about broadband data. We’ve created <a href="https://rural-broadband-map.ruralinnovation.us/">detailed interactive maps of broadband service</a>, produced <a href="https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/">research on the economic impacts of broadband on rural areas</a>, and helped states and regions develop more equitable and effective <a href="https://ruralinnovationstrategies.com/capabilities/broadband-consulting/">broadband strategies</a>. Now, we’re excited to share <code>cori.data.fcc</code>, an R package which makes Federal Communication Commission (FCC) broadband data releases more accessible than ever before.</p>
+<p>Here at the Center on Rural Innovation, we spend a lot of time thinking about broadband data. We’ve created <a href="https://rural-broadband-map.ruralinnovation.us/">detailed interactive maps of broadband service</a>, produced <a href="https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/">research on the economic impacts of broadband on rural areas</a>, and helped states and regions develop more equitable and effective <a href="https://ruralinnovationstrategies.com/capabilities/broadband-consulting/">broadband strategies</a>. Now, we’re excited to share <a href="https://ruralinnovation.github.io/cori.data.fcc/"><code>cori.data.fcc</code></a>, an R package which makes Federal Communication Commission (FCC) broadband data releases more accessible than ever before.</p>
 <p>In this blog post, I’ll cover three ways you can make use of our package to better understand broadband access and gaps.</p>
 <section id="view-broadband-service-in-your-area" class="level2">
 <h2 class="anchored" data-anchor-id="view-broadband-service-in-your-area">1. View broadband service in your area</h2>
@@ -242,7 +242,20 @@ $ combo_frn                               &lt;dbl&gt; NA, 1.284636e+19, 1.389614
 $ release                                 &lt;date&gt; 2023-12-01, 2023-12-01, 2023-…</code></pre>
 </div>
 </div>
-<p>Next, we can pull spatial data using the <code>tigris</code> package to help us visualize the NBM data.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>if you are curious of what those columns means you can use <code>get_fcc_dictionary("nbm_block")</code></p>
+</div>
+</div>
+<p>Next, we can pull spatial data using the <a href="https://github.com/walkerke/tigris"><code>tigris</code></a> package to help us visualize the NBM data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load all Vermont Census blocks</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>vt_blocks <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">blocks</span>(<span class="st">"VT"</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>)</span>
@@ -337,28 +350,29 @@ $ release                                 &lt;date&gt; 2023-12-01, 2023-12-01, 2
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(),</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">reverse =</span> T</span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(<span class="at">data =</span> vt_places_centroids, <span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">family =</span> <span class="st">"Lato"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span>  </span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(bbox[<span class="st">'xmin'</span>], bbox[<span class="st">'xmax'</span>]), </span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(bbox[<span class="st">'ymin'</span>], bbox[<span class="st">'ymax'</span>])</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_cori_map</span>() <span class="sc">+</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">50</span>, <span class="st">"pt"</span>),</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Broadband service in the Northeast Kingdom"</span>,</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Percent of locations with access to 100/20 Mbps service by census block"</span>,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data source: 2023 FCC National Broadband Map</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_bb_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(<span class="at">data =</span> vt_places_centroids, </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">family =</span> <span class="st">"Lato"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span>  </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(bbox[<span class="st">'xmin'</span>], bbox[<span class="st">'xmax'</span>]), </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(bbox[<span class="st">'ymin'</span>], bbox[<span class="st">'ymax'</span>])</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_cori_map</span>() <span class="sc">+</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">50</span>, <span class="st">"pt"</span>),</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Broadband service in the Northeast Kingdom"</span>,</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Percent of locations with access to 100/20 Mbps service by census block"</span>,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data source: 2023 FCC National Broadband Map</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_bb_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/nek_bb_service.png" alt="Map of broadband service in the Northeast Kingdom of VT" style="width: 100%;"></p>
-<p>We can also explore broadband access by technology, such as fiber, cable, and fixed wireless.</p>
+<p>Broadband access can also be analyzed by technology, including fiber, cable, and fixed wireless. This example map focuses on fiber access in the region.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nek_bb_blocks) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">base_map</span>(</span>
@@ -373,29 +387,30 @@ $ release                                 &lt;date&gt; 2023-12-01, 2023-12-01, 2
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(),</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">reverse =</span> T</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(<span class="at">data =</span> vt_places_centroids, <span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">family =</span> <span class="st">"Lato"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span>  </span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(bbox[<span class="st">'xmin'</span>], bbox[<span class="st">'xmax'</span>]), </span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(bbox[<span class="st">'ymin'</span>], bbox[<span class="st">'ymax'</span>])</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_cori_map</span>() <span class="sc">+</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">50</span>, <span class="st">"pt"</span>),</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fiber access in the Northeast Kingdom"</span>,</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Percent of locations with access to fiber by census block"</span>,</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data source: 2023 FCC National Broadband Map</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_fiber_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(<span class="at">data =</span> vt_places_centroids, </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">family =</span> <span class="st">"Lato"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span>  </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(bbox[<span class="st">'xmin'</span>], bbox[<span class="st">'xmax'</span>]), </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(bbox[<span class="st">'ymin'</span>], bbox[<span class="st">'ymax'</span>])</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_cori_map</span>() <span class="sc">+</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">50</span>, <span class="st">"pt"</span>),</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fiber access in the Northeast Kingdom"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Percent of locations with access to fiber by census block"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data source: 2023 FCC National Broadband Map</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_fiber_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/nek_fiber_service.png" alt="Map of fiber access in the Northeast Kingdom of VT" style="width: 100%;"></p>
 <p>Fiber service is pretty rare! Only a handful of towns have access.</p>
-<p>We can easily generate some summary statistics to see what percent of locations in the region have fiber access.</p>
+<p>Next, let’s generate some summary statistics to see what percent of locations in the region have fiber access.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate share of locations with access to fiber</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>nek_locations_total <span class="ot">&lt;-</span> nek_bb_blocks <span class="sc">%&gt;%</span> </span>
@@ -408,17 +423,17 @@ $ release                                 &lt;date&gt; 2023-12-01, 2023-12-01, 2
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>nek_locations_fiber <span class="sc">/</span> nek_locations_total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Turns out only <strong>11.5%</strong> of locations have fiber access in the Northeast Kingdom.</p>
+<p>Turns out only <strong>11.5%</strong> locations have fiber access in the Northeast Kingdom.</p>
 </section>
 <section id="view-internet-service-provider-isp-footprints" class="level2">
 <h2 class="anchored" data-anchor-id="view-internet-service-provider-isp-footprints">2. View Internet Service Provider (ISP) footprints</h2>
-<p>We can also use <code>cori.data.fcc</code> to understand ISP presence in an area. Let’s begin by pulling data for the state of Vermont.</p>
+<p><code>cori.data.fcc</code> can also be used to better understand ISP presence in an area. Let’s explore how by first pulling Form 477 data for the state of Vermont.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pulling all Form 477 for the state of Vermont</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vt_477 <span class="ot">&lt;-</span> <span class="fu">get_f477</span>(<span class="st">"VT"</span>, <span class="at">frn =</span> <span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In this example, I’m interested in seeing the footprint for <a href="https://nekbroadband.org/">NEK Broadband</a>, a community non-profit bringing high-speed broadband to the Northeast Kingdom.</p>
-<p>Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data we can filter using this unique FRN.</p>
+<p>Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data. we can filter using this unique FRN.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nek_bb_frn <span class="ot">&lt;-</span> <span class="st">"0031871197"</span> <span class="co"># This number can be found using cori.data.fcc::fcc_provider</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -452,6 +467,19 @@ $ MaxAdDown          &lt;int&gt; 250, 250, 250, 250, 250, 250, 250, 250, 250, 25
 $ MaxAdUp            &lt;int&gt; 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 2…
 $ Business           &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…
 $ Date               &lt;chr&gt; "2021-12-01", "2021-12-01", "2021-12-01", "2021-12-…</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>get_fcc_dictionary("f477")</code> to get a description!</p>
 </div>
 </div>
 <p>To map the data, we can once again join in with Census blocks from TIGRIS.</p>
@@ -492,7 +520,7 @@ $ Date               &lt;chr&gt; "2021-12-01", "2021-12-01", "2021-12-01", "2021
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_broadband_footprint.png"</span>), <span class="at">chart_height =</span> <span class="fl">8.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/nek_broadband_footprint.png" alt="Map of NEK Broadband ISP footprint" style="width: 100%;"></p>
-<p>We can also examine what service NEK Broadband is reported to be providing.</p>
+<p>Let’s dig deeper and see what service levels NEK Broadband reports that they provide.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nek_service_blocks) <span class="sc">+</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">base_map</span>(</span>
@@ -541,37 +569,45 @@ $ Date               &lt;chr&gt; "2021-12-01", "2021-12-01", "2021-12-01", "2021
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  caledonia_2023</span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The raw county data reports the service levels at each broadband serviceable location. To create block totals, we will need to do some aggregation calculations.</p>
+<p>The raw county data reports service levels for every broadband serviceable location. To create block totals, we will need to do some aggregation calculations.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percent of locations with at least 100/20 Mbps service</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>caledonia_chg <span class="ot">&lt;-</span> caledonia_combined <span class="sc">%&gt;%</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_100_20_service =</span> <span class="fu">ifelse</span>(</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      max_advertised_download_speed <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      max_advertised_upload_speed <span class="sc">&gt;=</span> <span class="dv">20</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        max_advertised_upload_speed <span class="sc">&gt;=</span> <span class="dv">20</span>,</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span>,</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>      <span class="dv">0</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(geoid_bl, year) <span class="sc">%&gt;%</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_100_20 =</span> <span class="fu">sum</span>(has_100_20_service, <span class="at">na.rm =</span> T),</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_total =</span> <span class="fu">n</span>()</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_100_20 =</span> count_100_20 <span class="sc">/</span> count_total</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(geoid_bl, pct_100_20, year)</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine with tigris spatial data to get our data ready for mapping</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>caledonia_blocks <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">blocks</span>(<span class="st">"50"</span>, <span class="at">county =</span> <span class="st">"005"</span>)</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>chrt_dta <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    caledonia_chg,</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    caledonia_blocks,</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"geoid_bl"</span> <span class="ot">=</span> <span class="st">"GEOID20"</span>)</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">valid_100_20_location =</span> <span class="fu">ifelse</span>(has_100_20_service <span class="sc">==</span> <span class="dv">1</span>, location_id, <span class="cn">NA</span>) </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter out satellite coverage which overstates service levels</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>technology <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"61"</span>, <span class="st">"60"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(geoid_bl, year) <span class="sc">%&gt;%</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># number of locations that have 100/20 service</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_100_20 =</span> <span class="fu">n_distinct</span>(valid_100_20_location, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># number of location </span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_total =</span> <span class="fu">n_distinct</span>(location_id),</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># number of services</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_services =</span> <span class="fu">n</span>()</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_100_20 =</span> count_100_20 <span class="sc">/</span> count_total</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(geoid_bl, count_100_20, count_total, n_services, pct_100_20, year)</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine with tigris spatial data to get our data ready for mapping</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>caledonia_blocks <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">blocks</span>(<span class="st">"50"</span>, <span class="at">county =</span> <span class="st">"005"</span>)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>chrt_dta <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    caledonia_blocks,</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    caledonia_chg,</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"GEOID20"</span> <span class="ot">=</span> <span class="st">"geoid_bl"</span>)</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now our data is ready to map!</p>
 <div class="cell">
@@ -605,8 +641,7 @@ $ Date               &lt;chr&gt; "2021-12-01", "2021-12-01", "2021-12-01", "2021
 <span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/caledonia_broadband_100_20_service.png"</span>), <span class="at">chart_height =</span> <span class="fl">8.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/caledonia_broadband_100_20_service.png" alt="Map of Caledonia 100/20 service from 2022 to 2023" style="width: 100%;"></p>
-<p>Wow! Reported access to 100/20 Mbps has increased a lot between the two releases.</p>
-<p>There’s a lot more to discover in the package, so I highly recommend you check out the <a href="https://ruralinnovation.github.io/cori.data.fcc/reference/index.html">reference documentation</a>.</p>
+<p>There’s a lot more to discover in the package, so I highly recommend you check out the <a href="https://ruralinnovation.github.io/cori.data.fcc/reference/index.html">reference documentation</a> and give it a try yourself.</p>
 
 
 </section>

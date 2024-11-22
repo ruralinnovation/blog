@@ -57,7 +57,7 @@ glimpse(nek_nbm)
 ```
 
 ::: callout-tip
-if you are curious of what those columns means you can use `get_fcc_dictionary("nbm_block")`
+If you are curious what those columns mean, you can use `get_fcc_dictionary("nbm_block")`
 :::
 
 Next, we can pull spatial data using the [`tigris`](https://github.com/walkerke/tigris) package to help us visualize the NBM data.
