@@ -56,11 +56,9 @@ glimpse(nek_nbm)
 
 ```
 
-
-::: {.callout-tip}
- if you are curious of what those columns means you can use `get_fcc_dictionary("nbm_block")`
+::: callout-tip
+if you are curious of what those columns means you can use `get_fcc_dictionary("nbm_block")`
 :::
-
 
 Next, we can pull spatial data using the [`tigris`](https://github.com/walkerke/tigris) package to help us visualize the NBM data.
 
@@ -157,7 +155,6 @@ vt_places_centroids <- vt_places %>%
 
 ```
 
-
 ```{r map_bb_nek, message=FALSE, warning=FALSE, eval=FALSE}
 
 bbox <- st_bbox(nek_bb_blocks) %>%
@@ -201,7 +198,7 @@ save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_bb_service.png")
 
 <img src="images/nek_bb_service.png" alt="Map of broadband service in the Northeast Kingdom of VT" style="width: 100%;"/>
 
-We can also explore broadband access by technology, such as fiber, cable, and fixed wireless.
+Broadband access can also be analyzed by technology, including fiber, cable, and fixed wireless. This example map focuses on fiber access in the region.
 
 ```{r fiber_nek, message=FALSE, warning=FALSE, eval=FALSE}
 
@@ -245,7 +242,7 @@ save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_fiber_service.pn
 
 Fiber service is pretty rare! Only a handful of towns have access.
 
-We can easily generate some summary statistics to see what percent of locations in the region have fiber access.
+Next, let's generate some summary statistics to see what percent of locations in the region have fiber access.
 
 ```{r percent_fiber, message=FALSE, warning=FALSE, eval=FALSE}
 
@@ -266,8 +263,7 @@ Turns out only **11.5%** locations have fiber access in the Northeast Kingdom.
 
 ## 2. View Internet Service Provider (ISP) footprints
 
-We can also use `cori.data.fcc` to understand ISP presence in an area. Let's 
-begin by pulling data for the state of Vermont.
+`cori.data.fcc` can also be used to better understand ISP presence in an area. Let's explore how by first pulling Form 477 data for the state of Vermont.
 
 ```{r f477, message=FALSE, warning=FALSE}
 
@@ -276,12 +272,9 @@ vt_477 <- get_f477("VT", frn = "all")
 
 ```
 
-In this example, I'm interested in seeing the footprint for 
-[NEK Broadband](https://nekbroadband.org/), a community non-profit 
-bringing high-speed broadband to the Northeast Kingdom.
+In this example, I'm interested in seeing the footprint for [NEK Broadband](https://nekbroadband.org/), a community non-profit bringing high-speed broadband to the Northeast Kingdom.
 
-Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data. 
-we can filter using this unique FRN.
+Each ISP has a unique FRN in the Form 477 data. To view, NEK Broadband data. we can filter using this unique FRN.
 
 ```{r filter_nek, message=FALSE, warning=FALSE}
 
@@ -298,7 +291,6 @@ nek_service <- vt_477  %>%
 
 ```
 
-
 Here's what the Form 477 data looks like for NEK Broadband:
 
 ```{r gimpse_f477, message=FALSE, warning=FALSE}
@@ -307,7 +299,7 @@ glimpse(nek_service)
 
 ```
 
-::: {.callout-tip}
+::: callout-tip
 Use `get_fcc_dictionary("f477")` to get a description!
 :::
 
@@ -332,7 +324,6 @@ nek_service_blocks <- left_join(
   sf::st_as_sf()
 
 ```
-
 
 ```{r nek_bb, message=FALSE, warning=FALSE, eval=FALSE}
 
@@ -359,7 +350,7 @@ save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_broadband_footpr
 
 <img src="images/nek_broadband_footprint.png" alt="Map of NEK Broadband ISP footprint" style="width: 100%;"/>
 
-We can also examine what service NEK Broadband is reported to be providing.
+Let's dig deeper and see what service levels NEK Broadband reports that they provide.
 
 ```{r nek_service, message=FALSE, warning=FALSE, eval=FALSE}
 
@@ -395,14 +386,11 @@ save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_broadband_fiber_
 
 <img src="images/nek_broadband_fiber_service.png" alt="Map of NEK Broadband fiber service" style="width: 100%;"/>
 
-
 ## 3. Compare service over time
 
-Finally, we can use `cori.data.fcc` to see how reported broadband service 
-levels vary over time.
+Finally, we can use `cori.data.fcc` to see how reported broadband service levels vary over time.
 
-To do so, we will use the `get_county_nbm_raw` function to load data for 
-Caledonia County, VT from the 2022 and 2023 December NBM releases.
+To do so, we will use the `get_county_nbm_raw` function to load data for Caledonia County, VT from the 2022 and 2023 December NBM releases.
 
 ```{r caledonia_county_data, message=FALSE, warning=FALSE, eval=FALSE}
 
@@ -421,9 +409,7 @@ caledonia_combined <- bind_rows(
 
 ```
 
-The raw county data reports the service levels at each broadband serviceable 
-location. To create block totals, we will need to do some aggregation 
-calculations.
+The raw county data reports service levels for every broadband serviceable location. To create block totals, we will need to do some aggregation calculations.
 
 ```{r caledonia_county_calcs, message=FALSE, warning=FALSE, eval=FALSE}
 
@@ -437,14 +423,12 @@ caledonia_chg <- caledonia_combined %>%
       0
     )) %>%
   mutate(
-    good_location = ifelse(has_100_20_service == 1, location_id, NA) 
+    valid_100_20_location = ifelse(has_100_20_service == 1, location_id, NA) 
   ) %>%
   group_by(geoid_bl, year) %>%
   summarise(
-    # number of services that has 100/20
-    count_100_20_prev = sum(has_100_20_service, na.rm = TRUE),
-    # number of locations that has 100/20
-    count_100_20 = n_distinct(good_location, na.rm = TRUE),
+    # number of locations that have 100/20 service
+    count_100_20 = n_distinct(valid_100_20_location, na.rm = TRUE),
     # number of location 
     count_total = n_distinct(location_id),
     # number of services
@@ -453,16 +437,17 @@ caledonia_chg <- caledonia_combined %>%
   mutate(
     pct_100_20 = count_100_20 / count_total
   ) %>%
-  select(geoid_bl, count_100_20_prev, count_100_20, count_total, n_services, pct_100_20, year)
+  select(geoid_bl, count_100_20, count_total, n_services, pct_100_20, year)
 
 # Combine with tigris spatial data to get our data ready for mapping
 caledonia_blocks <- tigris::blocks("50", county = "005")
 
 chrt_dta <- left_join(
-  caledonia_blocks,
-  caledonia_chg,
-  by = c("GEOID20" = "geoid_bl")
-)
+    caledonia_blocks,
+    caledonia_chg,
+    by = c("GEOID20" = "geoid_bl")
+  ) %>%
+  filter(!is.na(year))
 
 ```
 
@@ -505,5 +490,4 @@ save_plot(fig, here("posts/10_cori_data_fcc_overview/images/caledonia_broadband_
 
 Wow! Reported access to 100/20 Mbps has increased a lot between the two releases.
 
-There's a lot more to discover in the package, so I highly recommend you 
-check out the [reference documentation](https://ruralinnovation.github.io/cori.data.fcc/reference/index.html).
+There's a lot more to discover in the package, so I highly recommend you check out the [reference documentation](https://ruralinnovation.github.io/cori.data.fcc/reference/index.html) and give it a try yourself.
