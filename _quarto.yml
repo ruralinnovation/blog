@@ -12,6 +12,7 @@ website:
   title: "Mapping & Data Analytics Blog @cori-risi"
   search: false
   favicon: assets/images/Logo-Mark_Black.png
+  open-graph: true
   google-analytics: "G-07QRVQQ5JK"
   navbar:
     logo-href: https://ruralinnovation.us/our-work/research_mapping/
