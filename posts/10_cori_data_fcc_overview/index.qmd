@@ -1,5 +1,7 @@
 ---
 title: "3 cool uses of the cori.data.fcc package"
+description: "A quick primer on accessing, analyzing, and mapping FCC data using the cori.data.fcc package"
+image: "https://ruralinnovation.github.io/blog/posts/10_cori_data_fcc_overview/images/nek_bb_service.png"
 author: "Camden Blatchly"
 editor: visual
 date: "2024-11-11"
