@@ -3,10 +3,9 @@ project:
   output-dir: docs
   render:
     - "*.qmd"
-    - "!posts/07_bead/proj-fcc-report/*.qmd"
-    - "posts/07_bead/proj-fcc-report/index.qmd"
-    - "!posts/fcc-duckdb/proj-fcc-report/*.qmd"
-    - "posts/fcc-duckdb/proj-fcc-report/index.qmd"
+    - "**/*.qmd"
+    - "!posts/07_fcc-duckdb/proj-fcc-report/*.qmd"
+    - "posts/07_fcc-duckdb/proj-fcc-report/index.qmd"
 
 website:
   title: "Mapping & Data Analytics Blog @cori-risi"
