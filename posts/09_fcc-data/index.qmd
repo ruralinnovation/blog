@@ -4,7 +4,7 @@ subtitle: Accessing data about access to broadband
 author:
   - John Hall
   - Olivier Leroy
-date: "2024-09-01"
+date: "2025-01-01"
 categories:
   - access
   - api
