@@ -99,7 +99,7 @@ Every location is characterized by:
 - Ways to geographically locate it (`state_abbr`, `block_geoid`, `h3_res8_id`)
 
 ::: {.callout-tip}
-A location (see [What is a BSL?](#what-is-a-broadband-serviceable-location-bsl)) can be covered by multiple Internet Services Provides (ISP) with  potentially different services and technologies. Hence, it can represented in the data by many "rows".
+A location (see [What is a BSL?](#what-is-a-broadband-serviceable-location-bsl)) can be covered by multiple Internet Services Provides (ISP) with  potentially different services and technologies. Hence, it can be represented in the data by many "rows".
 :::
 
 :::{.aside}
@@ -165,7 +165,7 @@ To support rural broadband providers and policymakers, we have developed the fol
 
 TODO: ... write more about `cori.data.fcc` ...
 
-TODO: ... we are also using it in "ERC tools"
+TODO: ... we are also using it in "ERC tools" (but what's the public name for this tool?)
 
 TODO: ... but more a question should we include link to study that were suported by our works? (CALIX report for example) 
 
