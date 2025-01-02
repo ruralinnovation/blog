@@ -99,7 +99,7 @@ Every location is characterized by:
 - Ways to geographically locate it (`state_abbr`, `block_geoid`, `h3_res8_id`)
 
 ::: {.callout-tip}
-A location (see [What is a BSL?](#what-is-a-broadband-serviceable-location-bsl)) can be covered by multiple Internet Services Provides (ISP) with  potentially different services and technologies. Hence, it can represented in the data can by many "rows".
+A location (see [What is a BSL?](#what-is-a-broadband-serviceable-location-bsl)) can be covered by multiple Internet Services Provides (ISP) with  potentially different services and technologies. Hence, it can represented in the data by many "rows".
 :::
 
 :::{.aside}
@@ -164,6 +164,10 @@ To support rural broadband providers and policymakers, we have developed the fol
 - [**Broadband Climate Risk Mitigation Tool**](https://broadband-risk.ruralinnovation.us/){.external target="_blank"}: Assesses climate risks posed to broadband infrastructure in order to enhance resiliency.
 
 TODO: ... write more about `cori.data.fcc` ...
+
+TODO: ... we are also using it in "ERC tools"
+
+TODO: ... but more a question should we include link to study that were suported by our works? (CALIX report for example) 
 
 TODO: ... in describing the web apps, note that all are served by the [CORI Data API](https://cori-data-api.ruralinnovation.us/){.external target="_blank"} (which is provisioned by `cori.data.dcc`)
 
