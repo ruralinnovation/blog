@@ -1,7 +1,7 @@
 ---
 title: "3 cool uses of the cori.data.fcc package"
 description: "A quick primer on accessing, analyzing, and mapping FCC data using the cori.data.fcc package"
-image: "https://ruralinnovation.github.io/blog/posts/10_cori_data_fcc_overview/images/nek_bb_service.png"
+image: images/nek_bb_service.png
 author: "Camden Blatchly"
 editor: visual
 date: "2024-11-11"
@@ -16,13 +16,10 @@ library(sf)
 library(ggplot2)
 library(cori.charts)
 library(basemapR)
-library(here)
 
-sysfonts::font_add_google("Lato")
+# sysfonts::font_add_google("Lato")
 showtext::showtext_auto()
 showtext::showtext_opts(dpi = 300)
-
-i_am("posts/10_cori_data_fcc_overview/index.qmd")
 
 ```
 
@@ -128,7 +125,7 @@ fig <- ggplot(data = stj_vt_bb_blocks) +
     caption = "Data source: 2023 FCC National Broadband Map\nMap source: © OpenStreetMap contributors © CARTO"
   )
 
-save_plot(fig, here("posts/10_cori_data_fcc_overview/images/st_j_bb_service.png"), chart_height = 8)
+save_plot(fig, here("images/st_j_bb_service.png"), chart_height = 8)
 
 ```
 
@@ -194,7 +191,7 @@ fig <- ggplot(data = nek_bb_blocks) +
     y = NULL
   )
 
-save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_bb_service.png"), chart_height = 8)
+save_plot(fig, here("images/nek_bb_service.png"), chart_height = 8)
 
 ```
 
@@ -236,7 +233,7 @@ fig <- ggplot(data = nek_bb_blocks) +
     y = NULL
   )
 
-save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_fiber_service.png"), chart_height = 8)
+save_plot(fig, here("images/nek_fiber_service.png"), chart_height = 8)
 
 ```
 
@@ -345,7 +342,7 @@ fig <- ggplot(data = nek_service_blocks) +
     caption = "Data source: 2021 FCC Form 477\nMap source: © OpenStreetMap contributors © CARTO",
   )
 
-save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_broadband_footprint.png"), chart_height = 8.25)
+save_plot(fig, here("images/nek_broadband_footprint.png"), chart_height = 8.25)
 
 
 ```
@@ -381,7 +378,7 @@ fig <- ggplot(data = nek_service_blocks) +
     caption = "Data source: 2021 FCC Form 477\nMap source: © OpenStreetMap contributors © CARTO",
   )
 
-save_plot(fig, here("posts/10_cori_data_fcc_overview/images/nek_broadband_fiber_service.png"), chart_height = 9)
+save_plot(fig, here("images/nek_broadband_fiber_service.png"), chart_height = 9)
 
 
 ```
@@ -486,7 +483,7 @@ fig <- ggplot(data = chrt_dta) +
   ) +
   facet_wrap(~year, ncol = 2)
 
-save_plot(fig, here("posts/10_cori_data_fcc_overview/images/caledonia_broadband_100_20_service.png"), chart_height = 8.5)
+save_plot(fig, here("images/caledonia_broadband_100_20_service.png"), chart_height = 8.5)
 
 ```
 
