@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.7.13">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Olivier Leroy">
-<meta name="dcterms.date" content="2024-08-16">
+<meta name="author" content="Brittany Kainen">
+<meta name="dcterms.date" content="2024-07-01">
 
-<title>Mapping &amp; Data Analytics Blog @cori-risi - Fast analytics on FCC (big) dataset</title>
+<title>Using SEC Form D to estimate venture capital – Mapping &amp; Data Analytics Blog @cori-risi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,15 +29,16 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <link href="../../assets/images/Logo-Mark_Black.png" rel="icon" type="image/png">
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f7f6a05848b69485c6bf538bbdfa151.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -65,7 +66,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../assets/fonts.css">
-<meta property="og:title" content="Mapping &amp; Data Analytics Blog @cori-risi - Fast analytics on FCC (big) dataset">
+<meta property="og:title" content="Using SEC Form D to estimate venture capital – Mapping &amp; Data Analytics Blog @cori-risi">
 <meta property="og:description" content="">
 <meta property="og:image" content="thumbnail.png">
 <meta property="og:site_name" content="Mapping &amp; Data Analytics Blog @cori-risi">
@@ -82,7 +83,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -104,7 +105,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -113,12 +114,12 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Fast analytics on FCC (big) dataset</h1>
+      <h1 class="title">Using SEC Form D to estimate venture capital</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">cli</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">duckDB</div>
-                <div class="quarto-category">broadband</div>
+                <div class="quarto-category">SEC</div>
+                <div class="quarto-category">Form D</div>
+                <div class="quarto-category">Quarto</div>
+                <div class="quarto-category">Venture Capital</div>
               </div>
                   </div>
   </div>
@@ -129,14 +130,14 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Olivier Leroy </p>
+               <p>Brittany Kainen </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 16, 2024</p>
+        <p class="date">July 1, 2024</p>
       </div>
     </div>
     
@@ -152,12 +153,8 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
-  <ul class="collapse">
-  <li><a href="#the-challenge-and-the-opportunity" id="toc-the-challenge-and-the-opportunity" class="nav-link" data-scroll-target="#the-challenge-and-the-opportunity">The challenge and the opportunity</a></li>
-  </ul></li>
-  <li><a href="#the-available-data" id="toc-the-available-data" class="nav-link" data-scroll-target="#the-available-data">The available data</a></li>
-  <li><a href="#tools-for-big-broadband-analytics" id="toc-tools-for-big-broadband-analytics" class="nav-link" data-scroll-target="#tools-for-big-broadband-analytics">Tools for big broadband analytics</a></li>
+  <li><a href="#how-form-d-works" id="toc-how-form-d-works" class="nav-link active" data-scroll-target="#how-form-d-works">How Form D works</a></li>
+  <li><a href="#cleaning-up-form-d-data" id="toc-cleaning-up-form-d-data" class="nav-link" data-scroll-target="#cleaning-up-form-d-data">Cleaning up Form D data</a></li>
   </ul>
 </nav>
     </div>
@@ -168,27 +165,31 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>TODO: Synopsis… in this <em>series</em> of posts we:</p>
+<p>The ability of private companies to raise capital serves as a crucial indicator of entrepreneurial activity. The Security and Exchange Commission’s Form D is a publicly available dataset published quarterly that allows researchers to explore the landscape of venture capital investment.</p>
+<p>The Securities Act of 1933 established the laws governing the sale of securities, including registration with the SEC and mandatory reporting of information that may be pertinent to the public’s investment decisions. Private companies wishing to raise capital from accredited investors may still do so under the exemption, “Regulation D.”</p>
+<section id="how-form-d-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-form-d-works">How Form D works</h3>
+<p>Regulation D allows private companies to conduct fundraising rounds without registering with the SEC or regularly submitting information that is required for publicly traded companies. This exemption is the primary mechanism for early-stage ventures to access funding.</p>
+<p>When a company raises capital under Regulation D, they must file a Form D, which includes basic information about the company and the fundraising round. This data allows analysts to better understand who is raising venture capital and how much is invested.</p>
+<p>However, Form D data is often messy and riddled with human errors. Here are some tips on accessing and cleaning Form D data.</p>
+</section>
+<section id="cleaning-up-form-d-data" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-up-form-d-data">Cleaning up Form D data</h3>
+<p>Data going back to Q1 2008 can be downloaded directly from the <a href="https://www.sec.gov/about/dera_form-d">SEC website</a>. For a more streamlined process, we recommend accessing data in R using the dform package developed by Matt Rogers (download package from <a href="https://github.com/matthewjrogers/dform">matthewjrogers/dform</a>). This allows users to load data by quarter from 2014 to present.</p>
+<p>If you download the Form D files directly through the SEC and sum the “TOTALAMOUNTSOLD” column the total amount of capital raised through Regulation D in 2022 would be approximately $10.4 trillion, which dramatically overestimates the actual amount of venture capital raised that year. <a href="https://www.ey.com/en_us/insights/growth/q4-2022-venture-capital-investment-trends">Ernst &amp; Young</a> reported total U.S. venture capital raised in 2022 at $209.4 billion, <a href="https://www.statista.com/statistics/277501/venture-capital-amount-invested-in-the-united-states-since-1995/#:~:text=Value%20of%20venture%20capital%20investment%20in%20the%20U.S.%202006%2D2022&amp;text=Although%20the%20companies%20lack%20the,nearly%20241%20billion%20U.S.%20dollars.">Statista</a> places it at $241 billion, and <a href="9https://dealroom.co/guides/usa">Dealroom</a> at $235 billion.</p>
+<p>This discrepancy is partly due to duplicate entries. The dform package takes a first pass at removing duplicates, reducing the total amount raised in 2022 to $4.9 trilion. This figure still overestimates the amount of venture capital raised by U.S. businesses in 2022. Therefore, once the data is accessed through dform, additional cleaning steps are necessary before the data can provide a realistic picture of the venture landscape.</p>
+<p>First, eliminate companies headquartered outside of the U.S. Removing these entries brings the estimate from $4.9 trillion down to $3.7 trillion.</p>
+<p>Next, retain only the latest amendment within a funding round. Companies may file amendments for various reasons. They may need to notify the SEC of additional capital raised within a single fundraising effort or for something as small as correcting a spelling error in a previous filing.</p>
+<p>Because “TOTALAMOUNTSOLD” is cumulative for a fundraising round, simply summing this column would double-count funds already accounted for in other entries. In order to count these dollars once and attribute the most up-to-date total to the round, we recommend keeping only the latest entry for each funding round. This brings the total down to about $3.67 trillion.</p>
+<p>Finally, remove investment funds. Investment vehicles raising capital on the private market are also required to file a Form D. To distinguish these entities from startups or companies raising operational funds, we recommend separating them from the filings made by traditional businesses. We identify filings made by investment vehicles in the following ways:</p>
 <ol type="1">
-<li><p>frame the problem,</p></li>
-<li><p>briefly explore the available public data</p></li>
-<li><p>share the data and applications that we have produced in order to help rural broadband providers maximize their access to this unprecedented availability of public and private investment funding</p></li>
+<li><p>The industry is reported as “Pooled Investment Fund.”</p></li>
+<li><p>The field “ISPOOLEDINVESTMENTFUNDTYPE” is flagged as “TRUE.” This means the purpose of this fundraising round was for a pooled investment fund.</p></li>
+<li><p>The entity name contains the word “FUND.” This indicates that the entity is actually an investment fund.</p></li>
+<li><p>The entity name contains the word “HOLDING.” This indicates that the entity is actually a holding company.</p></li>
 </ol>
-<section id="the-challenge-and-the-opportunity" class="level3">
-<h3 class="anchored" data-anchor-id="the-challenge-and-the-opportunity">The challenge and the opportunity</h3>
-<p>TODO: … why the ability to analyze broadband data is so critical at this time …</p>
-</section>
-</section>
-<section id="the-available-data" class="level2">
-<h2 class="anchored" data-anchor-id="the-available-data">The available data</h2>
-<p>TODO: Extract some key takeaways from our internal <a href="proj-fcc-report" target="_blank">FCC report</a> (see below) and add to this section…</p>
-<!-- {{< include proj-fcc-report/index.qmd >}} -->
-</section>
-<section id="tools-for-big-broadband-analytics" class="level2">
-<h2 class="anchored" data-anchor-id="tools-for-big-broadband-analytics">Tools for big broadband analytics</h2>
-<p>TODO: … the main content of this article …</p>
+<p>This brings the final estimate for the total amount of venture funding raised by U.S. companies in 2022 down to about $233B.</p>
+<p>While other measures may further refine estimates based on Form D data, using the dform package and following these steps results in a final estimate consistent with other figures for 2022.</p>
 
 
 </section>
@@ -229,18 +230,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -272,7 +262,45 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -307,7 +335,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -355,7 +387,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

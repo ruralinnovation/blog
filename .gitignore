@@ -4,9 +4,11 @@
 /.obsidian/
 /.quarto/
 /data/
+/prez/
 /_freeze/
 /_site/
 #docs
 node_modules
 .Rproj.user
 .Rhistory
+posts/12_fcc-data/
