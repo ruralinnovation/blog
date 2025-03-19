@@ -1,0 +1,57 @@
+---
+title: "Recapping our favorite visualizations of 2024"
+author: "Camden Blatchly"
+date: "2025-03-19"
+categories: [code, sf, ggplot2, d3.js, mapbox, spatial data]
+image: thumbnail.png
+lightbox: true
+---
+
+From downtown placemaking to broadband planning and economic research, data-driven analysis has remained at the heart of CORI’s work this past year. To highlight the hard work that goes into analyzing and visualizing rural data, we’ve compiled our favorite charts, graphics, and interactive visualizations from 2024 below.
+
+### Mapping Affordable Connectivity Program enrollment
+
+![Screenshot of an interactive map of Affordable Connectivity Program enrollment ](images/acp_map.png){.lightbox}\
+
+The Affordable Connectivity Program ended in June 2024, impacting 23 million households—many in rural areas—that relied on the program for reduced-cost or fully subsidized internet access. To illustrate the program’s reach and assess the effects of its discontinuation, we created, in collaboration with [Rural LISC](https://www.lisc.org/rural/), an interactive map showing ACP utilization over time for U.S. zip codes. The map visualizes the steady rise in enrollment rates, demonstrating how, for most participants, <a href="https://ruralinnovation.us/blog/affordable-connectivity-program-impact/" target="_blank">the ACP was the difference</a> between having access to the opportunities that connectivity offers and being left behind.
+
+### Visualizing the role of broadband in rural economic growth
+
+![Scatterplot of business change versus broadband adoption](images/rural_broadband_adoption_vs_estab_entry){.lightbox}\
+
+![Change in businesses by broadband utilization status](images/pct_chg_estab_2020_2021_by_bb_status.png){.lightbox}\
+
+For our recent <a href="https://ruralinnovation.us/wp-content/uploads/2024/09/CORI-Beyond-Connectivity-Broadband-Rural-Economic-Growth-Report.pdf" target="_blank">report on the impacts of broadband on rural economic growth</a>, we visualized how higher broadband utilization (higher broadband adoption rates and a higher prevalence of small broadband service providers) improves the economic dynamism of rural areas. One key takeaway: rural counties with high broadband utilization see increases in the number of businesses, while similar counties without high broadband utilization see businesses decline.
+
+### Open data for rural placemaking
+
+![Taxable value per acre map of Rutland, VT](images/rutland_tax_per_acre){.lightbox}\
+
+![Map of parking land use in Rutland, VT](images/rutland_parking_parks_downtown.png){.lightbox}\
+
+To better understand land use when <a href="https://ruralinnovation.us/resources/reports/placemaking-for-rural-innovation-districts/" target="_blank">developing innovation districts</a>, we visualized OpenStreetMap and parcel tax data for the communities of Pine Bluff, AR, Selma, AL, and Rutland VT, helping residents easily compare community priorities with their current downtown structure.
+
+### Mapping broadband access and funding
+
+![Screenshot of Rural Broadband Service Map](images/bead_map.png){.lightbox}\
+
+In February 2024, we released the <a href="https://rural-broadband-map.ruralinnovation.us/" target="_blank">Rural Broadband Service Map<a/>—the most detailed map of broadband service and funding available. With data displayed at the Census block level, users can readily identify areas lacking broadband access and assess grant eligibility and strategy.
+
+### Charting changes in rural voting patterns
+
+![Line chart comparing rural and nonrural political diversity over time](images/rural_political_diversity_alt.png){.lightbox}\
+
+Following the 2024 election, <a href="https://www.electionanalysis.ws/us/president2024/section-3-voters/beyond-the-rural-vote-economic-anxiety-and-the-2024-presidential-election/" target="_blank">we analyzed the recent divergence in rural and nonrural voting trends</a>, visualizing how increasing polarization has manifested across the country - and in rural areas.
+
+### Spatial trends in rural innovation funding
+
+![Screenshot of the Who Wins Build to Scale tool](images/who_wins_b2s_map.png){.lightbox}\
+
+[Build to Scale](https://www.eda.gov/funding/programs/build-to-scale), the Economic Development Administration's flagship grant program for technology-driven businesses, recently celebrated its 10th anniversary. To analyze spatial trends among grantees and identify rural communities with strong potential for successful applications, we developed a statistical model (<a href="https://who-wins-b2s.ruralinnovation.us/" target="_blank">and associated mapping tool</a>) that leverages attributes of past winners to estimate the likelihood of a rural area receiving this prestigious grant.
+
+
+### Disadvantaged rural communities charting a path to economic success
+
+![Line chart comparing community types population growth](images/03_cpc_pop_change_line_chart_v3.png){.lightbox}\
+
+In our final installment of the [Rural Aperture Project](https://ruralinnovation.us/resources/mapping-and-data-analytics/the-rural-aperture-project/), we explored how rural communities that are most affected by systemic inequities can nonetheless chart a path towards economic success and well-being. Our data-driven analysis centered around a comparative study of 20 communities classified as Disadvantaged or Most Disadvantage according to the University of Michigan’s Index of Deep Disadvantage, visualizing the key factors that have contributed to their success despite systemic challenges.
