@@ -1,19 +1,19 @@
 ---
 title: "Recapping our favorite visualizations of 2024"
 author: "Camden Blatchly"
-date: "2025-03-20"
-categories: [code, sf, ggplot2, leaflet, spatial data]
+date: "2025-03-19"
+categories: [code, sf, ggplot2, d3.js, mapbox, spatial data]
 image: thumbnail.png
 lightbox: true
 ---
 
-From downtown placemaking to broadband planning and economic research, data-driven analysis remained at the heart of CORI’s work this past year. To highlight the hard work that goes into analyzing and visualizing rural data, we’ve compiled our favorite charts, graphics, and interactive visualizations from 2024 below.
+From downtown placemaking to broadband planning and economic research, data-driven analysis has remained at the heart of CORI’s work this past year. To highlight the hard work that goes into analyzing and visualizing rural data, we’ve compiled our favorite charts, graphics, and interactive visualizations from 2024 below.
 
 ### Mapping Affordable Connectivity Program enrollment
 
 ![Screenshot of an interactive map of Affordable Connectivity Program enrollment ](images/acp_map.png){.lightbox}\
 
-The Affordable Connectivity Program ended in June 2024, impacting 23 million households—many in rural areas—that relied on the program for reduced-cost or fully subsidized internet access. To illustrate the program’s reach and assess the effects of its discontinuation, we created, in collaboration with [Rural LISC](https://www.lisc.org/rural/), an interactive map showing ACP utilization over time for U.S. zip codes. The map visualizes the steady rise in enrollment rates, demonstrating how, for most participants, <a href="https://ruralinnovation.us/blog/affordable-connectivity-program-impact/" target="_blank">the ACP was the difference between having access to the opportunities that connectivity offers and being left behind</a>.
+The Affordable Connectivity Program ended in June 2024, impacting 23 million households—many in rural areas—that relied on the program for reduced-cost or fully subsidized internet access. To illustrate the program’s reach and assess the effects of its discontinuation, we created, in collaboration with [Rural LISC](https://www.lisc.org/rural/), an interactive map showing ACP utilization over time for U.S. zip codes. The map visualizes the steady rise in enrollment rates, demonstrating how, for most participants, <a href="https://ruralinnovation.us/blog/affordable-connectivity-program-impact/" target="_blank">the ACP was the difference</a> between having access to the opportunities that connectivity offers and being left behind.
 
 ### Visualizing the role of broadband in rural economic growth
 
@@ -34,7 +34,8 @@ To better understand land use when <a href="https://ruralinnovation.us/resources
 ### Mapping broadband access and funding
 
 ![Screenshot of Rural Broadband Service Map](images/bead_map.png){.lightbox}\
-In February 2024, we released the <a href="https://rural-broadband-map.ruralinnovation.us/" target="_blank">Rural Broadband Service Map</>—the most detailed map of broadband service and funding available. With data available at the Census block level, users can readily identify areas lacking broadband access and assess grant eligibility and strategy.
+
+In February 2024, we released the <a href="https://rural-broadband-map.ruralinnovation.us/" target="_blank">Rural Broadband Service Map<a/>—the most detailed map of broadband service and funding available. With data displayed at the Census block level, users can readily identify areas lacking broadband access and assess grant eligibility and strategy.
 
 ### Charting changes in rural voting patterns
 
