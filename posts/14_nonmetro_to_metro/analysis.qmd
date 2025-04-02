@@ -1,0 +1,196 @@
+---
+title: "analysis"
+editor: visual
+---
+
+
+```{r}
+
+library(dplyr)
+library(tidyr)
+library(here)
+library(readr)
+library(coriverse)
+
+i_am("posts/14_nonmetro_to_metro/analysis.qmd")
+
+```
+
+```{r}
+
+rucc_1974 <- ruraldefinitions::rucc_1974 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_1983 <- ruraldefinitions::rucc_1983 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_1993 <- ruraldefinitions::rucc_1993 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_2003 <- ruraldefinitions::rucc_2003 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_2013 <- ruraldefinitions::rucc_2013 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_2023 <- ruraldefinitions::rucc_2023 %>%
+  mutate(rural_def = as.character(rural_def))
+
+
+```
+
+
+```{r}
+
+rucc_all <- bind_rows(
+    rucc_1974,
+    rucc_1983,
+    rucc_1993,
+    rucc_2003,
+    rucc_2013,
+    rucc_2023
+  ) %>%
+  left_join(
+    .,
+    cori.utils::county_state_crosswalk,
+    by = c("geoid" = "geoid_co")
+  ) %>%
+  select(-rural_def) %>%
+  pivot_wider(
+    names_from = "year",
+    names_prefix = "rucc_",
+    values_from = "is_rural"
+  ) %>%
+  mutate(
+    rural_to_nonrural = ifelse(
+      rucc_1974 == "Rural" & rucc_1983 == "Nonrural",
+      1983,
+      ifelse(
+        rucc_1974 == "Rural" & rucc_1993 == "Nonrural",
+        1993,
+        ifelse(
+          rucc_1974 == "Rural" & rucc_2003 == "Nonrural",
+          2003,
+          ifelse(
+            rucc_1974 == "Rural" & rucc_2013 == "Nonrural",
+            2013,
+            ifelse(
+              rucc_1974 == "Rural" & rucc_2023 == "Nonrural",
+              2023,
+              NA
+            )
+          )
+        )
+      )
+    ),
+    nonrural_to_rural = ifelse(
+      rucc_1974 == "Nonrural" & rucc_1983 == "Rural",
+      1983,
+      ifelse(
+        rucc_1974 == "Nonrural" & rucc_1993 == "Rural",
+        1993,
+        ifelse(
+          rucc_1974 == "Nonrural" & rucc_2003 == "Rural",
+          2003,
+          ifelse(
+            rucc_1974 == "Nonrural" & rucc_2013 == "Rural",
+            2013,
+            ifelse(
+              rucc_1974 == "Nonrural" & rucc_2023 == "Rural",
+              2023,
+              NA
+            )
+          )
+        )
+      )
+    )
+  )
+  
+readr::write_csv(rucc_all, here("posts/14_nonmetro_to_metro/data/rucc_over_time.csv"))
+
+```
+
+
+```{r}
+
+con <- connect_to_db("proj_erc")
+erc_dta <- read_db(con, "erc_data_tidy")
+DBI::dbDisconnect(con)
+
+```
+
+
+## Data for Nonmetro to Metro (2013-2023)
+
+```{r}
+
+nonmetro_to_metro_geoids <- rucc_all %>%
+  filter(rural_to_nonrural == 2023) %>%
+  pull(geoid)
+
+analysis_dta <- erc_dta %>%
+  filter(metric %in% c(
+    "Median age",
+    "Number of establishments",
+    "Population",
+    "Quality of life",
+    "Educational attainment",
+    "Employment",
+    "Tech employment",
+    "Share of employment by sector",
+    "Broadband adoption"
+  ))
+
+sum_metrics <- c(
+  "Population", 
+  "Number of establishments",
+  "Employment"
+)
+
+weight_metrics <- c(
+  "Broadband adoption",
+  "Tech employment",
+  "Share of employment by sector",
+  "Educational attainment"
+)
+
+rucc_nonmetro_2023 <- rucc_2023 %>%
+  filter(is_rural == "Rural") %>%
+  pull(geoid) %>% unique()
+
+nonmetro_to_metro_summary <- analysis_dta %>%
+  mutate(
+    category = ifelse(
+      geoid %in% nonmetro_to_metro_geoids,
+      "Nonmetro to metro 2023",
+      ifelse(
+        geoid %in% rucc_nonmetro_2023,
+        "Nonmetro in 2023",
+        "All other metro in 2023"
+      )
+    )
+  ) %>%
+  mutate(
+    weighted_value = agg_var * value
+  ) %>%
+  group_by(category, year, variable, metric) %>%
+  summarise(
+    count = n_distinct(geoid),
+    weighted_value_sum = sum(weighted_value, na.rm = TRUE),
+    total_value = sum(value, na.rm = T),
+    agg_var = sum(agg_var, na.rm = T),
+    value = mean(value, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  mutate(
+    value = ifelse(
+      metric %in% sum_metrics,
+      total_value,
+      ifelse(
+        metric %in% weight_metrics,
+        weighted_value_sum / agg_var,
+        value
+      )
+    )
+  )
+
+```
+
+
+
+
