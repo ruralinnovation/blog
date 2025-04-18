@@ -359,3 +359,7 @@ fig <- chrt_dta %>%
   facet_wrap(~variable_label, ncol = 1, scales = "free")
 
 save_plot(fig, here("posts/14_nonmetro_to_metro/modern_economy.png"), chart_height = 8)
+
+
+```
+
