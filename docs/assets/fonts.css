@@ -61,7 +61,7 @@
 
 /* default */
 html, body {
-  font-family: "Montserrat", "Bitter", serif;
+  font-family: "Bitter", serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -121,6 +121,6 @@ a:hover {
 }
 
 .nav-item a, .sidebar-item a {
-  font-family: "Montserrat", "TT Hoves", sans-serif;
+  font-family: "TT Hoves", sans-serif;
   font-weight: normal;
 }

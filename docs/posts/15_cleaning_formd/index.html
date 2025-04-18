@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Camden Blatchly">
+<meta name="dcterms.date" content="2025-04-18">
 
-<title>about – Mapping &amp; Data Analytics Blog @cori-risi</title>
+<title>How we work with Form D filings – Mapping &amp; Data Analytics Blog @cori-risi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,21 +22,56 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<link href="./assets/images/Logo-Mark_Black.png" rel="icon" type="image/png">
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../assets/images/Logo-Mark_Black.png" rel="icon" type="image/png">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -61,17 +98,17 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="assets/fonts.css">
-<meta property="og:title" content="– Mapping &amp; Data Analytics Blog @cori-risi">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<meta property="og:title" content="How we work with Form D filings – Mapping &amp; Data Analytics Blog @cori-risi">
 <meta property="og:description" content="">
-<meta property="og:image" content="assets/images/Full-Logo_CORI_Black.svg">
+<meta property="og:image" content="thumbnail.png">
 <meta property="og:site_name" content="Mapping &amp; Data Analytics Blog @cori-risi">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -85,13 +122,13 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Mapping &amp; Data Analytics Blog</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -107,62 +144,97 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">How we work with Form D filings</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">private investment</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Form D</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Camden Blatchly </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 18, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
-<div class="quarto-about-jolla">
-  <img src="assets/images/Full-Logo_CORI_Black.svg" class="about-image
-  round " style="height: 15em; width: 15em;">
- <main class="content" id="quarto-document-content">
-<p><a id="github-profile-logo" href="https://ruralinnovation.us/" target="_blank"><img src="assets/images/Full-Logo_CORI_Cream.svg" alt="The Center on Rural Innovation" width="12%" align="left"></a> <br></p>
-<hr>
-<p>The <a href="https://ruralinnovation.us/" class="external" target="_blank">Center on Rural Innovation (CORI)</a> is a 501(c)(3) nonprofit organization that partners with rural leaders across industries, across sectors and across the country to build tech economies that support scalable entrepreneurship and lead to more tech jobs in rural America.</p>
-<p>These repositories are maintained by the <a href="https://ruralinnovation.us/our-work/research_mapping/" class="external" target="_blank"><em>Mapping and Data Analytics</em> (MDA)</a> team at CORI/RISI. Our team provides data, analytics and visualizations to support rural participation in the digital economy through scalable entrepreneurship and tech job growth in rural America. We aim to provide a better understanding of the forces and trends affecting rural America as we help communities chart a path to opportunity and prosperity through the tech economy.</p>
-<p>We strive towards serving as the primary center of excellence advancing sustainable, economic opportunity and equity in rural America. We do this by providing expert spatial and statistical analysis, modernized visualization and tool development, credible technical subject matter expertise, and transparent documentation.</p>
-<p>Follow our work by reading <a href="https://ruralinnovation.github.io/blog/" class="external" target="_blank">our blog</a> and reviewing the following list of past projects:</p>
-<div>
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p><strong>Broadband</strong><br> - <a href="https://rural-broadband-map.ruralinnovation.us/" class="external" target="_blank">Broadband Equity Access and Deployment (BEAD) tool</a><br> - <a href="https://broadband-risk.ruralinnovation.us/" class="external" target="_blank">Climate Risk Mapping</a></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p><strong>Research</strong><br> - <a href="https://ruralinnovation.us/resources/reports/the-rural-aperture-project/" class="external" target="_blank">Rural Aperture Project</a> (RWJF)<br> - <a href="https://ruralinnovation.us/blog/defining-rural-america/" class="external" target="_blank">Defining rural America</a><br> - Who lives in rural America? <a href="https://ruralinnovation.us/blog/who-lives-in-rural-america-part-i/" class="external" target="_blank">Part 1</a> <a href="https://ruralinnovation.us/blog/who-lives-in-rural-america-part-2/" class="external" target="_blank">Part 2</a><br> - <a href="https://ruralinnovation.us/blog/equity-economic-opportunity-rural-america/" class="external" target="_blank">The equity of economic opportunity in rural America</a></p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p><strong>Rural Innovation Network</strong><br> - <a href="https://ruralinnovation.us/resources/reports/report-rural-americas-tech-employment-landscape/" class="external" target="_blank">Ascendium reports and data viz</a><br> - <a href="https://erc-tool.ruralinnovation.us/" class="external" target="_blank">Economic Development (ERC) tool</a></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p><strong>Rural Innovation Initiative</strong><br> - Tech Economy Diagnostic (TED) <br> (i.e., community assessment → <a href="https://erc-tool.ruralinnovation.us/" class="external" target="_blank">ERC tool</a>)</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p><strong>Tech Entrepreneurship</strong> <br> - <a href="https://docs.google.com/document/d/1XcIts0l7weC1Kccw-hDSAQ1pj9FUyuaswAOZQP26UJM/edit#heading=h.ldyanhes5kq4" class="external" target="_blank">Feasibility studies</a><br> - Tech Talent Tracker → <a href="https://erc-tool.ruralinnovation.us/" class="external" target="_blank">ERC tool</a><br></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p><strong>Additional work</strong><br> - Economic Development Administration (EDA) reports<br> - Economic impact analysis<br> - <a href="https://drive.google.com/drive/folders/1hb6t9j9FDCxTCKikHqRKzuVPjUI3NCaQ" class="external" target="_blank">Multistate Workforce Analysis</a> - <a href="https://docs.google.com/document/d/1-ikRrZv-zxDaKkM9lScsY5BMSZvTV7Fn/edit" class="external" target="_blank">example</a><br> - <a href="https://drive.google.com/file/d/115CbNaxueucskWevb3BmWqz0Oe4gfrX2" class="external" target="_blank">Who Is Missing Analysis</a></p>
-</div>
-</div>
-</div>
-<p>Learn more about the MDA approach to Knowledge here: <a href="https://ruralinnovation.us/our-work/research_mapping/" class="external" target="_blank">Research, mapping, and data analytics</a></p>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://github.com/ruralinnovation/" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
+
+
+
+<p>We access raw Form D filings using the <code>dform</code> <a href="https://github.com/ruralinnovation/dForm">package</a>. There are two datasets: issuers and offerings. The issuers dataset describes entities which are filing an offering, while the offerings dataset describes the terms of the offerings.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>formd_obj <span class="ot">&lt;-</span> dForm<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>formd_obj<span class="sc">$</span><span class="fu">load_data</span>(<span class="at">years =</span> <span class="fu">c</span>(<span class="dv">2010</span><span class="sc">:</span><span class="dv">2023</span>), <span class="at">use_cache =</span> <span class="cn">FALSE</span>, <span class="at">remove_duplicates =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>issuers <span class="ot">&lt;-</span> formd_obj<span class="sc">$</span>issuers</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>offerings <span class="ot">&lt;-</span> formd_obj<span class="sc">$</span>offerings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
- <!-- /main -->
+<p>To clean the issuers dataset, we remove unnecessary whitespace and standardize common entity and city naming conventions (e.g., normalize L.P. to LP).</p>
+<p>Next, we associate each issuer with a county. When submitting a Form D filing, issuers must list an address. To convert from the address to a county, we take the following steps:</p>
+<ul>
+<li>We begin by loading a zip code to county crosswalk that is produced by the Department of Housing and Urban Development. Because zip codes change over time, we use 2021 and 2014 versions of this crosswalk.<br>
+</li>
+<li>The simplest translation occurs when a zip code is associated with a single county. This is the most common scenario and is the case for about 70% of zip codes. When an issuer’s address is in a zip code associated with a single county, then we assign that county to the issuer.<br>
+</li>
+<li>When an issuer’s zip code spans multiple counties, we assign the issuer to the county where more of the business addresses in the zip code are located. If those values are the same or not available, we assign the issuer to the county where more of the total (residential and business) addresses are located.<br>
+</li>
+<li>After these two steps, we have assigned counties to the vast majority of issuers. For the remaining issuers, we use the Census geocoder to associate their address with a county. If an issuer is not matched with a county after this geocoding step, it is not used in our analysis. At the time of this writing, less than 500 issuers were unmatched after geocoding (out of a dataset of more than 500,000 issuers).</li>
+</ul>
+<p>Issuers must also list a precise year of incorporation when filing. Because the <code>yearofinc_value_entered</code> field may be blank for some of an entity’s submissions, we group by the <code>cik</code> (the unique ID given by the SEC to entities) and the name of the entity, and then take the smallest year entered. If an entity is yet to be formed or is older than five years , the <code>yearofinc_value_entered</code> field may be NA. In these cases, we take the value in the <code>yearofinc_timespan_choice</code> field, which will be either ‘yetToBeFormed,’ ‘withinFiveYears,’ or ‘overFiveYears’</p>
+<p>Issuers sometimes choose to change their industry association between submissions. To address these discrepancies, we collapse all industries for an entity into a single comma separated string (e.g., “Retailing, Restaurants”).</p>
+<p>After these steps, we are ready to join the issuers and offerings datasets. We join by <code>accessionnumber</code> (a unique ID number assigned by the SEC to each submission), <code>year</code>, and <code>quarter</code> and filter to submissions submitted by the primary issuer only (using the <code>is_primaryissuer_flag</code> field).</p>
+<p>The field “totalamountsold” is the basis for much of our Form D analysis. This field reports the cumulative amount of money raised by a company for a given fundraising effort (which may involve multiple offerings). Because this field is cumulative, we must identify the incremental difference in the amount raised between one offering and the last offering within a given fundraising effort. Failure to do this will artificially inflate the amount of funding raised in later periods. For example, if Company A raises $50k in 2016, their 2016 filing will report $50k as the total amount sold. But if they continue fundraising efforts and accrue an extra $20k in 2017, the 2017 filing will report $70k as the total amount sold, resulting in an inflated value of $50k for the 2017 filing year.</p>
+<p>The steps to correct the dollar amount sold from each company for each fundraising effort are as follows:</p>
+<p><strong>1. Create a business ID</strong></p>
+<p>The first 10 digits of the accession number (the unique ID given to offerings) is typically the CIK code (the unique ID given to entities), but not always. When the first 10 digits of the accession number differ from the CIK code, it suggests that there is a difference between that entity and an entity where the CIK code and accession number prefix match. Therefore, we use a combination between the CIK code and accession number prefix to identify offerings from the same business entity.</p>
+<p><strong>2. Create a funding round ID and sort filings within the round.</strong></p>
+<p>Our goal is to identify entries belonging to unique fundraising efforts for each company. To accomplish this aim, for each business ID, we assign a funding round ID to each group of filings that have the same values for the following fields:</p>
+<ul>
+<li><code>sale_date</code> (the date the sale of securities was initiated).<br>
+</li>
+<li><code>isequitytype</code> (a true/false field indicating if the filing was the result of equity fundraising).<br>
+</li>
+<li><code>isdebttype</code> (a true/false field indicating if the filing was the result of debt financing).<br>
+</li>
+<li><code>ispooledinvestmentfundtype</code> (a true/false field indicating if the filing was the result of raising capital or an investment fund).<br>
+</li>
+<li><code>isbusinesscombinationtrans</code> (a true/false field indicating if the filing was the result of M&amp;A activity).</li>
+</ul>
+<p>Once a business ID’s unique fundraising efforts have been identified, we determine the order in which each offering was filed using the accession number, which includes digits describing the year and the ordering of filing. After sorting the offerings, we can calculate the incremental amounts raised. The data is then separated into two separate tables (businesses and funds) based upon whether the security includes Pooled Investment Fund interests.</p>
+<p>Now the data is ready for analysis or visualization! Take a look at our <a href="https://private-funding-map.ruralinnovation.us/">private funding map</a> to get a feel for how the data can be used.</p>
+
+
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -183,6 +255,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
