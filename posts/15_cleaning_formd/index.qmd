@@ -10,13 +10,10 @@ lightbox: true
 We access raw Form D filings using the `dform` [package](https://github.com/ruralinnovation/dForm). There are two datasets: issuers and offerings. The issuers dataset describes entities which are filing an offering, while the offerings dataset describes the terms of the offerings.
 
 ```{r, eval=FALSE}
-
 formd_obj <- dForm$new()
 formd_obj$load_data(years = c(2010:2023), use_cache = FALSE, remove_duplicates = FALSE)
-
 issuers <- formd_obj$issuers
 offerings <- formd_obj$offerings
-
 ```
 
 ### Associating issuers with counties
@@ -60,3 +57,4 @@ Once a business ID’s unique fundraising efforts have been identified, we deter
 
 Now the data is ready for analysis or visualization! Take a look at our [private funding map](https://private-funding-map.ruralinnovation.us/) to get a feel for how the data 
 can be used.
+
