@@ -362,4 +362,3 @@ save_plot(fig, here("posts/14_nonmetro_to_metro/modern_economy.png"), chart_heig
 
 
 ```
-
