@@ -232,12 +232,12 @@ chrt_dta <- nonmetro_to_metro_summary %>%
   filter(!(name == "est_2022" & variable != "Tradable services")) %>%
   mutate(
     variable_label = recode(variable,
-    "employment" = "Pct. change in employment (2017-2022)",
-    "establishments" = "Pct. change in businesses (2017-2022)",
-    "population" = "Pct. change in population (2017-2022)",
+    "employment" = "Percent change in employment (2017-2022)",
+    "establishments" = "Percent change in businesses (2017-2022)",
+    "population" = "Percent change in population (2017-2022)",
     "pct_emp_in_computer_math_occupations" = "Share employed in tech (2023)",
     "share_ba_or_higher" = "Share with a college degree (2023)",
-    "broadband_adoption" = "Broadband adoption rate (2023)",
+    "broadband_adoption" = "Share of households with a broadband subscription (2023)",
     "median_age" = "Average median age (2023)",
     "Tradable services" = "Share employed in tradable services (2022)"
     ),
@@ -266,7 +266,8 @@ fig <- chrt_dta %>%
     position = position_dodge2(width = 0.9, reverse = FALSE),
     hjust = -.2,
     family = "Lato",
-    fontface = "bold"
+    fontface = "bold",
+    size = 5
   ) +
   scale_fill_manual(
     values = c(
@@ -285,7 +286,7 @@ fig <- chrt_dta %>%
     subtitle = "By 2023 metropolitan designation",
     x = NULL,
     y = NULL,
-    caption = "Source: Bureau of Economic Analysis"
+    caption = 'Source: Bureau of Economic Analysis\nNote: "Rural" refers to the nonmetro definition which includes all nonmetro counties.'
   ) +
   theme_cori_horizontal_bars() +
   theme(
@@ -309,7 +310,7 @@ save_plot(fig, here("posts/14_nonmetro_to_metro/growth.png"), chart_height = 8)
 ```{r}
 
 fig <- chrt_dta %>%
-  filter(!variable %in% c("employment", "population", "establishments", "median_age")) %>%
+  filter(!variable %in% c("employment", "population", "establishments", "pct_emp_in_computer_math_occupations", "median_age")) %>%
   ggplot(aes(value, variable_label, fill = category)) +
   geom_col(position = "dodge") +
   # Add in data labels
@@ -322,7 +323,8 @@ fig <- chrt_dta %>%
     position = position_dodge2(width = 0.9, reverse = FALSE),
     hjust = -.2,
     family = "Lato",
-    fontface = "bold"
+    fontface = "bold",
+    size = 5
   ) +
   scale_fill_manual(
     values = c(
@@ -341,7 +343,7 @@ fig <- chrt_dta %>%
     subtitle = "By 2023 metropolitan designation",
     x = NULL,
     y = NULL,
-    caption = "Source: Bureau of Economic Analysis, American Community Survey 5-year estimates"
+    caption = 'Source: Bureau of Economic Analysis, American Community Survey 5-year estimates\nNote: "Rural" refers to the nonmetro definition which includes all nonmetro counties.'
   ) +
   theme_cori_horizontal_bars() +
   theme(
@@ -356,7 +358,7 @@ fig <- chrt_dta %>%
   ) +
   facet_wrap(~variable_label, ncol = 1, scales = "free")
 
-save_plot(fig, here("posts/14_nonmetro_to_metro/modern_economy.png"), chart_height = 10)
+save_plot(fig, here("posts/14_nonmetro_to_metro/modern_economy.png"), chart_height = 8)
 
 
 ```
