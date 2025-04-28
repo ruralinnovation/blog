@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Brittany Kainen">
-<meta name="dcterms.date" content="2024-07-03">
+<meta name="author" content="Camden Blatchly">
+<meta name="dcterms.date" content="2025-03-19">
 
-<title>The top 10 micropolitan areas for raising venture capital – Mapping &amp; Data Analytics Blog @cori-risi</title>
+<title>Recapping our favorite visualizations of 2024 – Mapping &amp; Data Analytics Blog @cori-risi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,9 +68,9 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../assets/fonts.css">
-<meta property="og:title" content="The top 10 micropolitan areas for raising venture capital – Mapping &amp; Data Analytics Blog @cori-risi">
+<meta property="og:title" content="Recapping our favorite visualizations of 2024 – Mapping &amp; Data Analytics Blog @cori-risi">
 <meta property="og:description" content="">
-<meta property="og:image" content="images/top10_vc_micropolitans.png">
+<meta property="og:image" content="thumbnail.png">
 <meta property="og:site_name" content="Mapping &amp; Data Analytics Blog @cori-risi">
 </head>
 
@@ -116,13 +116,14 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">The top 10 micropolitan areas for raising venture capital</h1>
+      <h1 class="title">Recapping our favorite visualizations of 2024</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">SEC</div>
-                <div class="quarto-category">Form D</div>
-                <div class="quarto-category">Quarto</div>
-                <div class="quarto-category">Venture Capital</div>
-                <div class="quarto-category">Rural</div>
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">sf</div>
+                <div class="quarto-category">ggplot2</div>
+                <div class="quarto-category">d3.js</div>
+                <div class="quarto-category">mapbox</div>
+                <div class="quarto-category">spatial data</div>
               </div>
                   </div>
   </div>
@@ -133,14 +134,14 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Brittany Kainen </p>
+               <p>Camden Blatchly </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 3, 2024</p>
+        <p class="date">March 19, 2025</p>
       </div>
     </div>
     
@@ -151,8 +152,20 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#mapping-affordable-connectivity-program-enrollment" id="toc-mapping-affordable-connectivity-program-enrollment" class="nav-link active" data-scroll-target="#mapping-affordable-connectivity-program-enrollment">Mapping Affordable Connectivity Program enrollment</a></li>
+  <li><a href="#visualizing-the-role-of-broadband-in-rural-economic-growth" id="toc-visualizing-the-role-of-broadband-in-rural-economic-growth" class="nav-link" data-scroll-target="#visualizing-the-role-of-broadband-in-rural-economic-growth">Visualizing the role of broadband in rural economic growth</a></li>
+  <li><a href="#open-data-for-rural-placemaking" id="toc-open-data-for-rural-placemaking" class="nav-link" data-scroll-target="#open-data-for-rural-placemaking">Open data for rural placemaking</a></li>
+  <li><a href="#mapping-broadband-access-and-funding" id="toc-mapping-broadband-access-and-funding" class="nav-link" data-scroll-target="#mapping-broadband-access-and-funding">Mapping broadband access and funding</a></li>
+  <li><a href="#charting-changes-in-rural-voting-patterns" id="toc-charting-changes-in-rural-voting-patterns" class="nav-link" data-scroll-target="#charting-changes-in-rural-voting-patterns">Charting changes in rural voting patterns</a></li>
+  <li><a href="#spatial-trends-in-rural-innovation-funding" id="toc-spatial-trends-in-rural-innovation-funding" class="nav-link" data-scroll-target="#spatial-trends-in-rural-innovation-funding">Spatial trends in rural innovation funding</a></li>
+  <li><a href="#disadvantaged-rural-communities-charting-a-path-to-economic-success" id="toc-disadvantaged-rural-communities-charting-a-path-to-economic-success" class="nav-link" data-scroll-target="#disadvantaged-rural-communities-charting-a-path-to-economic-success">Disadvantaged rural communities charting a path to economic success</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -161,51 +174,55 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>Venture capital funding plays a pivotal role in bolstering a region’s economy by catalyzing innovation, fostering job creation, and attracting talent.</p>
-<p>Venture capital investment injects vital funding into promising businesses with growth potential, enabling them to scale rapidly. And it holds immense promise for revitalizing rural America’s economy by empowering local entrepreneurs with the resources needed to innovate and grow.</p>
-<p>Though rural areas have traditionally been overlooked by investors, many rural entrepreneurs have managed to access capital that is crucial to transforming their budding ideas into thriving businesses.</p>
-<p>To explore the venture capital landscape in rural America, we can use the SEC’s Form D to identify the amount of funding received by private businesses in micropolitan areas. A micropolitan area, as defined by the U.S. Office of Management and Budget, is a region centered around a small urban cluster with a population between 10,000 and 50,000 people. These areas are smaller than metropolitan areas but still exhibit economic and social connections with nearby population centers, making micropolitans an ideal geography for observing venture capital dynamics in rural economies.</p>
-<div>
+<p>From downtown placemaking to broadband planning and economic research, data-driven analysis has remained at the heart of CORI’s work this past year. To highlight the hard work that goes into analyzing and visualizing rural data, we’ve compiled our favorite charts, graphics, and interactive visualizations from 2024 below.</p>
+<section id="mapping-affordable-connectivity-program-enrollment" class="level3">
+<h3 class="anchored" data-anchor-id="mapping-affordable-connectivity-program-enrollment">Mapping Affordable Connectivity Program enrollment</h3>
+<p><a href="images/acp_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Screenshot of an interactive map of Affordable Connectivity Program enrollment"><img src="images/acp_map.png" class="img-fluid" alt="Screenshot of an interactive map of Affordable Connectivity Program enrollment"></a><br>
+</p>
+<p>The Affordable Connectivity Program ended in June 2024, impacting 23 million households—many in rural areas—that relied on the program for reduced-cost or fully subsidized internet access. To illustrate the program’s reach and assess the effects of its discontinuation, we created, in collaboration with <a href="https://www.lisc.org/rural/">Rural LISC</a>, an interactive map showing ACP utilization over time for U.S. zip codes. The map visualizes the steady rise in enrollment rates, demonstrating how, for most participants, <a href="https://ruralinnovation.us/blog/affordable-connectivity-program-impact/" target="_blank">the ACP was the difference</a> between having access to the opportunities that connectivity offers and being left behind.</p>
+</section>
+<section id="visualizing-the-role-of-broadband-in-rural-economic-growth" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-role-of-broadband-in-rural-economic-growth">Visualizing the role of broadband in rural economic growth</h3>
+<p><a href="images/rural_broadband_adoption_vs_estab_entry.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Scatterplot of business change versus broadband adoption"><img src="images/rural_broadband_adoption_vs_estab_entry.png" class="img-fluid" alt="Scatterplot of business change versus broadband adoption"></a><br>
+</p>
+<p><a href="images/pct_chg_estab_2020_2021_by_bb_status.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Change in businesses by broadband utilization status"><img src="images/pct_chg_estab_2020_2021_by_bb_status.png" class="img-fluid" alt="Change in businesses by broadband utilization status"></a><br>
+</p>
+<p>For our recent <a href="https://ruralinnovation.us/wp-content/uploads/2024/09/CORI-Beyond-Connectivity-Broadband-Rural-Economic-Growth-Report.pdf" target="_blank">report on the impacts of broadband on rural economic growth</a>, we visualized how higher broadband utilization (higher broadband adoption rates and a higher prevalence of small broadband service providers) improves the economic dynamism of rural areas. One key takeaway: rural counties with high broadband utilization see increases in the number of businesses, while similar counties without high broadband utilization see businesses decline.</p>
+</section>
+<section id="open-data-for-rural-placemaking" class="level3">
+<h3 class="anchored" data-anchor-id="open-data-for-rural-placemaking">Open data for rural placemaking</h3>
+<p><a href="images/rutland_tax_per_acre.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Taxable value per acre map of Rutland, VT"><img src="images/rutland_tax_per_acre.png" class="img-fluid" alt="Taxable value per acre map of Rutland, VT"></a><br>
+</p>
+<p><a href="images/rutland_parking_parks_downtown.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Map of parking land use in Rutland, VT"><img src="images/rutland_parking_parks_downtown.png" class="img-fluid" alt="Map of parking land use in Rutland, VT"></a><br>
+</p>
+<p>To better understand land use when <a href="https://ruralinnovation.us/resources/reports/placemaking-for-rural-innovation-districts/" target="_blank">developing innovation districts</a>, we visualized OpenStreetMap and parcel tax data for the communities of Pine Bluff, AR, Selma, AL, and Rutland VT, helping residents easily compare community priorities with their current downtown structure.</p>
+</section>
+<section id="mapping-broadband-access-and-funding" class="level3">
+<h3 class="anchored" data-anchor-id="mapping-broadband-access-and-funding">Mapping broadband access and funding</h3>
+<p><a href="images/bead_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Screenshot of Rural Broadband Service Map"><img src="images/bead_map.png" class="img-fluid" alt="Screenshot of Rural Broadband Service Map"></a><br>
+</p>
+<p>In February 2024, we released the <a href="https://rural-broadband-map.ruralinnovation.us/" target="_blank">Rural Broadband Service Map</a><a>—the most detailed map of broadband service and funding available. With data displayed at the Census block level, users can readily identify areas lacking broadband access and assess grant eligibility and strategy.</a></p><a>
+</a></section><a>
+</a><section id="charting-changes-in-rural-voting-patterns" class="level3"><a>
+<h3 class="anchored" data-anchor-id="charting-changes-in-rural-voting-patterns">Charting changes in rural voting patterns</h3>
+</a><p><a></a><a href="images/rural_political_diversity_alt.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Line chart comparing rural and nonrural political diversity over time"><img src="images/rural_political_diversity_alt.png" class="img-fluid" alt="Line chart comparing rural and nonrural political diversity over time"></a><br>
+</p>
+<p>Following the 2024 election, <a href="https://www.electionanalysis.ws/us/president2024/section-3-voters/beyond-the-rural-vote-economic-anxiety-and-the-2024-presidential-election/" target="_blank">we analyzed the recent divergence in rural and nonrural voting trends</a>, visualizing how increasing polarization has manifested across the country - and in rural areas.</p>
+</section>
+<section id="spatial-trends-in-rural-innovation-funding" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-trends-in-rural-innovation-funding">Spatial trends in rural innovation funding</h3>
+<p><a href="images/who_wins_b2s_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Screenshot of the Who Wins Build to Scale tool"><img src="images/who_wins_b2s_map.png" class="img-fluid" alt="Screenshot of the Who Wins Build to Scale tool"></a><br>
+</p>
+<p><a href="https://www.eda.gov/funding/programs/build-to-scale">Build to Scale</a>, the Economic Development Administration’s flagship grant program for technology-driven businesses, recently celebrated its 10th anniversary. To analyze spatial trends among grantees and identify rural communities with strong potential for successful applications, we developed a statistical model (<a href="https://who-wins-b2s.ruralinnovation.us/" target="_blank">and associated mapping tool</a>) that leverages attributes of past winners to estimate the likelihood of a rural area receiving this prestigious grant.</p>
+</section>
+<section id="disadvantaged-rural-communities-charting-a-path-to-economic-success" class="level3">
+<h3 class="anchored" data-anchor-id="disadvantaged-rural-communities-charting-a-path-to-economic-success">Disadvantaged rural communities charting a path to economic success</h3>
+<p><a href="images/03_cpc_pop_change_line_chart_v3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Line chart comparing community types population growth"><img src="images/03_cpc_pop_change_line_chart_v3.png" class="img-fluid" alt="Line chart comparing community types population growth"></a><br>
+</p>
+<p>In our final installment of the <a href="https://ruralinnovation.us/resources/mapping-and-data-analytics/the-rural-aperture-project/">Rural Aperture Project</a>, we explored how rural communities that are most affected by systemic inequities can nonetheless chart a path towards economic success and well-being. Our data-driven analysis centered around a comparative study of 20 communities classified as Disadvantaged or Most Disadvantage according to the University of Michigan’s Index of Deep Disadvantage, visualizing the key factors that have contributed to their success despite systemic challenges.</p>
 
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p>Here are the micropolitan areas that raised the most venture capital in 2022:</p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p>And here are the micropolitan areas that raised the most in venture capital funding per capita in 2022:</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/top10_total_vc_micropolitans.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Micro VC totals (click chart to enlarge)"><img src="images/top10_total_vc_micropolitans.png" class="img-fluid figure-img" alt="Micro VC totals (click chart to enlarge)"></a></p>
-<figcaption>Micro VC totals (click chart to enlarge)</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/top10_vc_micropolitans.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Micro VC chart (click chart to enlarge)"><img src="images/top10_vc_micropolitans.png" class="img-fluid figure-img" alt="Micro VC chart (click chart to enlarge)"></a></p>
-<figcaption>Micro VC chart (click chart to enlarge)</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<ul>
-<li>Sheridan, Heber, and Jackson achieved these outcomes through an abundance of venture capital activity, while the others are driven by a couple companies with very large deals in 2022.</li>
-<li>Of the 81 micropolitans that raised venture capital through Regulation D in 2022, the 10 that raised the most represent 84% of the $1.4 billion in funding that went to micropolitan areas.<br>
-</li>
-<li>The 10 micropolitans with the most funding per capita varied widely by population size. Grants, New Mexico, had the smallest population (11,620), while the population of Bozeman, Montana, (109,207) was much larger than the others on this list. Heber, Utah was the second-largest micropolitan area in the top 10 (68,075).</li>
-</ul>
-<p>Each of these micropolitan areas demonstrates that rural communities are ripe with entrepreneurial spirit and offer investors an abundance of opportunities.</p>
-<p>If you’d like to dig deeper on the power of direct investment in rural startups, check out our seed fund, the <a href="https://www.corifund.com/">CORI Innovation Fund</a>, which has a growing portfolio of rural tech startups with high-growth potential. Or you can <a href="https://ruralinnovation.us/about/contact-us/">connect</a> with our team directly to learn more!</p>
 
-
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -629,7 +646,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
