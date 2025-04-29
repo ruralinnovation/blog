@@ -1,0 +1,365 @@
+---
+title: "analysis"
+editor: visual
+---
+
+```{r}
+
+library(dplyr)
+library(tidyr)
+library(here)
+library(readr)
+library(coriverse)
+library(ggplot2)
+library(cori.charts)
+
+load_fonts()
+
+i_am("posts/14_nonmetro_to_metro/analysis.qmd")
+
+```
+
+```{r}
+
+rucc_1974 <- ruraldefinitions::rucc_1974 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_1983 <- ruraldefinitions::rucc_1983 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_1993 <- ruraldefinitions::rucc_1993 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_2003 <- ruraldefinitions::rucc_2003 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_2013 <- ruraldefinitions::rucc_2013 %>%
+  mutate(rural_def = as.character(rural_def))
+rucc_2023 <- ruraldefinitions::rucc_2023 %>%
+  mutate(rural_def = as.character(rural_def))
+
+
+```
+
+```{r}
+
+rucc_all <- bind_rows(
+    rucc_1974,
+    rucc_1983,
+    rucc_1993,
+    rucc_2003,
+    rucc_2013,
+    rucc_2023
+  ) %>%
+  left_join(
+    .,
+    cori.utils::county_state_crosswalk,
+    by = c("geoid" = "geoid_co")
+  ) %>%
+  select(-rural_def) %>%
+  pivot_wider(
+    names_from = "year",
+    names_prefix = "rucc_",
+    values_from = "is_rural"
+  ) %>%
+  mutate(
+    rural_to_nonrural = ifelse(
+      rucc_1974 == "Rural" & rucc_1983 == "Nonrural",
+      1983,
+      ifelse(
+        rucc_1974 == "Rural" & rucc_1993 == "Nonrural",
+        1993,
+        ifelse(
+          rucc_1974 == "Rural" & rucc_2003 == "Nonrural",
+          2003,
+          ifelse(
+            rucc_1974 == "Rural" & rucc_2013 == "Nonrural",
+            2013,
+            ifelse(
+              rucc_1974 == "Rural" & rucc_2023 == "Nonrural",
+              2023,
+              NA
+            )
+          )
+        )
+      )
+    ),
+    nonrural_to_rural = ifelse(
+      rucc_1974 == "Nonrural" & rucc_1983 == "Rural",
+      1983,
+      ifelse(
+        rucc_1974 == "Nonrural" & rucc_1993 == "Rural",
+        1993,
+        ifelse(
+          rucc_1974 == "Nonrural" & rucc_2003 == "Rural",
+          2003,
+          ifelse(
+            rucc_1974 == "Nonrural" & rucc_2013 == "Rural",
+            2013,
+            ifelse(
+              rucc_1974 == "Nonrural" & rucc_2023 == "Rural",
+              2023,
+              NA
+            )
+          )
+        )
+      )
+    )
+  )
+  
+readr::write_csv(rucc_all, here("posts/14_nonmetro_to_metro/data/rucc_over_time.csv"))
+
+```
+
+```{r}
+
+con <- connect_to_db("proj_erc")
+erc_dta <- read_db(con, "erc_data_tidy")
+DBI::dbDisconnect(con)
+
+```
+
+## Data for Nonmetro to Metro (2013-2023)
+
+```{r}
+
+nonmetro_to_metro_geoids <- rucc_all %>%
+  filter(rural_to_nonrural == 2023) %>%
+  pull(geoid)
+
+analysis_dta <- erc_dta %>%
+  filter(metric %in% c(
+    "Median age",
+    "Number of establishments",
+    "Population",
+    "Quality of life",
+    "Educational attainment",
+    "Employment",
+    "Tech employment",
+    "Share of employment by sector",
+    "Broadband adoption"
+  ))
+
+sum_metrics <- c(
+  "Population", 
+  "Number of establishments",
+  "Employment"
+)
+
+weight_metrics <- c(
+  "Broadband adoption",
+  "Tech employment",
+  "Share of employment by sector",
+  "Educational attainment"
+)
+
+rucc_nonmetro_2023 <- rucc_2023 %>%
+  filter(is_rural == "Rural") %>%
+  pull(geoid) %>% unique()
+
+nonmetro_to_metro_summary <- analysis_dta %>%
+  mutate(
+    category = ifelse(
+      geoid %in% nonmetro_to_metro_geoids,
+      "Newly nonrural",
+      ifelse(
+        geoid %in% rucc_nonmetro_2023,
+        "Rural",
+        "All other nonrural"
+      )
+    )
+  ) %>%
+  mutate(
+    weighted_value = agg_var * value
+  ) %>%
+  group_by(category, year, variable, metric) %>%
+  summarise(
+    count = n_distinct(geoid),
+    weighted_value_sum = sum(weighted_value, na.rm = TRUE),
+    total_value = sum(value, na.rm = T),
+    agg_var = sum(agg_var, na.rm = T),
+    value = mean(value, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  mutate(
+    value = ifelse(
+      metric %in% sum_metrics,
+      total_value,
+      ifelse(
+        metric %in% weight_metrics,
+        weighted_value_sum / agg_var,
+        value
+      )
+    )
+  )
+
+```
+
+
+```{r}
+
+chart_vars <- c(
+  "Tradable services",
+  "establishments",
+  "pct_emp_in_computer_math_occupations",
+  "population",
+  "broadband_adoption",
+  "share_ba_or_higher",
+  "employment",
+  "median_age"
+)
+
+chrt_dta <- nonmetro_to_metro_summary %>%
+  filter(variable %in% chart_vars) %>%
+  filter(year %in% c(2017, 2018, 2022, 2023)) %>%
+  select(category, year, variable, value) %>% 
+  pivot_wider(
+    names_from = "year",
+    names_prefix = "est_",
+    values_from = "value"
+  ) %>%
+  mutate(
+    pct_chg_2023 = (est_2023 - est_2018) / est_2018,
+    pct_chg_2022 = (est_2022 - est_2017) / est_2017
+  ) %>%
+  select(category, variable, est_2022, est_2023, tidyr::starts_with("pct")) %>%
+  tidyr::pivot_longer(
+    cols = c(est_2023, est_2022, tidyr::starts_with("pct"))
+  ) %>%
+  filter(!is.na(value)) %>%
+  filter(
+    !(name == "pct_chg_2023" & variable == "pct_emp_in_computer_math_occupations")
+  ) %>%
+  filter(
+    !(name == "pct_chg_2023" & variable == "share_ba_or_higher")
+  ) %>%
+  filter(!(name == "est_2022" & variable != "Tradable services")) %>%
+  mutate(
+    variable_label = recode(variable,
+    "employment" = "Percent change in employment (2017-2022)",
+    "establishments" = "Percent change in businesses (2017-2022)",
+    "population" = "Percent change in population (2017-2022)",
+    "pct_emp_in_computer_math_occupations" = "Share employed in tech (2023)",
+    "share_ba_or_higher" = "Share with a college degree (2023)",
+    "broadband_adoption" = "Share of households with a broadband subscription (2023)",
+    "median_age" = "Average median age (2023)",
+    "Tradable services" = "Share employed in tradable services (2022)"
+    ),
+    category = factor(category, levels = c(
+        "All other nonrural",
+        "Newly nonrural",
+        "Rural"
+      )
+    )
+  )
+
+
+
+```
+
+
+```{r}
+
+fig <- chrt_dta %>%
+  filter(variable %in% c("employment", "population", "establishments")) %>%
+  ggplot(aes(value, variable_label, fill = category)) +
+  geom_col(position = "dodge") +
+  # Add in data labels
+  geom_text(
+    aes(label = scales::percent(value, accuracy = .1)),
+    position = position_dodge2(width = 0.9, reverse = FALSE),
+    hjust = -.2,
+    family = "Lato",
+    fontface = "bold",
+    size = 5
+  ) +
+  scale_fill_manual(
+    values = c(
+      "All other nonrural" = cori_colors[["Dark Purple"]],
+      "Newly nonrural" = "#d0d2ce",
+      "Rural" = cori_colors[["Emerald"]] 
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    labels = NULL,
+    expand = expansion(mult = c(0, .1))
+  ) +
+  labs(
+    title = "Newly nonrural counties are growing quickly",
+    subtitle = "By 2023 metropolitan designation",
+    x = NULL,
+    y = NULL,
+    caption = 'Source: Bureau of Economic Analysis\nNote: "Rural" refers to the nonmetro definition which includes all nonmetro counties.'
+  ) +
+  theme_cori_horizontal_bars() +
+  theme(
+    axis.text.y = element_blank(),
+    strip.text = element_text(
+      hjust = -.01,
+      family = "Lato",
+      face = "bold",
+      size = 14
+    ),
+    legend.text = element_text(margin = margin(l = 4, r = 8))
+  ) +
+  facet_wrap(~variable_label, ncol = 1, scales = "free")
+
+save_plot(fig, here("posts/14_nonmetro_to_metro/growth.png"), chart_height = 8)
+
+
+```
+
+
+```{r}
+
+fig <- chrt_dta %>%
+  filter(!variable %in% c("employment", "population", "establishments", "pct_emp_in_computer_math_occupations", "median_age")) %>%
+  ggplot(aes(value, variable_label, fill = category)) +
+  geom_col(position = "dodge") +
+  # Add in data labels
+  geom_text(
+    aes(label = ifelse(
+      variable != "median_age",
+      scales::percent(value, accuracy = .1), 
+      scales::number(value, accuracy = .1)
+    )),
+    position = position_dodge2(width = 0.9, reverse = FALSE),
+    hjust = -.2,
+    family = "Lato",
+    fontface = "bold",
+    size = 5
+  ) +
+  scale_fill_manual(
+    values = c(
+      "All other nonrural" = cori_colors[["Dark Purple"]],
+      "Newly nonrural" = "#d0d2ce",
+      "Rural" = cori_colors[["Emerald"]] 
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    labels = NULL,
+    expand = expansion(mult = c(0, .1))
+  ) +
+  labs(
+    title = "Newly nonrural counties are better positioned in the modern\neconomy than rural ones, but lag behind other nonrural counties",
+    subtitle = "By 2023 metropolitan designation",
+    x = NULL,
+    y = NULL,
+    caption = 'Source: Bureau of Economic Analysis, American Community Survey 5-year estimates\nNote: "Rural" refers to the nonmetro definition which includes all nonmetro counties.'
+  ) +
+  theme_cori_horizontal_bars() +
+  theme(
+    axis.text.y = element_blank(),
+    strip.text = element_text(
+      hjust = -.01,
+      family = "Lato",
+      face = "bold",
+      size = 14
+    ),
+    legend.text = element_text(margin = margin(l = 4, r = 8))
+  ) +
+  facet_wrap(~variable_label, ncol = 1, scales = "free")
+
+save_plot(fig, here("posts/14_nonmetro_to_metro/modern_economy.png"), chart_height = 8)
+
+
+```
+

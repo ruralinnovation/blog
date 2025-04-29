@@ -1,0 +1,50 @@
+---
+title: "The reclassification of rural counties and what it means for rural America"
+author: "Camden Blatchly"
+date: "2025-04-28"
+categories: [demographics, knowledge economy, data, viz, maps]
+image: thumbnail.png
+lightbox: true
+---
+
+Why is rural America perceived as being perpetually in decline? In part, because superstar rural counties often grow into run-of-the-mill urban counties.
+
+What counts as “rural” is a moving target. Every ten years, the Office of Management and Budget reviews the standards for delineating metropolitan areas and reclassifies counties as rural or urban based on the latest census data.^[The Office of Management and Budget (OMB) does not define "rural," but its nonmetropolitan designation is often used as a county-level proxy.] Depending on which definition year you use as your baseline, rural America can appear to be either thriving or struggling. In fact, in a 2018 article in *Applied Economic Perspectives and Policy*, Stephan Goetz, Mark Partridge, and Heather Stephens found that if we used the 1950 definition of "rural," rural counties would have actually grown faster than urban ones. So much for the story of rural decline.
+
+The standards based on the 2020 Census were recently updated, continuing this cycle of reclassification. To visualize how these shifts have unfolded over time, CORI mapped the counties that have “graduated” from rural to urban in the past 50 years. Take a look below.
+
+<iframe title="When rural counties became urban (starting in 1974)" aria-label="Map" id="datawrapper-chart-wMyjD" src="https://datawrapper.dwcdn.net/wMyjD/4/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="474" data-external="1">
+
+</iframe>
+
+```{=html}
+<script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}}))}();
+</script>
+```
+
+### **Top performing rural counties become run-of-the-mill urban counties**
+
+Since 1974, 650 counties have been reclassified from rural to urban, including 53 in 2023. So, who are these recent rural graduates? A look into the data shows that these new grads are younger and more educated than their former rural counterparts. They’ve seen stronger job and business growth, with economies more concentrated in high-growth, knowledge-based industries. In short, they were rural standouts, and their trajectory points to a clear link between strong knowledge economy employment and population growth.
+
+<img src="growth.png" alt="Bar chart of growth indicators across rural, newly nonrural, and nonrural counties" width="100%" style="max-width:800px;margin:0px;border:none;border-radius:5px;" />
+
+<img src="modern_economy.png" alt="Bar chart of knowledge economy indicators across rural, newly nonrural, and nonrural counties" width="100%" style="max-width:800px;margin:0px;border:none;border-radius:5px;" />
+
+### Urban counties becoming rural
+
+Do urban counties ever shrink into non-rural counties? Yes, but not as often as rural counties grow into urban ones. Since 1974, only 63 counties have transitioned from urban to rural at least once (oftentimes, counties near the urban population threshold fluctuate between classifications). In 2023, just two urban counties—Jefferson County, AR (home to Rural Innovation Network Member Pine Bluff) and Henderson County, KY—were reclassified as rural.
+
+<iframe title="When urban counties became rural (starting in 1974)" aria-label="Map" id="datawrapper-chart-HX5m9" src="https://datawrapper.dwcdn.net/HX5m9/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="474" data-external="1">
+
+</iframe>
+
+```{=html}
+<script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}}))}();
+</script>
+```
+
+### Beyond narrative, what are the impacts of rural reclassification?
+
+These shifting definitions don't just shape our perception of rural America, they have real funding and policy implications, too. When a rural county becomes urban, it may lose eligibility for key programs, from USDA community development grants to [federal rural health funding](https://www.hrsa.gov/rural-health/about-us/what-is-rural). Sometimes, a population shift of just a few hundred people is enough to move a county across that line and out of reach of critical resources. 
+
+These definitions, however, are far from permanent. In fact, the Office of Management and Budget even [proposed raising the minimum population threshold](https://www.brookings.edu/articles/the-new-rural-the-implications-of-ombs-proposal-to-redefine-nonmetro-america/) from 50,000 to 100,000 in 2021. While the idea was ultimately abandoned, it highlights how easily these classifications can shift, reshaping our understanding of rural America once again.

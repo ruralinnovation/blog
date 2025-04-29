@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-11-11">
 <meta name="description" content="A quick primer on accessing, analyzing, and mapping FCC data using the cori.data.fcc package">
 
-<title>Mapping &amp; Data Analytics Blog @cori-risi - 3 cool uses of the cori.data.fcc package</title>
+<title>3 cool uses of the cori.data.fcc package – Mapping &amp; Data Analytics Blog @cori-risi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -100,7 +100,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../assets/fonts.css">
-<meta property="og:title" content="Mapping &amp; Data Analytics Blog @cori-risi - 3 cool uses of the cori.data.fcc package">
+<meta property="og:title" content="3 cool uses of the cori.data.fcc package – Mapping &amp; Data Analytics Blog @cori-risi">
 <meta property="og:description" content="A quick primer on accessing, analyzing, and mapping FCC data using the cori.data.fcc package">
 <meta property="og:image" content="images/nek_bb_service.png">
 <meta property="og:site_name" content="Mapping &amp; Data Analytics Blog @cori-risi">
@@ -117,7 +117,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -139,7 +139,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -232,24 +232,24 @@ Columns: 21
 $ geoid_bl                                &lt;chr&gt; "500059570001000", "5000595700…
 $ geoid_st                                &lt;chr&gt; "50", "50", "50", "50", "50", …
 $ geoid_co                                &lt;chr&gt; "50005", "50005", "50005", "50…
-$ state_abbr                              &lt;chr&gt; "VT", "VT", "VT", "VT", "VT", …
-$ cnt_total_locations                     &lt;int&gt; 1, 4, 5, 62, 3, 24, NA, 2, NA,…
-$ cnt_bead_locations                      &lt;int&gt; 0, 1, 4, 46, 1, 3, NA, 0, NA, …
-$ cnt_copper_locations                    &lt;int&gt; 0, 0, 0, 0, 0, 0, NA, 0, NA, 0…
+$ cnt_total_locations                     &lt;int&gt; 1, 4, 5, 64, 3, 25, NA, 2, NA,…
+$ cnt_bead_locations                      &lt;int&gt; 0, 4, 4, 51, 3, 23, NA, 2, NA,…
+$ cnt_copper_locations                    &lt;int&gt; 0, 4, 2, 18, 3, 18, NA, 1, NA,…
 $ cnt_cable_locations                     &lt;int&gt; 0, 0, 0, 0, 0, 0, NA, 0, NA, 0…
 $ cnt_fiber_locations                     &lt;int&gt; 0, 0, 0, 0, 0, 0, NA, 0, NA, 0…
 $ cnt_other_locations                     &lt;int&gt; 0, 0, 0, 0, 0, 0, NA, 0, NA, 0…
 $ cnt_unlicensed_fixed_wireless_locations &lt;int&gt; 0, 0, 0, 0, 0, 0, NA, 0, NA, 0…
-$ cnt_licensed_fixed_wireless_locations   &lt;int&gt; 0, 1, 4, 46, 1, 3, NA, 0, NA, …
-$ cnt_LBR_fixed_wireless_locations        &lt;int&gt; 0, 0, 0, 1, 0, 0, NA, 0, NA, 0…
-$ cnt_terrestrial_locations               &lt;int&gt; 0, 1, 4, 46, 1, 3, NA, 0, NA, …
-$ cnt_25_3                                &lt;int&gt; 0, 1, 4, 41, 1, 2, NA, 0, NA, …
+$ cnt_licensed_fixed_wireless_locations   &lt;int&gt; 0, 2, 3, 46, 1, 14, NA, 2, NA,…
+$ cnt_LBR_fixed_wireless_locations        &lt;int&gt; 0, 0, 0, 1, 0, 2, NA, 0, NA, 0…
+$ cnt_terrestrial_locations               &lt;int&gt; 0, 4, 4, 51, 3, 23, NA, 2, NA,…
+$ cnt_25_3                                &lt;int&gt; 0, 1, 2, 40, 1, 5, NA, 0, NA, …
 $ cnt_100_20                              &lt;int&gt; 0, 0, 0, 0, 0, 0, NA, 0, NA, 0…
 $ cnt_100_100                             &lt;int&gt; 0, 0, 0, 0, 0, 0, NA, 0, NA, 0…
-$ cnt_distcint_frn                        &lt;int&gt; NA, 1, 2, 4, 1, 2, NA, NA, NA,…
-$ array_frn                               &lt;list&gt; &lt;NULL&gt;, "0006945950", &lt;"00036…
-$ combo_frn                               &lt;dbl&gt; NA, 1.284636e+19, 1.389614e+19…
-$ release                                 &lt;date&gt; 2023-12-01, 2023-12-01, 2023-…</code></pre>
+$ cnt_distcint_frn                        &lt;int&gt; NA, 3, 2, 4, 2, 4, NA, 2, NA, …
+$ array_frn                               &lt;list&gt; &lt;NULL&gt;, &lt;"0003645843", "00069…
+$ combo_frn                               &lt;dbl&gt; NA, 3.040635e+18, 8.391679e+18…
+$ release                                 &lt;date&gt; 2024-06-01, 2024-06-01, 2024-…
+$ state_abbr                              &lt;chr&gt; "VT", "VT", "VT", "VT", "VT", …</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -321,7 +321,7 @@ Tip
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data source: 2023 FCC National Broadband Map</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span></span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/st_j_bb_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"images/st_j_bb_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/st_j_bb_service.png" alt="Map of broadband service in St. Johnsbury, VT" style="width: 100%;"></p>
 <p>We can also easily plot broadband service data for the entire Northeast Kingdom.</p>
@@ -379,7 +379,7 @@ Tip
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
 <span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_bb_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"images/nek_bb_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/nek_bb_service.png" alt="Map of broadband service in the Northeast Kingdom of VT" style="width: 100%;"></p>
 <p>Broadband access can also be analyzed by technology, including fiber, cable, and fixed wireless. This example map focuses on fiber access in the region.</p>
@@ -416,7 +416,7 @@ Tip
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_fiber_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"images/nek_fiber_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/nek_fiber_service.png" alt="Map of fiber access in the Northeast Kingdom of VT" style="width: 100%;"></p>
 <p>Fiber service is pretty rare! Only a handful of towns have access.</p>
@@ -527,7 +527,7 @@ Tip
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data source: 2021 FCC Form 477</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_broadband_footprint.png"</span>), <span class="at">chart_height =</span> <span class="fl">8.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"images/nek_broadband_footprint.png"</span>), <span class="at">chart_height =</span> <span class="fl">8.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/nek_broadband_footprint.png" alt="Map of NEK Broadband ISP footprint" style="width: 100%;"></p>
 <p>Let’s dig deeper and see what service levels NEK Broadband reports that they provide.</p>
@@ -557,7 +557,7 @@ Tip
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data source: 2021 FCC Form 477</span><span class="sc">\n</span><span class="st">Map source: © OpenStreetMap contributors © CARTO"</span>,</span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/nek_broadband_fiber_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"images/nek_broadband_fiber_service.png"</span>), <span class="at">chart_height =</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/nek_broadband_fiber_service.png" alt="Map of NEK Broadband fiber service" style="width: 100%;"></p>
 </section>
@@ -648,7 +648,7 @@ Tip
 <span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>year, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
 <span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"posts/10_cori_data_fcc_overview/images/caledonia_broadband_100_20_service.png"</span>), <span class="at">chart_height =</span> <span class="fl">8.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(fig, <span class="fu">here</span>(<span class="st">"images/caledonia_broadband_100_20_service.png"</span>), <span class="at">chart_height =</span> <span class="fl">8.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/caledonia_broadband_100_20_service.png" alt="Map of Caledonia 100/20 service from 2022 to 2023" style="width: 100%;"></p>
 <p>There’s a lot more to discover in the package, so I highly recommend you check out the <a href="https://ruralinnovation.github.io/cori.data.fcc/reference/index.html">reference documentation</a> and give it a try yourself.</p>
@@ -692,18 +692,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -735,7 +724,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -770,7 +799,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
