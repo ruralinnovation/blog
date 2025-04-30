@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Camden Blatchly">
 <meta name="dcterms.date" content="2025-04-18">
 
-<title>How we work with Form D filings – Mapping &amp; Data Analytics Blog @cori-risi</title>
+<title>Mapping &amp; Data Analytics Blog @cori-risi - How we work with Form D filings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -99,7 +99,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../assets/fonts.css">
-<meta property="og:title" content="How we work with Form D filings – Mapping &amp; Data Analytics Blog @cori-risi">
+<meta property="og:title" content="Mapping &amp; Data Analytics Blog @cori-risi - How we work with Form D filings">
 <meta property="og:description" content="">
 <meta property="og:image" content="thumbnail.png">
 <meta property="og:site_name" content="Mapping &amp; Data Analytics Blog @cori-risi">
@@ -116,7 +116,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -138,7 +138,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -181,15 +181,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#associating-issuers-with-counties" id="toc-associating-issuers-with-counties" class="nav-link active" data-scroll-target="#associating-issuers-with-counties">Associating issuers with counties</a></li>
-  <li><a href="#addressing-filing-discrepancies" id="toc-addressing-filing-discrepancies" class="nav-link" data-scroll-target="#addressing-filing-discrepancies">Addressing filing discrepancies</a></li>
-  <li><a href="#identifying-funding-rounds-and-calculating-investment-totals" id="toc-identifying-funding-rounds-and-calculating-investment-totals" class="nav-link" data-scroll-target="#identifying-funding-rounds-and-calculating-investment-totals">Identifying funding rounds and calculating investment totals</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -202,30 +194,24 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>formd_obj <span class="ot">&lt;-</span> dForm<span class="sc">$</span><span class="fu">new</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>formd_obj<span class="sc">$</span><span class="fu">load_data</span>(<span class="at">years =</span> <span class="fu">c</span>(<span class="dv">2010</span><span class="sc">:</span><span class="dv">2023</span>), <span class="at">use_cache =</span> <span class="cn">FALSE</span>, <span class="at">remove_duplicates =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>issuers <span class="ot">&lt;-</span> formd_obj<span class="sc">$</span>issuers</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>offerings <span class="ot">&lt;-</span> formd_obj<span class="sc">$</span>offerings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>issuers <span class="ot">&lt;-</span> formd_obj<span class="sc">$</span>issuers</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>offerings <span class="ot">&lt;-</span> formd_obj<span class="sc">$</span>offerings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="associating-issuers-with-counties" class="level3">
-<h3 class="anchored" data-anchor-id="associating-issuers-with-counties">Associating issuers with counties</h3>
-<p>First, to clean entity and city names in the issuers dataset, we remove unnecessary whitespace and standardize common naming conventions (e.g., normalize L.P. to LP). Next, we associate each issuer with a county. When submitting a Form D filing, issuers must list an address. To convert from the address to a county, we take the following steps:</p>
+<p>To clean the issuers dataset, we remove unnecessary whitespace and standardize common entity and city naming conventions (e.g., normalize L.P. to LP).</p>
+<p>Next, we associate each issuer with a county. When submitting a Form D filing, issuers must list an address. To convert from the address to a county, we take the following steps:</p>
 <ul>
 <li>We begin by loading a zip code to county crosswalk that is produced by the Department of Housing and Urban Development. Because zip codes change over time, we use 2021 and 2014 versions of this crosswalk.<br>
 </li>
 <li>The simplest translation occurs when a zip code is associated with a single county. This is the most common scenario and is the case for about 70% of zip codes. When an issuer’s address is in a zip code associated with a single county, then we assign that county to the issuer.<br>
 </li>
-<li>When an issuer’s zip code spans multiple counties, we assign the issuer to the county where more of the business addresses in the zip code are located, a field provided as part of the crosswalk. If those values are the same or not available, we assign the issuer to the county where more of the total (residential and business) addresses are located.<br>
+<li>When an issuer’s zip code spans multiple counties, we assign the issuer to the county where more of the business addresses in the zip code are located. If those values are the same or not available, we assign the issuer to the county where more of the total (residential and business) addresses are located.<br>
 </li>
 <li>After these two steps, we have assigned counties to the vast majority of issuers. For the remaining issuers, we use the Census geocoder to associate their address with a county. If an issuer is not matched with a county after this geocoding step, it is not used in our analysis. At the time of this writing, less than 500 issuers were unmatched after geocoding (out of a dataset of more than 500,000 issuers).</li>
 </ul>
-</section>
-<section id="addressing-filing-discrepancies" class="level3">
-<h3 class="anchored" data-anchor-id="addressing-filing-discrepancies">Addressing filing discrepancies</h3>
-<p>Issuers must also list a precise year of incorporation when filing. Because the <code>yearofinc_value_entered</code> field may be blank for some of an entity’s submissions, we group by the <code>cik</code> (the unique ID given by the SEC to entities) and the name of the entity, and then take the earliest year entered. If an entity is yet to be formed or is older than five years , the <code>yearofinc_value_entered</code> field may be NA. In these cases, we take the value in the <code>yearofinc_timespan_choice</code> field, which will be either ‘yetToBeFormed,’ ‘withinFiveYears,’ or ‘overFiveYears’</p>
+<p>Issuers must also list a precise year of incorporation when filing. Because the <code>yearofinc_value_entered</code> field may be blank for some of an entity’s submissions, we group by the <code>cik</code> (the unique ID given by the SEC to entities) and the name of the entity, and then take the smallest year entered. If an entity is yet to be formed or is older than five years , the <code>yearofinc_value_entered</code> field may be NA. In these cases, we take the value in the <code>yearofinc_timespan_choice</code> field, which will be either ‘yetToBeFormed,’ ‘withinFiveYears,’ or ‘overFiveYears’</p>
 <p>Issuers sometimes choose to change their industry association between submissions. To address these discrepancies, we collapse all industries for an entity into a single comma separated string (e.g., “Retailing, Restaurants”).</p>
 <p>After these steps, we are ready to join the issuers and offerings datasets. We join by <code>accessionnumber</code> (a unique ID number assigned by the SEC to each submission), <code>year</code>, and <code>quarter</code> and filter to submissions submitted by the primary issuer only (using the <code>is_primaryissuer_flag</code> field).</p>
-</section>
-<section id="identifying-funding-rounds-and-calculating-investment-totals" class="level3">
-<h3 class="anchored" data-anchor-id="identifying-funding-rounds-and-calculating-investment-totals">Identifying funding rounds and calculating investment totals</h3>
 <p>The field “totalamountsold” is the basis for much of our Form D analysis. This field reports the cumulative amount of money raised by a company for a given fundraising effort (which may involve multiple offerings). Because this field is cumulative, we must identify the incremental difference in the amount raised between one offering and the last offering within a given fundraising effort. Failure to do this will artificially inflate the amount of funding raised in later periods. For example, if Company A raises $50k in 2016, their 2016 filing will report $50k as the total amount sold. But if they continue fundraising efforts and accrue an extra $20k in 2017, the 2017 filing will report $70k as the total amount sold, resulting in an inflated value of $50k for the 2017 filing year.</p>
 <p>The steps to correct the dollar amount sold from each company for each fundraising effort are as follows:</p>
 <p><strong>1. Create a business ID</strong></p>
@@ -247,7 +233,6 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <p>Now the data is ready for analysis or visualization! Take a look at our <a href="https://private-funding-map.ruralinnovation.us/">private funding map</a> to get a feel for how the data can be used.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -285,7 +270,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -317,29 +313,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -347,7 +321,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

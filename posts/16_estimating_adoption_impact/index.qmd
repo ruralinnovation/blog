@@ -1,0 +1,91 @@
+---
+title: "Estimating local impact of broadband adoption"
+author: "Lindsey Elliott & Drew Rosebush"
+date: "2025-04-30"
+categories: [econometrics, R, broadband adoption, impact]
+image: thumbnail.png
+lightbox: true
+---
+
+Last year, exciting research surfaced around estimating the impact of broadband services on economic activity. In particular, results from the [Beyond Connectivity Report](https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/) suggest that high broadband utilization (high broadband adoption combined with a concentration of small broadband service providers) positively impacts economic dynamism. In sum, CORI researchers find that “rural counties with high broadband utilization see increases in the number of businesses” (Weinstein, Dewbury, & Eourart, 2024).[^1]
+
+[^1]: Weinstein, A., Erouart, M., & Dewbury, A. (2024) Beyond Connectivity: The role of broadband in rural economic growth and resilience. *Center on Rural Innovation.* <https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/>
+
+Leveraging the methodologies put forth by the Beyond Connectivity Report, the Center on Rural Innovation Mapping and Data Analytics team simplified the original modeling strategy to better disseminate the findings of the national study to public audiences. To do this, the original study’s small broadband service provider indicator is removed and only broadband adoption rate is selected as the model’s primary impact factor. The simplified approach also transitions from a quasi-experimental analysis and instead utilizes a simple regression equation that works to examine the impact of broadband adoption rates while controlling for other key economic indicators.
+
+**An important note on the current analysis** When examining broadband adoption rates, a distinct gap appears between counties with very low broadband adoption rates and those with normal-to-very-high rates. Because of this, counties considered to be at or below the 20th percentile of broadband adoption are classified as “Low Performers.” All calculations on economic growth potential are benchmarked against counties identified as Low Performers in accordance with the county’s rural classification (OMB’s 2020 CBSA metro and nonmetro definition).[^2]
+
+[^2]: [Core-Based Statistical Areas Definitions. (2023). Office of Management and Budget](https://www.google.com/url?q=https://www.census.gov/programs-surveys/metro-micro.html&sa=D&source=docs&ust=1746023236124380&usg=AOvVaw13UVnW1CnxvJpCb3RuhACA)
+
+### Data sources
+
+#### Overview
+
+The analysis is based on 11 indicators that are used to predict the local impact of broadband adoption on business and employment growth of selected counties in comparison to those with the lowest broadband adoption rates. The tool’s indicators are nationally available and were identified through dozens of research studies highlighting their significance toward economic growth and by expert-led statistical analyses that demonstrated their impact on the tool’s key outcomes—**business** and **employment growth**. The values displayed are the additive change in business/employment growth from 2020 to 2022 and the predicted change of these values based on an increase in broadband adoption rates. The tool is continually revised as nationally available annual data is published. Below, indicators for the tool’s methods are highlighted.
+
+#### Predicted economic outcomes
+
+-   **Business growth**: The percent change in new business creation from 2020 to 2022. *Source: Business Dynamics Statistics, 1978 - 2022.*
+
+-   **Employment growth**: The percent change in the number of jobs created from 2020 and 2022. *Source: Business Dynamics Statistics, 1978 - 2022.*
+
+#### Independent variable of interest
+
+**Broadband internet adoption**: The total number of county residents who have Internet access with a paid subscription divided by the total number of households in the county. Recent research has highlighted that access to and speed of Internet options does not necessarily equate to economic growth. Community residents must take advantage of the Internet within their area for it to have a meaningful effect on economic well-being. Because of this, we use an alternative approach for our key Technology indicator–Broadband Internet Adoption–which can be defined as the share of a county’s residents who have internet access and utilize it. Recently, this indicator has been highlighted as a key factor for economic growth within the United States’ technology- and service-based economy. *Source: American Community Survey 5-Year Estimates, 2018 - 2022.*
+
+#### Independent variable of interest
+
+##### Population demographics
+
+-   **Higher education degree holders**: The share of adults 25 years of age and older that has obtained a higher education degree from an accredited university. The indicator is calculated by the total number of residents in the county with at least a bachelor’s degree divided by the county’s total population. These data include estimates for every individual in the county grouped by education attainment. *Source: American Community Survey 5-Year Estimates, 2018- 2022.*
+
+-   **Median age**: The age at the 50% mark for the age range of all county residents. This indicator includes the estimated age of all documented individuals within the county and is calculated annually by the Census Bureau. *Source: American Community Survey 5-Year Estimates, 2018 - 2022.*
+
+-   **Poverty**: The share of the population below the federally designated poverty level. The indicator is calculated by dividing the population at or below the federal poverty line by the total population for which poverty status can be determined within the county. The Census Bureau determines poverty status based on family size, composition, and annual income. The indicator also adjusts for inflation. *Source: American Community Survey 5-Year Estimates, 2018 - 2022.*
+
+-   **BIPOC (black, indigenous, and people of color)** : The share of the population that is defined as non-white. The indicator is calculated by the sum of all residents defined as any race or combination of races, but non-white, divided by total population of the county. *Source: American Community Survey 5-Year Estimates, 2018 - 2022.*
+
+-   **Population size**: The product of the natural log of the population. A natural log transformation is common for population size given the large variation in population across the United States. The natural log can be understood as the product of a number divided by approximately 2.71828. *Source: American Community Survey 5-Year Estimates, 2018 - 2022.*
+
+##### Location characteristics
+
+-   **Quality of life**: The indicator captures the location premium people pay to live in an area with higher amenities. Quality of life has been recognized as an important indicator for economic outcomes in several studies (Weinstein, Hicks, & Wornell, 2023).[^3] *Source: U.S. Census Bureau 2010; 2020.*
+
+[^3]: Weinstein, Hicks, & Wornell, 2023. An aggregate approach to estimating quality of life in micropolitan areas. *The Annals of Regional Science*, 70, pp. 447 - 476.
+
+```{=html}
+<!-- -->
+```
+-   **Isolation**: The distance in kilometers to the nearest metropolitan city as defined by the Legal/Statistical Area Description (LSAD) designation M1. LSAD’s M1 designation refers to metropolitan areas with a large population. The indicator is measured by calculating population centroids for all M1-designated counties and determining the distance between the selected county and the closest metropolitan population centroid. Counties very far from metropolitan areas tend to face significant economic hurdles due to various challenges such as technology infrastructure, transportation costs, and low economic diversity. *Source: American Community Survey 5-Year Estimates, 2018 - 2022. U.S. Census Bureau, TIGER files, 2021.*
+
+-   **State Boundary**: The state in which a county resides. All values are considered in context with the state in which the county resides. *Source: U.S. Census Bureau, TIGER/Line Files, 2021.*
+
+##### Economic characteristics
+
+-   **Previous growth**: All analyses include an indicator that measures economic growth (business or employment growth) for previous years, 2017 - 2019. These indicators were specifically utilized to depress over-estimation of the impact between Broadband Internet Adoption and economic growth indicators. Each is calculated using the same method as the tool’s primary economic insights. *Source: Business Dynamics Statistics, 1978 - 2022.*
+
+### Data notes
+
+#### Handling Connecticut’s “new” planning regions
+
+In 2022 Connecticut transitioned away from using county definitions to using planning regions, county equivalents (Connecticut State Library, 2025).[^4] Because the redefinition time period overlaps with our research timeframe and no official county-to-planning region crosswalks have been released, we did not include Connecticut in our analysis.
+
+[^4]: Connecticut State Library. (2025, February 27). [Maps - Regional Planning in Connecticut](https://libguides.ctstatelibrary.org/regionalplanning/maps). Connecticut State Library.
+
+#### Handling Virginia’s independent cities
+
+In our analysis, we find that U.S. governmental agencies do not share a consistent definition of "county" and "county equivalent." Notably, the U.S. Census Bureau classifies several independent cities in Virginia as county equivalents and are thus represented as individual county-level records in the agency’s products. This disaggregated approach, though widely accepted, is not adopted by the Bureau of Economic Analysis (BEA), which reports county-level data by aggregating independent cities with their surrounding counties (Chen, 2017).[^5]
+
+[^5]: Chen, Jing. (2017). A technical note on spatial aggregation for independent cities and counties in Virginia. *Regional Research Institute Technical Documents. 1.* Retrieved from: https://researchrepository.wvu.edu/rri_tech_docs/1
+
+In our work, we choose to follow the Census Bureau's disaggregated definitions for counties and county equivalents when analyzing economic data. However, when reporting BEA-related variables at the county level, we adhere to standard practice by presenting the aggregated BEA metrics for both the independent city and the surrounding county.
+
+### APPENDIX
+
+#### Regression Model Specification
+
+The values for each county are derived from a multivariate regression equation model. The symbolic representation for the equation is detailed below and includes a brief interpretation of its meaning: In short, a county’s predicted value of growth is the result of an analysis which estimates the average effects of broadband adoption on the selected outcome. The equation is mathematically expressed by:
+
+$\widehat{Growth_i} = ((County_iBroadband - Low PerformerBroadband) * \widehat{Average Broadband Value})$
+
+Using this strategy, we are able to estimate the impact of a 1% increase or decrease in broadband adoption on growth indicators (such as the change in jobs or businesses).

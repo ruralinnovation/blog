@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Olivier Leroy">
 <meta name="dcterms.date" content="2025-02-12">
 
-<title>Democratizing analytics on FCC’s (big) data – Mapping &amp; Data Analytics Blog @cori-risi</title>
+<title>Mapping &amp; Data Analytics Blog @cori-risi - Democratizing analytics on FCC’s (big) data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../assets/fonts.css">
-<meta property="og:title" content="Democratizing analytics on FCC’s (big) data – Mapping &amp; Data Analytics Blog @cori-risi">
+<meta property="og:title" content="Mapping &amp; Data Analytics Blog @cori-risi - Democratizing analytics on FCC’s (big) data">
 <meta property="og:description" content="Accessing data about access to broadband">
 <meta property="og:image" content="images/whats-on-the-national-broadband-map-113023-1.png">
 <meta property="og:site_name" content="Mapping &amp; Data Analytics Blog @cori-risi">
@@ -83,7 +83,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <span class="navbar-title">Mapping &amp; Data Analytics Blog <span class="citation" data-cites="cori-risi">@cori-risi</span></span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -105,7 +105,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -238,7 +238,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <li>Localizes data to census blocks or H3 hexagons.</li>
 </ul>
 <p>This dataset is an abstraction of the “Fabric” locations data developed by <strong>CostQuest</strong>. The Fabric provides precise geolocation data for <strong>Broadband Serviceable Locations</strong> (BSLs), which are updated biannually (June and December) with interim updates every two weeks. The exact coordinates for each locations are only inclued in the Fabric dataset, so using the National Broadband Map data we can only link a record for a location to a Census Block (2020 vintage) or H3 hexagon.</p>
-<div id="fig-broadbanddata" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-broadbanddata" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-broadbanddata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/whats-on-the-national-broadband-map-113023-1.png" class="img-fluid figure-img">
@@ -406,7 +406,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -438,29 +449,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -468,7 +457,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

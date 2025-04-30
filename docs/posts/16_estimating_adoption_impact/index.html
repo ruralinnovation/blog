@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Camden Blatchly">
-<meta name="dcterms.date" content="2025-04-28">
+<meta name="author" content="Lindsey Elliott &amp; Drew Rosebush">
+<meta name="dcterms.date" content="2025-04-30">
 
-<title>Mapping &amp; Data Analytics Blog @cori-risi - The reclassification of rural counties and what it means for rural America</title>
+<title>Mapping &amp; Data Analytics Blog @cori-risi - Estimating local impact of broadband adoption</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -63,9 +63,38 @@ gtag('js', new Date());
 gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/fonts.css">
-<meta property="og:title" content="Mapping &amp; Data Analytics Blog @cori-risi - The reclassification of rural counties and what it means for rural America">
+<meta property="og:title" content="Mapping &amp; Data Analytics Blog @cori-risi - Estimating local impact of broadband adoption">
 <meta property="og:description" content="">
 <meta property="og:image" content="thumbnail.png">
 <meta property="og:site_name" content="Mapping &amp; Data Analytics Blog @cori-risi">
@@ -113,13 +142,12 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">The reclassification of rural counties and what it means for rural America</h1>
+      <h1 class="title">Estimating local impact of broadband adoption</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">demographics</div>
-                <div class="quarto-category">knowledge economy</div>
-                <div class="quarto-category">data</div>
-                <div class="quarto-category">viz</div>
-                <div class="quarto-category">maps</div>
+                <div class="quarto-category">econometrics</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">broadband adoption</div>
+                <div class="quarto-category">impact</div>
               </div>
                   </div>
   </div>
@@ -130,14 +158,14 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Camden Blatchly </p>
+               <p>Lindsey Elliott &amp; Drew Rosebush </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 28, 2025</p>
+        <p class="date">April 30, 2025</p>
       </div>
     </div>
     
@@ -153,9 +181,9 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#top-performing-rural-counties-become-run-of-the-mill-urban-counties" id="toc-top-performing-rural-counties-become-run-of-the-mill-urban-counties" class="nav-link active" data-scroll-target="#top-performing-rural-counties-become-run-of-the-mill-urban-counties"><strong>Top performing rural counties become run-of-the-mill urban counties</strong></a></li>
-  <li><a href="#urban-counties-becoming-rural" id="toc-urban-counties-becoming-rural" class="nav-link" data-scroll-target="#urban-counties-becoming-rural">Urban counties becoming rural</a></li>
-  <li><a href="#beyond-narrative-what-are-the-impacts-of-rural-reclassification" id="toc-beyond-narrative-what-are-the-impacts-of-rural-reclassification" class="nav-link" data-scroll-target="#beyond-narrative-what-are-the-impacts-of-rural-reclassification">Beyond narrative, what are the impacts of rural reclassification?</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link active" data-scroll-target="#data-sources">Data sources</a></li>
+  <li><a href="#data-notes" id="toc-data-notes" class="nav-link" data-scroll-target="#data-notes">Data notes</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">APPENDIX</a></li>
   </ul>
 </nav>
     </div>
@@ -166,40 +194,90 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>Why is rural America perceived as being perpetually in decline? In part, because superstar rural counties often grow into run-of-the-mill urban counties.</p>
-<p>What counts as “rural” is a moving target. Every ten years, the Office of Management and Budget reviews the standards for delineating metropolitan areas and reclassifies counties as rural or urban based on the latest census data.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Depending on which definition year you use as your baseline, rural America can appear to be either thriving or struggling. In fact, in a 2018 article in <em>Applied Economic Perspectives and Policy</em>, Stephan Goetz, Mark Partridge, and Heather Stephens found that if we used the 1950 definition of “rural,” rural counties would have actually grown faster than urban ones. So much for the story of rural decline.</p>
-<p>The standards based on the 2020 Census were recently updated, continuing this cycle of reclassification. To visualize how these shifts have unfolded over time, CORI mapped the counties that have “graduated” from rural to urban in the past 50 years. Take a look below.</p>
-<iframe title="When rural counties became urban (starting in 1974)" aria-label="Map" id="datawrapper-chart-wMyjD" src="https://datawrapper.dwcdn.net/wMyjD/4/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="474" data-external="1">
-</iframe>
-<script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}}))}();
-</script>
-<section id="top-performing-rural-counties-become-run-of-the-mill-urban-counties" class="level3">
-<h3 class="anchored" data-anchor-id="top-performing-rural-counties-become-run-of-the-mill-urban-counties"><strong>Top performing rural counties become run-of-the-mill urban counties</strong></h3>
-<p>Since 1974, 650 counties have been reclassified from rural to urban, including 53 in 2023. So, who are these recent rural graduates? A look into the data shows that these new grads are younger and more educated than their former rural counterparts. They’ve seen stronger job and business growth, with economies more concentrated in high-growth, knowledge-based industries. In short, they were rural standouts, and their trajectory points to a clear link between strong knowledge economy employment and population growth.</p>
-<p><img src="growth.png" alt="Bar chart of growth indicators across rural, newly nonrural, and nonrural counties" width="100%" style="max-width:800px;margin:0px;border:none;border-radius:5px;"></p>
-<p><img src="modern_economy.png" alt="Bar chart of knowledge economy indicators across rural, newly nonrural, and nonrural counties" width="100%" style="max-width:800px;margin:0px;border:none;border-radius:5px;"></p>
+<p>Last year, exciting research surfaced around estimating the impact of broadband services on economic activity. In particular, results from the <a href="https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/">Beyond Connectivity Report</a> suggest that high broadband utilization (high broadband adoption combined with a concentration of small broadband service providers) positively impacts economic dynamism. In sum, CORI researchers find that “rural counties with high broadband utilization see increases in the number of businesses” (Weinstein, Dewbury, &amp; Eourart, 2024).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Leveraging the methodologies put forth by the Beyond Connectivity Report, the Center on Rural Innovation Mapping and Data Analytics team simplified the original modeling strategy to better disseminate the findings of the national study to public audiences. To do this, the original study’s small broadband service provider indicator is removed and only broadband adoption rate is selected as the model’s primary impact factor. The simplified approach also transitions from a quasi-experimental analysis and instead utilizes a simple regression equation that works to examine the impact of broadband adoption rates while controlling for other key economic indicators.</p>
+<p><strong>An important note on the current analysis</strong> When examining broadband adoption rates, a distinct gap appears between counties with very low broadband adoption rates and those with normal-to-very-high rates. Because of this, counties considered to be at or below the 20th percentile of broadband adoption are classified as “Low Performers.” All calculations on economic growth potential are benchmarked against counties identified as Low Performers in accordance with the county’s rural classification (OMB’s 2020 CBSA metro and nonmetro definition).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<section id="data-sources" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources">Data sources</h3>
+<section id="overview" class="level4">
+<h4 class="anchored" data-anchor-id="overview">Overview</h4>
+<p>The analysis is based on 11 indicators that are used to predict the local impact of broadband adoption on business and employment growth of selected counties in comparison to those with the lowest broadband adoption rates. The tool’s indicators are nationally available and were identified through dozens of research studies highlighting their significance toward economic growth and by expert-led statistical analyses that demonstrated their impact on the tool’s key outcomes—<strong>business</strong> and <strong>employment growth</strong>. The values displayed are the additive change in business/employment growth from 2020 to 2022 and the predicted change of these values based on an increase in broadband adoption rates. The tool is continually revised as nationally available annual data is published. Below, indicators for the tool’s methods are highlighted.</p>
 </section>
-<section id="urban-counties-becoming-rural" class="level3">
-<h3 class="anchored" data-anchor-id="urban-counties-becoming-rural">Urban counties becoming rural</h3>
-<p>Do urban counties ever shrink into non-rural counties? Yes, but not as often as rural counties grow into urban ones. Since 1974, only 63 counties have transitioned from urban to rural at least once (oftentimes, counties near the urban population threshold fluctuate between classifications). In 2023, just two urban counties—Jefferson County, AR (home to Rural Innovation Network Member Pine Bluff) and Henderson County, KY—were reclassified as rural.</p>
-<iframe title="When urban counties became rural (starting in 1974)" aria-label="Map" id="datawrapper-chart-HX5m9" src="https://datawrapper.dwcdn.net/HX5m9/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="474" data-external="1">
-</iframe>
-<script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}}))}();
-</script>
+<section id="predicted-economic-outcomes" class="level4">
+<h4 class="anchored" data-anchor-id="predicted-economic-outcomes">Predicted economic outcomes</h4>
+<ul>
+<li><p><strong>Business growth</strong>: The percent change in new business creation from 2020 to 2022. <em>Source: Business Dynamics Statistics, 1978 - 2022.</em></p></li>
+<li><p><strong>Employment growth</strong>: The percent change in the number of jobs created from 2020 and 2022. <em>Source: Business Dynamics Statistics, 1978 - 2022.</em></p></li>
+</ul>
 </section>
-<section id="beyond-narrative-what-are-the-impacts-of-rural-reclassification" class="level3">
-<h3 class="anchored" data-anchor-id="beyond-narrative-what-are-the-impacts-of-rural-reclassification">Beyond narrative, what are the impacts of rural reclassification?</h3>
-<p>These shifting definitions don’t just shape our perception of rural America, they have real funding and policy implications, too. When a rural county becomes urban, it may lose eligibility for key programs, from USDA community development grants to <a href="https://www.hrsa.gov/rural-health/about-us/what-is-rural">federal rural health funding</a>. Sometimes, a population shift of just a few hundred people is enough to move a county across that line and out of reach of critical resources.</p>
-<p>These definitions, however, are far from permanent. In fact, the Office of Management and Budget even <a href="https://www.brookings.edu/articles/the-new-rural-the-implications-of-ombs-proposal-to-redefine-nonmetro-america/">proposed raising the minimum population threshold</a> from 50,000 to 100,000 in 2021. While the idea was ultimately abandoned, it highlights how easily these classifications can shift, reshaping our understanding of rural America once again.</p>
+<section id="independent-variable-of-interest" class="level4">
+<h4 class="anchored" data-anchor-id="independent-variable-of-interest">Independent variable of interest</h4>
+<p><strong>Broadband internet adoption</strong>: The total number of county residents who have Internet access with a paid subscription divided by the total number of households in the county. Recent research has highlighted that access to and speed of Internet options does not necessarily equate to economic growth. Community residents must take advantage of the Internet within their area for it to have a meaningful effect on economic well-being. Because of this, we use an alternative approach for our key Technology indicator–Broadband Internet Adoption–which can be defined as the share of a county’s residents who have internet access and utilize it. Recently, this indicator has been highlighted as a key factor for economic growth within the United States’ technology- and service-based economy. <em>Source: American Community Survey 5-Year Estimates, 2018 - 2022.</em></p>
+</section>
+<section id="independent-variable-of-interest-1" class="level4">
+<h4 class="anchored" data-anchor-id="independent-variable-of-interest-1">Independent variable of interest</h4>
+<section id="population-demographics" class="level5">
+<h5 class="anchored" data-anchor-id="population-demographics">Population demographics</h5>
+<ul>
+<li><p><strong>Higher education degree holders</strong>: The share of adults 25 years of age and older that has obtained a higher education degree from an accredited university. The indicator is calculated by the total number of residents in the county with at least a bachelor’s degree divided by the county’s total population. These data include estimates for every individual in the county grouped by education attainment. <em>Source: American Community Survey 5-Year Estimates, 2018- 2022.</em></p></li>
+<li><p><strong>Median age</strong>: The age at the 50% mark for the age range of all county residents. This indicator includes the estimated age of all documented individuals within the county and is calculated annually by the Census Bureau. <em>Source: American Community Survey 5-Year Estimates, 2018 - 2022.</em></p></li>
+<li><p><strong>Poverty</strong>: The share of the population below the federally designated poverty level. The indicator is calculated by dividing the population at or below the federal poverty line by the total population for which poverty status can be determined within the county. The Census Bureau determines poverty status based on family size, composition, and annual income. The indicator also adjusts for inflation. <em>Source: American Community Survey 5-Year Estimates, 2018 - 2022.</em></p></li>
+<li><p><strong>BIPOC (black, indigenous, and people of color)</strong> : The share of the population that is defined as non-white. The indicator is calculated by the sum of all residents defined as any race or combination of races, but non-white, divided by total population of the county. <em>Source: American Community Survey 5-Year Estimates, 2018 - 2022.</em></p></li>
+<li><p><strong>Population size</strong>: The product of the natural log of the population. A natural log transformation is common for population size given the large variation in population across the United States. The natural log can be understood as the product of a number divided by approximately 2.71828. <em>Source: American Community Survey 5-Year Estimates, 2018 - 2022.</em></p></li>
+</ul>
+</section>
+<section id="location-characteristics" class="level5">
+<h5 class="anchored" data-anchor-id="location-characteristics">Location characteristics</h5>
+<ul>
+<li><strong>Quality of life</strong>: The indicator captures the location premium people pay to live in an area with higher amenities. Quality of life has been recognized as an important indicator for economic outcomes in several studies (Weinstein, Hicks, &amp; Wornell, 2023).<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <em>Source: U.S. Census Bureau 2010; 2020.</em></li>
+</ul>
+<!-- -->
+<ul>
+<li><p><strong>Isolation</strong>: The distance in kilometers to the nearest metropolitan city as defined by the Legal/Statistical Area Description (LSAD) designation M1. LSAD’s M1 designation refers to metropolitan areas with a large population. The indicator is measured by calculating population centroids for all M1-designated counties and determining the distance between the selected county and the closest metropolitan population centroid. Counties very far from metropolitan areas tend to face significant economic hurdles due to various challenges such as technology infrastructure, transportation costs, and low economic diversity. <em>Source: American Community Survey 5-Year Estimates, 2018 - 2022. U.S. Census Bureau, TIGER files, 2021.</em></p></li>
+<li><p><strong>State Boundary</strong>: The state in which a county resides. All values are considered in context with the state in which the county resides. <em>Source: U.S. Census Bureau, TIGER/Line Files, 2021.</em></p></li>
+</ul>
+</section>
+<section id="economic-characteristics" class="level5">
+<h5 class="anchored" data-anchor-id="economic-characteristics">Economic characteristics</h5>
+<ul>
+<li><strong>Previous growth</strong>: All analyses include an indicator that measures economic growth (business or employment growth) for previous years, 2017 - 2019. These indicators were specifically utilized to depress over-estimation of the impact between Broadband Internet Adoption and economic growth indicators. Each is calculated using the same method as the tool’s primary economic insights. <em>Source: Business Dynamics Statistics, 1978 - 2022.</em></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="data-notes" class="level3">
+<h3 class="anchored" data-anchor-id="data-notes">Data notes</h3>
+<section id="handling-connecticuts-new-planning-regions" class="level4">
+<h4 class="anchored" data-anchor-id="handling-connecticuts-new-planning-regions">Handling Connecticut’s “new” planning regions</h4>
+<p>In 2022 Connecticut transitioned away from using county definitions to using planning regions, county equivalents (Connecticut State Library, 2025).<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Because the redefinition time period overlaps with our research timeframe and no official county-to-planning region crosswalks have been released, we did not include Connecticut in our analysis.</p>
+</section>
+<section id="handling-virginias-independent-cities" class="level4">
+<h4 class="anchored" data-anchor-id="handling-virginias-independent-cities">Handling Virginia’s independent cities</h4>
+<p>In our analysis, we find that U.S. governmental agencies do not share a consistent definition of “county” and “county equivalent.” Notably, the U.S. Census Bureau classifies several independent cities in Virginia as county equivalents and are thus represented as individual county-level records in the agency’s products. This disaggregated approach, though widely accepted, is not adopted by the Bureau of Economic Analysis (BEA), which reports county-level data by aggregating independent cities with their surrounding counties (Chen, 2017).<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>In our work, we choose to follow the Census Bureau’s disaggregated definitions for counties and county equivalents when analyzing economic data. However, when reporting BEA-related variables at the county level, we adhere to standard practice by presenting the aggregated BEA metrics for both the independent city and the surrounding county.</p>
+</section>
+</section>
+<section id="appendix" class="level3">
+<h3 class="anchored" data-anchor-id="appendix">APPENDIX</h3>
+<section id="regression-model-specification" class="level4">
+<h4 class="anchored" data-anchor-id="regression-model-specification">Regression Model Specification</h4>
+<p>The values for each county are derived from a multivariate regression equation model. The symbolic representation for the equation is detailed below and includes a brief interpretation of its meaning: In short, a county’s predicted value of growth is the result of an analysis which estimates the average effects of broadband adoption on the selected outcome. The equation is mathematically expressed by:</p>
+<p><span class="math inline">\(\widehat{Growth_i} = ((County_iBroadband - Low PerformerBroadband) * \widehat{Average Broadband Value})\)</span></p>
+<p>Using this strategy, we are able to estimate the impact of a 1% increase or decrease in broadband adoption on growth indicators (such as the change in jobs or businesses).</p>
 
 
+</section>
 </section>
 
 
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>The Office of Management and Budget (OMB) does not define “rural,” but its nonmetropolitan designation is often used as a county-level proxy.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Weinstein, A., Erouart, M., &amp; Dewbury, A. (2024) Beyond Connectivity: The role of broadband in rural economic growth and resilience. <em>Center on Rural Innovation.</em> <a href="https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/" class="uri">https://ruralinnovation.us/resources/reports/report-the-role-of-broadband-in-rural-economic-growth-and-resilience/</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.google.com/url?q=https://www.census.gov/programs-surveys/metro-micro.html&amp;sa=D&amp;source=docs&amp;ust=1746023236124380&amp;usg=AOvVaw13UVnW1CnxvJpCb3RuhACA">Core-Based Statistical Areas Definitions. (2023). Office of Management and Budget</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Weinstein, Hicks, &amp; Wornell, 2023. An aggregate approach to estimating quality of life in micropolitan areas. <em>The Annals of Regional Science</em>, 70, pp.&nbsp;447 - 476.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Connecticut State Library. (2025, February 27). <a href="https://libguides.ctstatelibrary.org/regionalplanning/maps">Maps - Regional Planning in Connecticut</a>. Connecticut State Library.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Chen, Jing. (2017). A technical note on spatial aggregation for independent cities and counties in Virginia. <em>Regional Research Institute Technical Documents. 1.</em> Retrieved from: https://researchrepository.wvu.edu/rri_tech_docs/1<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
