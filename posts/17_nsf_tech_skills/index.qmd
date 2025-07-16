@@ -1,0 +1,603 @@
+---
+title: "NSF Tech Skills"
+author: "Lindsey Elliott"
+date: "2025-07-15"
+categories: [cli, code, geojson, json, spatial data, broadband]
+image: thumbnail.png
+---
+## ACCESS, INNOVATION, AND 'TECH DESERTS': THE REALITIES OF RURAL HIGH-TECH INEQUALITY
+
+
+Despite significant investment in technology industries from both, private and government entities, the distribution of high-tech jobs remains spatially uneven. Today, the vast majority of tech work opportunities is centrally positioned within large urban areas and their adjoining areas. In fact, although official records indicate the rural workforce comprises 12-15% of the national prime age working body, tech jobs reflect less than 5% of available career pathways across all of rural America. Among the few tech jobs available in rural landscapes, they too remain spatially specific, where only a small proportion of rural counties retain a meaningful number of high-tech jobs. In contrast, a far more common occurrence among rural communities is a profound absence of good paying high-tech careers. This problem has far-reaching implications for rural communities, such as the continuation of 'brain drain'[^brain_drain] among a community's young people in search of better paying jobs within large metropolitans, the continued decline of economic stability and diversification of historically distressed small towns, and the persistent and incorrect evaluation that rural communities are flush with strong agricultural, mining, or manufacturing work--three industries that have exponentially declined in the past fifty years.
+
+
+A problem of equal proportion to the lack of rural high-tech work is the sparsity of research dedicated toward highlighting this issue. Only recently have researchers begun to speak toward the substantive disparities between rural and metropolitan tech industries. Moreover, the measurement of tech-related work and industry makeup remains precarious due to its constantly evolving nature and wide breadth. These quagmires, compounded by a lack of interest among economists and social scientists to study rural problems, tends to the prevailing allusion that the difficulties for rural America to access tech jobs do not exist.
+
+### **Defining Tech Access across the United States**
+Recent research conducted by the Center on Rural Innovation (CORI) seeks to dispel the shroud that masks this problem by clearly highlighting the disconnect between rural America and access to tech jobs. To do this, researchers at CORI have developed a measure derived from several data sources that identifies a county's access to high-tech jobs and businesses across the United States. Referred to as the **Tech Access and Innovation Score**, the scale measures several county-specific tech variables, such as the share of high-tech jobs[^tech_jobs], the number of high tech businesses, tech job postings on professional work platforms, and the share of general tradable services[^data_used]. The measure ranges from 1 (**Very Low**) to 7 (**Very High**) and reflects a county's high-tech industry topology for a given year. 
+
+
+The measure is displayed below for the year 2023 in the United States' Lower-48 contiguous body. The analysis reveals that much of rural America lags behind its metropolitan counterparts in tech access and innovation. This fact is further highlighted in the second graphic, when nonrural counties are removed and only rural counties remain. Of the 176 **Very High** tech access and innovation counties within the United States, only 3 are located in rural America (1.7%). Among the 349 counties with **High** tech access and innovation, only 8.6% (30) are classified as rural.
+
+<img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Innovation rankings across the United States" style="width: 100%;"/>
+
+### **Rural (in?)access to Tech**
+This distinction is further presented when looking at the opposite end of the spectrum, where 92.8% of the counties categorized as having **Very Low** tech access and innovation are classified as rural. By the numbers, that's 116 of 125 **Very Low** tech access and innovation counties. In fact, more than 90% of counties categorized as **Very Low**, **Low**, and **Medium-Low** are classified as rural, and 77% of counties categorized as **Medium** are rural. In total, of the 1983 counties classified as rural by the Office of Management and Budget, 1693 (85.4%) do not reach above the **Medium** tech access and innovation threshold. 
+
+<img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Innovation rankings across rural counties in the United States" style="width: 100%;"/>
+
+### **'Tech deserts' across the Great Plains and the Deep South**
+When disaggregated by region, the emergence of a 'tech desert' appears in the central Mid-West and Deep South. In these regions, the vast majority of counties do not surpass **Medium-Low** tech access and innovation categories. From the tip of North Dakota to the southern basin of Texas, the absence of tech access is obvious. This trend continues into the entire South region, across the rural Black Belt South, stretching across Texas, Mississippi, Louisiana, Alabama, and into Georgia. Especially true for the South, the emergence of a 'tech desert' not only demonstrates a lack of access to high-tech jobs among rural communities, but further highlights historical and contemporary racial disparities that remain faceted within economic outcomes. Nearly 80% of America's black population resides in the South and this map displays that access to good-paying tech jobs for black community members in the region is virtually unavailable. 
+
+<img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation rankings across Mid-West rural counties" style="width: 100%;"/>
+
+### **Startling insights and a troublesome conclusion**
+The geographic imbalance in tech access and opportunity is not merely a byproduct of industry clustering--it is a reflection of deeper systemic inequities that leave rural communities, particularly in the Midwest and South, on the digital and economic margins. While urban centers flourish with high-paying, innovation-driven careers, rural America remains sidelined as detailed by a tech desert that spans thousands of miles and impacts millions of lives. The novel measure we present here confirms what many rural residents already know firsthand: access to the digital economy is not equitably distributed. Addressing this disparity requires intentional investment, pragmatic policy, inclusive economic planning, and a shift in national perceptions that recognizes rural communities as critical to the country’s economic future. Without such efforts, the rural-urban tech divide will become more disparate, reinforcing cycles of disinvestment, economic decline, and structural inequality.
+
+
+[^brain_drain]: Sowl, Smith, & Brown (2022) define 'brain drain' as the out-migration of young people away from their rural origins in search of better paying jobs in larger cities. 
+
+[^tech_jobs]: CORI defines tech jobs as those with an O-NET Compatibility Score $\geq$ 80.00 in relation to 15-XXXX computer and mathematics occupations and meet a miniumum threshold score based on principal component analyses.
+
+[^data_used]: Data utilized to create CORI's measure on tech work access and innovation is derived from data aggregated to the county level from the IRS's Form D, Lightcast's proprietary occupations database, and the American Community Survey 5-year estimates for years 2019 - 2023. The measure examines 7 tech-specific county-level indicators that are transformed into a single value which denotes the location's tech-related work that is concurrent or available. We perceive this value to define the county's available tech resources for its population to access for tech work and tech innovation. 
+
+
+``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(tidyverse)
+library(here)
+library(cori.charts)
+library(coriverse)
+library(tigris)
+library(sf)
+
+load_fonts()
+
+i_am("blog/posts/17_nsf_tech_skills/index.qmd")
+
+
+```
+``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+
+con <- connect_to_db("proj_nsf")
+nsf_dta <- DBI::dbReadTable(con, "nsf")
+DBI::dbDisconnect(con)
+
+options(tigris_use_cache = TRUE, 
+        tigris_class = "sf")
+
+# Load county shapefiles
+counties <- counties(cb = TRUE, year = 2020) %>% 
+  rename("geoid" = "GEOID")
+
+# US MAP ----
+dta <- nsf_dta %>%
+  filter(
+    year == 2023
+  )
+
+map_dta <- counties %>% 
+  left_join(
+    dta, 
+    by = "geoid"
+  ) %>%
+  select(
+    year,
+    geoid,
+    st_abbrv = STUSPS,
+    name_co,
+    co_tech_percentile,
+    co_tech_skill,
+    tech_hub_co_ord7,
+    geometry
+  ) %>% 
+  filter(
+    !substr(geoid, 1, 2) %in% c("02", "15"),
+    !substr(geoid, 1, 2) > "56"
+  ) %>% 
+  mutate(
+    year = ifelse(is.na(year), 2023, year),
+    tech_hub_co_ord7 = factor(tech_hub_co_ord7,
+                              levels = c(
+                              "Very Low", 
+                              "Low",
+                              "Mid-Low",
+                              "Mid",
+                              "Mid-High",
+                              "High",
+                              "Very High")),
+    tech_hub_co_ord7 = fct_recode(tech_hub_co_ord7,
+      "Medium" = "Mid"
+    ))
+
+# Rural map data ----
+rural <- ruraldefinitions::cbsa_2023 %>% 
+  select(
+    geoid,
+    is_rural
+  )
+
+rural_map_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural"
+  )
+
+
+# South map data ----
+
+south_states <- c(
+  "DE", "MD", "DC", "VA", "WV", "NC", "SC", "GA", "FL", 
+  "KY", "TN", "MS", "AL",                              
+  "OK", "TX", "AR", "LA"                                
+)
+
+south_rural_map_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural",
+    st_abbrv %in% south_states
+  )
+
+# Mid west map data ---
+mid_west <-  c("IL", "IN", "IA", "KS", "MI", "MN", "MO", "NE", "ND", "OH", "SD", "WI")
+
+# Data ----
+rural_mid_west_map_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural",
+    st_abbrv %in% mid_west
+  )
+
+
+# South and Mid West States
+select_states <-  c("IL", "IN", "IA", "KS", "MI", 
+                    "MN", "MO", "NE", "ND", "OH", 
+                    "SD", "WI", "DE", "MD", "DC", 
+                    "VA", "WV", "NC", "SC", "GA", 
+                    "FL", "KY", "TN", "MS", "AL",                              
+                    "OK", "TX", "AR", "LA")
+
+select_states_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural",
+    st_abbrv %in% select_states
+  )
+# Map colors ----
+ord7_colors <- c(
+  "Very Low" = "#BA3434",
+  "Low" =      "#D95C4E",
+  "Mid-Low" =  "#E89A79",
+  "Medium" =   "#F2D2B6",
+  "Mid-High" = "#B5D4E3",
+  "High" =     "#7CB6CC",
+  "Very High" ="#245871"
+)
+```
+
+
+``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+
+# Map ----
+
+fig <- map_dta %>% 
+  ggplot() +
+  geom_sf(aes(fill = factor(tech_hub_co_ord7)), color = "grey", size = 0.05) +
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 12, family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_manual(
+    name = "Tech Access & Innovation Score",
+    values = ord7_colors,
+    na.value = "grey60",
+    breaks = c("Very Low", "Medium", "Very High"),
+    labels = c("Very Low", "Medium", "Very High"),
+  guide = guide_legend(
+    direction = "horizontal",
+    title.position = "top",
+    title.hjust = 0.5,
+    label.position = "bottom"
+  )) +
+  labs(
+    title = "Tech Access & Innovation rankings across the United States",
+    subtitle = "Scores displayed at the county-level (2023)",
+    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
+    y = NULL,
+    x = NULL
+  )
+
+
+save_plot(
+  fig = fig,
+  export_path = "viz/co_tech_innovation_score_us_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+```
+<!-- <img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Innovation rankings across the United States" style="width: 100%;"/> -->
+
+
+``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+
+fig <- rural_map_dta %>% 
+  ggplot() +
+  geom_sf(aes(fill = factor(tech_hub_co_ord7)), color = "grey", size = 0.05) +
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 12, family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_manual(
+    name = "Tech Access & Innovation Score",
+    values = ord7_colors,
+    na.value = "grey60",
+    breaks = c("Very Low", "Medium", "Very High"),
+    labels = c("Very Low", "Medium", "Very High"),
+  guide = guide_legend(
+    direction = "horizontal",
+    title.position = "top",
+    title.hjust = 0.5,
+    label.position = "bottom"
+  )) +
+  labs(
+    title = "Tech Access & Innovation rankings across rural counties\nin the United States",
+    subtitle = "Scores displayed at the county-level (2023)",
+    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
+    y = NULL,
+    x = NULL
+  )
+
+# fig
+
+save_plot(
+  fig = fig,
+  export_path = "viz/rural_tech_innovation_score_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+
+```
+<!-- <img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Innovation rankings across rural counties in the United States" style="width: 100%;"/> -->
+
+
+``` {r, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+
+south_rural_map_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural",
+    st_abbrv %in% south_states
+  )
+
+# Map ----
+
+fig <- south_rural_map_dta %>% 
+  ggplot() +
+  geom_sf(aes(fill = factor(tech_hub_co_ord7)), color = "grey", size = 0.05) +
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 12, family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_manual(
+    name = "Tech Access & Innovation Score",
+    values = ord7_colors,
+    na.value = "grey60",
+    breaks = c("Very Low", "Medium", "Very High"),
+    labels = c("Very Low", "Medium", "Very High"),
+  guide = guide_legend(
+    direction = "horizontal",
+    title.position = "top",
+    title.hjust = 0.5,
+    label.position = "bottom"
+  )) +
+  labs(
+    title = "Tech Access & Innovation rankings across\nSouthern rural counties",
+    subtitle = "Scores displayed at the county-level (2023)",
+    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
+    y = NULL,
+    x = NULL
+  )
+
+save_plot(
+  fig = fig,
+  export_path = "viz/south_co_tech_innovation_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+```
+<!-- <img src="viz/south_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation across Southern rural counties" style="width: 100%;"/> -->
+
+
+``` {r, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+
+## Fix "Very High" bar loss ----
+
+# Define the 7 expected levels in your ordinal variable
+all_levels <- c("Very Low", 
+                "Low", 
+                "Mid-Low", 
+                "Medium", 
+                "Mid-High", 
+                "High", 
+                "Very High")
+
+# Step 1: Filter to Midwest counties and ensure factor levels
+midwest_map_dta <- map_dta %>%
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    st_abbrv %in% mid_west,
+    is_rural == "Rural"
+  ) %>%
+  mutate(
+    tech_hub_co_ord7 = factor(tech_hub_co_ord7, levels = all_levels)
+  )
+
+# Step 2: Identify missing levels
+missing_levels <- setdiff(all_levels, unique(midwest_map_dta$tech_hub_co_ord7))
+
+# Step 3: Create dummy geometries with matching CRS
+dummy_geom <- st_sfc(
+  rep(st_geometrycollection(), length(missing_levels)),
+  crs = st_crs(midwest_map_dta)
+)
+
+# Step 4: Create dummy rows
+dummy_rows <- tibble(
+  tech_hub_co_ord7 = factor(missing_levels, levels = all_levels),
+  geometry = dummy_geom
+)
+
+# Step 5: Combine
+midwest_map_full <- bind_rows(midwest_map_dta, dummy_rows)
+
+
+# Map ----
+fig <- midwest_map_full %>% 
+  ggplot() +
+  geom_sf(aes(fill = factor(tech_hub_co_ord7)), 
+          color = "grey", 
+          size = 0.05, 
+          show.legend = TRUE) +
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 12, family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_manual(
+    name = "Tech Access & Innovation Score",
+    values = ord7_colors,
+    na.value = "grey60",
+    breaks = c("Very Low", "Medium", "Very High"),
+    labels = c("Very Low", "Medium", "Very High"),
+    drop = FALSE,
+  guide = guide_legend(
+    direction = "horizontal",
+    title.position = "top",
+    title.hjust = 0.5,
+    label.position = "bottom"
+  )) +
+  labs(
+    title = "Tech Access & Innovation rankings across\nMid-West rural counties",
+    subtitle = "Scores displayed at the county-level (2023)",
+    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
+    y = NULL,
+    x = NULL
+  )
+
+save_plot(
+  fig = fig,
+  export_path = "viz/midwest_co_tech_innovation_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+
+```
+<!-- <img src="viz/midwest_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation rankings across Mid-West rural counties" style="width: 100%;"/> -->
+
+``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+
+# Map ----
+fig <- select_states_dta %>% 
+  ggplot() +
+  geom_sf(aes(fill = factor(tech_hub_co_ord7)), 
+          color = "grey", 
+          size = 0.05, 
+          show.legend = TRUE) +
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 12, family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_manual(
+    name = "Tech Access & Innovation Score",
+    values = ord7_colors,
+    na.value = "grey60",
+    breaks = c("Very Low", "Medium", "Very High"),
+    labels = c("Very Low", "Medium", "Very High"),
+    drop = FALSE,
+  guide = guide_legend(
+    direction = "horizontal",
+    title.position = "top",
+    title.hjust = 0.5,
+    label.position = "bottom"
+  )) +
+  labs(
+    title = "Tech Access & Innovation rankings across\n Southern and Mid-West rural counties",
+    subtitle = "Scores displayed at the county-level (2023)",
+    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
+    y = NULL,
+    x = NULL
+  )
+
+save_plot(
+  fig = fig,
+  export_path = "viz/select_states_co_tech_innovation_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+
+```
+<!-- <img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation rankings across Mid-West rural counties" style="width: 100%;"/> -->
+
+``` {r, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+
+# co_tech_percentile Stats ----
+df <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  )
+
+
+# All
+stats <- df %>% 
+filter(co_tech_percentile < 0.25) %>% 
+  summarise(
+    total_below_25th = n(),
+    rural_below_25th = sum(is_rural == "Rural", na.rm = TRUE),
+    prop_rural_below_25th = mean(is_rural == "Rural", na.rm = TRUE)
+  )
+
+
+# South
+stats <- df %>% 
+  filter(
+    st_abbrv %in% south_states,
+    co_tech_percentile < 0.25) %>%
+  summarise(
+    total_below_25th = n(),
+    rural_below_25th = sum(is_rural == "Rural", na.rm = TRUE),
+    prop_rural_below_25th = mean(is_rural == "Rural", na.rm = TRUE)
+  )
+
+
+
+# Full proportions
+stats <- df %>% 
+  filter(
+    is_rural == "Rural"
+    ) %>%
+  summarise(
+    prop_below_50th = mean(co_tech_percentile < 0.5, na.rm = TRUE)
+  )
+
+
+# tech_hub_co_ord7 stats ----
+df <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  group_by(
+    tech_hub_co_ord7
+  ) %>% 
+  mutate(
+    tech_hub_co_ord7 = factor(tech_hub_co_ord7,
+                              levels = c("Very Low", 
+                              "Low",
+                              "Mid-Low",
+                              "Mid",
+                              "Mid-High",
+                              "High",
+                              "Very High"))) %>%
+  filter(
+    st_abbrv %in% mid_west
+  ) %>%
+  summarise(
+    total = n(),
+    rural_count = sum(is_rural == "Rural", na.rm = TRUE),
+    proportion = rural_count / total
+  ) %>% 
+  print(df)
+
+
+
+```
