@@ -37,7 +37,8 @@ The geographic imbalance in tech access and opportunity is not merely a byproduc
 
 [^brain_drain]: Sowl, Smith, & Brown (2022) define 'brain drain' as the out-migration of young people away from their rural origins in search of better paying jobs in larger cities. 
 
-[^tech_jobs]: CORI defines tech jobs as those with an O-NET Compatibility Score $\geq$ 80.00 in relation to 15-XXXX computer and mathematics occupations and meet a miniumum threshold score based on principal component analyses.
+[^tech_jobs]: CORI defines tech jobs as those with an O-NET Compatibility Score &ge;
+ 80.00 in relation to 15-XXXX computer and mathematics occupations and meet a minimum threshold score based on principal component analyses.
 
 [^data_used]: Data utilized to create CORI's measure on tech work access and innovation is derived from data aggregated to the county level from the IRS's Form D, Lightcast's proprietary occupations database, and the American Community Survey 5-year estimates for years 2019 - 2023. The measure examines 7 tech-specific county-level indicators that are transformed into a single value which denotes the location's tech-related work that is concurrent or available. We perceive this value to define the county's available tech resources for its population to access for tech work and tech innovation. 
 

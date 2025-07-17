@@ -63,35 +63,6 @@ gtag('js', new Date());
 gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../assets/fonts.css">
 <meta property="og:title" content="NSF Tech Skills – Mapping &amp; Data Analytics Blog @cori-risi">
@@ -238,7 +209,7 @@ window.Quarto = {
 
 <ol>
 <li id="fn1"><p>Sowl, Smith, &amp; Brown (2022) define ‘brain drain’ as the out-migration of young people away from their rural origins in search of better paying jobs in larger cities.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>CORI defines tech jobs as those with an O-NET Compatibility Score <span class="math inline">\(\geq\)</span> 80.00 in relation to 15-XXXX computer and mathematics occupations and meet a miniumum threshold score based on principal component analyses.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>CORI defines tech jobs as those with an O-NET Compatibility Score ≥ 80.00 in relation to 15-XXXX computer and mathematics occupations and meet a minimum threshold score based on principal component analyses.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Data utilized to create CORI’s measure on tech work access and innovation is derived from data aggregated to the county level from the IRS’s Form D, Lightcast’s proprietary occupations database, and the American Community Survey 5-year estimates for years 2019 - 2023. The measure examines 7 tech-specific county-level indicators that are transformed into a single value which denotes the location’s tech-related work that is concurrent or available. We perceive this value to define the county’s available tech resources for its population to access for tech work and tech innovation.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
