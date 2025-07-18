@@ -1,5 +1,5 @@
 ---
-title: "NSF Tech Skills"
+title: "'Tech Deserts' in the Digital Age"
 author: "Lindsey Elliott"
 date: "2025-07-15"
 categories: [cli, code, geojson, json, spatial data, broadband]
@@ -43,7 +43,7 @@ The geographic imbalance in tech access and opportunity is not merely a byproduc
 [^data_used]: Data utilized to create CORI's measure on tech work access and innovation is derived from data aggregated to the county level from the IRS's Form D, Lightcast's proprietary occupations database, and the American Community Survey 5-year estimates for years 2019 - 2023. The measure examines 7 tech-specific county-level indicators that are transformed into a single value which denotes the location's tech-related work that is concurrent or available. We perceive this value to define the county's available tech resources for its population to access for tech work and tech innovation. 
 
 
-``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+``` {r Setup, echo = FALSE, message = FALSE, warning = FALSE}
 
 library(tidyverse)
 library(here)
@@ -58,7 +58,8 @@ i_am("blog/posts/17_nsf_tech_skills/index.qmd")
 
 
 ```
-``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+
+``` {r Data, echo = FALSE, message = FALSE, warning = FALSE}
 
 con <- connect_to_db("proj_nsf")
 nsf_dta <- DBI::dbReadTable(con, "nsf")
@@ -110,6 +111,9 @@ map_dta <- counties %>%
     tech_hub_co_ord7 = fct_recode(tech_hub_co_ord7,
       "Medium" = "Mid"
     ))
+
+# Get the US map data for under layer
+us_map <- sf::st_as_sf(maps::map("state", plot = FALSE, fill = TRUE))
 
 # Rural map data ----
 rural <- ruraldefinitions::cbsa_2023 %>% 
@@ -190,14 +194,16 @@ ord7_colors <- c(
 )
 ```
 
-
-``` {r, echo = FALSE, message = FALSE, warning = FALSE}
+``` {r US Map, echo = FALSE, message = FALSE, warning = FALSE}
 
 # Map ----
 
-fig <- map_dta %>% 
-  ggplot() +
-  geom_sf(aes(fill = factor(tech_hub_co_ord7)), color = "grey", size = 0.05) +
+fig <-  ggplot() +
+  geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
+  geom_sf(data = map_dta, aes(fill = factor(tech_hub_co_ord7)), 
+          color = "grey60", 
+          size = 0.05, 
+          show.legend = TRUE) +
   cori.charts::theme_cori_map() +
   theme(
     legend.position = "bottom",
@@ -224,7 +230,7 @@ fig <- map_dta %>%
   labs(
     title = "Tech Access & Innovation rankings across the United States",
     subtitle = "Scores displayed at the county-level (2023)",
-    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
+    caption = "Source: 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
     y = NULL,
     x = NULL
   )
@@ -246,12 +252,14 @@ save_plot(
 ```
 <!-- <img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Innovation rankings across the United States" style="width: 100%;"/> -->
 
+``` {r Rural map, echo = FALSE, message = FALSE, warning = FALSE}
 
-``` {r, echo = FALSE, message = FALSE, warning = FALSE}
-
-fig <- rural_map_dta %>% 
-  ggplot() +
-  geom_sf(aes(fill = factor(tech_hub_co_ord7)), color = "grey", size = 0.05) +
+fig <- ggplot() +
+  geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
+  geom_sf(data = rural_map_dta, aes(fill = factor(tech_hub_co_ord7)), 
+          color = "grey60", 
+          size = 0.05, 
+          show.legend = TRUE) +
   cori.charts::theme_cori_map() +
   theme(
     legend.position = "bottom",
@@ -269,16 +277,16 @@ fig <- rural_map_dta %>%
     na.value = "grey60",
     breaks = c("Very Low", "Medium", "Very High"),
     labels = c("Very Low", "Medium", "Very High"),
-  guide = guide_legend(
-    direction = "horizontal",
-    title.position = "top",
-    title.hjust = 0.5,
-    label.position = "bottom"
-  )) +
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "bottom"
+    )) +
   labs(
     title = "Tech Access & Innovation rankings across rural counties\nin the United States",
     subtitle = "Scores displayed at the county-level (2023)",
-    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
+    caption = "Source: 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
     y = NULL,
     x = NULL
   )
@@ -302,122 +310,13 @@ save_plot(
 ```
 <!-- <img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Innovation rankings across rural counties in the United States" style="width: 100%;"/> -->
 
-
-``` {r, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
-
-south_rural_map_dta <- map_dta %>% 
-  left_join(
-    rural,
-    by = "geoid"
-  ) %>% 
-  filter(
-    is_rural == "Rural",
-    st_abbrv %in% south_states
-  )
+``` {r Midwest + South Rural Map, echo = FALSE, message = FALSE, warning = FALSE}
 
 # Map ----
 
-fig <- south_rural_map_dta %>% 
-  ggplot() +
-  geom_sf(aes(fill = factor(tech_hub_co_ord7)), color = "grey", size = 0.05) +
-  cori.charts::theme_cori_map() +
-  theme(
-    legend.position = "bottom",
-    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
-    legend.text = element_text(size = 12, family = "Lato"),
-    legend.key.height = unit(.15, "in"),
-    legend.key.width = unit(.30, "in"),
-    legend.margin = margin(t = -25),
-    legend.box.margin = margin(t = -10),
-    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
-  ) +
-  scale_fill_manual(
-    name = "Tech Access & Innovation Score",
-    values = ord7_colors,
-    na.value = "grey60",
-    breaks = c("Very Low", "Medium", "Very High"),
-    labels = c("Very Low", "Medium", "Very High"),
-  guide = guide_legend(
-    direction = "horizontal",
-    title.position = "top",
-    title.hjust = 0.5,
-    label.position = "bottom"
-  )) +
-  labs(
-    title = "Tech Access & Innovation rankings across\nSouthern rural counties",
-    subtitle = "Scores displayed at the county-level (2023)",
-    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
-    y = NULL,
-    x = NULL
-  )
-
-save_plot(
-  fig = fig,
-  export_path = "viz/south_co_tech_innovation_map_nsf.jpg",
-  chart_height = 7,
-  add_logo = TRUE,
-  logo_position = "top right",
-  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
-  logo_scale = 20,
-  img_scale = 1,
-  units = "in",
-  background = "white"
-)
-
-```
-<!-- <img src="viz/south_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation across Southern rural counties" style="width: 100%;"/> -->
-
-
-``` {r, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
-
-## Fix "Very High" bar loss ----
-
-# Define the 7 expected levels in your ordinal variable
-all_levels <- c("Very Low", 
-                "Low", 
-                "Mid-Low", 
-                "Medium", 
-                "Mid-High", 
-                "High", 
-                "Very High")
-
-# Step 1: Filter to Midwest counties and ensure factor levels
-midwest_map_dta <- map_dta %>%
-  left_join(
-    rural,
-    by = "geoid"
-  ) %>% 
-  filter(
-    st_abbrv %in% mid_west,
-    is_rural == "Rural"
-  ) %>%
-  mutate(
-    tech_hub_co_ord7 = factor(tech_hub_co_ord7, levels = all_levels)
-  )
-
-# Step 2: Identify missing levels
-missing_levels <- setdiff(all_levels, unique(midwest_map_dta$tech_hub_co_ord7))
-
-# Step 3: Create dummy geometries with matching CRS
-dummy_geom <- st_sfc(
-  rep(st_geometrycollection(), length(missing_levels)),
-  crs = st_crs(midwest_map_dta)
-)
-
-# Step 4: Create dummy rows
-dummy_rows <- tibble(
-  tech_hub_co_ord7 = factor(missing_levels, levels = all_levels),
-  geometry = dummy_geom
-)
-
-# Step 5: Combine
-midwest_map_full <- bind_rows(midwest_map_dta, dummy_rows)
-
-
-# Map ----
-fig <- midwest_map_full %>% 
-  ggplot() +
-  geom_sf(aes(fill = factor(tech_hub_co_ord7)), 
+fig <- ggplot() +
+  geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
+  geom_sf(data = select_states_dta, aes(fill = factor(tech_hub_co_ord7)), 
           color = "grey", 
           size = 0.05, 
           show.legend = TRUE) +
@@ -439,74 +338,16 @@ fig <- midwest_map_full %>%
     breaks = c("Very Low", "Medium", "Very High"),
     labels = c("Very Low", "Medium", "Very High"),
     drop = FALSE,
-  guide = guide_legend(
-    direction = "horizontal",
-    title.position = "top",
-    title.hjust = 0.5,
-    label.position = "bottom"
-  )) +
-  labs(
-    title = "Tech Access & Innovation rankings across\nMid-West rural counties",
-    subtitle = "Scores displayed at the county-level (2023)",
-    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
-    y = NULL,
-    x = NULL
-  )
-
-save_plot(
-  fig = fig,
-  export_path = "viz/midwest_co_tech_innovation_map_nsf.jpg",
-  chart_height = 7,
-  add_logo = TRUE,
-  logo_position = "top right",
-  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
-  logo_scale = 20,
-  img_scale = 1,
-  units = "in",
-  background = "white"
-)
-
-
-```
-<!-- <img src="viz/midwest_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation rankings across Mid-West rural counties" style="width: 100%;"/> -->
-
-``` {r, echo = FALSE, message = FALSE, warning = FALSE}
-
-# Map ----
-fig <- select_states_dta %>% 
-  ggplot() +
-  geom_sf(aes(fill = factor(tech_hub_co_ord7)), 
-          color = "grey", 
-          size = 0.05, 
-          show.legend = TRUE) +
-  cori.charts::theme_cori_map() +
-  theme(
-    legend.position = "bottom",
-    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
-    legend.text = element_text(size = 12, family = "Lato"),
-    legend.key.height = unit(.15, "in"),
-    legend.key.width = unit(.30, "in"),
-    legend.margin = margin(t = -25),
-    legend.box.margin = margin(t = -10),
-    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
-  ) +
-  scale_fill_manual(
-    name = "Tech Access & Innovation Score",
-    values = ord7_colors,
-    na.value = "grey60",
-    breaks = c("Very Low", "Medium", "Very High"),
-    labels = c("Very Low", "Medium", "Very High"),
-    drop = FALSE,
-  guide = guide_legend(
-    direction = "horizontal",
-    title.position = "top",
-    title.hjust = 0.5,
-    label.position = "bottom"
-  )) +
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "bottom"
+    )) +
   labs(
     title = "Tech Access & Innovation rankings across\n Southern and Mid-West rural counties",
     subtitle = "Scores displayed at the county-level (2023)",
-    caption = "Source: Aggregated 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
+    caption = "Source: 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
     y = NULL,
     x = NULL
   )
@@ -528,7 +369,7 @@ save_plot(
 ```
 <!-- <img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation rankings across Mid-West rural counties" style="width: 100%;"/> -->
 
-``` {r, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+``` {r stats, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
 
 # co_tech_percentile Stats ----
 df <- map_dta %>% 
@@ -600,5 +441,37 @@ df <- map_dta %>%
   print(df)
 
 
+library(corrplot)
+
+# Assuming your data is in a data frame called 'df'
+# Replace 'df' with the actual name of your data frame
+
+# Select the variables for correlation analysis
+nsf_dta <- nsf_dta %>% 
+  mutate(
+    tech_hub_co_ord7_numeric = recode(tech_hub_co_ord7,
+                                      "Very Low" = "1",
+                                      "Low" =      "2",
+                                      "Mid-Low" =  "3",
+                                      "Mid" =      "4",
+                                      "Mid-High" = "5",
+                                      "High" =     "6",
+                                      "Very High" ="7"),
+    tech_hub_co_ord7_numeric = as.numeric(tech_hub_co_ord7_numeric)
+  )
+
+data_subset <- nsf_dta[, c("tech_hub_co_ord7_numeric", "mhi", "pct_poverty", "pct_bipoc", "net_migration", "ht_5x_biz")]
+
+# Remove rows with missing values
+data_subset <- na.omit(data_subset)
+
+# Calculate the correlation matrix
+correlation_matrix <- cor(data_subset)
+
+# Print the correlation matrix
+print(correlation_matrix)
+
+# Visualize the correlation matrix using corrplot
+corrplot(correlation_matrix, method = "circle") # You can change the method as needed
 
 ```
