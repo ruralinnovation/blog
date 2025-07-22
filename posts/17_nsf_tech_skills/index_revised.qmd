@@ -1,8 +1,8 @@
 ---
-title: "Turning data into progress: Guiding rural tech policy with insight"
+title: "Turning data into progress: Guiding rural tech policy with measurable insight"
 author: "Lindsey Elliott"
 date: "2025-07-15"
-categories: [cli, code, geojson, json, spatial data, broadband]
+categories: [rural, tech access, measurement, geography]
 image: thumbnail.png
 editor: 
   markdown: 
