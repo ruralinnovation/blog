@@ -1,35 +1,39 @@
 ---
-title: "'Tech Deserts' in the Digital Age"
+title: "Tech Deserts & the Digital Age"
+subtitle: "The harsh realities of rural high-tech inequality"
 author: "Lindsey Elliott"
 date: "2025-07-15"
 categories: [cli, code, geojson, json, spatial data, broadband]
 image: thumbnail.png
 ---
-## ACCESS, INNOVATION, AND 'TECH DESERTS': THE REALITIES OF RURAL HIGH-TECH INEQUALITY
 
+### **The promise of the digital economy remains out of reach for millions in rural America.**
+While technology industries flourish in urban centers, a stark reality persists: vast regions of our country are becoming **tech deserts**, exacerbating economic disparities and perpetuating brain drain. The Center on Rural Innovation (CORI) is dedicated to confronting this critical challenge and fostering equitable access to high-tech opportunities. 
 
-Despite significant investment in technology industries from both, private and government entities, the distribution of high-tech jobs remains spatially uneven. Today, the vast majority of tech work opportunities is centrally positioned within large urban areas and their adjoining areas. In fact, although official records indicate the rural workforce comprises 12-15% of the national prime age working body, tech jobs reflect less than 5% of available career pathways across all of rural America. Among the few tech jobs available in rural landscapes, they too remain spatially specific, where only a small proportion of rural counties retain a meaningful number of high-tech jobs. In contrast, a far more common occurrence among rural communities is a profound absence of good paying high-tech careers. This problem has far-reaching implications for rural communities, such as the continuation of 'brain drain'[^brain_drain] among a community's young people in search of better paying jobs within large metropolitans, the continued decline of economic stability and diversification of historically distressed small towns, and the persistent and incorrect evaluation that rural communities are flush with strong agricultural, mining, or manufacturing work--three industries that have exponentially declined in the past fifty years.
+Despite the United States' rapid shift toward a tech-based economy, the distribution of high-tech jobs remains geographically uneven. Today, the vast majority of tech work opportunities is centrally positioned within large urban cities and their adjoining areas. Although official records indicate the rural workforce comprises 12-15% of the national prime age working body, tech jobs reflect less than 5% of available career pathways across all of rural America. Among the few tech jobs available in rural landscapes, they too remain geographically specific, where only a small proportion of rural counties retain a meaningful number of high-tech jobs. In contrast, a far more common occurrence among rural communities is a profound absence of good paying high-tech careers. This problem has far-reaching implications for rural communities, such as the continuation of 'brain drain'[^brain_drain] among a community's young people in search of better paying jobs within large metropolitans, the continued decline of economic stability and diversification of historically distressed small towns, and the persistent and incorrect evaluation that rural communities are flush with strong agricultural, mining, or manufacturing work--three industries that have exponentially declined in the past fifty years.
 
 
 A problem of equal proportion to the lack of rural high-tech work is the sparsity of research dedicated toward highlighting this issue. Only recently have researchers begun to speak toward the substantive disparities between rural and metropolitan tech industries. Moreover, the measurement of tech-related work and industry makeup remains precarious due to its constantly evolving nature and wide breadth. These quagmires, compounded by a lack of interest among economists and social scientists to study rural problems, tends to the prevailing allusion that the difficulties for rural America to access tech jobs do not exist.
 
-### **Defining Tech Access across the United States**
-Recent research conducted by the Center on Rural Innovation (CORI) seeks to dispel the shroud that masks this problem by clearly highlighting the disconnect between rural America and access to tech jobs. To do this, researchers at CORI have developed a measure derived from several data sources that identifies a county's access to high-tech jobs and businesses across the United States. Referred to as the **Tech Access and Innovation Score**, the scale measures several county-specific tech variables, such as the share of high-tech jobs[^tech_jobs], the number of high tech businesses, tech job postings on professional work platforms, and the share of general tradable services[^data_used]. The measure ranges from 1 (**Very Low**) to 7 (**Very High**) and reflects a county's high-tech industry topology for a given year. 
+### **Tech deserts: CORI's findings into the state of tech access**
+Recent research conducted by the Center on Rural Innovation (CORI) seeks to dispel the shroud that masks this problem by clearly highlighting the disconnect between rural America and access to tech jobs. To do this, researchers at CORI have developed a measure derived from several data sources that identifies a county's access to high-tech jobs and businesses across the United States. Referred to as the **Tech Access and Opportunity Score**, the scale measures several county-specific tech variables, such as the share of high-tech jobs[^tech_jobs], the number of high tech businesses, tech job postings on professional work platforms, and the share of general tradable services[^data_used]. The measure ranges from 1 (**Very Low**) to 7 (**Very High**) and reflects a county's high-tech industry topology for a given year. 
 
 
-The measure is displayed below for the year 2023 in the United States' Lower-48 contiguous body. The analysis reveals that much of rural America lags behind its metropolitan counterparts in tech access and innovation. This fact is further highlighted in the second graphic, when nonrural counties are removed and only rural counties remain. Of the 176 **Very High** tech access and innovation counties within the United States, only 3 are located in rural America (1.7%). Among the 349 counties with **High** tech access and innovation, only 8.6% (30) are classified as rural.
+The measure is displayed below for all counties in the United States' Lower-48 contiguous body for the year 2023. The analysis reveals that much of rural America lags behind its metropolitan counterparts in tech access and opportunity. This fact is further highlighted in the second graphic, when nonrural counties are removed and only rural counties remain. Of the 176 **Very High** tech access and opportunity counties within the United States, only 3 are located in rural America (1.7%). Among the 349 counties with **High** tech access and opportunity, only 8.6% (30) are classified as rural.
 
-<img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Innovation rankings across the United States" style="width: 100%;"/>
+<img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Opportunity rankings across the United States" style="width: 100%;"/>
 
 ### **Rural (in?)access to Tech**
-This distinction is further presented when looking at the opposite end of the spectrum, where 92.8% of the counties categorized as having **Very Low** tech access and innovation are classified as rural. By the numbers, that's 116 of 125 **Very Low** tech access and innovation counties. In fact, more than 90% of counties categorized as **Very Low**, **Low**, and **Medium-Low** are classified as rural, and 77% of counties categorized as **Medium** are rural. In total, of the 1983 counties classified as rural by the Office of Management and Budget, 1693 (85.4%) do not reach above the **Medium** tech access and innovation threshold. 
+The disparity in tech access between urban and rural counties becomes drastic when looking at the opposite end of the spectrum, where 92.8% of the counties categorized as having **Very Low** tech access and opportunity are classified as rural. By the numbers, that's 116 of 125 **Very Low** tech access and opportunity counties. In fact, more than 90% of counties categorized as **Very Low**, **Low**, and **Medium-Low** are classified as rural, and 77% of counties categorized as **Medium** are rural. In total, of the 1983 counties classified as rural by the Office of Management and Budget, 1693 (85.4%) do not reach above the **Medium** tech access and opportunity threshold. 
 
-<img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Innovation rankings across rural counties in the United States" style="width: 100%;"/>
+<img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Opportunity rankings across rural counties in the United States" style="width: 100%;"/>
 
-### **'Tech deserts' across the Great Plains and the Deep South**
-When disaggregated by region, the emergence of a 'tech desert' appears in the central Mid-West and Deep South. In these regions, the vast majority of counties do not surpass **Medium-Low** tech access and innovation categories. From the tip of North Dakota to the southern basin of Texas, the absence of tech access is obvious. This trend continues into the entire South region, across the rural Black Belt South, stretching across Texas, Mississippi, Louisiana, Alabama, and into Georgia. Especially true for the South, the emergence of a 'tech desert' not only demonstrates a lack of access to high-tech jobs among rural communities, but further highlights historical and contemporary racial disparities that remain faceted within economic outcomes. Nearly 80% of America's black population resides in the South and this map displays that access to good-paying tech jobs for black community members in the region is virtually unavailable. 
+### **Tech deserts across the Great Plains and the Deep South**
+When disaggregated by region, the emergence of a **tech desert** appears in the central Mid-West and Deep South. In these regions, the vast majority of counties do not surpass **Medium-Low** tech access and opportunity categories. From the tip of North Dakota to the southern basin of Texas, the absence of tech access is obvious. This trend continues into the entire South region, across the rural Black Belt South, stretching across Texas, Mississippi, Louisiana, Alabama, and into Georgia. Especially true for the South, the existence of a **tech desert** not only demonstrates a lack of access to high-tech jobs among rural communities, but further highlights historical and contemporary racial disparities that remain faceted within economic outcomes. Nearly 80% of America's black population resides in the South and the analysis displays that access to good-paying tech jobs for black community members in the region is virtually unavailable. 
 
-<img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation rankings across Mid-West rural counties" style="width: 100%;"/>
+<img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Opportunity rankings across Mid-West rural counties" style="width: 100%;"/>
+
+The analysis also reveals a strong relationship between the lack of tech opportunities and other important economic indicators. For instance, in counties with **Very Low** or **Low** tech access and opportunity scores, median household income lags behind the rest of the nation by more than $20,000. Because of this, the share of the population that resides below the federally designated poverty threshold within these counties is much higher than state and national averages, and net migration is often negative, indicating that more residents are leaving than entering into these economically distressed areas. In short, a vicious trend appears to have taken hold among counties with poor tech access: lack of contemporary tech-based opportunities increases the likelihood of poverty and residents have little choice but to seek out better paying jobs elsewhere. In time, this downward trend could lead to loss of critical jobs within already distressed counties, a problem which in turn will likely lead to significant population decline. This potential problem spells disaster for the counties, states, and regions most impacted by the absence of tech jobs. 
 
 ### **Startling insights and a troublesome conclusion**
 The geographic imbalance in tech access and opportunity is not merely a byproduct of industry clustering--it is a reflection of deeper systemic inequities that leave rural communities, particularly in the Midwest and South, on the digital and economic margins. While urban centers flourish with high-paying, innovation-driven careers, rural America remains sidelined as detailed by a tech desert that spans thousands of miles and impacts millions of lives. The novel measure we present here confirms what many rural residents already know firsthand: access to the digital economy is not equitably distributed. Addressing this disparity requires intentional investment, pragmatic policy, inclusive economic planning, and a shift in national perceptions that recognizes rural communities as critical to the country’s economic future. Without such efforts, the rural-urban tech divide will become more disparate, reinforcing cycles of disinvestment, economic decline, and structural inequality.
@@ -40,7 +44,7 @@ The geographic imbalance in tech access and opportunity is not merely a byproduc
 [^tech_jobs]: CORI defines tech jobs as those with an O-NET Compatibility Score &ge;
  80.00 in relation to 15-XXXX computer and mathematics occupations and meet a minimum threshold score based on principal component analyses.
 
-[^data_used]: Data utilized to create CORI's measure on tech work access and innovation is derived from data aggregated to the county level from the IRS's Form D, Lightcast's proprietary occupations database, and the American Community Survey 5-year estimates for years 2019 - 2023. The measure examines 7 tech-specific county-level indicators that are transformed into a single value which denotes the location's tech-related work that is concurrent or available. We perceive this value to define the county's available tech resources for its population to access for tech work and tech innovation. 
+[^data_used]: Data utilized to create CORI's measure on tech access and opportunity is derived from data aggregated to the county level from the IRS's Form D, Lightcast's proprietary occupations database, and the American Community Survey 5-year estimates for years 2019 - 2023. The measure examines 7 tech-specific county-level indicators that are transformed into a single value which denotes the location's tech-related work that is concurrent or available. We perceive this value to define the county's available tech resources for its population to access for tech work and tech innovation. 
 
 
 ``` {r Setup, echo = FALSE, message = FALSE, warning = FALSE}
@@ -62,7 +66,18 @@ i_am("blog/posts/17_nsf_tech_skills/index.qmd")
 ``` {r Data, echo = FALSE, message = FALSE, warning = FALSE}
 
 con <- connect_to_db("proj_nsf")
-nsf_dta <- DBI::dbReadTable(con, "nsf")
+nsf_dta <- DBI::dbReadTable(con, "nsf") %>% 
+  mutate(
+    tech_hub_numeric = as.numeric(factor(tech_hub_co_ord7, ordered = TRUE,
+                                         levels = c(
+                                           "Very Low",
+                                           "Low",
+                                           "Mid-Low",
+                                           "Mid",
+                                           "Mid-High",
+                                           "High",
+                                           "Very High")))
+  )
 DBI::dbDisconnect(con)
 
 options(tigris_use_cache = TRUE, 
@@ -91,6 +106,7 @@ map_dta <- counties %>%
     co_tech_percentile,
     co_tech_skill,
     tech_hub_co_ord7,
+    tech_hub_numeric,
     geometry
   ) %>% 
   filter(
@@ -183,52 +199,56 @@ select_states_dta <- map_dta %>%
     st_abbrv %in% select_states
   )
 # Map colors ----
-ord7_colors <- c(
-  "Very Low" = "#BA3434",
-  "Low" =      "#D95C4E",
-  "Mid-Low" =  "#E89A79",
-  "Medium" =   "#F2D2B6",
-  "Mid-High" = "#B5D4E3",
-  "High" =     "#7CB6CC",
-  "Very High" ="#245871"
+
+numeric_colors <- c(
+  "1" = "#BA3434",
+  "2" = "#D95C4E",
+  "3" = "#E89A79",
+  "4" = "#F2D2B6",
+  "5" = "#B5D4E3",
+  "6" = "#7CB6CC",
+  "7" = "#245871"
 )
+
+gradient_colors <- unname(numeric_colors[as.character(1:7)])
+
 ```
 
 ``` {r US Map, echo = FALSE, message = FALSE, warning = FALSE}
 
 # Map ----
 
-fig <-  ggplot() +
+fig <- ggplot() +
   geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
-  geom_sf(data = map_dta, aes(fill = factor(tech_hub_co_ord7)), 
+  geom_sf(data = map_dta, aes(fill = tech_hub_numeric), 
           color = "grey60", 
-          size = 0.05, 
+          size = 0.05,
           show.legend = TRUE) +
   cori.charts::theme_cori_map() +
   theme(
     legend.position = "bottom",
-    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
-    legend.text = element_text(size = 12, family = "Lato"),
+    legend.title = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 10, face = "bold", family = "Lato"),
     legend.key.height = unit(.15, "in"),
     legend.key.width = unit(.30, "in"),
     legend.margin = margin(t = -25),
     legend.box.margin = margin(t = -10),
     plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
   ) +
-  scale_fill_manual(
-    name = "Tech Access & Innovation Score",
-    values = ord7_colors,
-    na.value = "grey60",
-    breaks = c("Very Low", "Medium", "Very High"),
-    labels = c("Very Low", "Medium", "Very High"),
-  guide = guide_legend(
-    direction = "horizontal",
-    title.position = "top",
-    title.hjust = 0.5,
-    label.position = "bottom"
-  )) +
+  scale_fill_gradientn(
+    name = "Tech Access & Opportunity Score",
+    colours = gradient_colors,
+    limits = c(1, 7),
+    breaks = c(1, 7),
+    labels = c("Very Low", "Very High"),
+    guide = guide_colorbar(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "bottom"
+    )) +
   labs(
-    title = "Tech Access & Innovation rankings across the United States",
+    title = "Tech access & opportunity is geographically uneven\nacross the United States",
     subtitle = "Scores displayed at the county-level (2023)",
     caption = "Source: 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
     y = NULL,
@@ -256,35 +276,35 @@ save_plot(
 
 fig <- ggplot() +
   geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
-  geom_sf(data = rural_map_dta, aes(fill = factor(tech_hub_co_ord7)), 
+  geom_sf(data = rural_map_dta, aes(fill = tech_hub_numeric), 
           color = "grey60", 
           size = 0.05, 
           show.legend = TRUE) +
   cori.charts::theme_cori_map() +
   theme(
     legend.position = "bottom",
-    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
-    legend.text = element_text(size = 12, family = "Lato"),
+    legend.title = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 10, face = "bold", family = "Lato"),
     legend.key.height = unit(.15, "in"),
     legend.key.width = unit(.30, "in"),
     legend.margin = margin(t = -25),
     legend.box.margin = margin(t = -10),
     plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
   ) +
-  scale_fill_manual(
-    name = "Tech Access & Innovation Score",
-    values = ord7_colors,
-    na.value = "grey60",
-    breaks = c("Very Low", "Medium", "Very High"),
-    labels = c("Very Low", "Medium", "Very High"),
-    guide = guide_legend(
+  scale_fill_gradientn(
+    name = "Tech Access & Opportunity Score",
+    colours = gradient_colors,
+    limits = c(1, 7),
+    breaks = c(1, 7),
+    labels = c("Very Low", "Very High"),
+    guide = guide_colorbar(
       direction = "horizontal",
       title.position = "top",
       title.hjust = 0.5,
       label.position = "bottom"
     )) +
   labs(
-    title = "Tech Access & Innovation rankings across rural counties\nin the United States",
+    title = "Tech access & opportunity is absent in many rural areas\nacross the United States",
     subtitle = "Scores displayed at the county-level (2023)",
     caption = "Source: 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
     y = NULL,
@@ -312,41 +332,74 @@ save_plot(
 
 ``` {r Midwest + South Rural Map, echo = FALSE, message = FALSE, warning = FALSE}
 
-# Map ----
+# select_states_dta <- select_states_dta %>%
+#   mutate(region = case_when(
+#     st_abbrv %in% c("IL", "IN", "IA", "KS", "MI", "MN", "MO", "NE", "ND", "OH", "SD", "WI") ~ "Midwest",
+#     st_abbrv %in% c("DE", "MD", "DC", "VA", "WV", "NC", "SC", "GA", "FL", 
+#                     "KY", "TN", "MS", "AL", "OK", "TX", "AR", "LA") ~ "South",
+#     TRUE ~ NA_character_
+#   ))
+# 
+# region_outlines <- select_states_dta %>%
+#   filter(!is.na(region)) %>%
+#   group_by(region) %>%
+#   summarize(geometry = st_union(geometry), .groups = "drop")
+# 
+# 
+#   geom_sf(data = region_outlines, aes(color = region), fill = NA, linewidth = .4) +
+#   scale_color_manual(
+#     values = c("Midwest" = "#2E86C1", "South" = "grey40"),
+#     guide = "none"  # Or remove this to show in legend
+#   )
+    
+# Filter just the "Very Low"/"Low" counties
+very_low_dta <- select_states_dta %>% 
+  dplyr::filter(
+    tech_hub_numeric %in% c(1, 2, 3)
+                )
 
+# Map ----
 fig <- ggplot() +
+  # Base map
   geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
-  geom_sf(data = select_states_dta, aes(fill = factor(tech_hub_co_ord7)), 
+
+  # All counties with gradient fill
+  geom_sf(data = select_states_dta, aes(fill = tech_hub_numeric), 
           color = "grey", 
           size = 0.05, 
           show.legend = TRUE) +
+
+  # Outline layer for "Very Low" counties
+  geom_sf(data = very_low_dta, fill = NA, color = "black", linewidth = 0.3) +
+  
+  
   cori.charts::theme_cori_map() +
   theme(
     legend.position = "bottom",
-    legend.title = element_text(size = 12, face = "bold", family = "Lato"),
-    legend.text = element_text(size = 12, family = "Lato"),
+    legend.title = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 10, face = "bold", family = "Lato"),
     legend.key.height = unit(.15, "in"),
     legend.key.width = unit(.30, "in"),
     legend.margin = margin(t = -25),
     legend.box.margin = margin(t = -10),
     plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
   ) +
-  scale_fill_manual(
-    name = "Tech Access & Innovation Score",
-    values = ord7_colors,
-    na.value = "grey60",
-    breaks = c("Very Low", "Medium", "Very High"),
-    labels = c("Very Low", "Medium", "Very High"),
-    drop = FALSE,
-    guide = guide_legend(
+  scale_fill_gradientn(
+    name = "Tech Access & Opportunity Score",
+    colours = gradient_colors,
+    limits = c(1, 7),
+    breaks = c(1, 7),
+    labels = c("Very Low", "Very High"),
+    guide = guide_colorbar(
       direction = "horizontal",
       title.position = "top",
       title.hjust = 0.5,
       label.position = "bottom"
-    )) +
+    )
+  ) +
   labs(
-    title = "Tech Access & Innovation rankings across\n Southern and Mid-West rural counties",
-    subtitle = "Scores displayed at the county-level (2023)",
+    title = "America's 'Tech Desert' extends across the rural Mid-West\nand Deep South",
+    subtitle = "Very Low, Low, and Medium-Low counties are emphasized",
     caption = "Source: 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates",
     y = NULL,
     x = NULL

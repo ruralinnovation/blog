@@ -1,0 +1,775 @@
+---
+title: "Turning data into progress: Guiding rural tech policy with insight"
+author: "Lindsey Elliott"
+date: "2025-07-15"
+categories: [cli, code, geojson, json, spatial data, broadband]
+image: thumbnail.png
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+### **A Bright Future: Unlocking Tech Access and Opportunity Across Rural America**
+
+While urban centers have long been synonymous with tech innovation, a
+powerful transformation is on the horizon. Researchers at the Center on
+Rural Innovation (CORI) have created a meaningful and data-driven method
+to identify and understand tech access and opportunity across every
+county in the United States. This breakthrough effort introduces the
+**Tech Access and Opportunity Score**--a unique measure that empowers
+policymakers, community leaders, and economic developers with the
+insights they need to take meaningful action. The measure offers a
+clear, quantifiable view of where high-tech opportunities are
+flourishing and where they can be strategically nurtured, especially in
+rural counties that have historically been left out of the digital
+economy.
+
+### **A smart tool for the high-tech era**
+
+At the heart of this initiative is a simple but powerful idea: access to the digital economy should not depend on
+geography. To bring this vision to life, CORI researchers have developed a
+scale that measures high-tech employment, business activity,
+high-tech job postings, and related services to produce a single,
+easy to understand score for each U.S. county. Ranging from **Very Low**
+to **Very High**, this score gives communities a roadmap for growth and
+provides a compelling tool for crafting pragmatic, locally-informed tech
+policy.
+
+### **Rural potential: Not just a possiblity--it's already happening **
+
+While it's true that urban centers currently dominate the tech landscape, rural America
+holds enormous untapped potential, and that potential is already being
+realized in key places. Our analysis reveals that some rural counties
+have reached the highest levels of tech access and opportunity,
+demonstrating that success is not only possible but already happening.
+These rural innovation hubs serve as models of what’s possible with
+targeted investment, community engagement, and smart policy.
+
+Moreover, high-tech jobs in rural communities have the power to be
+transformational. They bring higher wages, foster local
+entrepreneurship, attract talent back home, and contribute to
+diversified, resilient local economies. By identifying where gaps exist
+and where growth is happening, CORI's **Tech Access and Opportunity Score**
+becomes a springboard for identifying and scaling rural success across the country.
+
+### **Closing the gap with insight and intention**
+
+Of course, challenges remain. Our research finds that rural counties are disproportionately
+represented among the areas with lower tech access. But this fact doesn’t
+signify failure--it signals where opportunity for change is greatest. In
+fact, over 85% of rural counties currently fall below the national
+median for tech access, making them ideal targets for future investment
+and innovation initiatives.
+
+<img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="RURAL" style="width: 100%;"/>
+
+### **Spotlighting regions for growth**
+
+Within our analysis, several patterns emerge that shine a
+light on key regions for policy focus. This is especially true in the rural Midwest
+and Deep South. These regions currently face lower access to tech jobs
+and resources, but they are also rich in talent, culture, and
+resilience. With the right support, these areas are poised to become the
+next wave of tech-enabled communities.
+
+Focused policy efforts are especially important in areas with long-standing racial and
+economic inequities, such as the Deep South. By pinpointing where access is currently limited,
+this tool helps stakeholders prioritize equity-based solutions that
+ensure all Americans—no matter where they live—have a fair shot at
+success in the digital economy.
+
+<img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access &amp; Opportunity rankings across Mid-West rural counties" style="width: 100%;"/>
+
+### **A path forward with tech**
+
+Our analysis also reveals how tech access impacts broader economic health. In places with higher tech access and
+opportunity, median household incomes are significantly higher, poverty
+is lower, and communities are growing. These insights highlight a clear pathway
+forward: **strengthening rural economies with thriving tech ecosystems can catalyze lasting prosperity.**
+
+Rather than framing rural areas in terms of what they lack, this
+research invites us to think about what they can gain—and what the
+nation stands to gain by uplifting them. Through CORI's **Tech Access and
+Opportunity Score**, we can craft smart, inclusive policies that target
+real needs, drive innovation, and close the rural-urban divide.
+
+### **Optimism, Innovation, and Impact**
+
+The launch of CORI's new research marks a turning point. Since America's turn toward a digital economy, the absence of data has made it easy to
+overlook rural communities in tech-driven conversations. Today, CORI is equipped with
+the tools to change that narrative and drive meaningful, community-based policies that strongly align with the interests of rural America and the millions of people who call it home.   
+
+At CORI, we believe that rural America belongs in the future of tech.
+And with this new resource, we can work together—researchers,
+policymakers, and communities alike—to ensure that future is bright,
+inclusive, and accessible to all.
+
+### **An interactive look at tech access and opportunity**
+
+Did you find CORI's **Tech Access and Opportunity Score** as interesting as we did? Take a look at the interactive map to find your county. The widget in the top right allows you to filter between 2010 - 2023. This way, you can see how your community has developed opportunities to access tech jobs over the past decade.
+
+<iframe src="viz/nsf_interactive_tech_map.html" width="100%" height="600px" style="border:none;"></iframe>
+
+
+```{r Setup, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(tidyverse)
+library(here)
+library(cori.charts)
+library(coriverse)
+library(tigris)
+library(sf)
+library(plotly)
+
+load_fonts()
+
+i_am("blog/posts/17_nsf_tech_skills/index.qmd")
+
+
+```
+
+```{r Data, echo = FALSE, message = FALSE, warning = FALSE}
+
+con <- connect_to_db("proj_nsf")
+nsf_dta <- DBI::dbReadTable(con, "nsf") %>% 
+  mutate(
+    tech_hub_numeric = as.numeric(factor(tech_hub_co_ord7, ordered = TRUE,
+                                         levels = c(
+                                           "Very Low",
+                                           "Low",
+                                           "Mid-Low",
+                                           "Mid",
+                                           "Mid-High",
+                                           "High",
+                                           "Very High")))
+  )
+DBI::dbDisconnect(con)
+
+options(tigris_use_cache = TRUE, 
+        tigris_class = "sf")
+
+# Load county shapefiles
+counties <- counties(cb = TRUE, year = 2020) %>% 
+  rename("geoid" = "GEOID")
+
+# US MAP ----
+dta <- nsf_dta %>%
+  filter(
+    year == 2023
+  )
+
+map_dta <- counties %>% 
+  left_join(
+    dta, 
+    by = "geoid"
+  ) %>%
+  select(
+    year,
+    geoid,
+    st_abbrv = STUSPS,
+    name_co,
+    co_tech_percentile,
+    co_tech_skill,
+    tech_hub_co_ord7,
+    tech_hub_numeric,
+    geometry
+  ) %>% 
+  filter(
+    !substr(geoid, 1, 2) %in% c("02", "15"),
+    !substr(geoid, 1, 2) > "56"
+  ) %>% 
+  mutate(
+    year = ifelse(is.na(year), 2023, year),
+    tech_hub_co_ord7 = factor(tech_hub_co_ord7,
+                              levels = c(
+                              "Very Low", 
+                              "Low",
+                              "Mid-Low",
+                              "Mid",
+                              "Mid-High",
+                              "High",
+                              "Very High")),
+    tech_hub_co_ord7 = fct_recode(tech_hub_co_ord7,
+      "Medium" = "Mid"
+    ))
+
+# Get the US map data for under layer
+us_map <- sf::st_as_sf(maps::map("state", plot = FALSE, fill = TRUE))
+
+# Rural map data ----
+rural <- ruraldefinitions::cbsa_2023 %>% 
+  select(
+    geoid,
+    is_rural
+  )
+
+rural_map_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural"
+  )
+
+
+# South map data ----
+
+south_states <- c(
+  "DE", "MD", "DC", "VA", "WV", "NC", "SC", "GA", "FL", 
+  "KY", "TN", "MS", "AL",                              
+  "OK", "TX", "AR", "LA"                                
+)
+
+south_rural_map_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural",
+    st_abbrv %in% south_states
+  )
+
+# Mid west map data ---
+mid_west <-  c("IL", "IN", "IA", "KS", "MI", "MN", "MO", "NE", "ND", "OH", "SD", "WI")
+
+# Data ----
+rural_mid_west_map_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural",
+    st_abbrv %in% mid_west
+  )
+
+
+# South and Mid West States
+select_states <-  c("IL", "IN", "IA", "KS", "MI", 
+                    "MN", "MO", "NE", "ND", "OH", 
+                    "SD", "WI", "DE", "MD", "DC", 
+                    "VA", "WV", "NC", "SC", "GA", 
+                    "FL", "KY", "TN", "MS", "AL",                              
+                    "OK", "TX", "AR", "LA")
+
+select_states_dta <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  filter(
+    is_rural == "Rural",
+    st_abbrv %in% select_states
+  )
+# Map colors ----
+
+numeric_colors <- c(
+  "1" = "#BA3434",
+  "2" = "#D95C4E",
+  "3" = "#E89A79",
+  "4" = "#F2D2B6",
+  "5" = "#B5D4E3",
+  "6" = "#7CB6CC",
+  "7" = "#245871"
+)
+
+gradient_colors <- unname(numeric_colors[as.character(1:7)])
+
+```
+
+```{r US Map, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+
+# Map ----
+
+fig <- ggplot() +
+  geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
+  geom_sf(data = map_dta, aes(fill = tech_hub_numeric), 
+          color = "grey60", 
+          size = 0.05,
+          show.legend = TRUE) +
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_gradientn(
+    name = "Tech Access & Opportunity Score",
+    colours = gradient_colors,
+    limits = c(1, 7),
+    breaks = c(1, 7),
+    labels = c("Very Low", "Very High"),
+    guide = guide_colorbar(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "bottom"
+    )) +
+  labs(
+    title = "Tech access & opportunity is geographically uneven\nacross the United States",
+    subtitle = "Scores displayed at the county-level (2023)",
+    caption = "Source: 2023 O*NET Occupational Data\n                  2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
+    y = NULL,
+    x = NULL
+  )
+
+
+save_plot(
+  fig = fig,
+  export_path = "viz/co_tech_innovation_score_us_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+```
+
+<!-- <img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Innovation rankings across the United States" style="width: 100%;"/> -->
+
+```{r Rural map, echo = FALSE, message = FALSE, warning = FALSE}
+
+fig <- ggplot() +
+  geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
+  geom_sf(data = rural_map_dta, aes(fill = tech_hub_numeric), 
+          color = "grey60", 
+          size = 0.05, 
+          show.legend = TRUE) +
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_gradientn(
+    name = "Tech Access & Opportunity Score",
+    colours = gradient_colors,
+    limits = c(1, 7),
+    breaks = c(1, 7),
+    labels = c("Emerging Potential", "Innovation Leader"),
+    guide = guide_colorbar(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "bottom"
+    )) +
+  labs(
+    title = "Rural America is a well of untapped tech potential",
+    subtitle = "Only rural counties are displayed",
+    caption = "Source: 2023 O*NET Occupational Data\n                   2019–2023 American Community Survey 5-Year Estimates\nNote: Connecticut removed from analysis due to differences in county definitions",
+    y = NULL,
+    x = NULL
+  )
+
+# fig
+
+save_plot(
+  fig = fig,
+  export_path = "viz/rural_tech_innovation_score_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+
+```
+
+<!-- <img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Innovation rankings across rural counties in the United States" style="width: 100%;"/> -->
+
+```{r Midwest + South Rural Map, echo = FALSE, message = FALSE, warning = FALSE}
+
+# select_states_dta <- select_states_dta %>%
+#   mutate(region = case_when(
+#     st_abbrv %in% c("IL", "IN", "IA", "KS", "MI", "MN", "MO", "NE", "ND", "OH", "SD", "WI") ~ "Midwest",
+#     st_abbrv %in% c("DE", "MD", "DC", "VA", "WV", "NC", "SC", "GA", "FL", 
+#                     "KY", "TN", "MS", "AL", "OK", "TX", "AR", "LA") ~ "South",
+#     TRUE ~ NA_character_
+#   ))
+# 
+# region_outlines <- select_states_dta %>%
+#   filter(!is.na(region)) %>%
+#   group_by(region) %>%
+#   summarize(geometry = st_union(geometry), .groups = "drop")
+# 
+# 
+#   geom_sf(data = region_outlines, aes(color = region), fill = NA, linewidth = .4) +
+#   scale_color_manual(
+#     values = c("Midwest" = "#2E86C1", "South" = "grey40"),
+#     guide = "none"  # Or remove this to show in legend
+#   )
+    
+# Filter just the "Very Low"/"Low" counties
+very_low_dta <- select_states_dta %>% 
+  dplyr::filter(
+    tech_hub_numeric %in% c(1, 2, 3)
+                )
+
+# Map ----
+fig <- ggplot() +
+  # Base map
+  geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
+
+  # All counties with gradient fill
+  geom_sf(data = select_states_dta, aes(fill = tech_hub_numeric), 
+          color = "grey", 
+          size = 0.05, 
+          show.legend = TRUE) +
+
+  # Outline layer for "Very Low" counties
+  geom_sf(data = very_low_dta, fill = NA, color = "black", linewidth = 0.3) +
+  
+  
+  cori.charts::theme_cori_map() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.text = element_text(size = 10, face = "bold", family = "Lato"),
+    legend.key.height = unit(.15, "in"),
+    legend.key.width = unit(.30, "in"),
+    legend.margin = margin(t = -25),
+    legend.box.margin = margin(t = -10),
+    plot.margin = margin(t = 5, r = 5, b = 5, l = 5)
+  ) +
+  scale_fill_gradientn(
+    name = "Tech Access & Opportunity Score",
+    colours = gradient_colors,
+    limits = c(1, 7),
+    breaks = c(1, 7),
+    labels = c("Very Low", "Very High"),
+    guide = guide_colorbar(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "bottom"
+    )
+  ) +
+  labs(
+    title = "The rural Mid-West and Deep South are primed\nfor tech investment",
+    subtitle = "Emerging and developing tech ecosystems are emphasized",
+    caption = "Source: 2023 O*NET Occupational Data\n                   2019–2023 American Community Survey 5-Year Estimates",
+    y = NULL,
+    x = NULL
+  )
+
+save_plot(
+  fig = fig,
+  export_path = "viz/select_states_co_tech_innovation_map_nsf.jpg",
+  chart_height = 7,
+  add_logo = TRUE,
+  logo_position = "top right",
+  logo_path = "https://rwjf-public.s3.amazonaws.com/Logo-Mark_CORI_Black.svg",
+  logo_scale = 20,
+  img_scale = 1,
+  units = "in",
+  background = "white"
+)
+
+
+```
+
+<!-- <img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access & Innovation rankings across Mid-West rural counties" style="width: 100%;"/> -->
+
+```{r stats, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+
+# co_tech_percentile Stats ----
+df <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  )
+
+
+# All
+stats <- df %>% 
+filter(co_tech_percentile < 0.25) %>% 
+  summarise(
+    total_below_25th = n(),
+    rural_below_25th = sum(is_rural == "Rural", na.rm = TRUE),
+    prop_rural_below_25th = mean(is_rural == "Rural", na.rm = TRUE)
+  )
+
+
+# South
+stats <- df %>% 
+  filter(
+    st_abbrv %in% south_states,
+    co_tech_percentile < 0.25) %>%
+  summarise(
+    total_below_25th = n(),
+    rural_below_25th = sum(is_rural == "Rural", na.rm = TRUE),
+    prop_rural_below_25th = mean(is_rural == "Rural", na.rm = TRUE)
+  )
+
+
+
+# Full proportions
+stats <- df %>% 
+  filter(
+    is_rural == "Rural"
+    ) %>%
+  summarise(
+    prop_below_50th = mean(co_tech_percentile < 0.5, na.rm = TRUE)
+  )
+
+
+# tech_hub_co_ord7 stats ----
+df <- map_dta %>% 
+  left_join(
+    rural,
+    by = "geoid"
+  ) %>% 
+  group_by(
+    tech_hub_co_ord7
+  ) %>% 
+  mutate(
+    tech_hub_co_ord7 = factor(tech_hub_co_ord7,
+                              levels = c("Very Low", 
+                              "Low",
+                              "Mid-Low",
+                              "Mid",
+                              "Mid-High",
+                              "High",
+                              "Very High"))) %>%
+  filter(
+    st_abbrv %in% mid_west
+  ) %>%
+  summarise(
+    total = n(),
+    rural_count = sum(is_rural == "Rural", na.rm = TRUE),
+    proportion = rural_count / total
+  ) %>% 
+  print(df)
+
+
+library(corrplot)
+
+# Assuming your data is in a data frame called 'df'
+# Replace 'df' with the actual name of your data frame
+
+# Select the variables for correlation analysis
+nsf_dta <- nsf_dta %>% 
+  mutate(
+    tech_hub_co_ord7_numeric = recode(tech_hub_co_ord7,
+                                      "Very Low" = "1",
+                                      "Low" =      "2",
+                                      "Mid-Low" =  "3",
+                                      "Mid" =      "4",
+                                      "Mid-High" = "5",
+                                      "High" =     "6",
+                                      "Very High" ="7"),
+    tech_hub_co_ord7_numeric = as.numeric(tech_hub_co_ord7_numeric)
+  )
+
+data_subset <- nsf_dta[, c("tech_hub_co_ord7_numeric", "mhi", "pct_poverty", "pct_bipoc", "net_migration", "ht_5x_biz")]
+
+# Remove rows with missing values
+data_subset <- na.omit(data_subset)
+
+# Calculate the correlation matrix
+correlation_matrix <- cor(data_subset)
+
+# Print the correlation matrix
+print(correlation_matrix)
+
+# Visualize the correlation matrix using corrplot
+corrplot(correlation_matrix, method = "circle") # You can change the method as needed
+
+```
+
+``` {r interactive map, warning = FALSE, message = FALSE, echo = FALSE}
+
+library(leaflet)
+library(sf)
+library(dplyr)
+library(htmlwidgets)
+library(htmltools)
+library(tigris)
+library(rnaturalearth)
+
+score_labels <- c(
+  "1" = "Emerging Potential (1)",
+  "2" = "Early Stage Growth (2)",
+  "3" = "Developing (3)",
+  "4" = "Growing Tech Presence (4)",
+  "5" = "Expanding Ecosystem (5)",
+  "6" = "Established Innovation Hub (6)",
+  "7" = "Innovation Leader (7)"
+)
+
+# Load county geometries for lower 48 states (excluding AK, HI, PR)
+county_geo <- counties(cb = TRUE, resolution = "20m", year = 2023) %>%
+  filter(!STATEFP %in% c("02", "15", "72")) %>%
+  st_transform(crs = 4326)
+
+# Load state geometries for lower 48 states
+state_geo <- states(cb = TRUE, resolution = "20m", year = 2023) %>%
+  filter(!STATEFP %in% c("02", "15", "72")) %>%
+  st_transform(crs = 4326)
+
+# US outline (national border)
+us_outline <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf") %>%
+  filter(admin == "United States of America") %>%
+  st_transform(crs = 4326)
+
+# Prepare nsf_dta: ensure GEOID is character and year integer
+nsf_dta <- nsf_dta %>%
+  mutate(
+    year = as.integer(year),
+    st_fips = stringr::str_sub(geoid, 1, 2)
+  )
+
+# Join score data to county geometry (make sure join columns match)
+nsf_geo <- county_geo %>%
+  left_join(nsf_dta, 
+            by = c("GEOID" = "geoid")) %>%
+  filter(!is.na(tech_hub_numeric))
+
+# Split data by year to create layers per year
+year_list <- sort(unique(nsf_geo$year))
+year_data <- split(nsf_geo, nsf_geo$year)
+
+# Color palette for numeric scale 1–7
+pal <- colorNumeric(
+  palette = c(
+    "#BA3434", "#D95C4E", "#E89A79", "#F2D2B6",
+    "#B5D4E3", "#7CB6CC", "#245871"
+  ),
+  domain = nsf_geo$tech_hub_numeric
+)
+
+# Build the base leaflet map
+leaf_map <- leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  
+  # Add US outline
+  addPolygons(
+    data = us_outline,
+    color = "grey50",
+    weight = 1,
+    fill = FALSE
+  )
+
+
+# Add one polygon layer per year with group names "Year: XXXX"
+for (yr in year_list) {
+  leaf_map <- leaf_map %>%
+    addPolygons(
+      data = year_data[[as.character(yr)]],
+      fillColor = ~pal(tech_hub_numeric),
+      fillOpacity = 0.85,
+      color = "#ffffff",
+      weight = 0.4,
+      label = ~paste0(
+        NAME, " County, ", STUSPS,
+        " Score: ", score_labels[as.character(tech_hub_numeric)]
+      ),
+      layerId = ~GEOID,  # unique id per polygon
+      highlightOptions = highlightOptions(weight = 1, color = "#333333", bringToFront = TRUE),
+      labelOptions = labelOptions(
+        style = list("font-weight" = "normal", padding = "3px 8px"),
+        textsize = "13px",
+        direction = "auto",
+        sticky = TRUE  # label follows mouse (try TRUE or FALSE to see which you prefer)
+      ),
+      group = paste0("Year: ", yr)
+    )
+}
+# Add state borders AFTER the county layers
+leaf_map <- leaf_map %>%
+  addPolygons(
+    data = state_geo,
+    color = "#333333",
+    weight = .5,
+    fill = FALSE,
+    opacity = .7
+  )
+
+# Create HTML dropdown for year selection
+dropdown_html <- HTML(sprintf('
+  <div style="position: absolute; z-index: 999; background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); top: 10px; left: 50px; font-family: Arial, sans-serif;">
+    <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">Year Selection</div>
+    <select id="yearSelect" onchange="changeYear(this.value)" style="font-size: 12px; padding: 2px;">
+      %s
+    </select>
+  </div>',
+  paste(sprintf("<option value='Year: %s'>%s</option>", year_list, year_list), collapse = "\n")
+))
+
+# Create custom legend HTML
+legend_html <- HTML('
+  <div style="
+    padding: 3px 6px; 
+    background: white; 
+    border-radius: 4px; 
+    text-align: center; 
+    font-size: 10px; 
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 5px rgba(0,0,0,0.15);">
+    <strong style="font-size: 11px;">Tech Access & Opportunity Score</strong><br>
+    <span style="background-color:#BA3434; padding:2px 8px; color:white; border-radius: 2px;">Emerging</span>
+    <span style="background-color:#D95C4E; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#E89A79; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#F2D2B6; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#B5D4E3; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#7CB6CC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#245871; padding:2px 8px; color:white; border-radius: 2px;">Leader</span>
+  </div>
+')
+
+# Add controls and layers control; initially show only latest year
+leaf_map <- leaf_map %>%
+  addControl(html = dropdown_html, position = "topright") %>%
+  addControl(html = legend_html, position = "bottomleft") %>%
+  addLayersControl(
+    overlayGroups = paste0("Year: ", year_list),
+    options = layersControlOptions(collapsed = TRUE)
+  ) %>%
+  hideGroup(paste0("Year: ", year_list[-length(year_list)])) %>%  # hide all but latest year
+  setView(lng = -98, lat = 39, zoom = 4)
+
+# JavaScript to toggle layers when dropdown changes
+leaf_map <- htmlwidgets::onRender(
+  leaf_map,
+  '
+  function(el, x) {
+    window.changeYear = function(val) {
+      var map = this;
+      var groups = x.overlayGroups;
+      groups.forEach(function(g) {
+        if (g === val) {
+          map.addLayer(map.layerManager.getLayer("overlay", g));
+        } else {
+          map.removeLayer(map.layerManager.getLayer("overlay", g));
+        }
+      });
+    }.bind(this);
+  }
+  ',
+  data = list(overlayGroups = paste0("Year: ", year_list))
+)
+
+# Save as standalone html file
+htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfcontained = TRUE)
+
+```
