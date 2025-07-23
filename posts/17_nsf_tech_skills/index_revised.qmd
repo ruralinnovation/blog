@@ -1,5 +1,6 @@
 ---
 title: "Turning data into progress: Guiding rural tech policy with measurable insight"
+subtitle: "Unlocking Tech Access and Opportunity Across Rural America"
 author: "Lindsey Elliott"
 date: "2025-07-15"
 categories: [rural, tech access, measurement, geography]
@@ -9,7 +10,6 @@ editor:
     wrap: 72
 ---
 
-### **A Bright Future: Unlocking Tech Access and Opportunity Across Rural America**
 
 While urban centers have long been synonymous with tech innovation, a
 powerful transformation is on the horizon. Researchers at the Center on
@@ -695,8 +695,14 @@ us_outline <- ne_countries(scale = "medium", returnclass = "sf") %>%
   ) %>%
   setView(lng = -98, lat = 39, zoom = 4)
 
+viz_dir <- "viz"
+
+if (!dir.exists(viz_dir)) {
+  dir.create(viz_dir)
+}
+
 # Save widget
-htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfcontained = TRUE)
+htmlwidgets::saveWidget(leaf_map, paste0(viz_dir, "/nsf_interactive_tech_map.html"), selfcontained = TRUE)
 
 
 ```
@@ -709,6 +715,8 @@ library(htmlwidgets)
 library(htmltools)
 library(tigris)
 library(rnaturalearth)
+# missing this...
+library(rnaturalearthdata)
 
 score_labels <- c(
   "1" = "Emerging Potential (1)",
