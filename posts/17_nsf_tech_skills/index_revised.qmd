@@ -30,12 +30,12 @@ At the heart of this initiative is a simple but powerful idea: access to the dig
 geography. To bring this vision to life, CORI researchers have developed a
 scale that measures high-tech employment, business activity,
 high-tech job postings, and related services to produce a single,
-easy to understand score for each U.S. county. Ranging from **Very Low**
-to **Very High**, this score gives communities a roadmap for growth and
+easy to understand score for each U.S. county. Ranging from **Emerging Potential**
+to **Innovation Leader**, this score gives communities a roadmap for growth and
 provides a compelling tool for crafting pragmatic, locally-informed tech
 policy.
 
-### **Rural potential: Not just a possiblity--it's already happening **
+### **Rural potential: Not just a possibility--it's already happening **
 
 While it's true that urban centers currently dominate the tech landscape, rural America
 holds enormous untapped potential, and that potential is already being
@@ -93,7 +93,7 @@ nation stands to gain by uplifting them. Through CORI's **Tech Access and
 Opportunity Score**, we can craft smart, inclusive policies that target
 real needs, drive innovation, and close the rural-urban divide.
 
-### **Optimism, Innovation, and Impact**
+### **CORI’s mission: Innovative pathways for rural tech**
 
 The launch of CORI's new research marks a turning point. Since America's turn toward a digital economy, the absence of data has made it easy to
 overlook rural communities in tech-driven conversations. Today, CORI is equipped with
@@ -106,7 +106,7 @@ inclusive, and accessible to all.
 
 ### **An interactive look at tech access and opportunity**
 
-Did you find CORI's **Tech Access and Opportunity Score** as interesting as we did? Take a look at the interactive map to find your county. The map displays the scores for all counties in the U.S. for the year 2023. Hover over a selected county and compare it to its neighbors.
+Did you find CORI's **Tech Access and Opportunity Score** as interesting as we did? Take a look at the interactive map to find your county. The map displays the scores for all counties in the U.S. for the year 2023. Hover over a selected county to compare with its neighbors.
 
 <iframe src="viz/nsf_interactive_tech_map.html" width="100%" height="600px" style="border:none;"></iframe>
 
@@ -466,7 +466,7 @@ fig <- ggplot() +
     colours = gradient_colors,
     limits = c(1, 7),
     breaks = c(1, 7),
-    labels = c("Very Low", "Very High"),
+    labels = c("Emerging Potential", "Innovation Leader"),
     guide = guide_colorbar(
       direction = "horizontal",
       title.position = "top",
@@ -613,55 +613,49 @@ library(sf)
 library(dplyr)
 library(tigris)
 library(rnaturalearth)
+library(htmlwidgets)
 
 score_labels <- c(
-  "1" = "Emerging Potential (1)",
-  "2" = "Early Stage Growth (2)",
-  "3" = "Developing (3)",
-  "4" = "Growing Tech Presence (4)",
-  "5" = "Expanding Ecosystem (5)",
-  "6" = "Established Innovation Hub (6)",
-  "7" = "Innovation Leader (7)"
+  "1" = "1 - Emerging Potential",
+  "2" = "2 - Early Stage Growth",
+  "3" = "3 - Developing",
+  "4" = "4 - Growing Tech Presence",
+  "5" = "5 - Expanding Ecosystem",
+  "6" = "6 - Established Innovation Hub",
+  "7" = "7 - Innovation Leader"
 )
 
+# Color palette
 pal <- colorNumeric(
-  palette = c("#BA3434", 
-              "#D95C4E",
-              "#E89A79",
-              "#F2D2B6", 
-              "#B5D4E3", 
-              "#7CB6CC",
-              "#245871"),
+  palette = c("#BA3434", "#D95C4E", "#E89A79", "#F2D2B6", 
+              "#B5D4E3", "#7CB6CC", "#245871"),
   domain = 1:7,
   na.color = "#eeeeee"
 )
 
-# Load 2023 county geometries (exclude AK, HI, PR)
+# Load geometries
 county_geo <- counties(cb = TRUE, resolution = "20m", year = 2023) %>%
   filter(!STATEFP %in% c("02", "15", "72")) %>%
   st_transform(crs = 4326)
 
-# Prepare 2023 data only
-nsf_2023 <- nsf_dta %>%
-  filter(year == 2023) %>%
-  mutate(geoid = as.character(geoid))
-
-# Join data to geometry for 2023
-map_data <- county_geo %>%
-  left_join(nsf_2023, by = c("GEOID" = "geoid"))
-
-# Load US states outline (exclude AK, HI, PR)
 state_geo <- states(cb = TRUE, resolution = "20m", year = 2023) %>%
   filter(!STATEFP %in% c("02", "15", "72")) %>%
   st_transform(crs = 4326)
 
-# US outline for context
 us_outline <- ne_countries(scale = "medium", returnclass = "sf") %>%
   filter(admin == "United States of America") %>%
   st_transform(crs = 4326)
 
-# Build leaflet map
- leaf_map <- leaflet(map_data) %>%
+# Load and join data
+nsf_2023 <- nsf_dta %>%
+  filter(year == 2023) %>%
+  mutate(geoid = as.character(geoid))
+
+map_data <- county_geo %>%
+  left_join(nsf_2023, by = c("GEOID" = "geoid"))
+
+# Build map
+leaf_map <- leaflet(map_data) %>%
   addProviderTiles("CartoDB.Positron") %>%
   addPolygons(
     fillColor = ~pal(tech_hub_numeric),
@@ -693,11 +687,28 @@ us_outline <- ne_countries(scale = "medium", returnclass = "sf") %>%
     weight = 1,
     fill = FALSE
   ) %>%
+  addControl(html = HTML(
+    "<div style='position: relative; bottom: 0px; background: white; padding: 7px 7px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.3); font-size: 12px;'>
+      <b>Tech Hub Progression</b><br>
+      <div style='display: flex; gap: 4px; margin-top: 4px;'>
+        <div style='background-color:#BA3434;width:20px;height:10px;border-radius:2px;'></div>
+        <div style='background-color:#D95C4E;width:20px;height:10px;border-radius:2px;'></div>
+        <div style='background-color:#E89A79;width:20px;height:10px;border-radius:2px;'></div>
+        <div style='background-color:#F2D2B6;width:20px;height:10px;border-radius:2px;'></div>
+        <div style='background-color:#B5D4E3;width:20px;height:10px;border-radius:2px;'></div>
+        <div style='background-color:#7CB6CC;width:20px;height:10px;border-radius:2px;'></div>
+        <div style='background-color:#245871;width:20px;height:10px;border-radius:2px;'></div>
+      </div>
+      <div style='display:flex;justify-content:space-between;margin-top:2px;'>
+        <span>Potential</span>
+        <span style='margin-left:auto;'>Leader</span>
+      </div>
+    </div>"
+  ), position = "bottomleft") %>%
   setView(lng = -98, lat = 39, zoom = 4)
 
-# Save widget
+# Save map
 htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfcontained = TRUE)
-
 
 ```
 
