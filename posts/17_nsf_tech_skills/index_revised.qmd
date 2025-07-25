@@ -106,12 +106,12 @@ inclusive, and accessible to all.
 
 ### **An interactive look at tech access and opportunity**
 
-Did you find CORI's **Tech Access and Opportunity Score** as interesting as we did? Take a look at the interactive map to find your county. The map displays the scores for all counties in the U.S. for the year 2023. Hover over a selected county to compare with its neighbors.
+Did you find CORI's **Tech Access and Opportunity Score** as interesting as we did? Take a look at the interactive map to find your county. The map displays the scores for all counties in the contiguous U.S. from 2010 - 2023. The widget in the top right of the map allows you to toggle between years. Hover over a selected county to compare with its neighbors, or toggle years to see how the county has developed over time.
 
 <iframe src="viz/nsf_interactive_tech_map.html" width="100%" height="600px" style="border:none;"></iframe>
 
 
-```{r Setup, echo = FALSE, message = FALSE, warning = FALSE}
+```{r Setup, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
 
 library(tidyverse)
 library(here)
@@ -138,7 +138,7 @@ i_am("blog/posts/17_nsf_tech_skills/index.qmd")
 
 ```
 
-```{r Data, echo = FALSE, message = FALSE, warning = FALSE}
+```{r Data, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
 
 con <- connect_to_db("proj_nsf")
 nsf_dta <- DBI::dbReadTable(con, "nsf") %>% 
@@ -275,15 +275,24 @@ select_states_dta <- map_dta %>%
   )
 # Map colors ----
 
+# numeric_colors <- c(
+#   "1" = "#BA3434",
+#   "2" = "#D95C4E",
+#   "3" = "#E89A79",
+#   "4" = "#F2D2B6",
+#   "5" = "#B5D4E3",
+#   "6" = "#7CB6CC",
+#   "7" = "#245871"
+# )
+
 numeric_colors <- c(
-  "1" = "#BA3434",
-  "2" = "#D95C4E",
-  "3" = "#E89A79",
-  "4" = "#F2D2B6",
-  "5" = "#B5D4E3",
-  "6" = "#7CB6CC",
-  "7" = "#245871"
-)
+  "1" = "#002914", 
+  "2" = "#1F5131", 
+  "3" = "#A8D2AC", 
+  "4" = "#E0F7D6", 
+  "5" = "#B5D4E3", 
+  "6" = "#7CB6CC", 
+  "7" = "#245871")
 
 gradient_colors <- unname(numeric_colors[as.character(1:7)])
 
@@ -348,7 +357,7 @@ save_plot(
 
 <!-- <img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Innovation rankings across the United States" style="width: 100%;"/> -->
 
-```{r Rural map, echo = FALSE, message = FALSE, warning = FALSE}
+```{r Rural map, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
 
 fig <- ggplot() +
   geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
@@ -407,28 +416,9 @@ save_plot(
 
 <!-- <img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Innovation rankings across rural counties in the United States" style="width: 100%;"/> -->
 
-```{r Midwest + South Rural Map, echo = FALSE, message = FALSE, warning = FALSE}
+```{r Midwest + South Rural Map, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
 
-# select_states_dta <- select_states_dta %>%
-#   mutate(region = case_when(
-#     st_abbrv %in% c("IL", "IN", "IA", "KS", "MI", "MN", "MO", "NE", "ND", "OH", "SD", "WI") ~ "Midwest",
-#     st_abbrv %in% c("DE", "MD", "DC", "VA", "WV", "NC", "SC", "GA", "FL", 
-#                     "KY", "TN", "MS", "AL", "OK", "TX", "AR", "LA") ~ "South",
-#     TRUE ~ NA_character_
-#   ))
-# 
-# region_outlines <- select_states_dta %>%
-#   filter(!is.na(region)) %>%
-#   group_by(region) %>%
-#   summarize(geometry = st_union(geometry), .groups = "drop")
-# 
-# 
-#   geom_sf(data = region_outlines, aes(color = region), fill = NA, linewidth = .4) +
-#   scale_color_manual(
-#     values = c("Midwest" = "#2E86C1", "South" = "grey40"),
-#     guide = "none"  # Or remove this to show in legend
-#   )
-    
+
 # Filter just the "Very Low"/"Low" counties
 very_low_dta <- select_states_dta %>% 
   dplyr::filter(
@@ -447,7 +437,7 @@ fig <- ggplot() +
           show.legend = TRUE) +
 
   # Outline layer for "Very Low" counties
-  geom_sf(data = very_low_dta, fill = NA, color = "black", linewidth = 0.3) +
+  geom_sf(data = very_low_dta, fill = NA, color = "grey20", linewidth = 0.3) +
   
   
   cori.charts::theme_cori_map() +
@@ -607,7 +597,7 @@ corrplot(correlation_matrix, method = "circle") # You can change the method as n
 
 ```
 
-``` {r interactive map year 2023, warning = FALSE, message = FALSE, echo = FALSE}
+``` {r interactive map year 2023, warning = FALSE, message = FALSE, echo = FALSE, eval = FALSE}
 library(leaflet)
 library(sf)
 library(dplyr)
@@ -654,6 +644,14 @@ nsf_2023 <- nsf_dta %>%
 map_data <- county_geo %>%
   left_join(nsf_2023, by = c("GEOID" = "geoid"))
 
+# Tooltip template for sprintf()
+# Tooltip template for leaf_map
+tooltip_template <-
+  paste(sep = " | ",
+    paste0("%s, %s"),
+    "Score: %s"
+  )
+
 # Build map
 leaf_map <- leaflet(map_data) %>%
   addProviderTiles("CartoDB.Positron") %>%
@@ -662,10 +660,14 @@ leaf_map <- leaflet(map_data) %>%
     fillOpacity = 0.85,
     color = "#ffffff",
     weight = 0.4,
-    label = ~paste0(
-      name_co, " County, ", STUSPS,
-      ifelse(is.na(tech_hub_numeric), "", paste0(" | Score: ", score_labels[as.character(tech_hub_numeric)]))
-    ),
+    label = ~(
+      sprintf(
+      tooltip_template,
+      name_co,
+      STUSPS,
+      ifelse(is.na(tech_hub_numeric), "", score_labels[as.character(tech_hub_numeric)])
+    )
+  ),
     highlightOptions = highlightOptions(weight = 2, color = "#000000", bringToFront = TRUE),
     labelOptions = labelOptions(
       style = list("font-weight" = "normal", padding = "4px 8px"),
@@ -712,7 +714,7 @@ htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfconta
 
 ```
 
-``` {r interactive map, warning = FALSE, message = FALSE, echo = FALSE, eval = FALSE}
+``` {r interactive map 2010 - 2023, warning = FALSE, message = FALSE, echo = FALSE, eval = FALSE}
 library(leaflet)
 library(sf)
 library(dplyr)
@@ -722,18 +724,26 @@ library(tigris)
 library(rnaturalearth)
 
 score_labels <- c(
-  "1" = "Emerging Potential (1)",
-  "2" = "Early Stage Growth (2)",
-  "3" = "Developing (3)",
-  "4" = "Growing Tech Presence (4)",
-  "5" = "Expanding Ecosystem (5)",
-  "6" = "Established Innovation Hub (6)",
-  "7" = "Innovation Leader (7)"
+  "1" = "1 - Emerging Potential",
+  "2" = "2 - Early Stage Growth",
+  "3" = "3 - Developing Tech Presence",
+  "4" = "4 - Moderate Tech Ecosystem",
+  "5" = "5 - Expanding Tech Ecosystem",
+  "6" = "6 - Established Innovation Hub",
+  "7" = "7 - Innovation Leader"
 )
 
 pal <- colorNumeric(
-  palette = c("#BA3434", "#D95C4E", "#E89A79", "#F2D2B6", "#B5D4E3", "#7CB6CC", "#245871"),
+  palette = c("#BA3434", 
+              "#D95C4E", 
+              "#E89A79", 
+              "#F2D2B6", 
+              "#B5D4E3", 
+              "#7CB6CC", 
+              "#245871"),
+  
   domain = 1:7,
+  
   na.color = "#eeeeee"
 )
 
@@ -797,7 +807,7 @@ for (yr in names(year_data)) {
         name_co,
         " | Score: ", score_labels[as.character(tech_hub_numeric)]
       ),
-      layerId = ~GEOID,
+      # layerId = NULL,
       highlightOptions = highlightOptions(weight = 1, color = "#333333", bringToFront = TRUE),
       labelOptions = labelOptions(
         style = list("font-weight" = "normal", padding = "3px 8px"),
@@ -805,21 +815,22 @@ for (yr in names(year_data)) {
         direction = "auto",
         sticky = TRUE
       ),
-      group = yr  # group = "2015", "2016", etc.
+      group = yr
     )
 }
 
+  
 # Add state borders on top
 leaf_map <- leaf_map %>%
   addPolygons(
     data = state_geo,
     color = "#333333",
-    weight = 0.5,
+    weight = 0.7,
     fill = FALSE,
-    opacity = 0.7
+    opacity = 0.5
   )
 
-# Dropdown HTML uses year strings (no "Year: " prefix)
+# Radio button for year toggle
 dropdown_html <- HTML(sprintf('
   <div style="position: absolute; z-index: 999; background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); top: 10px; left: 50px; font-family: Arial, sans-serif;">
     <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">Year Selection</div>
@@ -845,19 +856,19 @@ legend_html <- HTML('
     font-family: Arial, sans-serif;
     box-shadow: 0 0 5px rgba(0,0,0,0.15);">
     <strong style="font-size: 11px;">Tech Access & Opportunity Score</strong><br>
-    <span style="background-color:#BA3434; padding:2px 8px; color:white; border-radius: 2px;">Emerging</span>
+    <span style="background-color:#BA3434; padding:2px 8px; color:white; border-radius: 2px;"><b>Potential<b/></span>
     <span style="background-color:#D95C4E; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#E89A79; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#F2D2B6; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#B5D4E3; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#7CB6CC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#245871; padding:2px 8px; color:white; border-radius: 2px;">Leader</span>
+    <span style="background-color:#245871; padding:2px 8px; color:white; border-radius: 2px;"><b>Leader<b/></span>
   </div>
 ')
 
 # Add controls and layers control; hide all but latest year
 leaf_map <- leaf_map %>%
-  addControl(html = dropdown_html, position = "topright") %>%
+  # addControl(html = dropdown_html, position = "topright") %>%
   addControl(html = legend_html, position = "bottomleft") %>%
   addLayersControl(
     overlayGroups = names(year_data),
@@ -866,33 +877,13 @@ leaf_map <- leaf_map %>%
   hideGroup(names(year_data)[-length(year_data)]) %>%
   setView(lng = -98, lat = 39, zoom = 4)
 
-# JavaScript to toggle layers on dropdown change, using keys without "Year: "
-leaf_map <- htmlwidgets::onRender(
-  leaf_map,
-  '
-  function(el, x) {
-    window.changeYear = function(val) {
-      var map = this;
-      var groups = x.overlayGroups;
-      groups.forEach(function(g) {
-        if (g === val) {
-          map.addLayer(map.layerManager.getLayer("overlay", g));
-        } else {
-          map.removeLayer(map.layerManager.getLayer("overlay", g));
-        }
-      });
-    }.bind(this);
-  }
-  ',
-  data = list(overlayGroups = names(year_data))
-)
 
 # Save widget
 htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfcontained = TRUE)
 
 ```
 
-``` {r attempt, warning = FALSE, echo = FALSE, message = FALSE, eval = FALSE}
+``` {r interactive map 2010 - 2023 with state borders and colors, warning = FALSE, message = FALSE, echo = FALSE, eval = FALSE}
 library(leaflet)
 library(sf)
 library(dplyr)
@@ -901,88 +892,77 @@ library(htmltools)
 library(tigris)
 library(rnaturalearth)
 
-# Your score_labels and palette (same as before)
+# Labels and palette
 score_labels <- c(
-  "1" = "Emerging Potential (1)",
-  "2" = "Early Stage Growth (2)",
-  "3" = "Developing (3)",
-  "4" = "Growing Tech Presence (4)",
-  "5" = "Expanding Ecosystem (5)",
-  "6" = "Established Innovation Hub (6)",
-  "7" = "Innovation Leader (7)"
+  "1" = "1 - Emerging Potential",
+  "2" = "2 - Early Stage Growth",
+  "3" = "3 - Developing Tech Presence",
+  "4" = "4 - Moderate Tech Ecosystem",
+  "5" = "5 - Expanding Tech Ecosystem",
+  "6" = "6 - Established Innovation Hub",
+  "7" = "7 - Innovation Leader"
 )
 
 pal <- colorNumeric(
-  palette = c("#BA3434", "#D95C4E", "#E89A79", "#F2D2B6", "#B5D4E3", "#7CB6CC", "#245871"),
-  domain = 1:7
+  palette = c("#002914", 
+              "#1F5131", 
+              "#A8D2AC", 
+              "#E0F7D6", 
+              "#B5D4E3", 
+              "#7CB6CC", 
+              "#245871"),
+  domain = 1:7,
+  na.color = "#eeeeee"
 )
 
-# Load 2023 county geometries (lower 48 states)
+# Load geometries
 county_geo <- counties(cb = TRUE, resolution = "20m", year = 2023) %>%
   filter(!STATEFP %in% c("02", "15", "72")) %>%
-  st_transform(crs = 4326) %>%
-  select(GEOID, NAME, STUSPS = STATEFP)  # Keep only needed cols
+  st_transform(crs = 4326)
 
-# Prepare nsf_dta: make sure geoid is character, year is integer
-nsf_dta <- nsf_dta %>%
-  mutate(
-    year = as.integer(year),
-    geoid = as.character(geoid)
-  )
-
-# For each year, join nsf_dta to county geometry, but since geometry is fixed,
-# we create a spatial data frame that duplicates geometry per year.
-
-# 1. Create all combinations of GEOID and year 2010:2023
-all_years <- 2010:2023
-all_geo_years <- expand.grid(GEOID = county_geo$GEOID, year = all_years, stringsAsFactors = FALSE)
-
-# 2. Join nsf_dta to this grid to get tech_hub_numeric per GEOID-year
-all_data <- all_geo_years %>%
-  left_join(nsf_dta, by = c("GEOID" = "geoid", "year" = "year"))
-
-# 3. Join geometry from county_geo (just once)
-all_data_sf <- all_data %>%
-  left_join(st_drop_geometry(county_geo), by = "GEOID") %>%
-  left_join(county_geo, by = "GEOID") %>%
-  st_as_sf()
-
-# Filter to only those rows where tech_hub_numeric is NOT NA (optional)
-all_data_sf <- all_data_sf %>%
-  filter(!is.na(tech_hub_numeric))
-
-# Split into a list by year
-year_list <- sort(unique(all_data_sf$year))
-year_data <- split(all_data_sf, all_data_sf$year)
-
-# Load state geometries and US outline as before
 state_geo <- states(cb = TRUE, resolution = "20m", year = 2023) %>%
   filter(!STATEFP %in% c("02", "15", "72")) %>%
   st_transform(crs = 4326)
 
-us_outline <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf") %>%
+us_outline <- ne_countries(scale = "medium", returnclass = "sf") %>%
   filter(admin == "United States of America") %>%
   st_transform(crs = 4326)
 
-# Build leaflet map base
+# Prepare data
+nsf_dta <- nsf_dta %>%
+  mutate(year = as.integer(year), geoid = as.character(geoid))
+
+all_years <- 2010:2023
+all_geo_years <- expand.grid(GEOID = county_geo$GEOID, year = all_years, stringsAsFactors = FALSE)
+
+all_data <- all_geo_years %>%
+  left_join(nsf_dta, by = c("GEOID" = "geoid", "year" = "year")) %>%
+  left_join(st_drop_geometry(county_geo), by = "GEOID") %>%
+  left_join(county_geo, by = "GEOID") %>%
+  st_as_sf() %>%
+  filter(!is.na(tech_hub_numeric))
+
+# Split into yearly groups
+year_list <- sort(unique(all_data$year))
+year_data <- split(all_data, all_data$year)
+names(year_data) <- as.character(year_list)
+
+# Build map and define high z-index pane for state borders
 leaf_map <- leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
   addProviderTiles("CartoDB.Positron") %>%
+  addMapPane("state-borders", zIndex = 420) %>%
   addPolygons(data = us_outline, color = "grey50", weight = 1, fill = FALSE)
 
-# Add polygons per year (grouped layers)
-for (yr in year_list) {
+# Add yearly data layers
+for (yr in names(year_data)) {
   leaf_map <- leaf_map %>%
     addPolygons(
-      data = year_data[[as.character(yr)]],
+      data = year_data[[yr]],
       fillColor = ~pal(tech_hub_numeric),
       fillOpacity = 0.85,
       color = "#ffffff",
       weight = 0.4,
-      label = ~paste0(
-        name_co,
-        " Score: ", score_labels[as.character(tech_hub_numeric)]
-      ),
-      layerId = ~GEOID,
+      label = ~paste0(name_co, " | Score: ", score_labels[as.character(tech_hub_numeric)]),
       highlightOptions = highlightOptions(weight = 1, color = "#333333", bringToFront = TRUE),
       labelOptions = labelOptions(
         style = list("font-weight" = "normal", padding = "3px 8px"),
@@ -990,35 +970,57 @@ for (yr in year_list) {
         direction = "auto",
         sticky = TRUE
       ),
-      group = paste0("Year: ", yr)
+      group = yr
     )
 }
 
-# Add state borders on top
+# Add state borders to custom pane so they're always on top
 leaf_map <- leaf_map %>%
   addPolygons(
     data = state_geo,
     color = "#333333",
     weight = 0.5,
     fill = FALSE,
-    opacity = 0.7
+    opacity = 0.7,
+    group = "State Borders",
+    options = pathOptions(pane = "state-borders")
   )
 
-# Dropdown HTML (same logic)
-dropdown_html <- HTML(sprintf('
-  <div style="position: absolute; z-index: 999; background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); top: 10px; left: 50px; font-family: Arial, sans-serif;">
-    <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">Year Selection</div>
-    <select id="yearSelect" onchange="changeYear(this.value)" style="font-size: 12px; padding: 2px;">
-      %s
-    </select>
-  </div>',
-  paste(sprintf("<option value='Year: %s'%s>%s</option>", 
-                year_list, 
-                ifelse(year_list == max(year_list), " selected", ""), 
-                year_list), collapse = "\n")
-))
+# Dropdown HTML and JS
+dropdown_html <- tagList(
+  tags$div(
+    style = "position: absolute; z-index: 999; background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); top: 10px; left: 50px; font-family: Arial, sans-serif;",
+    tags$div("Year Selection", style = "font-weight: bold; font-size: 14px; margin-bottom: 4px;"),
+    tags$select(
+      id = "yearSelect",
+      onchange = "changeYear(this.value)",
+      style = "font-size: 12px; padding: 2px;",
+      lapply(
+        names(year_data),
+        function(yr) {
+          tags$option(value = yr, selected = yr == max(names(year_data)), yr)
+        }
+      )
+    )
+  ),
+  tags$script(HTML("
+    function changeYear(year) {
+      if (!window.leafletMap || !window.leafletMap.layerManager) return;
 
-# Legend HTML (same as before)
+      for (var key in window.leafletMap.layerManager._byGroup) {
+        if (window.leafletMap.layerManager._byGroup.hasOwnProperty(key)) {
+          if (key === year || key === 'State Borders') {
+            window.leafletMap.showGroup(key);
+          } else {
+            window.leafletMap.hideGroup(key);
+          }
+        }
+      }
+    }
+  "))
+)
+
+# Legend HTML
 legend_html <- HTML('
   <div style="
     padding: 3px 6px; 
@@ -1029,52 +1031,36 @@ legend_html <- HTML('
     font-family: Arial, sans-serif;
     box-shadow: 0 0 5px rgba(0,0,0,0.15);">
     <strong style="font-size: 11px;">Tech Access & Opportunity Score</strong><br>
-    <span style="background-color:#BA3434; padding:2px 8px; color:white; border-radius: 2px;">Emerging</span>
-    <span style="background-color:#D95C4E; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#E89A79; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#F2D2B6; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#002914; padding:2px 8px; color:white; border-radius: 2px;"><b>Potential<b/></span>
+    <span style="background-color:#1F5131; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#A8D2AC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#E0F7D6; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#B5D4E3; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#7CB6CC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#245871; padding:2px 8px; color:white; border-radius: 2px;">Leader</span>
+    <span style="background-color:#245871; padding:2px 8px; color:white; border-radius: 2px;"><b>Leader<b/></span>
   </div>
 ')
 
-# Add controls and layers control; show only latest year initially
+# Add controls
 leaf_map <- leaf_map %>%
   addControl(html = dropdown_html, position = "topright") %>%
   addControl(html = legend_html, position = "bottomleft") %>%
   addLayersControl(
-    overlayGroups = paste0("Year: ", year_list),
+    overlayGroups = c(names(year_data), "State Borders"),
     options = layersControlOptions(collapsed = TRUE)
   ) %>%
-  hideGroup(paste0("Year: ", year_list[-length(year_list)])) %>%  # hide all but latest year
+  hideGroup(names(year_data)[-length(year_data)]) %>% 
   setView(lng = -98, lat = 39, zoom = 4)
 
-# JavaScript to toggle layers on dropdown change
-leaf_map <- htmlwidgets::onRender(
-  leaf_map,
-  '
+# Register the map globally for JS control
+leaf_map <- htmlwidgets::onRender(leaf_map, "
   function(el, x) {
-    window.changeYear = function(selectedYear) {
-      var map = this;
-      map.eachLayer(function(layer) {
-        if(layer.options && layer.options.group) {
-          if(layer.options.group === selectedYear) {
-            if(!map.hasLayer(layer)) map.addLayer(layer);
-          } else {
-            if(map.hasLayer(layer)) map.removeLayer(layer);
-          }
-        }
-      });
-    }.bind(this);
+    window.leafletMap = this;
   }
-  ',
-  data = list(overlayGroups = names(year_data))
-)
+")
 
-# Save the map
+# Save the interactive map
 htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfcontained = TRUE)
 
 
 ```
-
