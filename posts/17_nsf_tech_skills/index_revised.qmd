@@ -1,5 +1,6 @@
 ---
-title: "Turning data into progress: Guiding rural tech policy with measurable insight"
+title: "Turning data into progress"
+subtitle: "Guiding rural tech policy with measurable insight"
 author: "Lindsey Elliott"
 date: "2025-07-15"
 categories: [rural, tech access, measurement, geography]
@@ -24,94 +25,109 @@ flourishing and where they can be strategically nurtured, especially in
 rural counties that have historically been left out of the digital
 economy.
 
-### **A smart tool for the high-tech era**
+At the heart of this initiative is a simple but powerful idea: access to
+the digital economy should not depend on geography. To bring this vision
+to life, CORI researchers have developed a scale that measures high-tech
+employment, business activity, high-tech job postings, and related
+services to produce a single, easy to understand score for each U.S.
+county. Ranging from **Emerging Potential** to **Innovation Leader**,
+this score gives communities a roadmap for growth and provides a
+compelling tool for crafting pragmatic, locally-informed tech policy.
 
-At the heart of this initiative is a simple but powerful idea: access to the digital economy should not depend on
-geography. To bring this vision to life, CORI researchers have developed a
-scale that measures high-tech employment, business activity,
-high-tech job postings, and related services to produce a single,
-easy to understand score for each U.S. county. Ranging from **Emerging Potential**
-to **Innovation Leader**, this score gives communities a roadmap for growth and
-provides a compelling tool for crafting pragmatic, locally-informed tech
-policy.
+The interactive map below displays the scores for all counties in the
+contiguous U.S. from 2010 - 2023. The widget in the top right of the map
+allows you to toggle between years. Hover over a selected county to
+compare with its neighbors, or toggle years to see how the county has
+developed over time.
 
-### **Rural potential: Not just a possibility--it's already happening **
+<iframe src="viz/nsf_interactive_tech_map.html" width="100%" height="600px" style="border:none;">
 
-While it's true that urban centers currently dominate the tech landscape, rural America
-holds enormous untapped potential, and that potential is already being
-realized in key places. Our analysis reveals that some rural counties
-have reached the highest levels of tech access and opportunity,
-demonstrating that success is not only possible but already happening.
-These rural innovation hubs serve as models of what’s possible with
+</iframe>
+
+### **Rural tech innovation: Not just a possibility--it's already happening**
+
+While it's true that urban centers currently dominate the tech
+landscape, rural America holds enormous untapped potential, and that
+potential is already being realized in key places. Our analysis reveals
+that some rural counties have reached the highest levels of tech access
+and opportunity, demonstrating that successful tech futures for rural
+communities are not only possible but already happening. Rural
+innovation hubs such as these serve as models of what’s possible with
 targeted investment, community engagement, and smart policy.
 
-Moreover, high-tech jobs in rural communities have the power to be
-transformational. They bring higher wages, foster local
-entrepreneurship, attract talent back home, and contribute to
-diversified, resilient local economies. By identifying where gaps exist
-and where growth is happening, CORI's **Tech Access and Opportunity Score**
-becomes a springboard for identifying and scaling rural success across the country.
-
-### **Closing the gap with insight and intention**
-
-Of course, challenges remain. Our research finds that rural counties are disproportionately
-represented among the areas with lower tech access. But this fact doesn’t
-signify failure--it signals where opportunity for change is greatest. In
-fact, over 85% of rural counties currently fall below the national
-median for tech access, making them ideal targets for future investment
-and innovation initiatives.
+Importantly, high-tech jobs in rural communities are critical because
+they have the power to transform local economies. They bring higher
+wages, foster local entrepreneurship, attract talent back home, and
+contribute to economic resilience and diversification. By identifying
+where gaps exist and where growth is happening, CORI's **Tech Access and
+Opportunity Score** becomes a springboard for identifying and scaling
+rural success across the country.
 
 <img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="RURAL" style="width: 100%;"/>
 
+### **Closing the gap with evidence-based insight**
+
+Of course, challenges remain. Our research finds that rural counties are
+disproportionately represented among the areas with lower tech access.
+But this fact doesn’t signify failure--it signals where opportunity for
+change is greatest. In fact, over 85% of rural counties currently fall
+below the national median for tech access, making them ideal targets for
+future investment and innovation initiatives.
+
 ### **Spotlighting regions for growth**
 
-Within our analysis, several patterns emerge that shine a
-light on key regions for policy focus. This is especially true in the rural Midwest
+Within our analysis, several patterns emerge that shine a light on key
+regions for policy focus. This is especially true in the rural Midwest
 and Deep South. These regions currently face lower access to tech jobs
-and resources, but they are also rich in talent, culture, and
-resilience. With the right support, these areas are poised to become the
-next wave of tech-enabled communities.
+and resources, but they are also rich in talent, culture, and . With the
+right support, these areas are poised to become the next wave of
+tech-enabled communities.
 
-Focused policy efforts are especially important in areas with long-standing racial and
-economic inequities, such as the Deep South. By pinpointing where access is currently limited,
-this tool helps stakeholders prioritize equity-based solutions that
-ensure all Americans—no matter where they live—have a fair shot at
-success in the digital economy.
+Focused policy efforts are especially important in areas with
+long-standing racial and economic inequities, such as the Deep South. By
+pinpointing where access is currently limited, this tool helps
+stakeholders prioritize equity-based solutions that ensure all
+Americans—no matter where they live—have a fair shot at success in the
+digital economy.
 
 <img src="viz/select_states_co_tech_innovation_map_nsf.jpg" alt="Tech Access &amp; Opportunity rankings across Mid-West rural counties" style="width: 100%;"/>
 
 ### **A path forward with tech**
 
-Our analysis also reveals how tech access impacts broader economic health. In places with higher tech access and
-opportunity, median household incomes are significantly higher, poverty
-is lower, and communities are growing. These insights highlight a clear pathway
-forward: **strengthening rural economies with thriving tech ecosystems can catalyze lasting prosperity.**
+Our analysis also reveals how tech access impacts broader economic
+health. In places with higher tech access and opportunity, median
+household incomes are significantly higher, poverty is lower, and
+communities are growing. These insights highlight a clear pathway
+forward: **strengthening rural economies with thriving tech ecosystems
+can catalyze lasting prosperity.**
 
 Rather than framing rural areas in terms of what they lack, this
 research invites us to think about what they can gain—and what the
-nation stands to gain by uplifting them. Through CORI's **Tech Access and
-Opportunity Score**, we can craft smart, inclusive policies that target
-real needs, drive innovation, and close the rural-urban divide.
+nation stands to gain by uplifting them. Through CORI's **Tech Access
+and Opportunity Score**, we can craft smart, inclusive policies that
+target real needs, drive innovation, and close the rural-urban divide.
 
 ### **CORI’s mission: Innovative pathways for rural tech**
 
-The launch of CORI's new research marks a turning point. Since America's turn toward a digital economy, the absence of data has made it easy to
-overlook rural communities in tech-driven conversations. Today, CORI is equipped with
-the tools to change that narrative and drive meaningful, community-based policies that strongly align with the interests of rural America and the millions of people who call it home.   
+The launch of CORI's new research marks a turning point. Since America's
+rapid evolution toward a digital economy, the absence of data has made
+it easy to overlook rural communities in tech-driven conversations.
+Today, CORI is equipped with the tools to change that narrative and
+drive meaningful, community-based policies that strongly align with the
+interests of rural America and the millions of people who call it home.
 
-At CORI, we believe that rural America belongs in the future of tech.
-And with this new resource, we can work together—researchers,
+<center>**At CORI, we believe that rural America belongs in the future
+of tech. And with this new resource, we can work together—researchers,
 policymakers, and communities alike—to ensure that future is bright,
-inclusive, and accessible to all.
+inclusive, and accessible to all.**</center>
 
-### **An interactive look at tech access and opportunity**
+<!-- ### **An interactive look at tech access and opportunity** -->
 
-Did you find CORI's **Tech Access and Opportunity Score** as interesting as we did? Take a look at the interactive map to find your county. The map displays the scores for all counties in the contiguous U.S. from 2010 - 2023. The widget in the top right of the map allows you to toggle between years. Hover over a selected county to compare with its neighbors, or toggle years to see how the county has developed over time.
+<!-- Did you find CORI's **Tech Access and Opportunity Score** as interesting as we did? Take a look at the interactive map to find your county. The map displays the scores for all counties in the contiguous U.S. from 2010 - 2023. The widget in the top right of the map allows you to toggle between years. Hover over a selected county to compare with its neighbors, or toggle years to see how the county has developed over time. -->
 
-<iframe src="viz/nsf_interactive_tech_map.html" width="100%" height="600px" style="border:none;"></iframe>
+<!-- <iframe src="viz/nsf_interactive_tech_map.html" width="100%" height="600px" style="border:none;"></iframe> -->
 
-
-```{r Setup, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+```{r Setup, echo = FALSE, message = FALSE, warning = FALSE, eval = TRUE}
 
 library(tidyverse)
 library(here)
@@ -138,7 +154,7 @@ i_am("blog/posts/17_nsf_tech_skills/index.qmd")
 
 ```
 
-```{r Data, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+```{r Data, echo = FALSE, message = FALSE, warning = FALSE, eval = TRUE}
 
 con <- connect_to_db("proj_nsf")
 nsf_dta <- DBI::dbReadTable(con, "nsf") %>% 
@@ -275,6 +291,17 @@ select_states_dta <- map_dta %>%
   )
 # Map colors ----
 
+
+# numeric_colors <- c(
+#   "1" = "#002914", 
+#   "2" = "#1F5131", 
+#   "3" = "#A8D2AC", 
+#   "4" = "#E0F7D6", 
+#   "5" = "#B5D4E3", 
+#   "6" = "#7CB6CC", 
+#   "7" = "#245871")
+# )
+
 # numeric_colors <- c(
 #   "1" = "#BA3434",
 #   "2" = "#D95C4E",
@@ -285,14 +312,37 @@ select_states_dta <- map_dta %>%
 #   "7" = "#245871"
 # )
 
+# numeric_colors <- c(
+#   "1" = "#B48D47",
+#   "2" = "#DFA73A",
+#   "3" = "#F1CD74",
+#   "4" = "#F6E7B3",
+#   "5" = "#7B9FAB",
+#   "6" = "#4E6F8C",
+#   "7" = "#2C3E58"
+# )
+
+
+# numeric_colors <- c(
+#   "1" = "#DFA73A",
+#   "2" = "#F1CD74",  
+#   "3" = "#FFe473",  
+#   "4" = "#FBF9E9",  
+#   "5" = "#B3CEF9",  
+#   "6" = "#234FBF",  
+#   "7" = "#001A87"   
+# )
+
 numeric_colors <- c(
   "1" = "#002914", 
   "2" = "#1F5131", 
   "3" = "#A8D2AC", 
   "4" = "#E0F7D6", 
-  "5" = "#B5D4E3", 
-  "6" = "#7CB6CC", 
-  "7" = "#245871")
+  "5" = "#B3CEF9",  
+  "6" = "#234FBF",  
+  "7" = "#001A87"
+)
+
 
 gradient_colors <- unname(numeric_colors[as.character(1:7)])
 
@@ -357,7 +407,7 @@ save_plot(
 
 <!-- <img src="viz/co_tech_innovation_score_us_map_nsf.jpg" alt="Tech Access & Innovation rankings across the United States" style="width: 100%;"/> -->
 
-```{r Rural map, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+```{r Rural map, echo = FALSE, message = FALSE, warning = FALSE, eval = TRUE}
 
 fig <- ggplot() +
   geom_sf(data = us_map, color = "black", fill = "grey95", linewidth = 0.05) +
@@ -416,7 +466,7 @@ save_plot(
 
 <!-- <img src="viz/rural_tech_innovation_score_map_nsf.jpg" alt="Tech Access & Innovation rankings across rural counties in the United States" style="width: 100%;"/> -->
 
-```{r Midwest + South Rural Map, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
+```{r Midwest + South Rural Map, echo = FALSE, message = FALSE, warning = FALSE, eval = TRUE}
 
 
 # Filter just the "Very Low"/"Low" counties
@@ -597,293 +647,7 @@ corrplot(correlation_matrix, method = "circle") # You can change the method as n
 
 ```
 
-``` {r interactive map year 2023, warning = FALSE, message = FALSE, echo = FALSE, eval = FALSE}
-library(leaflet)
-library(sf)
-library(dplyr)
-library(tigris)
-library(rnaturalearth)
-library(htmlwidgets)
-
-score_labels <- c(
-  "1" = "1 - Emerging Potential",
-  "2" = "2 - Early Stage Growth",
-  "3" = "3 - Developing",
-  "4" = "4 - Growing Tech Presence",
-  "5" = "5 - Expanding Ecosystem",
-  "6" = "6 - Established Innovation Hub",
-  "7" = "7 - Innovation Leader"
-)
-
-# Color palette
-pal <- colorNumeric(
-  palette = c("#BA3434", "#D95C4E", "#E89A79", "#F2D2B6", 
-              "#B5D4E3", "#7CB6CC", "#245871"),
-  domain = 1:7,
-  na.color = "#eeeeee"
-)
-
-# Load geometries
-county_geo <- counties(cb = TRUE, resolution = "20m", year = 2023) %>%
-  filter(!STATEFP %in% c("02", "15", "72")) %>%
-  st_transform(crs = 4326)
-
-state_geo <- states(cb = TRUE, resolution = "20m", year = 2023) %>%
-  filter(!STATEFP %in% c("02", "15", "72")) %>%
-  st_transform(crs = 4326)
-
-us_outline <- ne_countries(scale = "medium", returnclass = "sf") %>%
-  filter(admin == "United States of America") %>%
-  st_transform(crs = 4326)
-
-# Load and join data
-nsf_2023 <- nsf_dta %>%
-  filter(year == 2023) %>%
-  mutate(geoid = as.character(geoid))
-
-map_data <- county_geo %>%
-  left_join(nsf_2023, by = c("GEOID" = "geoid"))
-
-# Tooltip template for sprintf()
-# Tooltip template for leaf_map
-tooltip_template <-
-  paste(sep = " | ",
-    paste0("%s, %s"),
-    "Score: %s"
-  )
-
-# Build map
-leaf_map <- leaflet(map_data) %>%
-  addProviderTiles("CartoDB.Positron") %>%
-  addPolygons(
-    fillColor = ~pal(tech_hub_numeric),
-    fillOpacity = 0.85,
-    color = "#ffffff",
-    weight = 0.4,
-    label = ~(
-      sprintf(
-      tooltip_template,
-      name_co,
-      STUSPS,
-      ifelse(is.na(tech_hub_numeric), "", score_labels[as.character(tech_hub_numeric)])
-    )
-  ),
-    highlightOptions = highlightOptions(weight = 2, color = "#000000", bringToFront = TRUE),
-    labelOptions = labelOptions(
-      style = list("font-weight" = "normal", padding = "4px 8px"),
-      textsize = "14px",
-      direction = "auto",
-      sticky = TRUE
-    )
-  ) %>%
-  addPolygons(
-    data = state_geo,
-    color = "#333333",
-    weight = 0.7,
-    fill = FALSE,
-    opacity = 0.7
-  ) %>%
-  addPolygons(
-    data = us_outline,
-    color = "grey50",
-    weight = 1,
-    fill = FALSE
-  ) %>%
-  addControl(html = HTML(
-    "<div style='position: relative; bottom: 0px; background: white; padding: 7px 7px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.3); font-size: 12px;'>
-      <b>Tech Hub Progression</b><br>
-      <div style='display: flex; gap: 4px; margin-top: 4px;'>
-        <div style='background-color:#BA3434;width:20px;height:10px;border-radius:2px;'></div>
-        <div style='background-color:#D95C4E;width:20px;height:10px;border-radius:2px;'></div>
-        <div style='background-color:#E89A79;width:20px;height:10px;border-radius:2px;'></div>
-        <div style='background-color:#F2D2B6;width:20px;height:10px;border-radius:2px;'></div>
-        <div style='background-color:#B5D4E3;width:20px;height:10px;border-radius:2px;'></div>
-        <div style='background-color:#7CB6CC;width:20px;height:10px;border-radius:2px;'></div>
-        <div style='background-color:#245871;width:20px;height:10px;border-radius:2px;'></div>
-      </div>
-      <div style='display:flex;justify-content:space-between;margin-top:2px;'>
-        <span>Potential</span>
-        <span style='margin-left:auto;'>Leader</span>
-      </div>
-    </div>"
-  ), position = "bottomleft") %>%
-  setView(lng = -98, lat = 39, zoom = 4)
-
-# Save map
-htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfcontained = TRUE)
-
-```
-
-``` {r interactive map 2010 - 2023, warning = FALSE, message = FALSE, echo = FALSE, eval = FALSE}
-library(leaflet)
-library(sf)
-library(dplyr)
-library(htmlwidgets)
-library(htmltools)
-library(tigris)
-library(rnaturalearth)
-
-score_labels <- c(
-  "1" = "1 - Emerging Potential",
-  "2" = "2 - Early Stage Growth",
-  "3" = "3 - Developing Tech Presence",
-  "4" = "4 - Moderate Tech Ecosystem",
-  "5" = "5 - Expanding Tech Ecosystem",
-  "6" = "6 - Established Innovation Hub",
-  "7" = "7 - Innovation Leader"
-)
-
-pal <- colorNumeric(
-  palette = c("#BA3434", 
-              "#D95C4E", 
-              "#E89A79", 
-              "#F2D2B6", 
-              "#B5D4E3", 
-              "#7CB6CC", 
-              "#245871"),
-  
-  domain = 1:7,
-  
-  na.color = "#eeeeee"
-)
-
-# Load 2023 county geometries
-county_geo <- counties(cb = TRUE, resolution = "20m", year = 2023) %>%
-  filter(!STATEFP %in% c("02", "15", "72")) %>%
-  st_transform(crs = 4326)
-
-# Prepare nsf_dta
-nsf_dta <- nsf_dta %>%
-  mutate(year = as.integer(year), geoid = as.character(geoid))
-
-# Create grid of GEOID and years 2010-2023
-all_years <- 2010:2023
-all_geo_years <- expand.grid(GEOID = county_geo$GEOID, year = all_years, stringsAsFactors = FALSE)
-
-# Join data and geometry
-all_data <- all_geo_years %>%
-  left_join(nsf_dta, by = c("GEOID" = "geoid", "year" = "year")) %>%
-  left_join(st_drop_geometry(county_geo), by = "GEOID") %>%
-  left_join(county_geo, by = "GEOID") %>%
-  st_as_sf()
-
-# Filter out missing tech_hub_numeric
-all_data <- all_data %>% filter(!is.na(tech_hub_numeric))
-
-# Split by year WITHOUT "Year: " prefix
-year_list <- sort(unique(all_data$year))
-year_data <- split(all_data, all_data$year)
-names(year_data) <- as.character(year_list)  # Keys like "2015", "2016", etc.
-
-# Load state geometry and US outline
-state_geo <- states(cb = TRUE, resolution = "20m", year = 2023) %>%
-  filter(!STATEFP %in% c("02", "15", "72")) %>%
-  st_transform(crs = 4326)
-
-us_outline <- ne_countries(scale = "medium", returnclass = "sf") %>%
-  filter(admin == "United States of America") %>%
-  st_transform(crs = 4326)
-
-# Build leaflet map base
-leaf_map <- leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
-  addProviderTiles("CartoDB.Positron") %>%
-  addPolygons(
-    data = us_outline,
-    color = "grey50",
-    weight = 1,
-    fill = FALSE
-  )
-
-# Add polygons per year with group = year (string only)
-for (yr in names(year_data)) {
-  leaf_map <- leaf_map %>%
-    addPolygons(
-      data = year_data[[yr]],
-      fillColor = ~pal(tech_hub_numeric),
-      fillOpacity = 0.85,
-      color = "#ffffff",
-      weight = 0.4,
-      label = ~paste0(
-        name_co,
-        " | Score: ", score_labels[as.character(tech_hub_numeric)]
-      ),
-      # layerId = NULL,
-      highlightOptions = highlightOptions(weight = 1, color = "#333333", bringToFront = TRUE),
-      labelOptions = labelOptions(
-        style = list("font-weight" = "normal", padding = "3px 8px"),
-        textsize = "13px",
-        direction = "auto",
-        sticky = TRUE
-      ),
-      group = yr
-    )
-}
-
-  
-# Add state borders on top
-leaf_map <- leaf_map %>%
-  addPolygons(
-    data = state_geo,
-    color = "#333333",
-    weight = 0.7,
-    fill = FALSE,
-    opacity = 0.5
-  )
-
-# Radio button for year toggle
-dropdown_html <- HTML(sprintf('
-  <div style="position: absolute; z-index: 999; background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); top: 10px; left: 50px; font-family: Arial, sans-serif;">
-    <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">Year Selection</div>
-    <select id="yearSelect" onchange="changeYear(this.value)" style="font-size: 12px; padding: 2px;">
-      %s
-    </select>
-  </div>',
-  paste(sprintf("<option value='%s'%s>%s</option>",
-                names(year_data),
-                ifelse(names(year_data) == max(names(year_data)), " selected", ""),
-                names(year_data)
-  ), collapse = "\n")
-))
-
-# Legend HTML (same as before)
-legend_html <- HTML('
-  <div style="
-    padding: 3px 6px; 
-    background: white; 
-    border-radius: 4px; 
-    text-align: center; 
-    font-size: 10px; 
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 5px rgba(0,0,0,0.15);">
-    <strong style="font-size: 11px;">Tech Access & Opportunity Score</strong><br>
-    <span style="background-color:#BA3434; padding:2px 8px; color:white; border-radius: 2px;"><b>Potential<b/></span>
-    <span style="background-color:#D95C4E; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#E89A79; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#F2D2B6; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#B5D4E3; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#7CB6CC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#245871; padding:2px 8px; color:white; border-radius: 2px;"><b>Leader<b/></span>
-  </div>
-')
-
-# Add controls and layers control; hide all but latest year
-leaf_map <- leaf_map %>%
-  # addControl(html = dropdown_html, position = "topright") %>%
-  addControl(html = legend_html, position = "bottomleft") %>%
-  addLayersControl(
-    overlayGroups = names(year_data),
-    options = layersControlOptions(collapsed = TRUE)
-  ) %>%
-  hideGroup(names(year_data)[-length(year_data)]) %>%
-  setView(lng = -98, lat = 39, zoom = 4)
-
-
-# Save widget
-htmlwidgets::saveWidget(leaf_map, "viz/nsf_interactive_tech_map.html", selfcontained = TRUE)
-
-```
-
-``` {r interactive map 2010 - 2023 with state borders and colors, warning = FALSE, message = FALSE, echo = FALSE, eval = FALSE}
+```{r interactive map 2010 - 2023 with state borders and colors, warning = FALSE, message = FALSE, echo = FALSE, eval = TRUE}
 library(leaflet)
 library(sf)
 library(dplyr)
@@ -904,13 +668,15 @@ score_labels <- c(
 )
 
 pal <- colorNumeric(
-  palette = c("#002914", 
-              "#1F5131", 
-              "#A8D2AC", 
-              "#E0F7D6", 
-              "#B5D4E3", 
-              "#7CB6CC", 
-              "#245871"),
+  palette = c(numeric_colors <- c(
+   "#002914", 
+   "#1F5131", 
+   "#A8D2AC", 
+   "#E0F7D6", 
+   "#B3CEF9",  
+   "#234FBF",  
+   "#001A87"
+)),
   domain = 1:7,
   na.color = "#eeeeee"
 )
@@ -1035,9 +801,9 @@ legend_html <- HTML('
     <span style="background-color:#1F5131; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#A8D2AC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#E0F7D6; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#B5D4E3; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#7CB6CC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#245871; padding:2px 8px; color:white; border-radius: 2px;"><b>Leader<b/></span>
+    <span style="background-color:#B3CEF9; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#234FBF; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
+    <span style="background-color:#001A87; padding:2px 8px; color:white; border-radius: 2px;"><b>Leader<b/></span>
   </div>
 ')
 
