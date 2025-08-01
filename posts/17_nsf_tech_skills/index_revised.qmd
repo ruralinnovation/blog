@@ -129,23 +129,20 @@ inclusive, and accessible to all.**</center>
 
 ```{r Setup, echo = FALSE, message = FALSE, warning = FALSE, eval = TRUE}
 
-library(tidyverse)
-library(here)
-library(cori.charts)
-library(coriverse)
-library(tigris)
-library(sf)
-library(plotly)
-library(leaflet)
-library(sf)
-library(dplyr)
-library(purrr)
-library(tigris)
-library(rnaturalearth)
-library(htmlwidgets)
-library(htmltools)
-library(stringi)
+packages <- c("tidyverse", "here","cori.charts",  "coriverse", "tigris", "sf", 
+              "plotly", "leaflet", "purrr", "rnaturalearth", "htmlwidgets", 
+              "htmltools", "stringi")
 
+# Install missing packages
+installed <- packages %in% rownames(installed.packages())
+if (any(!installed)) {
+  install.packages(packages[!installed])
+}
+
+# Load all packages
+invisible(lapply(packages, function(pkg) {
+  library(pkg, character.only = TRUE)
+}))
 
 load_fonts()
 
@@ -648,13 +645,7 @@ corrplot(correlation_matrix, method = "circle") # You can change the method as n
 ```
 
 ```{r interactive map 2010 - 2023 with state borders and colors, warning = FALSE, message = FALSE, echo = FALSE, eval = TRUE}
-library(leaflet)
-library(sf)
-library(dplyr)
-library(htmlwidgets)
-library(htmltools)
-library(tigris)
-library(rnaturalearth)
+
 
 # Labels and palette
 score_labels <- c(
@@ -797,13 +788,13 @@ legend_html <- HTML('
     font-family: Arial, sans-serif;
     box-shadow: 0 0 5px rgba(0,0,0,0.15);">
     <strong style="font-size: 11px;">Tech Access & Opportunity Score</strong><br>
-    <span style="background-color:#002914; padding:2px 8px; color:white; border-radius: 2px;"><b>Potential<b/></span>
+    <span style="background-color:#002914; padding:2px 8px; color:white; border-radius: 2px;"><b>Emerging Potential<b/></span>
     <span style="background-color:#1F5131; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#A8D2AC; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#E0F7D6; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#B3CEF9; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
     <span style="background-color:#234FBF; padding:2px 6px; margin: 0 1px; border-radius: 2px;">&nbsp;</span>
-    <span style="background-color:#001A87; padding:2px 8px; color:white; border-radius: 2px;"><b>Leader<b/></span>
+    <span style="background-color:#001A87; padding:2px 8px; color:white; border-radius: 2px;"><b>Innovation Leader<b/></span>
   </div>
 ')
 
