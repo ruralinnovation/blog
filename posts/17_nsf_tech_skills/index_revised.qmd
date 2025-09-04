@@ -807,10 +807,15 @@ leaf_map <- leaf_map %>%
     options = layersControlOptions(collapsed = TRUE)
   ) %>%
   hideGroup(names(year_data)[-length(year_data)]) %>% 
-  setView(lng = -98, lat = 39, zoom = 4)
+  setView(lng = -98, lat = 39, zoom = 4) %>% 
+  addControl(
+    html = "<h2 style='margin: 0; padding: 10px; background: transparent; font-family: sans-serif; border-radius: 5px;'>Opportunity & Access Exploratory Map</h2>",
+    position = "topleft"
+  )
 
 # Register the map globally for JS control
-leaf_map <- htmlwidgets::onRender(leaf_map, "
+leaf_map <- leaf_map %>% 
+htmlwidgets::onRender( "
   function(el, x) {
     window.leafletMap = this;
   }
