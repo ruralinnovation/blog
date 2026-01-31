@@ -1,13 +1,13 @@
 ---
-title: "cori.fcc"
+title: "cori.data.fcc"
 description: "R package for accessing and analyzing FCC broadband data"
 date: 2025-11-20
 categories: ["R Package", "Broadband"]
 tags: ["FCC", "Data Processing", "R"]
 featured: true
-packageName: "cori.fcc"
-githubUrl: "https://github.com/ruralinnovation/cori.fcc"
-installCommand: 'remotes::install_github("ruralinnovation/cori.fcc")'
+packageName: "cori.data.fcc"
+githubUrl: "https://github.com/ruralinnovation/cori.data.fcc"
+installCommand: 'remotes::install_github("ruralinnovation/cori.data.fcc")'
 status: "stable"
 version: "0.2.1"
 maintainer: "CORI MDA Team"
@@ -15,7 +15,7 @@ maintainer: "CORI MDA Team"
 
 ## Overview
 
-The `cori.fcc` package provides tools for downloading, processing, and analyzing FCC broadband data in R. It simplifies access to the National Broadband Map and other FCC data sources.
+The `cori.data.fcc` package provides tools for downloading, processing, and analyzing FCC broadband data in R. It simplifies access to the National Broadband Map and other FCC data sources.
 
 ## Installation
 
@@ -25,14 +25,14 @@ Install the package from GitHub:
 # Install remotes if you haven't already
 install.packages("remotes")
 
-# Install cori.fcc
-remotes::install_github("ruralinnovation/cori.fcc")
+# Install cori.data.fcc
+remotes::install_github("ruralinnovation/cori.data.fcc")
 ```
 
 ## Quick Start
 
 ```r
-library(cori.fcc)
+library(cori.data.fcc)
 
 # Download broadband availability data for a state
 data <- get_broadband_data(state = "VT")
@@ -61,9 +61,9 @@ This package is used in:
 
 ## Documentation
 
-- [GitHub Repository](https://github.com/ruralinnovation/cori.fcc)
-- [Function Reference](https://github.com/ruralinnovation/cori.fcc/wiki)
-- [Example Vignettes](https://github.com/ruralinnovation/cori.fcc/tree/main/vignettes)
+- [GitHub Repository](https://github.com/ruralinnovation/cori.data.fcc)
+- [Function Reference](https://github.com/ruralinnovation/cori.data.fcc/wiki)
+- [Example Vignettes](https://github.com/ruralinnovation/cori.data.fcc/tree/main/vignettes)
 
 ## Related Datasets
 

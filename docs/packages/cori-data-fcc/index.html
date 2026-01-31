@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>cori.fcc | Rural Dataverse</title>
+  <title>cori.data.fcc | Rural Dataverse</title>
 
   <!-- SEO -->
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>cori.fcc | Rural Dataverse</title>
+<title>cori.data.fcc | Rural Dataverse</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="cori.fcc" />
+<meta property="og:title" content="cori.data.fcc" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="R package for accessing and analyzing FCC broadband data" />
 <meta property="og:description" content="R package for accessing and analyzing FCC broadband data" />
-<link rel="canonical" href="https://ruralinnovation.github.io/blog/packages/cori-fcc/" />
-<meta property="og:url" content="https://ruralinnovation.github.io/blog/packages/cori-fcc/" />
+<link rel="canonical" href="https://ruralinnovation.github.io/blog/packages/cori-data-fcc/" />
+<meta property="og:url" content="https://ruralinnovation.github.io/blog/packages/cori-data-fcc/" />
 <meta property="og:site_name" content="Rural Dataverse" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2025-11-20T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="cori.fcc" />
+<meta property="twitter:title" content="cori.data.fcc" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-11-20T00:00:00-05:00","datePublished":"2025-11-20T00:00:00-05:00","description":"R package for accessing and analyzing FCC broadband data","headline":"cori.fcc","mainEntityOfPage":{"@type":"WebPage","@id":"https://ruralinnovation.github.io/blog/packages/cori-fcc/"},"url":"https://ruralinnovation.github.io/blog/packages/cori-fcc/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-11-20T00:00:00-05:00","datePublished":"2025-11-20T00:00:00-05:00","description":"R package for accessing and analyzing FCC broadband data","headline":"cori.data.fcc","mainEntityOfPage":{"@type":"WebPage","@id":"https://ruralinnovation.github.io/blog/packages/cori-data-fcc/"},"url":"https://ruralinnovation.github.io/blog/packages/cori-data-fcc/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -117,10 +117,10 @@
     <nav class="breadcrumb">
       <a href="/blog/">Home</a> /
       <a href="/blog/packages/">R Packages</a> /
-      <span>cori.fcc</span>
+      <span>cori.data.fcc</span>
     </nav>
 
-    <h1>cori.fcc</h1>
+    <h1>cori.data.fcc</h1>
 
     
     <p class="lead">R package for accessing and analyzing FCC broadband data</p>
@@ -141,7 +141,7 @@
     <div class="main-content">
       <h2 id="overview">Overview</h2>
 
-<p>The <code class="language-plaintext highlighter-rouge">cori.fcc</code> package provides tools for downloading, processing, and analyzing FCC broadband data in R. It simplifies access to the National Broadband Map and other FCC data sources.</p>
+<p>The <code class="language-plaintext highlighter-rouge">cori.data.fcc</code> package provides tools for downloading, processing, and analyzing FCC broadband data in R. It simplifies access to the National Broadband Map and other FCC data sources.</p>
 
 <h2 id="installation">Installation</h2>
 
@@ -150,13 +150,13 @@
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Install remotes if you haven't already</span><span class="w">
 </span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"remotes"</span><span class="p">)</span><span class="w">
 
-</span><span class="c1"># Install cori.fcc</span><span class="w">
-</span><span class="n">remotes</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"ruralinnovation/cori.fcc"</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Install cori.data.fcc</span><span class="w">
+</span><span class="n">remotes</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"ruralinnovation/cori.data.fcc"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
 <h2 id="quick-start">Quick Start</h2>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">cori.fcc</span><span class="p">)</span><span class="w">
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">cori.data.fcc</span><span class="p">)</span><span class="w">
 
 </span><span class="c1"># Download broadband availability data for a state</span><span class="w">
 </span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">get_broadband_data</span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"VT"</span><span class="p">)</span><span class="w">
@@ -190,9 +190,9 @@
 <h2 id="documentation">Documentation</h2>
 
 <ul>
-  <li><a href="https://github.com/ruralinnovation/cori.fcc">GitHub Repository</a></li>
-  <li><a href="https://github.com/ruralinnovation/cori.fcc/wiki">Function Reference</a></li>
-  <li><a href="https://github.com/ruralinnovation/cori.fcc/tree/main/vignettes">Example Vignettes</a></li>
+  <li><a href="https://github.com/ruralinnovation/cori.data.fcc">GitHub Repository</a></li>
+  <li><a href="https://github.com/ruralinnovation/cori.data.fcc/wiki">Function Reference</a></li>
+  <li><a href="https://github.com/ruralinnovation/cori.data.fcc/tree/main/vignettes">Example Vignettes</a></li>
 </ul>
 
 <h2 id="related-datasets">Related Datasets</h2>
@@ -208,7 +208,7 @@
         <h3>Installation</h3>
         
         <div class="install-code">
-          <code>remotes::install_github("ruralinnovation/cori.fcc")</code>
+          <code>remotes::install_github("ruralinnovation/cori.data.fcc")</code>
         </div>
         
       </div>
@@ -217,7 +217,7 @@
         <h3>Links</h3>
         <ul class="link-list">
           
-          <li><a href="https://github.com/ruralinnovation/cori.fcc" target="_blank">GitHub Repository</a></li>
+          <li><a href="https://github.com/ruralinnovation/cori.data.fcc" target="_blank">GitHub Repository</a></li>
           
 
           

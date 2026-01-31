@@ -6,7 +6,7 @@ categories: ["Broadband", "Infrastructure"]
 tags: ["FCC", "Connectivity", "Geographic"]
 featured: true
 downloadUrl: "https://broadbandmap.fcc.gov/data-download"
-githubUrl: "https://github.com/ruralinnovation/cori.fcc"
+githubUrl: "https://github.com/ruralinnovation/cori.data.fcc"
 dataFormat: "CSV, Parquet"
 updateFrequency: "Biannual"
 coverage: "United States"
@@ -39,7 +39,7 @@ This dataset is commonly used in:
 
 ## Related Resources
 
-- [cori.fcc R Package](/packages/cori-fcc/)
+- [cori.data.fcc R Package](/packages/cori-data-fcc/)
 - [FCC Data Overview Blog Post](/stories/fcc-data-overview/)
 - [Broadband Equity Project](/projects/broadband-equity/)
 
@@ -48,4 +48,4 @@ This dataset is commonly used in:
 Access the data through:
 - [FCC Broadband Map Download](https://broadbandmap.fcc.gov/data-download)
 - [CORI S3 Bucket](https://s3.amazonaws.com/cori-data/fcc/)
-- [cori.fcc R Package](https://github.com/ruralinnovation/cori.fcc)
+- [cori.data.fcc R Package](https://github.com/ruralinnovation/cori.data.fcc)

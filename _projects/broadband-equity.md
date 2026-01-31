@@ -9,7 +9,7 @@ projectUrl: "https://broadband-equity.ruralinnovation.us"
 status: "active"
 team: ["drew-rosebush", "camden-blatchly", "olivier-leroy"]
 usesDatasets: ["fcc-broadband"]
-usesPackages: ["cori-fcc"]
+usesPackages: ["cori-data-fcc"]
 usesResources: ["geographic-crosswalks"]
 ---
 
@@ -45,7 +45,7 @@ Our analysis combines:
 - Census ACS Demographic Data
 
 **R Packages:**
-- [cori.fcc](/packages/cori-fcc/)
+- [cori.data.fcc](/packages/cori-data-fcc/)
 - tidycensus
 - sf (spatial analysis)
 
@@ -63,6 +63,11 @@ Our analysis combines:
 - Drew Rosebush - Project Lead
 - Camden Blatchly - Data Analysis
 - Olivier Leroy - Spatial Analysis
+
+## Resources
+
+- [cori.data.fcc R Package](/packages/cori-data-fcc/)
+- [FCC Broadband Dataset](/datasets/fcc-broadband/)
 
 ## GitHub Repository
 
