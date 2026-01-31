@@ -1,0 +1,210 @@
+/*-- scss:defaults --*/
+$h2-font-size:          1.6rem !default;
+$headings-font-weight:  500 !default;
+
+body {
+  background-color: #16343E !important;
+}
+
+header#quarto-header {
+  background-color: #16343E;
+
+  nav.navbar {
+    &[data-bs-theme="dark"] {
+      background-color: #16343E;
+
+      .navbar-brand {
+        min-width: 7em;
+        min-height: 3.5em;
+        background-image: url(assets/images/Full-Logo_CORI_Cream.svg);
+        background-size: calc(100% - 1em);
+        background-position: left top;
+        background-repeat: no-repeat;
+        padding-left: 0.5em;
+
+        .navbar-title {
+          display: none;
+        }
+      }
+
+      .nav-link, .nav-link.active {
+
+        &:hover {
+          color: #FFF;
+        }
+
+        .menu-text, i {
+          color: #FBF8E9;
+
+          &:hover {
+            color: #FFF;
+          }
+        }
+      }
+    }
+}
+
+  * a:visited {
+    color: #FFF !important;
+  }
+  * a:hover {
+    color: #7a7a7a !important;
+    text-shadow: none;
+  }
+
+  * a.nav-link {
+    font-variant: small-caps;
+  }
+
+  * a .navbar-title {
+    font-weight: bold;
+  }
+
+}
+
+div.quarto-title-banner {
+  background-color: #16343E;
+}
+
+div.quarto-title {
+  &, & .title, .title {
+    color: #fff;
+  }
+}
+
+header {
+  &#title-block-header {
+    background-color: #FFF;
+    margin-bottom: 0;
+  }
+
+  .quarto-title-breadcrumbs .breadcrumb {
+    //margin-bottom: .5em;
+    //font-size: .9rem;
+    //background-color: rgb(0, 131, 93);
+    background-color: rgba(163, 226, 181, 0.75);
+
+    li.breadcrumb-item::before {
+      //color: #FFFFFF;
+      color: rgb(89, 102, 106);
+    }
+
+    li a {
+      //color: #FFFFFF;
+      color: rgb(89, 102, 106);
+    }
+
+    li:last-of-type a {
+      //color: #6cFF7d;
+      color: rgb(22, 52, 62);
+
+    }
+  }
+}
+
+div#listing-listing {
+  margin-top: 4em;
+}
+
+div#quarto-content {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  background-color:  #FFF;
+
+  & > * {
+    padding-top: 0;
+  }
+
+mjx-container {
+  margin-left: 40px
+}
+
+  nav#quarto-sidebar {
+    z-index: 2;
+
+    .mt-2.flex-shrink-0.align-items-center {
+      display: none;
+    }
+
+    .sidebar-menu-container {
+      padding-top: 1em;
+    }
+  }
+
+  // Override the about page styling
+  div.quarto-about-jolla {
+    margin-top: 0;
+
+    * a#github-profile-logo {
+      display: none;
+    }
+
+    img.about-image {
+      margin-bottom: -2.5em;
+      object-fit: contain;
+
+      &.round {
+        border-radius: 0 !important;
+      }
+
+    }
+
+    div.quarto-title {
+      .title {
+        color: #7a7a7a;
+      }
+    }
+
+    main#quarto-document-content {
+      margin-top: 0;
+
+      p {
+        text-align: justify;
+      }
+
+    }
+
+  }
+
+  //&.page-columns #quarto-margin-sidebar {
+  //  display: none;
+  //}
+
+  main#quarto-document-content {
+    margin-top: 0;
+
+    div.quarto-title .title, div.quarto-title .title {
+      color: #59666a;
+    }
+
+    code {
+      color: #00835D;
+    }
+
+    p {
+      margin: 2.5% 7.5% 2.5% 0;
+
+      img {
+        margin: 0 3.75%;
+      }
+    }
+
+    blockquote {
+      &, p {
+        margin: 0;
+      }
+
+    }
+
+  }
+
+  #redoc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #FFF;
+  }
+
+}

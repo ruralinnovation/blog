@@ -1,0 +1,120 @@
+# Site settings
+title: "Rural Dataverse"
+short_title: "Rural Dataverse"
+tagline: "Center on Rural Innovation - Mapping & Data Analytics"
+description: >-
+  Your hub for rural innovation data, tools, research, and analysis.
+  Explore datasets, R packages, projects, and blog posts from the CORI MDA team.
+
+# URLs
+baseurl: "/blog" # for GitHub Pages at ruralinnovation.github.io/blog
+url: "https://ruralinnovation.github.io"
+repository: "https://github.com/ruralinnovation/blog"
+
+# Organization
+organization: "Center on Rural Innovation"
+org_short: "CORI"
+
+# Analytics
+google_analytics: "G-07QRVQQ5JK"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+destination: docs
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections
+collections:
+  datasets:
+    output: true
+    permalink: /datasets/:name/
+  packages:
+    output: true
+    permalink: /packages/:name/
+  projects:
+    output: true
+    permalink: /projects/:name/
+  stories:
+    output: true
+    permalink: /stories/:name/
+  resources:
+    output: true
+    permalink: /resources/:name/
+
+# Defaults for collections
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+  - scope:
+      type: "datasets"
+    values:
+      layout: "dataset"
+  - scope:
+      type: "packages"
+    values:
+      layout: "package"
+  - scope:
+      type: "projects"
+    values:
+      layout: "project"
+  - scope:
+      type: "stories"
+    values:
+      layout: "story"
+  - scope:
+      type: "resources"
+    values:
+      layout: "resource"
+
+# Navigation
+nav:
+  - title: Home
+    url: /
+  - title: Datasets
+    url: /datasets/
+  - title: R Packages
+    url: /packages/
+  - title: Projects
+    url: /projects/
+  - title: Blog
+    url: /stories/
+  - title: Resources
+    url: /resources/
+  - title: About
+    url: /about/
+
+# Footer navigation
+footer_nav:
+  - title: GitHub
+    url: https://github.com/ruralinnovation
+  - title: CORI Website
+    url: https://ruralinnovation.us
+  - title: Contact
+    url: /contact/
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - node_modules
+  - vendor
+  - .bundle
+  - README.md
+  - blog-mda.Rproj
+  - "*.qmd"
+  - _freeze
+  - ideation docs
+
+# Include
+include:
+  - _stories

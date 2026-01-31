@@ -1,0 +1,24 @@
+---
+layout: default
+title: R Packages
+permalink: /packages/
+---
+
+<div class="container">
+  <div class="page-header">
+    <h1>R Packages</h1>
+    <p>Tools for accessing and analyzing rural data in R</p>
+  </div>
+
+  <div class="content-list">
+    {% assign all_packages = site.packages | sort: "title" %}
+    {% for package in all_packages %}
+      {% include components/card.html
+        title=package.title
+        description=package.description
+        url=package.url
+        badge=package.status
+      %}
+    {% endfor %}
+  </div>
+</div>

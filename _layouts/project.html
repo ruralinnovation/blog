@@ -1,0 +1,72 @@
+---
+layout: default
+---
+
+<div class="container">
+  <div class="content-header">
+    <nav class="breadcrumb">
+      <a href="{{ '/' | relative_url }}">Home</a> /
+      <a href="{{ '/projects/' | relative_url }}">Projects</a> /
+      <span>{{ page.title }}</span>
+    </nav>
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="lead">{{ page.description }}</p>
+    {% endif %}
+
+    {% if page.status %}
+    <span class="badge status-{{ page.status }}">{{ page.status }}</span>
+    {% endif %}
+  </div>
+
+  <div class="content-grid">
+    <div class="main-content">
+      {{ content }}
+    </div>
+
+    <aside class="sidebar">
+      {% if page.projectUrl %}
+      <div class="sidebar-section">
+        <a href="{{ page.projectUrl }}" class="btn btn-primary" target="_blank">
+          View Project
+        </a>
+      </div>
+      {% endif %}
+
+      {% if page.usesDatasets %}
+      <div class="sidebar-section">
+        <h3>Datasets Used</h3>
+        <ul class="resource-list">
+          {% for dataset in page.usesDatasets %}
+          <li><a href="{{ '/datasets/' | append: dataset | append: '/' | relative_url }}">{{ dataset }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if page.usesPackages %}
+      <div class="sidebar-section">
+        <h3>R Packages Used</h3>
+        <ul class="resource-list">
+          {% for package in page.usesPackages %}
+          <li><a href="{{ '/packages/' | append: package | append: '/' | relative_url }}">{{ package }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if page.team %}
+      <div class="sidebar-section">
+        <h3>Team</h3>
+        <ul class="team-list">
+          {% for member in page.team %}
+          <li>{{ member }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </aside>
+  </div>
+</div>

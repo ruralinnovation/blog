@@ -1,0 +1,39 @@
+{% comment %}
+  Card component for displaying collection items
+
+  Parameters:
+  - title: Card title
+  - description: Card description
+  - url: Link URL
+  - date: Optional date
+  - categories: Optional array of categories
+  - badge: Optional badge text
+{% endcomment %}
+
+<article class="card">
+  <div class="card-content">
+    {% if include.badge %}
+    <span class="badge">{{ include.badge }}</span>
+    {% endif %}
+
+    <h3 class="card-title">
+      <a href="{{ include.url | relative_url }}">{{ include.title }}</a>
+    </h3>
+
+    {% if include.description %}
+    <p class="card-description">{{ include.description }}</p>
+    {% endif %}
+
+    {% if include.date %}
+    <p class="card-date">{{ include.date | date: "%B %d, %Y" }}</p>
+    {% endif %}
+
+    {% if include.categories %}
+    <div class="card-categories">
+      {% for category in include.categories %}
+      <span class="category-tag">{{ category }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</article>

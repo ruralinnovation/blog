@@ -1,0 +1,74 @@
+---
+layout: default
+---
+
+<div class="container">
+  <div class="content-header">
+    <nav class="breadcrumb">
+      <a href="{{ '/' | relative_url }}">Home</a> /
+      <a href="{{ '/packages/' | relative_url }}">R Packages</a> /
+      <span>{{ page.title }}</span>
+    </nav>
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="lead">{{ page.description }}</p>
+    {% endif %}
+
+    <div class="metadata">
+      {% if page.version %}
+      <span class="version">Version {{ page.version }}</span>
+      {% endif %}
+
+      {% if page.status %}
+      <span class="badge status-{{ page.status }}">{{ page.status }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="main-content">
+      {{ content }}
+    </div>
+
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h3>Installation</h3>
+        {% if page.installCommand %}
+        <div class="install-code">
+          <code>{{ page.installCommand }}</code>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Links</h3>
+        <ul class="link-list">
+          {% if page.githubUrl %}
+          <li><a href="{{ page.githubUrl }}" target="_blank">GitHub Repository</a></li>
+          {% endif %}
+
+          {% if page.vignetteUrl %}
+          <li><a href="{{ page.vignetteUrl }}" target="_blank">Documentation</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Details</h3>
+        <dl>
+          {% if page.maintainer %}
+          <dt>Maintainer</dt>
+          <dd>{{ page.maintainer }}</dd>
+          {% endif %}
+
+          {% if page.date %}
+          <dt>Last Updated</dt>
+          <dd>{{ page.date | date: "%B %Y" }}</dd>
+          {% endif %}
+        </dl>
+      </div>
+    </aside>
+  </div>
+</div>

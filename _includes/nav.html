@@ -1,0 +1,26 @@
+<header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="site-branding">
+        <a href="{{ '/' | relative_url }}" class="site-title">
+          <img src="{{ '/assets/images/CORI_Logo_Cream.svg' | relative_url }}" alt="CORI Logo" class="logo">
+          <span>{{ site.short_title }}</span>
+        </a>
+        <p class="tagline">{{ site.tagline }}</p>
+      </div>
+
+      <nav class="main-nav">
+        <ul>
+          {% for item in site.nav %}
+          <li>
+            <a href="{{ item.url | relative_url }}"
+               {% if page.url == item.url %}class="active"{% endif %}>
+              {{ item.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

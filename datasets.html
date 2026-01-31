@@ -1,0 +1,25 @@
+---
+layout: default
+title: Datasets
+permalink: /datasets/
+---
+
+<div class="container">
+  <div class="page-header">
+    <h1>Datasets</h1>
+    <p>Explore our collection of rural data resources</p>
+  </div>
+
+  <div class="content-list">
+    {% assign all_datasets = site.datasets | sort: "date" | reverse %}
+    {% for dataset in all_datasets %}
+      {% include components/card.html
+        title=dataset.title
+        description=dataset.description
+        url=dataset.url
+        date=dataset.date
+        categories=dataset.categories
+      %}
+    {% endfor %}
+  </div>
+</div>

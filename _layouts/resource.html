@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+<div class="container">
+  <article>
+    <header class="content-header">
+      <nav class="breadcrumb">
+        <a href="{{ '/' | relative_url }}">Home</a> /
+        <a href="{{ '/resources/' | relative_url }}">Resources</a> /
+        <span>{{ page.title }}</span>
+      </nav>
+
+      <h1>{{ page.title }}</h1>
+
+      {% if page.description %}
+      <p class="lead">{{ page.description }}</p>
+      {% endif %}
+
+      {% if page.type %}
+      <span class="badge">{{ page.type }}</span>
+      {% endif %}
+    </header>
+
+    <div class="content">
+      {{ content }}
+    </div>
+  </article>
+</div>

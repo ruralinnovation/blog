@@ -1,0 +1,26 @@
+---
+layout: default
+title: Projects
+permalink: /projects/
+---
+
+<div class="container">
+  <div class="page-header">
+    <h1>Projects</h1>
+    <p>Research and analysis projects from the CORI MDA team</p>
+  </div>
+
+  <div class="content-list">
+    {% assign all_projects = site.projects | sort: "date" | reverse %}
+    {% for project in all_projects %}
+      {% include components/card.html
+        title=project.title
+        description=project.description
+        url=project.url
+        date=project.date
+        categories=project.categories
+        badge=project.status
+      %}
+    {% endfor %}
+  </div>
+</div>

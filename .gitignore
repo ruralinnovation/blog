@@ -1,14 +1,59 @@
+# macOS
 *.DS_Store
-*.bak
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Editor/IDE
 *.idea
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.bak
+*.swp
+*~
+
+# Obsidian
 /.obsidian/
+
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Ruby/Bundler
+vendor/bundle/
+.bundle/
+*.gem
+
+# Quarto
 /.quarto/
-/data/
-/prez/
-/_freeze/
-/_site/
-#docs
-node_modules
+_freeze/
+
+# R/RStudio
 .Rproj.user
 .Rhistory
+.RData
+.Ruserdata
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Temporary/Local data folders (not needed in repo)
+/data/
+/prez/
+
+# Specific post excluded (if needed)
 posts/12_fcc-data/
+
+# Keep these folders IN the repo:
+# docs/ - NEEDED for GitHub Pages deployment
+# ideation docs/ - NEEDED for team documentation
+# posts/ - Original blog posts
+# _datasets/, _packages/, _projects/, _stories/, _resources/ - All content
