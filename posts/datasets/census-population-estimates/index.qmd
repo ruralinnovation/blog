@@ -1,0 +1,278 @@
+---
+title: "Census Population Estimates Program (PEP)"
+description: "Annual county-level population estimates from the U.S. Census Bureau"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Demographics"]
+tags: ["Census", "Population", "County-Level", "Annual"]
+dataset:
+  name: "Census Population Estimates Program (PEP)"
+  source: "U.S. Census Bureau"
+  sourceUrl: "https://www.census.gov/programs-surveys/popest.html"
+  accessMethod: "Census API and Direct Download"
+  updateFrequency: "Annual"
+  geographicLevel: "County, State, National"
+  dataFormat: ["CSV", "API"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The Census Population Estimates Program (PEP) provides annual estimates of the resident population for the United States, states, counties, cities, and towns. These estimates are produced for July 1st of each year and serve as official population counts between decennial censuses.
+
+PEP data is essential for per-capita calculations, demographic analysis, and understanding population change trends at the county level. It provides both total population and demographic breakdowns by age, sex, race, and Hispanic origin.
+
+::: callout-note
+## Why PEP is Essential
+
+- **Annual updates** - More frequent than ACS or decennial census
+- **Complete coverage** - Every county, every year
+- **Not survey-based** - No sampling error
+- **Official counts** - Used by federal agencies for funding
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- County
+- State
+- National
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 2000-present (annual estimates)
+- Released each March for prior year
+- Universe: All U.S. counties (3,100+)
+:::
+:::
+
+## Key Variables
+
+### Population Totals
+
+- **Total Population** - Resident population as of July 1st
+- **Population 16+** - Working-age population (for labor force calculations)
+- **Population by Age Groups** - 5-year age bands (0-4, 5-9, ... 85+)
+
+### Demographics
+
+- **Population by Sex** - Male and female counts
+- **Population by Race** - Single race estimates (White, Black, Asian, etc.)
+- **Hispanic Origin** - Hispanic/Latino population regardless of race
+- **Median Age** - Age at which half the population is older/younger
+
+## Access
+
+::: panel-tabset
+## Census API
+
+Free API access with registration:
+
+```{r}
+#| eval: false
+
+# Using tidycensus package
+library(tidycensus)
+
+# Get county population estimates for 2023
+population_2023 <- get_estimates(
+  geography = "county",
+  product = "population",
+  year = 2023,
+  vintage = 2023
+)
+```
+
+## Direct Download
+
+Bulk CSV files available from Census FTP:
+
+- [Population Estimates Files](https://www2.census.gov/programs-surveys/popest/datasets/)
+
+## CORI Packages
+
+```{r}
+#| eval: false
+
+# Using coriverse (internal)
+library(coriverse)
+
+pep_data <- get_census_population(
+  geography = "county",
+  years = 2007:2024
+)
+```
+:::
+
+## Data Structure
+
+**Standard Format:**
+
+- One row per county per year
+- GEOID: 5-digit FIPS code (state+county)
+- Annual time series from 2000-present
+
+**Typical Variables:**
+
+```
+geoid, year, population, pop_16plus, median_age,
+race_white, race_black, race_asian, hispanic
+```
+
+## Methodology
+
+PEP estimates use a "component of change" method:
+
+1. Start with last decennial census count
+2. Add births (from vital statistics)
+3. Subtract deaths (from vital statistics)
+4. Add net migration (domestic + international)
+5. Result = current population estimate
+
+Estimates are **not survey-based** - they use administrative records, making them highly reliable for time series analysis.
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| Per-Capita Calculations | Denominator for rates (jobs per 1000, permits per 1000) |
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Population trends 2007-2024, baseline comparisons |
+| Broadband Equity Analysis | Population counts for coverage gap calculations |
+| Migration Analysis | Combined with Components of Change data |
+
+### Common Applications
+
+- Grant funding allocations (many federal formulas use PEP)
+- Business market analysis
+- Infrastructure planning
+- Demographic trend analysis
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Annual updates
+- Complete coverage
+- Consistent methodology
+- Not survey-based (no sampling error)
+- Official counts for funding
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Less detailed demographics than ACS
+- Estimation uncertainty (especially migration)
+- Revision cycles
+- No socioeconomic data
+:::
+:::
+
+## Important Notes
+
+### Comparison to ACS
+
+::: columns
+::: {.column width="50%"}
+**PEP**
+
+- Total population counts
+- Basic demographics
+- No sampling error
+- Annual point estimates
+:::
+
+::: {.column width="50%"}
+**ACS**
+
+- Detailed demographics
+- Socioeconomic variables
+- Sampling error (MOE)
+- 5-year rolling averages
+:::
+:::
+
+For population totals and denominators, **use PEP**. For detailed characteristics (income, education, occupation), **use ACS**.
+
+### Revision Cycles
+
+PEP estimates are revised when new census data becomes available:
+
+- 2000-2009 estimates based on 2000 Census
+- 2010-2019 estimates based on 2010 Census
+- 2020-2029 estimates based on 2020 Census
+
+Revisions can be substantial, especially for migration components.
+
+## Related Datasets
+
+- [Census PEP Components of Change](/datasets/census-pep-components/) - Births, deaths, migration detail
+- [American Community Survey](/datasets/american-community-survey/) - More detailed demographics and socioeconomics
+- [IRS County-to-County Migration](/datasets/irs-migration/) - Where people are moving to/from
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install packages
+install.packages("tidycensus")   # Easy API access
+install.packages("censusapi")    # General Census API wrapper
+```
+
+### Usage Example
+
+```{r}
+#| eval: false
+
+library(tidycensus)
+
+# Set API key
+census_api_key("YOUR_KEY_HERE", install = TRUE)
+
+# Get population estimates
+pop_data <- get_estimates(
+  geography = "county",
+  product = "population",
+  year = 2023,
+  vintage = 2023,
+  state = NULL  # All states
+)
+
+# Get population by age
+pop_age <- get_estimates(
+  geography = "county",
+  product = "characteristics",
+  breakdown = "AGEGROUP",
+  year = 2023
+)
+```
+
+## Additional Resources
+
+- [Census PEP Methodology Documentation](https://www.census.gov/programs-surveys/popest/technical-documentation/methodology.html)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 2000-2024 (annual estimates)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

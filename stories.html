@@ -10,16 +10,15 @@ permalink: /stories/
     <p>Data analysis, methodologies, and insights from the CORI MDA team</p>
   </div>
 
-  <div class="content-list">
-    {% assign all_stories = site.stories | sort: "date" | reverse %}
-    {% for story in all_stories %}
-      {% include components/card.html
-        title=story.title
-        description=story.description
-        url=story.url
-        date=story.date
-        categories=story.categories
-      %}
-    {% endfor %}
+  <div class="content">
+    <p>The blog section is being rebuilt with Quarto.</p>
+    <p>Blog posts will be migrated to <code>posts/blog/</code> and rendered with Quarto's listing page features.</p>
+
+    <h2>Existing Posts</h2>
+    <ul>
+      <li><a href="{{ '/_stories/estimating-adoption-impact/' | relative_url }}">Estimating Adoption Impact</a></li>
+    </ul>
+
+    <p><em>See <a href="{{ '/QUARTO-MIGRATION.md' | relative_url }}">QUARTO-MIGRATION.md</a> for migration details.</em></p>
   </div>
 </div>

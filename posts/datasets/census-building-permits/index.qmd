@@ -1,0 +1,304 @@
+---
+title: "Census Building Permits Survey (BPS)"
+description: "Monthly and annual data on housing units authorized by building permits"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Housing"]
+tags: ["Census", "Building Permits", "Housing Supply", "County-Level"]
+dataset:
+  name: "Building Permits Survey (BPS)"
+  source: "U.S. Census Bureau"
+  sourceUrl: "https://www.census.gov/construction/bps/"
+  accessMethod: "Census API and Bulk Download"
+  updateFrequency: "Monthly"
+  geographicLevel: "County, Place, MSA, State, National"
+  dataFormat: ["CSV", "API", "Excel"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The Building Permits Survey (BPS) collects data on residential building permits issued by permit-issuing jurisdictions across the United States. Building permits serve as a **leading indicator** of housing supply and construction activity, signaling where new housing development is occurring.
+
+BPS data is widely used to track housing market conditions, assess housing supply constraints, and understand regional growth patterns.
+
+::: callout-note
+## Why BPS is Essential
+
+- **High frequency** - Monthly updates for timely tracking
+- **Leading indicator** - Precedes construction starts by ~2-3 months
+- **Long time series** - Data back to 1980
+- **Universal coverage** - All jurisdictions surveyed annually
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- County
+- Place
+- Metropolitan Statistical Area
+- State
+- National
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 1980-present (monthly)
+- Released mid-month for prior month
+- Universe: ~20,000 permit-issuing jurisdictions
+- Sample: ~1,400 in monthly survey
+:::
+:::
+
+## Key Variables
+
+### Permit Counts
+
+- **Total Housing Units Authorized** - Number of units approved by building permits
+- **Single-Family Units** - Detached single-family homes
+- **Multi-Family Units** - Buildings with 2+ units
+- **Units in Buildings with 5+ Units** - Larger apartment complexes
+
+### Valuation
+
+- **Construction Value** - Total estimated construction cost (in thousands of dollars)
+
+### Derived Metrics (CORI Projects)
+
+- **Permits per 1,000 Population** - Normalized housing supply indicator
+- **Year-over-year Growth Rate** - Housing supply momentum
+
+## Access
+
+::: panel-tabset
+## Building Permits Data Portal
+
+Interactive query tool:
+
+- [BPS Data Portal](https://www.census.gov/construction/bps/)
+
+## Bulk Download
+
+Annual files by geography:
+
+- [BPS Datasets](https://www.census.gov/construction/bps/how_the_data_are_collected/index.html)
+
+## Census API
+
+```{r}
+#| eval: false
+
+# Using censusapi package
+library(censusapi)
+
+permits <- getCensus(
+  name = "timeseries/bps/annsa",
+  vars = c("UNITS", "POP"),
+  region = "county:*",
+  time = "2023"
+)
+```
+
+## CORI Projects
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_bps.R
+# Calculates units per 1,000 population
+```
+:::
+
+## Data Structure
+
+**County Annual Format:**
+
+- One row per county per year
+- GEOID: 5-digit FIPS code
+- Permit counts and population
+
+**Typical Variables:**
+
+```
+geoid, year, units_authorized, population,
+units_per_1k_people
+```
+
+## Methodology
+
+### Data Collection
+
+BPS operates in two phases:
+
+**1. Monthly Survey (~1,400 jurisdictions):**
+
+- Largest permit-issuing places
+- Covers ~80% of all permits
+- Released monthly with ~3-week lag
+
+**2. Annual Comprehensive Survey (~20,000 jurisdictions):**
+
+- All known permit-issuing jurisdictions
+- Comprehensive coverage
+- Used for annual totals and county estimates
+
+### County-Level Estimates
+
+County totals are derived by:
+
+1. Aggregating all permit-issuing jurisdictions within the county
+2. Imputing for non-responding jurisdictions
+3. Annual reconciliation with comprehensive survey
+
+### Coverage Notes
+
+::: callout-important
+## Rural Coverage Considerations
+
+- **Not all counties issue permits** - Some rural areas don't require permits
+- **Undercounting in rural areas** - Informal construction, owner-built homes
+- **Jurisdictional complexity** - Some places span multiple counties
+:::
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Housing supply indicator 2007-2024 |
+| Cost Pressures Analysis | Tracking housing supply constraints |
+| Growth Patterns | Where is housing being built? |
+| Rural Housing Supply | Per-capita permit rates in rural vs. metro |
+
+### Common Applications
+
+- Housing market analysis
+- Economic development planning
+- Infrastructure planning (schools, utilities)
+- Demographic projections
+- Construction industry tracking
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- High frequency (monthly)
+- Leading indicator
+- Long time series (1980+)
+- Universal coverage
+- Administrative data
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Permits ≠ Construction
+- Lag to completion (6-18 months)
+- Undercounting in rural areas
+- No tenure information
+- Jurisdictional complexity
+- Suppression in small counties
+:::
+:::
+
+## Important Notes
+
+### Per-Capita Interpretation
+
+Permits per 1,000 population is normalized to account for county size:
+
+```
+Units per 1k = (Total units authorized / County population) × 1,000
+```
+
+::: panel-tabset
+## Typical Values
+
+**High-growth areas:** 5-10+ units per 1,000 population
+
+**Average growth:** 2-4 units per 1,000
+
+**Slow-growth/declining:** 0-2 units per 1,000
+
+## Rural Context
+
+Rural counties typically have **lower permits per capita** than urban/suburban counties, reflecting:
+
+- Slower population growth
+- Less demand for new housing
+- Informal construction not captured in permits
+:::
+
+### Permits as Leading Indicator
+
+Timeline from permit to occupancy:
+
+```
+Permit issued → 2-3 months → Construction starts →
+6-12 months → Construction completes → Occupancy
+```
+
+BPS permits lead [Census Population Estimates](/datasets/census-population-estimates/) by ~12-18 months.
+
+### Relationship to ACS Housing
+
+[ACS housing data](/datasets/american-community-survey/) captures the **stock** of housing (total units, occupancy rates, values). BPS captures the **flow** of new housing (additions to stock).
+
+## Related Datasets
+
+- [Census Population Estimates](/datasets/census-population-estimates/) - Population for per-capita calculations
+- [American Community Survey](/datasets/american-community-survey/) - Housing stock, values, occupancy
+- [Census Housing Units Estimates](/datasets/census-housing-units/) - Total housing unit counts
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install packages
+install.packages("censusapi")    # Census API wrapper
+```
+
+### Usage Example
+
+```{r}
+#| eval: false
+
+library(censusapi)
+
+# Get building permits data
+permits <- getCensus(
+  name = "timeseries/bps/annsa",
+  vars = c("UNITS", "VALUE", "POP"),
+  region = "county:*",
+  time = "2023"
+)
+```
+
+## Additional Resources
+
+- [BPS Methodology](https://www.census.gov/construction/bps/how_the_data_are_collected/index.html)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 1980-2024 (monthly)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

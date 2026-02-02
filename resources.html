@@ -7,19 +7,17 @@ permalink: /resources/
 <div class="container">
   <div class="page-header">
     <h1>Resources</h1>
-    <p>Guides, tools, and reference materials for rural data analysis</p>
+    <p>Guides, tools, and documentation</p>
   </div>
 
-  <div class="content-list">
-    {% assign all_resources = site.resources | sort: "date" | reverse %}
-    {% for resource in all_resources %}
-      {% include components/card.html
-        title=resource.title
-        description=resource.description
-        url=resource.url
-        date=resource.date
-        badge=resource.type
-      %}
-    {% endfor %}
+  <div class="content">
+    <p>Resources section coming soon.</p>
+    <p>This will include:</p>
+    <ul>
+      <li>Data access guides</li>
+      <li>Analysis tutorials</li>
+      <li>Tool documentation</li>
+      <li>Best practices</li>
+    </ul>
   </div>
 </div>

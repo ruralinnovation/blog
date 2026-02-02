@@ -1,0 +1,376 @@
+---
+title: "BLS Quarterly Census of Employment and Wages (QCEW)"
+description: "Comprehensive county-level employment and wage data by industry from the Bureau of Labor Statistics"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Labor Market"]
+tags: ["BLS", "Employment", "Wages", "Industry", "County-Level"]
+dataset:
+  name: "Quarterly Census of Employment and Wages (QCEW)"
+  source: "Bureau of Labor Statistics, U.S. Department of Labor"
+  sourceUrl: "https://www.bls.gov/cew/"
+  accessMethod: "BLS API and Bulk Download"
+  updateFrequency: "Quarterly (with 6-month lag)"
+  geographicLevel: "County, MSA, State, National"
+  dataFormat: ["CSV", "API", "Flat Files"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Overview
+
+The Quarterly Census of Employment and Wages (QCEW) is a comprehensive
+dataset covering 95% of U.S. jobs. Unlike survey-based employment data,
+QCEW is a **census** based on mandatory quarterly unemployment insurance
+(UI) tax filings from employers.
+
+QCEW provides employment counts and wage data at detailed industry
+levels (6-digit NAICS codes) for every county in the U.S., making it the
+gold standard for understanding local labor markets and economic
+structure.
+
+::: callout-note
+## Why QCEW is Essential
+
+-   **Census data** - Not a survey, covers 95% of U.S. jobs
+-   **Industry detail** - 6-digit NAICS codes (1,000+ industries)
+-   **Historical depth** - Consistent data back to 1990
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage** - County level - Metropolitan/Micropolitan
+Areas - State level - National totals
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage** - 1990-present (quarterly and annual) - Quarterly
+updates (\~6-month lag) - Annual averages (recommended for trends)
+:::
+:::
+
+**Universe:** 95% of U.S. jobs (excludes self-employed, farm workers,
+household workers)
+
+## Key Variables
+
+### Employment Metrics
+
+```{r}
+#| echo: false
+#| label: tbl-employment-vars
+#| tbl-cap: "Key Employment Variables in QCEW"
+
+library(tibble)
+library(knitr)
+
+tribble(
+  ~Variable, ~Description, ~Use_Case,
+  "Annual Average Employment", "Average monthly employment across 4 quarters", "Trend analysis",
+  "Monthly Employment Levels", "Employment for each of 3 months per quarter", "Seasonal patterns",
+  "Establishment Count", "Number of business establishments", "Business density",
+  "Employment by Industry", "Detailed NAICS breakdowns", "Sectoral analysis"
+) |> kable()
+```
+
+### Wage Metrics
+
+-   **Total Wages** - Sum of quarterly wages paid
+-   **Average Annual Pay** - Total wages / annual average employment
+-   **Average Weekly Wage** - Quarterly wages / (13 weeks × employment)
+
+### Derived Metrics (CORI Projects)
+
+::: panel-tabset
+## Real Wages
+
+Nominal wages deflated to **2023 dollars** using BLS CPI-U-RS:
+
+```{r}
+#| eval: false
+
+# Example deflation calculation
+real_wage_2023 = nominal_wage * (cpi_2023 / cpi_year)
+```
+
+## Industry Shares
+
+Employment shares by sector (% of total employment)
+
+## HHI Index
+
+Herfindahl-Hirschman Index measuring industry concentration (0-10,000
+scale):
+
+```{r}
+#| eval: false
+
+# HHI calculation
+HHI = sum((employment_share_i)^2) * 10000
+```
+
+-   HHI \< 1,500: Unconcentrated economy
+-   HHI 1,500-2,500: Moderate concentration
+-   HHI \> 2,500: High concentration
+
+## Economic Base
+
+-   **Tradable Goods** - Manufacturing, mining, agriculture
+-   **Tradable Services** - Information, finance, professional services
+-   **Local Services** - Retail, healthcare, hospitality
+:::
+
+## Access
+
+### Using R
+
+::: panel-tabset
+## blsAPI
+
+```{r}
+#| eval: false
+
+library(blsAPI)
+
+# Get employment for a specific county
+series_id <- "ENU0601510510"  # Example series ID
+qcew_data <- blsAPI(series_id, startyear = 2010, endyear = 2024)
+```
+
+## Bulk Download
+
+```{r}
+#| eval: false
+
+# Download annual averages CSV
+url <- "https://www.bls.gov/cew/downloadable-data-files.htm"
+download.file(url, "qcew_annual.csv")
+```
+
+## CORI Method
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_qcew.R
+source("R/data_import/load_qcew.R")
+
+# Includes wage deflation and HHI calculation
+qcew_data <- load_qcew(years = 2007:2024)
+```
+:::
+
+### Interactive Data Viewer
+
+Visit the [QCEW Data
+Viewer](https://data.bls.gov/cew/apps/data_views/data_views.htm) for
+interactive queries.
+
+## Methodology
+
+### Data Collection
+
+QCEW is built from three sources:
+
+```{mermaid}
+%%| fig-width: 6
+%%| fig-height: 3
+
+graph LR
+    A[UI-Covered Employers<br/>Quarterly UI-3 Forms] --> D[QCEW Database]
+    B[Federal Agencies<br/>USPS, Military] --> D
+    C[Railroad Retirement Board<br/>Railroad Workers] --> D
+    D --> E[95% of Civilian<br/>Employment]
+```
+
+::: callout-warning
+## Excluded from QCEW
+
+-   Self-employed individuals (no employees)
+-   Farm workers (some states)
+-   Household workers (domestic employees)
+-   Unincorporated businesses
+:::
+
+### Wage Deflation (CORI Method)
+
+Nominal wages converted to real 2023 dollars using **BLS CPI-U-RS**:
+
+```{r}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Show deflation function"
+
+deflate_wages <- function(nominal_wage, year, base_year = 2023) {
+  # CPI-U-RS values (example)
+  cpi_values <- c(
+    "2020" = 306.8,
+    "2021" = 319.4,
+    "2022" = 348.0,
+    "2023" = 360.0
+  )
+
+  real_wage <- nominal_wage * (cpi_values[as.character(base_year)] /
+                                cpi_values[as.character(year)])
+  return(real_wage)
+}
+```
+
+**Why CPI-U-RS?** More consistent for historical comparisons than
+standard CPI-U.
+
+## Use Cases
+
+### In CORI Projects
+
+| Project                                                     | Use Case                                               |
+|----------------------------------|--------------------------------------|
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Employment growth, wage trends 2007-2024               |
+| Broadband Equity                                            | Tech sector employment by county                       |
+| Industry Analysis                                           | Sectoral employment shares and concentration           |
+| Wage Gap Analysis                                           | Rural vs. metro pay differentials (inflation-adjusted) |
+
+: {tbl-colwidths="\[30,70\]"}
+
+### Common Applications
+
+-   Labor market analysis
+-   Economic development targeting
+-   Industry cluster identification
+-   Wage competitiveness studies
+-   Commuting pattern analysis (with LODES)
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### ✅ Strengths
+
+-   Census, not survey (no sampling error)
+-   95% job coverage
+-   6-digit NAICS industry detail
+-   Historical depth (1990+)
+-   Quarterly frequency
+-   Official data source
+:::
+
+::: {.column width="50%"}
+### ⚠️ Limitations
+
+-   6-month lag in release
+-   Excludes self-employment
+-   Disclosure suppression (\<3 establishments)
+-   Location of work, not residence
+-   Nominal wages (need deflation)
+-   Quarterly volatility
+:::
+:::
+
+## Important Notes
+
+### Disclosure Rules
+
+::: callout-important
+## Privacy Protection
+
+To protect business confidentiality: - Industries with **fewer than 3
+establishments suppressed** - Rural counties often have more suppression
+than urban - **Solution:** Use 2-digit NAICS for consistent county
+coverage
+:::
+
+### BEA Table Replacement
+
+As of 2023, QCEW is the **recommended source** for county employment
+after 2022:
+
+| BEA Table                          | Status                     | Replacement |
+|-------------------------|-------------------|----------------------------|
+| CAEMP25N (Employment by industry)  | ❌ Discontinued after 2022 | ✅ QCEW     |
+| CAINC6N (Compensation by industry) | ❌ Discontinued after 2022 | ✅ QCEW     |
+
+QCEW provides comparable industry breakdowns with more frequent updates.
+
+### Annual vs. Quarterly Data
+
+```{r}
+#| echo: false
+#| label: fig-annual-vs-quarterly
+#| fig-cap: "When to Use Annual vs. Quarterly Data"
+#| fig-width: 8
+#| fig-height: 3
+
+library(ggplot2)
+library(dplyr)
+
+tibble(
+  x = c(1, 1, 2, 2),
+  y = c(1, 2, 1, 2),
+  label = c("Annual Averages", "Quarterly Data",
+            "✓ Trend analysis\n✓ Smooths seasonality\n✓ Year-over-year comparisons",
+            "✓ Recession timing\n✓ Seasonal industries\n✓ Real-time monitoring")
+) |>
+  ggplot(aes(x, y, label = label)) +
+  geom_text(size = 4, hjust = 0.5, vjust = 0.5) +
+  theme_void() +
+  coord_cartesian(xlim = c(0.5, 2.5), ylim = c(0.5, 2.5))
+```
+
+## Related Datasets
+
+-   [BEA Real GDP](/datasets/bea-real-gdp/) - Economic output (GDP) to
+    complement employment
+-   [Census Business Dynamics Statistics](/datasets/census-bds/) -
+    Business entry/exit rates
+-   [Census Business Formation Statistics](/datasets/census-bfs/) -
+    Leading indicator of employment
+-   [American Community Survey](/datasets/american-community-survey/) -
+    Occupation detail
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install packages
+install.packages("blsAPI")        # BLS API wrapper
+install.packages("blscrapeR")     # Bulk download tools
+```
+
+### CORI Packages
+
+For CORI internal use:
+
+```{r}
+#| eval: false
+
+# CORI data infrastructure
+library(coriverse)
+qcew_data <- get_qcew(geography = "county", years = 2007:2024)
+```
+
+## Additional Resources
+
+-   [QCEW Overview &
+    Handbook](https://www.bls.gov/opub/hom/cew/home.htm)
+-   [BLS Data
+    Tools](https://data.bls.gov/cew/apps/data_views/data_views.htm)
+-   [Rural Economic Outlook
+    Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+------------------------------------------------------------------------
+
+**Last Updated:** February 2, 2026 **Data Coverage:** 1990-2024
+(quarterly), 2007-2024 (CORI focus) **Contact:**
+[data\@ruralinnovation.us](mailto:data@ruralinnovation.us)

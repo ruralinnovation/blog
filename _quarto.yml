@@ -1,26 +1,38 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
   render:
-    - "*.qmd"
-    - "**/*.qmd"
+    - "posts/**/*.qmd"
 
 website:
-  title: "Mapping & Data Analytics Blog @cori-risi"
-  search: false
+  title: "Rural Dataverse"
+  description: "Center on Rural Innovation - Mapping & Data Analytics"
   favicon: assets/images/Logo-Mark_Black.png
   open-graph: true
   google-analytics: "G-07QRVQQ5JK"
+
   navbar:
-    logo-href: https://ruralinnovation.us/our-work/research_mapping/
+    logo: assets/images/CORI_Logo_Cream.svg
+    logo-href: /
     left:
-      - href: index.qmd
-        text: Mapping & Data Analytics Blog
+      - text: "Home"
+        href: index.qmd
+      - text: "Datasets"
+        href: datasets.qmd
+      - text: "R Packages"
+        href: packages.qmd
+      - text: "Projects"
+        href: projects.qmd
+      - text: "Blog"
+        href: blog.qmd
+      - text: "Resources"
+        href: resources.qmd
     right:
-      - href: about.qmd
-        text: About
+      - text: "About"
+        href: about.qmd
       - icon: github
         href: https://github.com/ruralinnovation
+
 format:
   html:
     theme:
@@ -36,9 +48,26 @@ format:
       margin-width: 250px
     toc: true
 
-resources:
-- "assets/*"
+# Content organization
+contents:
+  blog:
+    path: "posts/blog"
+    type: blog
+  datasets:
+    path: "posts/datasets"
+    type: catalog
+  packages:
+    path: "posts/packages"
+    type: catalog
+  projects:
+    path: "posts/projects"
+    type: portfolio
+  resources:
+    path: "posts/resources"
+    type: catalog
 
 execute:
-  freeze: false
-
+  freeze: auto
+  echo: true
+  warning: false
+  message: false

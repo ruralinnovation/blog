@@ -1,0 +1,309 @@
+---
+title: "IRS County-to-County Migration Data"
+description: "Annual migration flows and income data based on tax return addresses"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Migration"]
+tags: ["IRS", "Migration", "Population", "County-Level"]
+dataset:
+  name: "IRS Statistics of Income (SOI) County-to-County Migration"
+  source: "Internal Revenue Service"
+  sourceUrl: "https://www.irs.gov/statistics/soi-tax-stats-migration-data"
+  accessMethod: "Manual Download"
+  updateFrequency: "Annual"
+  geographicLevel: "County-to-County Flows"
+  dataFormat: ["CSV", "Excel"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The IRS Statistics of Income (SOI) County-to-County Migration Data tracks the movement of people and income across U.S. counties based on year-to-year changes in tax return filing addresses. This dataset provides the most comprehensive view of **where people are moving** and **how much income they bring with them**.
+
+Unlike Census migration data (which is survey-based), IRS migration data is based on **administrative tax records**, covering the vast majority of the U.S. population.
+
+::: callout-note
+## Why IRS Migration Data is Essential
+
+- **Administrative data** - Based on tax records, not surveys (high accuracy)
+- **Income flows** - Unique ability to track wealth movement with people
+- **Origin-destination detail** - Know exactly where people are moving from/to
+- **High coverage** - ~95% of population (tax filers + dependents)
+- **Long time series** - Data back to 1991
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- County-to-county migration flows
+- Origin-destination pairs
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 1991-present (annual)
+- CORI uses 2007-2022
+- Released ~2 years after tax year
+- Universe: All tax filers (~95% of U.S.)
+:::
+:::
+
+## Key Variables
+
+### Migration Flows
+
+- **Returns (In-flow)** - Number of tax returns that moved into the county
+- **Returns (Out-flow)** - Number of tax returns that moved out of the county
+- **Exemptions (In-flow)** - Number of people who moved in (returns + dependents)
+- **Exemptions (Out-flow)** - Number of people who moved out
+- **Net Migration** - In-flow minus out-flow
+
+### Income Flows
+
+- **Adjusted Gross Income (AGI) In-flow** - Total AGI of in-migrants (thousands of dollars)
+- **AGI Out-flow** - Total AGI of out-migrants
+- **Net AGI Flow** - In-flow minus out-flow
+
+### Derived Metrics (CORI Projects)
+
+- **Net Migration Rate** - Net migration as % of county population
+- **Net AGI Migration Rate** - Net AGI flow as % of county total AGI
+- **Net Migration by Income Bracket** - Who is moving? (high/middle/low income)
+
+## Access
+
+::: panel-tabset
+## IRS Website
+
+Manual download of annual CSV files:
+
+- [IRS SOI Migration Data](https://www.irs.gov/statistics/soi-tax-stats-migration-data)
+
+Files organized by tax year (e.g., "1920.csv" for 2019-2020 migration).
+
+## CORI Projects
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_irs_soi.R
+# Aggregates county-pair flows to net county totals
+```
+:::
+
+## Data Structure
+
+### Raw Format (County-to-County Pairs)
+
+- One row per origin-destination county pair
+- Sparse matrix (only pairs with ≥10 returns reported)
+- FIPS codes for origin (y1) and destination (y2)
+
+**Example:**
+
+```
+origin_fips, dest_fips, returns, exemptions, agi_thousands
+06001, 06013, 245, 512, 18750
+06001, 36061, 89, 156, 9820
+```
+
+### Aggregated Format (Net Flows by County)
+
+CORI aggregates to net flows:
+
+```
+geoid, year, net_migration_count, net_agi_flow,
+share_of_net_migration, share_of_net_agi_migration
+```
+
+## Methodology
+
+### Data Source: Tax Returns
+
+IRS tracks address changes on Form 1040:
+
+- Year 1 (y1) address vs. Year 2 (y2) address
+- If addresses differ and in different counties → migration
+- Returns matched using Social Security Numbers
+
+**Coverage:**
+
+- **Tax filers** - Required to file if income above threshold
+- **Dependents** - Counted as "exemptions"
+- **Non-filers excluded** - Very low-income, undocumented immigrants
+
+### Privacy Protection
+
+To protect taxpayer privacy:
+
+- **Flows < 10 returns suppressed** - Small flows not reported
+- **Aggregated only** - No individual-level data
+- **Same-county moves excluded** - Only inter-county migration
+
+### AGI as Income Proxy
+
+Adjusted Gross Income (AGI) measures:
+
+::: columns
+::: {.column width="50%"}
+**Included:**
+
+- Wages and salaries
+- Business income
+- Investment income
+- Retirement income
+:::
+
+::: {.column width="50%"}
+**Excluded:**
+
+- Social Security (reported separately)
+- Tax-exempt interest
+- Unrealized capital gains
+:::
+:::
+
+**AGI reflects "movable" income** but has limitations.
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Migration trends 2007-2022 |
+| Brain Drain Analysis | Are high-income households leaving rural areas? |
+| Economic Impact | Income flows associated with migration |
+| Regional Competitiveness | Which counties are gaining/losing residents and wealth? |
+
+### Common Applications
+
+- Regional economic development strategy
+- Understanding pandemic migration (2020-2021)
+- Housing demand forecasting
+- Tax revenue projections
+- Workforce planning
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Administrative data (high accuracy)
+- Income flows (unique capability)
+- Origin-destination detail
+- High coverage (~95%)
+- Long time series (1991+)
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Lagged release (18-24 months)
+- Excludes non-filers
+- Tax year vs. calendar year
+- Suppression (<10 returns)
+- Address changes only
+- AGI not deflated (nominal dollars)
+:::
+:::
+
+## Important Notes
+
+### Net Migration vs. Gross Flows
+
+IRS data includes both:
+
+- **Gross in-flow** - Total people moving in
+- **Gross out-flow** - Total people moving out
+- **Net migration** - In-flow minus out-flow
+
+::: callout-tip
+## Example
+
+County gains 500 in-migrants, loses 400 out-migrants
+
+- **Gross in-flow:** 500
+- **Net migration:** +100
+
+Many rural counties have **high gross flows** (people moving in and out) but **small net migration** (in and out roughly balance).
+:::
+
+### AGI Deflation (Important!)
+
+IRS reports AGI in **nominal dollars** (not adjusted for inflation). For time series analysis:
+
+```{r}
+#| eval: false
+
+# Deflate to real 2023 dollars using CPI-U-RS
+real_agi_2023 = nominal_agi * (cpi_2023 / cpi_year)
+```
+
+CORI's `load_irs_soi.R` script should include deflation (currently a TODO item).
+
+### Pandemic Migration Surge (2020-2021)
+
+IRS data shows unprecedented migration during COVID-19:
+
+- 2020-2021 migration rates 30-50% higher than 2019
+- Large cities lost population to suburbs and smaller metros
+- Rural recreation counties (mountains, coasts) gained
+- Remote work enabled moves
+
+Rural net migration turned **positive** for first time in decades in many counties.
+
+### Relationship to Census Data
+
+IRS migration complements [Census PEP Components of Change](/datasets/census-pep-components/):
+
+| Dataset | Strengths | Limitations |
+|---------|-----------|-------------|
+| **IRS** | Origin-destination flows, income data, administrative | 18-month lag, excludes non-filers |
+| **Census Components** | Faster release, all population, separate domestic/international | No origin-destination, no income |
+
+**Best practice:** Use IRS for detailed flow analysis; use Census Components for timely total migration.
+
+## Related Datasets
+
+- [Census PEP Components of Change](/datasets/census-pep-components/) - Faster migration counts (no income or flows)
+- [Census Population Estimates](/datasets/census-population-estimates/) - Population for per-capita rates
+- [American Community Survey](/datasets/american-community-survey/) - Migration within past year (survey)
+
+## R Packages
+
+### Custom Scripts
+
+```{r}
+#| eval: false
+
+# No dedicated R package available
+# CORI uses custom scripts for processing
+
+# From rural-economic-outlook project
+source("R/data_import/load_irs_soi.R")
+```
+
+## Additional Resources
+
+- [IRS SOI Documentation](https://www.irs.gov/statistics/soi-tax-stats-migration-data-methodology)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 1991-2022 (CORI uses 2007-2022)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

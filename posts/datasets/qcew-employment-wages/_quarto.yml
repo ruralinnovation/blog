@@ -1,0 +1,6 @@
+format:
+  gfm:
+    output-file: "qcew-quarto.md"
+    output-dir: "../../../_datasets"
+    preserve-yaml: true
+    variant: +yaml_metadata_block

@@ -1,0 +1,315 @@
+---
+title: "FCC National Broadband Map"
+description: "Comprehensive broadband availability and adoption data from the Federal Communications Commission"
+author: "CORI Data Team"
+date: "2025-12-15"
+categories: ["Dataset", "Broadband", "Infrastructure"]
+tags: ["FCC", "Connectivity", "Geographic"]
+dataset:
+  name: "FCC National Broadband Map"
+  source: "Federal Communications Commission"
+  sourceUrl: "https://broadbandmap.fcc.gov/data-download"
+  accessMethod: "Direct Download and API"
+  updateFrequency: "Biannual"
+  geographicLevel: "Census Block, County, State"
+  dataFormat: ["CSV", "Parquet"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The FCC National Broadband Map provides detailed information about broadband availability across the United States. This dataset includes information on:
+
+- Broadband service provider coverage
+- Technology types (Fiber, Cable, DSL, etc.)
+- Upload and download speeds
+- Census block-level granularity
+
+The National Broadband Map is the authoritative source for understanding broadband access gaps and measuring progress toward universal connectivity.
+
+::: callout-note
+## Why FCC Broadband Data is Essential
+
+- **Location-level precision** - Census block level data (finest geographic detail)
+- **Technology detail** - Fiber, cable, DSL, fixed wireless, satellite
+- **Speed tiers** - Upload and download speeds by provider
+- **Biannual updates** - More frequent than survey-based measures
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- Census block level
+- County aggregations
+- State aggregations
+- All 50 states
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- Updated twice per year
+- Historical data available
+- Provider-reported service availability
+- Challenge process for data verification
+:::
+:::
+
+## Key Features
+
+### Geographic Granularity
+
+Census block-level data allows for:
+
+- Precise gap analysis
+- Rural vs. urban comparisons
+- Infrastructure planning
+- Grant targeting (BEAD, ReConnect, etc.)
+
+### Technology Types
+
+::: panel-tabset
+## Wireline Technologies
+
+- **Fiber** - Fiber to the premises (FTTP/FTTH)
+- **Cable** - Hybrid fiber-coaxial (HFC)
+- **DSL** - Digital subscriber line
+- **Copper** - Legacy telephone lines
+
+## Fixed Wireless
+
+- **Licensed Fixed Wireless** - Point-to-multipoint systems
+- **Unlicensed Fixed Wireless** - WiFi-based systems
+- **5G Home Internet** - Cellular-based home broadband
+
+## Satellite
+
+- **Geostationary Satellite** - Traditional satellite (high latency)
+- **Low Earth Orbit (LEO) Satellite** - Starlink, OneWeb, etc.
+:::
+
+### Speed Tiers
+
+Upload and download speeds reported by providers:
+
+- 25/3 Mbps (legacy broadband definition)
+- 100/20 Mbps (BEAD threshold)
+- 1 Gbps+ (gigabit service)
+
+## Usage
+
+This dataset is commonly used in:
+
+::: panel-tabset
+## Broadband Equity
+
+- Identifying unserved and underserved locations
+- BEAD (Broadband Equity, Access, and Deployment) program
+- Measuring digital divide
+
+## Rural Connectivity
+
+- Rural broadband availability
+- Technology adoption patterns
+- Infrastructure investment targeting
+
+## Infrastructure Planning
+
+- Network deployment planning
+- Cost modeling for buildout
+- Service area mapping
+
+## Policy Research
+
+- Measuring progress toward universal broadband
+- Evaluating broadband programs
+- Competition analysis
+:::
+
+## Access
+
+### FCC Broadband Map Download
+
+::: panel-tabset
+## Direct Download
+
+- [FCC Broadband Map Download](https://broadbandmap.fcc.gov/data-download)
+
+## CORI S3 Bucket
+
+- [CORI S3 Bucket](https://s3.amazonaws.com/cori-data/fcc/)
+
+## cori.data.fcc R Package
+
+```{r}
+#| eval: false
+
+# Using cori.data.fcc package
+library(cori.data.fcc)
+
+# Get broadband availability data
+fcc_data <- get_fcc_broadband(
+  geography = "county",
+  vintage = "2024-06"
+)
+```
+:::
+
+## Data Structure
+
+**Census Block Format:**
+
+- One row per census block per provider per technology
+- Detailed service characteristics
+- Maximum advertised speeds
+
+**County Aggregated Format:**
+
+- Unserved/underserved location counts
+- Technology availability percentages
+- Provider competition metrics
+
+## Methodology
+
+### Provider Reporting
+
+Broadband service providers report coverage data to the FCC:
+
+- Service availability by census block
+- Maximum advertised speeds
+- Technology types deployed
+- Reported twice per year
+
+### Challenge Process
+
+::: callout-important
+## Data Verification
+
+The FCC uses a challenge process to verify provider-reported data:
+
+- State and local governments can challenge data
+- Service providers must respond to challenges
+- Data updated based on verified challenges
+- Improves accuracy over time
+:::
+
+### Fabric Data
+
+The FCC uses "Fabric" data:
+
+- Comprehensive list of all broadband-serviceable locations (BSLs)
+- More accurate than census block aggregation
+- Enables location-level analysis
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Census block precision
+- Technology detail
+- Speed tier information
+- Challenge process improves accuracy
+- Biannual updates
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Provider self-reporting (verification ongoing)
+- Availability ≠ adoption
+- No pricing information
+- No quality/reliability metrics
+- Lag in challenge resolution
+:::
+:::
+
+## Important Notes
+
+### Availability vs. Adoption
+
+::: callout-warning
+## Critical Distinction
+
+**Availability:** Broadband service is available at a location (from FCC map)
+
+**Adoption:** Households subscribe to broadband service (from ACS)
+
+FCC data measures **availability**, not actual subscriptions. Use [ACS](/datasets/american-community-survey/) for adoption rates.
+:::
+
+### Speed Definitions
+
+Different programs use different speed thresholds:
+
+| Program | Download | Upload | Definition |
+|---------|----------|--------|------------|
+| Legacy FCC | 25 Mbps | 3 Mbps | "Broadband" |
+| BEAD | 100 Mbps | 20 Mbps | "Underserved" |
+| BEAD | <25 Mbps | <3 Mbps | "Unserved" |
+
+### Technology Considerations
+
+Not all technologies are equal:
+
+- **Fiber:** Future-proof, symmetrical speeds, low latency
+- **Cable:** High download, lower upload, shared bandwidth
+- **DSL:** Distance-limited, slower speeds
+- **Fixed Wireless:** Weather-dependent, line-of-sight required
+- **Satellite:** High latency (except LEO), expensive
+
+## Related Resources
+
+- [cori.data.fcc R Package](/packages/cori-data-fcc/)
+- [FCC Data Overview Blog Post](/stories/fcc-data-overview/)
+- [Broadband Equity Project](/projects/broadband-equity/)
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install cori.data.fcc package
+# remotes::install_github("ruralinnovation/cori.data.fcc")
+library(cori.data.fcc)
+```
+
+### Usage Example
+
+```{r}
+#| eval: false
+
+library(cori.data.fcc)
+
+# Get county-level broadband availability
+county_broadband <- get_fcc_broadband(
+  geography = "county",
+  vintage = "2024-06",
+  speeds = c("100_20", "25_3")
+)
+```
+
+## Additional Resources
+
+- [FCC National Broadband Map](https://broadbandmap.fcc.gov/)
+- [BEAD Program Information](https://broadbandusa.ntia.doc.gov/funding-programs/broadband-equity-access-and-deployment-bead-program)
+- [cori.data.fcc GitHub](https://github.com/ruralinnovation/cori.data.fcc)
+
+---
+
+**Last Updated:** December 15, 2025
+**Data Coverage:** Census block level, all U.S. states
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

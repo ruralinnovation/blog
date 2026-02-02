@@ -7,20 +7,20 @@ permalink: /projects/
 <div class="container">
   <div class="page-header">
     <h1>Projects</h1>
-    <p>Research and analysis projects from the CORI MDA team</p>
+    <p>Research projects combining multiple datasets and tools</p>
   </div>
 
-  <div class="content-list">
-    {% assign all_projects = site.projects | sort: "date" | reverse %}
-    {% for project in all_projects %}
-      {% include components/card.html
-        title=project.title
-        description=project.description
-        url=project.url
-        date=project.date
-        categories=project.categories
-        badge=project.status
-      %}
-    {% endfor %}
+  <div class="content-grid">
+    <div class="card">
+      <h3><a href="{{ '/posts/projects/rural-economic-outlook/' | relative_url }}">Rural Economic Outlook</a></h3>
+      <p>Comprehensive analysis of rural economic trends using 12 federal datasets. Examines employment, population, business formation, and migration patterns.</p>
+      <p><strong>Datasets:</strong> QCEW, ACS, Census PEP, BEA GDP, BDS, BFS, Building Permits, IRS Migration, USPTO Patents, and more</p>
+    </div>
+
+    <div class="card">
+      <h3><a href="{{ '/posts/projects/broadband-equity/' | relative_url }}">Broadband Equity Analysis</a></h3>
+      <p>Analysis of broadband access disparities and their impact on rural communities.</p>
+      <p><strong>Datasets:</strong> FCC Broadband, ACS, Census PEP</p>
+    </div>
   </div>
 </div>

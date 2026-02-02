@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-02-02">
+<meta name="description" content="Comprehensive analysis of rural economic conditions tracking employment, wages, business formation, migration, and innovation from 2007-2024">
+
+<title>Rural Economic Outlook – Rural Dataverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/images/Logo-Mark_Black.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-cb047e92c7285ae408a1a406cbf7f836.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-07QRVQQ5JK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../assets/fonts.css">
+<meta property="og:title" content="Rural Economic Outlook – Rural Dataverse">
+<meta property="og:description" content="Comprehensive analysis of rural economic conditions tracking employment, wages, business formation, migration, and innovation from 2007-2024">
+<meta property="og:site_name" content="Rural Dataverse">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://ruralinnovation.us/our-work/research_mapping/" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/images/CORI_Logo_Cream.svg" alt="" class="navbar-logo light-content">
+    <img src="../../../assets/images/CORI_Logo_Cream.svg" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="https://ruralinnovation.us/our-work/research_mapping/">
+    <span class="navbar-title">Rural Dataverse</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.qmd"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../datasets.qmd"> 
+<span class="menu-text">Datasets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../packages.qmd"> 
+<span class="menu-text">R Packages</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../projects.qmd"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.qmd"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources.qmd"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.qmd"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ruralinnovation"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Rural Economic Outlook</h1>
+                  <div>
+        <div class="description">
+          Comprehensive analysis of rural economic conditions tracking employment, wages, business formation, migration, and innovation from 2007-2024
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Economic Analysis</div>
+                <div class="quarto-category">Rural Development</div>
+                <div class="quarto-category">Data Infrastructure</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 2, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a></li>
+  <li><a href="#key-questions" id="toc-key-questions" class="nav-link" data-scroll-target="#key-questions">Key Questions</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
+  <ul class="collapse">
+  <li><a href="#etl-pipeline" id="toc-etl-pipeline" class="nav-link" data-scroll-target="#etl-pipeline">ETL Pipeline</a></li>
+  <li><a href="#inflation-adjustment" id="toc-inflation-adjustment" class="nav-link" data-scroll-target="#inflation-adjustment">Inflation Adjustment</a></li>
+  </ul></li>
+  <li><a href="#data-sources-integration" id="toc-data-sources-integration" class="nav-link" data-scroll-target="#data-sources-integration">Data Sources &amp; Integration</a>
+  <ul class="collapse">
+  <li><a href="#demographics-population-83-variables-total" id="toc-demographics-population-83-variables-total" class="nav-link" data-scroll-target="#demographics-population-83-variables-total">Demographics &amp; Population (83 Variables Total)</a></li>
+  <li><a href="#economic-output-labor-markets" id="toc-economic-output-labor-markets" class="nav-link" data-scroll-target="#economic-output-labor-markets">Economic Output &amp; Labor Markets</a></li>
+  <li><a href="#business-dynamics-entrepreneurship" id="toc-business-dynamics-entrepreneurship" class="nav-link" data-scroll-target="#business-dynamics-entrepreneurship">Business Dynamics &amp; Entrepreneurship</a></li>
+  <li><a href="#migration-housing-supply" id="toc-migration-housing-supply" class="nav-link" data-scroll-target="#migration-housing-supply">Migration &amp; Housing Supply</a></li>
+  <li><a href="#innovation-classification" id="toc-innovation-classification" class="nav-link" data-scroll-target="#innovation-classification">Innovation &amp; Classification</a></li>
+  </ul></li>
+  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key Findings</a></li>
+  <li><a href="#technical-implementation" id="toc-technical-implementation" class="nav-link" data-scroll-target="#technical-implementation">Technical Implementation</a>
+  <ul class="collapse">
+  <li><a href="#data-quality-controls" id="toc-data-quality-controls" class="nav-link" data-scroll-target="#data-quality-controls">Data Quality Controls</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
+  </ul></li>
+  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#challenges-solutions" id="toc-challenges-solutions" class="nav-link" data-scroll-target="#challenges-solutions">Challenges &amp; Solutions</a></li>
+  <li><a href="#impact-applications" id="toc-impact-applications" class="nav-link" data-scroll-target="#impact-applications">Impact &amp; Applications</a></li>
+  <li><a href="#project-team" id="toc-project-team" class="nav-link" data-scroll-target="#project-team">Project Team</a></li>
+  <li><a href="#resources-links" id="toc-resources-links" class="nav-link" data-scroll-target="#resources-links">Resources &amp; Links</a></li>
+  <li><a href="#future-directions" id="toc-future-directions" class="nav-link" data-scroll-target="#future-directions">Future Directions</a></li>
+  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
+  <li><a href="#contact" id="toc-contact" class="nav-link" data-scroll-target="#contact">Contact</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
+<p>The Rural Economic Outlook project is a comprehensive data infrastructure initiative that tracks rural economic conditions from 2007-2024. Built to support CORI’s February 2026 Rural Economic Outlook webinar, this project integrates <strong>12 federal datasets</strong> covering 3,100+ U.S. counties to answer the critical question: <strong>“What’s changing, what’s stuck, and what’s emerging in rural America?”</strong></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Project Scope
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The project establishes <strong>2007 as a baseline year</strong> (pre-Great Recession) to measure economic momentum across nearly two decades, enabling analysis of how rural economies have evolved through:</p>
+<ul>
+<li>Great Recession (2008-2009)</li>
+<li>Recovery period (2010-2019)</li>
+<li>Pandemic era (2020-2021)</li>
+<li>Post-pandemic period (2022-2024)</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Quick Links
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://github.com/ruralinnovation/data-rural-economic-outlook">GitHub Repository</a></li>
+<li>Database Schema: <code>proj_rural_economic_outlook</code> (PostgreSQL)</li>
+<li>Configuration: <code>params.yml</code></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="key-questions" class="level2">
+<h2 class="anchored" data-anchor-id="key-questions">Key Questions</h2>
+<p>The project addresses <strong>8 major analytical themes</strong>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Macro Conditions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Labor Markets</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Industry Structure</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Business Dynamics</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Tech &amp; Remote Work</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false" href="">Cost Pressures</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-7" role="tab" aria-controls="tabset-1-7" aria-selected="false" href="">Forward Outlook</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-8" role="tab" aria-controls="tabset-1-8" aria-selected="false" href="">AI Opportunities</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong>How has rural GDP per capita grown compared to metro areas?</strong></p>
+<p>Tracking real GDP growth using BEA data to understand rural economic momentum relative to metropolitan areas over the 2007-2023 period.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><strong>Are rural areas facing labor shortages? What are employment and wage trends?</strong></p>
+<p>Analyzing QCEW employment and wage data, ACS prime-age employment rates, and sectoral shifts in the rural labor market.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p><strong>How concentrated are rural economies? Which sectors are growing/declining?</strong></p>
+<p>Using Herfindahl-Hirschman Index (HHI) to measure industry concentration and tracking sectoral composition changes over time.</p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p><strong>Are rural areas creating new businesses? What role do young firms play in job creation?</strong></p>
+<p>Examining business entry/exit rates, firm age distributions, and the share of jobs created by young firms (0-5 years old) using BDS and BFS data.</p>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p><strong>How has remote work changed rural labor markets? Where are tech jobs located?</strong></p>
+<p>Tracking ACS occupation data to measure remote work adoption and technology sector employment in rural areas.</p>
+</div>
+<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<p><strong>Housing affordability, migration patterns, local fiscal capacity</strong></p>
+<p>Analyzing housing cost burden, building permits, migration flows, and their implications for rural community sustainability.</p>
+</div>
+<div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
+<p><strong>Scenario planning for 2026-2028</strong></p>
+<p>Developing projections based on historical trends and current economic indicators.</p>
+</div>
+<div id="tabset-1-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-8-tab">
+<p><strong>Where can AI boost rural productivity?</strong></p>
+<p>Identifying sectors and communities where AI adoption could enhance economic performance.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Data Integration Strategy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The project uses a <strong>tidy data architecture</strong> for reproducible analysis:</p>
+</div>
+</div>
+<section id="etl-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="etl-pipeline">ETL Pipeline</h3>
+<pre class="mermaid"><code>graph TD
+    A[Data Sources APIs/Downloads] --&gt; B[R/data_import/*.R Scripts]
+    B --&gt; C[County-Level Tidy Tables PostgreSQL]
+    C --&gt; D[Rural/Metro Aggregations Weighted]
+    D --&gt; E[R/viz/*.R Visualization Scripts]
+    E --&gt; F[Tableau Workbooks &amp; CSV Exports]</code></pre>
+</section>
+<div class="columns">
+<div class="column" style="width:48%;">
+<section id="geographic-classification" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-classification">Geographic Classification</h3>
+<p>All analysis uses <strong>CBSA 2023</strong> rural definition from the <a href="../../../packages/ruraldefinitions/">ruraldefinitions package</a> to ensure consistent rural vs.&nbsp;metropolitan comparisons across all datasets.</p>
+</section>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<section id="temporal-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="temporal-coverage">Temporal Coverage</h3>
+<ul>
+<li><strong>Baseline:</strong> 2007 (pre-Great Recession = 100 index)</li>
+<li><strong>Analysis Period:</strong> 2007-2024 (18 years)</li>
+<li><strong>Milestone Years:</strong> 2007, 2010, 2019, 2020-2021, 2023-2024</li>
+</ul>
+</section>
+</div>
+</div>
+<section id="inflation-adjustment" class="level3">
+<h3 class="anchored" data-anchor-id="inflation-adjustment">Inflation Adjustment</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Price Adjustment Methods
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All monetary values adjusted to <strong>2023 dollars</strong> using:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 61%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data Source</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>BEA GDP</strong></td>
+<td>Chain-weighted 2017 dollars (already inflation-adjusted)</td>
+</tr>
+<tr class="even">
+<td><strong>QCEW Wages</strong></td>
+<td>Deflated using BLS CPI-U-RS (Consumer Price Index Research Series)</td>
+</tr>
+<tr class="odd">
+<td><strong>IRS Migration AGI</strong></td>
+<td>Deflated using CPI-U-RS</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="data-sources-integration" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources-integration">Data Sources &amp; Integration</h2>
+<section id="demographics-population-83-variables-total" class="level3">
+<h3 class="anchored" data-anchor-id="demographics-population-83-variables-total">Demographics &amp; Population (83 Variables Total)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Variables</th>
+<th>Years</th>
+<th>Key Metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../../datasets/census-population-estimates/">Census Population Estimates</a></td>
+<td>Population totals, age structure</td>
+<td>2007-2024</td>
+<td>Denominators for per-capita rates</td>
+</tr>
+<tr class="even">
+<td><a href="../../../datasets/census-pep-components/">Census PEP Components</a></td>
+<td>Births, deaths, migration</td>
+<td>2007-2023</td>
+<td>Natural increase vs.&nbsp;migration drivers</td>
+</tr>
+<tr class="odd">
+<td><a href="../../../datasets/american-community-survey/">American Community Survey</a></td>
+<td>88 variables: demographics, labor, housing, occupations</td>
+<td>2013, 2018, 2023</td>
+<td>Prime-age employment, remote work, cost burden, education</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="economic-output-labor-markets" class="level3">
+<h3 class="anchored" data-anchor-id="economic-output-labor-markets">Economic Output &amp; Labor Markets</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Variables</th>
+<th>Years</th>
+<th>Key Metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../../datasets/bea-real-gdp/">BEA Real GDP</a></td>
+<td>Real GDP per capita</td>
+<td>2007-2023</td>
+<td>Economic growth momentum (2007=100)</td>
+</tr>
+<tr class="even">
+<td><a href="../../../datasets/qcew-employment-wages/">QCEW Employment &amp; Wages</a></td>
+<td>Employment, wages by industry, HHI</td>
+<td>2007-2024</td>
+<td>Real wage growth, sectoral shifts, industry concentration</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="business-dynamics-entrepreneurship" class="level3">
+<h3 class="anchored" data-anchor-id="business-dynamics-entrepreneurship">Business Dynamics &amp; Entrepreneurship</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Variables</th>
+<th>Years</th>
+<th>Key Metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../../datasets/census-bds/">Business Dynamics Statistics</a></td>
+<td>Entry/exit rates, job creation by firm age</td>
+<td>2007-2023</td>
+<td>Young firm job creation share, business dynamism</td>
+</tr>
+<tr class="even">
+<td><a href="../../../datasets/census-bfs/">Business Formation Statistics</a></td>
+<td>Business applications</td>
+<td>2007-2024</td>
+<td>Leading indicator of entrepreneurship</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="migration-housing-supply" class="level3">
+<h3 class="anchored" data-anchor-id="migration-housing-supply">Migration &amp; Housing Supply</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Variables</th>
+<th>Years</th>
+<th>Key Metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../../datasets/irs-migration/">IRS Migration</a></td>
+<td>County-to-county flows, AGI flows</td>
+<td>2007-2022</td>
+<td>Net migration rates, income flows</td>
+</tr>
+<tr class="even">
+<td><a href="../../../datasets/census-building-permits/">Building Permits</a></td>
+<td>Housing units authorized</td>
+<td>2007-2024</td>
+<td>Housing supply per 1,000 population</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="innovation-classification" class="level3">
+<h3 class="anchored" data-anchor-id="innovation-classification">Innovation &amp; Classification</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Variables</th>
+<th>Years</th>
+<th>Key Metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../../datasets/uspto-patents/">USPTO Patents</a></td>
+<td>Patent counts by assignee location</td>
+<td>2014-2024</td>
+<td>Innovation indicator</td>
+</tr>
+<tr class="even">
+<td><a href="../../../datasets/usda-county-typology/">USDA County Typology</a></td>
+<td>Economic specialization, persistent poverty</td>
+<td>2025 edition</td>
+<td>Stratification for analysis</td>
+</tr>
+<tr class="odd">
+<td><a href="../../../datasets/fcc-broadband/">FCC Broadband</a></td>
+<td>Broadband availability by technology</td>
+<td>2025</td>
+<td>Digital infrastructure</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Economic Growth</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Labor Markets</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Business Formation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Migration</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false" href="">Housing &amp; Costs</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>GDP &amp; Wage Trends (2007-2024)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Rural GDP growth lags metro</strong> - Rural real GDP per capita grew XX% vs.&nbsp;metro XX%</li>
+<li><strong>Wage gap persists</strong> - Real wages in rural areas remain XX% below metro, despite similar growth rates</li>
+<li><strong>Industry concentration</strong> - Rural economies more concentrated (higher HHI) than metro</li>
+</ul>
+<p><em>Note: Specific statistics to be updated with final analysis results</em></p>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Employment Dynamics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Prime-age employment</strong> - Rural prime-age (25-54) employment rate: XX% (2023)</li>
+<li><strong>Remote work surge</strong> - Rural remote work rate increased from X% (2013) to XX% (2023)</li>
+<li><strong>Sectoral shifts</strong> - Manufacturing share declined, professional services grew</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Entrepreneurship Trends
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Startup rates lower</strong> - Rural business entry rates XX% vs.&nbsp;metro XX%</li>
+<li><strong>Young firm job creation</strong> - Rural: XX% of jobs from 0-5 year firms vs.&nbsp;metro: XX%</li>
+<li><strong>Pandemic surge</strong> - Business applications spiked 2020-2021, but conversion rates uncertain</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Population Movement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Natural decrease accelerating</strong> - ~50% of rural counties have deaths &gt; births</li>
+<li><strong>Pandemic reversal</strong> - 2020-2021 saw positive rural net migration for first time in decades</li>
+<li><strong>Income flows matter</strong> - Some rural counties gain people but lose income (AGI)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Cost Pressures
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Housing supply constraints</strong> - Rural permits per 1,000 population: X vs.&nbsp;metro: XX</li>
+<li><strong>Cost burden rising</strong> - Renter cost burden increased from XX% to XX%</li>
+<li><strong>Aging housing stock</strong> - Limited new construction in many rural areas</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="technical-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="technical-implementation">Technical Implementation</h2>
+<section id="data-quality-controls" class="level3">
+<h3 class="anchored" data-anchor-id="data-quality-controls">Data Quality Controls</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Quality Assurance Process
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Variable count assertions</strong> - Verify all expected variables present (e.g., ACS: 88 variables)</li>
+<li><strong>Geographic coverage checks</strong> - All 3,100+ counties accounted for</li>
+<li><strong>Temporal consistency</strong> - Label changes documented (e.g., ACS “at home” → “from home”)</li>
+<li><strong>Deflation verification</strong> - CPI-U-RS applied consistently across wage variables</li>
+<li><strong>Missing value handling</strong> - Explicit NA treatment for cost burden, occupation shares</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="reproducibility" class="level3">
+<h3 class="anchored" data-anchor-id="reproducibility">Reproducibility</h3>
+<p>All code and documentation available:</p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<p><strong>Code &amp; Scripts</strong></p>
+<ul>
+<li>R scripts - Modular ETL for each data source</li>
+<li>Parameters file - <code>params.yml</code> centralizes configuration</li>
+</ul>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<p><strong>Documentation</strong></p>
+<ul>
+<li>Data codebook - 83 variables documented with sources, units, notes</li>
+<li>Import documentation - Detailed profiles for each data source</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="outputs" class="level2">
+<h2 class="anchored" data-anchor-id="outputs">Outputs</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Data Products</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Visualizations</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Documentation</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<ul>
+<li><strong>County-level tidy tables</strong> - One row per county per year per variable</li>
+<li><strong>Rural/metro aggregations</strong> - Weighted averages and sums by rural classification</li>
+<li><strong>Chart-ready datasets</strong> - 27 visualization datasets for webinar</li>
+<li><strong>Excel export</strong> - <code>Rural Innovation.xlsx</code> for stakeholder sharing</li>
+</ul>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<ul>
+<li>GDP growth indices (2007=100 baseline)</li>
+<li>Real wage trends by sector</li>
+<li>Employment composition changes</li>
+<li>Business formation rates</li>
+<li>Migration flow maps</li>
+<li>Housing supply indicators</li>
+<li>Industry concentration (HHI) distributions</li>
+</ul>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<ul>
+<li><strong>DATA_CODEBOOK.csv</strong> - Complete variable dictionary</li>
+<li><strong>README.md</strong> - Data source inventory and ETL priorities</li>
+<li><strong>BFS_DATA_SOURCE_PROFILE.md</strong> - Detailed source profile template</li>
+<li><strong>chart_data_readiness.csv</strong> - Mapping of visualizations to data requirements</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="challenges-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="challenges-solutions">Challenges &amp; Solutions</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">BEA Employment Tables</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">ACS Variable Labels</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">BFS Data Limitations</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">IRS Migration Lag</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p><strong>Challenge:</strong> BEA county employment tables (CAEMP25N, CAINC6N) ended after 2022.</p>
+<p><strong>Solution:</strong> Switched to <a href="../../../datasets/qcew-employment-wages/">QCEW data</a> for 2023-2024 employment, providing comparable industry detail with quarterly updates.</p>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<p><strong>Challenge:</strong> ACS variable labels changed formatting (“!!” → “::”; “at home” → “from home”).</p>
+<p><strong>Solution:</strong> Documented all changes in <code>acs_variable_problems.csv</code>; verified underlying variable codes (B-series) remain consistent; data is comparable despite cosmetic label changes.</p>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<p><strong>Challenge:</strong> High-propensity business applications (HBA) not available at county level; only ~11-12% of business applications (BA) become employer firms.</p>
+<p><strong>Solution:</strong> Use BA as intent indicator; link to <a href="../../../datasets/census-bds/">BDS</a> (18-month lag) for actual employer firm formation.</p>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<p><strong>Challenge:</strong> IRS migration data released 18-24 months after tax year.</p>
+<p><strong>Solution:</strong> Use <a href="../../../datasets/census-pep-components/">Census Components of Change</a> for timely total migration; use IRS for detailed flow and income analysis.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="impact-applications" class="level2">
+<h2 class="anchored" data-anchor-id="impact-applications">Impact &amp; Applications</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Policy Applications</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Research Applications</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Webinar Series</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<ul>
+<li><strong>Federal funding formulas</strong> - Data used in USDA, EDA, and ARC program targeting</li>
+<li><strong>Economic development strategy</strong> - Identify growth sectors and entrepreneurship gaps</li>
+<li><strong>Broadband investment</strong> - Combine with <a href="../../../datasets/fcc-broadband/">FCC data</a> for infrastructure targeting</li>
+<li><strong>Workforce development</strong> - Occupation and education data inform training programs</li>
+</ul>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<ul>
+<li>Rural economic resilience</li>
+<li>Effects of remote work on rural labor markets</li>
+<li>Entrepreneurship ecosystem assessment</li>
+<li>Migration and demographic change</li>
+<li>Regional inequality trends</li>
+</ul>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<p>Data infrastructure supports CORI’s quarterly economic outlook webinars:</p>
+<ul>
+<li><strong>February 2026:</strong> “Rural America in 2026: What’s Changing, What’s Stuck, What’s Emerging”</li>
+<li><strong>Future editions:</strong> Ongoing monitoring of rural economic conditions</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="project-team" class="level2">
+<h2 class="anchored" data-anchor-id="project-team">Project Team</h2>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>CORI Mapping and Data Analytics Team
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Data infrastructure architecture</li>
+<li>ETL pipeline development</li>
+<li>Analysis and visualization</li>
+<li>Documentation and methodology</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resources-links" class="level2">
+<h2 class="anchored" data-anchor-id="resources-links">Resources &amp; Links</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Data &amp; Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">R Packages</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Datasets</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<ul>
+<li><strong>GitHub Repository:</strong> <a href="https://github.com/ruralinnovation/data-rural-economic-outlook">data-rural-economic-outlook</a></li>
+<li><strong>Database Schema:</strong> <code>proj_rural_economic_outlook</code> (PostgreSQL)</li>
+<li><strong>Configuration:</strong> <code>params.yml</code> (API keys, year ranges, URLs)</li>
+</ul>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Purpose</th>
+<th>Documentation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../../packages/cori-data-bds/">cori.data.bds</a></td>
+<td>Business Dynamics Statistics</td>
+<td><a href="../../../packages/cori-data-bds/">View docs</a></td>
+</tr>
+<tr class="even">
+<td><a href="../../../packages/cori-data-fcc/">cori.data.fcc</a></td>
+<td>FCC Broadband Map</td>
+<td><a href="../../../packages/cori-data-fcc/">View docs</a></td>
+</tr>
+<tr class="odd">
+<td><a href="../../../packages/ruraldefinitions/">ruraldefinitions</a></td>
+<td>Rural classification</td>
+<td><a href="../../../packages/ruraldefinitions/">View docs</a></td>
+</tr>
+<tr class="even">
+<td>tidybea</td>
+<td>BEA API access</td>
+<td>External</td>
+</tr>
+<tr class="odd">
+<td>tidycensus</td>
+<td>Census API access</td>
+<td>External</td>
+</tr>
+<tr class="even">
+<td>blsAPI</td>
+<td>BLS API access</td>
+<td>External</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<p><strong>Demographics &amp; Population:</strong></p>
+<ul>
+<li><a href="../../../datasets/census-population-estimates/">Census Population Estimates</a></li>
+<li><a href="../../../datasets/census-pep-components/">Census PEP Components of Change</a></li>
+<li><a href="../../../datasets/american-community-survey/">American Community Survey</a></li>
+</ul>
+<p><strong>Economic Indicators:</strong></p>
+<ul>
+<li><a href="../../../datasets/bea-real-gdp/">BEA Real GDP Per Capita</a></li>
+<li><a href="../../../datasets/qcew-employment-wages/">QCEW Employment &amp; Wages</a></li>
+</ul>
+<p><strong>Business &amp; Entrepreneurship:</strong></p>
+<ul>
+<li><a href="../../../datasets/census-bds/">Business Dynamics Statistics</a></li>
+<li><a href="../../../datasets/census-bfs/">Business Formation Statistics</a></li>
+<li><a href="../../../datasets/census-building-permits/">Building Permits Survey</a></li>
+</ul>
+<p><strong>Migration &amp; Innovation:</strong></p>
+<ul>
+<li><a href="../../../datasets/irs-migration/">IRS County-to-County Migration</a></li>
+<li><a href="../../../datasets/uspto-patents/">USPTO Patents</a></li>
+</ul>
+<p><strong>Classification &amp; Infrastructure:</strong></p>
+<ul>
+<li><a href="../../../datasets/usda-county-typology/">USDA ERS County Typology</a></li>
+<li><a href="../../../datasets/fcc-broadband/">FCC National Broadband Map</a></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="future-directions" class="level2">
+<h2 class="anchored" data-anchor-id="future-directions">Future Directions</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Data Enhancements</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Analytical Extensions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false" href="">Infrastructure Improvements</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<ul>
+<li>Add Zillow housing price data (median home values, rent indices)</li>
+<li>Incorporate BLS LAUS unemployment rates (monthly frequency)</li>
+<li>Add Lightcast industry forecasts (forward-looking)</li>
+<li>Integrate AI exposure indices (automation risk)</li>
+</ul>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<ul>
+<li>County-level cluster analysis (identify economic types beyond USDA typology)</li>
+<li>Causal inference models (e.g., broadband impact on employment)</li>
+<li>Scenario modeling (2026-2028 projections)</li>
+<li>Industry-specific deep dives (manufacturing, recreation, tech)</li>
+</ul>
+</div>
+<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
+<ul>
+<li>Automated ETL pipeline (scheduled monthly updates)</li>
+<li>API endpoint for external access to tidy tables</li>
+<li>Interactive dashboard (Shiny or Tableau Public)</li>
+<li>Real-time data quality monitoring</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="citation" class="level2">
+<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<p>If using this data infrastructure or analysis in your work, please cite:</p>
+<pre><code>Center on Rural Innovation. (2026). Rural Economic Outlook Data Infrastructure.
+Retrieved from https://github.com/ruralinnovation/data-rural-economic-outlook</code></pre>
+</section>
+<section id="contact" class="level2">
+<h2 class="anchored" data-anchor-id="contact">Contact</h2>
+<p>For questions about this project, contact the CORI Mapping and Data Analytics Team at <a href="mailto:data@ruralinnovation.us">data@ruralinnovation.us</a>.</p>
+<hr>
+<p><strong>Last Updated:</strong> February 2, 2026 <strong>Project Status:</strong> Active <strong>Data Coverage:</strong> 2007-2024</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

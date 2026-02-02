@@ -1,0 +1,202 @@
+---
+title: "Broadband Equity Analysis"
+description: "Analyzing broadband access disparities in rural communities across the United States"
+date: 2025-10-01
+categories: ["Broadband", "Equity", "Infrastructure"]
+tags: ["Policy", "Rural Development"]
+featured: true
+projectUrl: "https://broadband-equity.ruralinnovation.us"
+status: "active"
+team: ["drew-rosebush", "camden-blatchly", "olivier-leroy"]
+usesDatasets: ["fcc-broadband"]
+usesPackages: ["cori-data-fcc"]
+usesResources: ["geographic-crosswalks"]
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Project Overview
+
+The Broadband Equity Analysis project examines disparities in broadband access and adoption across rural America. By combining FCC broadband data with socioeconomic indicators, we identify communities most in need of infrastructure investment.
+
+::: {.callout-tip icon=false}
+## Quick Links
+
+- [Interactive Dashboard](https://broadband-equity.ruralinnovation.us)
+- [Research Report](https://ruralinnovation.us/reports/broadband-equity)
+- [GitHub Repository](https://github.com/ruralinnovation/broadband-equity)
+:::
+
+## Key Questions
+
+::: {.panel-tabset}
+
+### Access
+
+**Which rural communities lack adequate broadband access?**
+
+This analysis identifies census blocks and communities without access to minimum broadband speeds (25/3 Mbps), highlighting geographic disparities in infrastructure deployment.
+
+### Economic Impact
+
+**How does broadband availability correlate with economic outcomes?**
+
+By linking broadband availability data with economic indicators, we examine relationships between digital infrastructure and median household income, employment rates, and business formation.
+
+### Investment Potential
+
+**What is the potential impact of broadband infrastructure investment?**
+
+Modeling scenarios estimate the economic impact of closing the broadband gap, identifying high-priority communities where investment could yield greatest returns.
+
+:::
+
+## Methodology
+
+::: {.callout-note}
+## Analytical Approach
+
+Our analysis combines multiple data sources to provide comprehensive assessment of broadband equity:
+:::
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Data Sources
+
+- **FCC National Broadband Map** - Census block level coverage data
+- **Census ACS** - Demographic and economic indicators
+- **Geographic Classifications** - Metro/non-metro, RUCA codes
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+### Analysis Methods
+
+- **Spatial Analysis** - Mapping coverage gaps and overlays with demographic data
+- **Statistical Modeling** - Estimating relationships between broadband and economic outcomes
+- **Impact Estimation** - Projecting benefits of infrastructure investment
+:::
+
+::::
+
+## Key Findings
+
+::: {.callout-important}
+## Major Findings
+
+- **XX% of rural census blocks** lack access to 25/3 Mbps broadband
+- **Broadband access correlates with XX% higher** median household income
+- **Closing the broadband gap could impact XX rural communities**
+
+*Note: Specific statistics to be updated with final analysis results*
+:::
+
+## Data & Tools
+
+::: {.panel-tabset}
+
+### Datasets
+
+| Dataset | Purpose | Coverage |
+|---------|---------|----------|
+| [FCC National Broadband Map](/datasets/fcc-broadband/) | Broadband availability by technology and speed | Census block level |
+| Census ACS Demographic Data | Socioeconomic indicators | County and tract level |
+
+### R Packages
+
+| Package | Function | Documentation |
+|---------|----------|---------------|
+| [cori.data.fcc](/packages/cori-data-fcc/) | FCC data access and processing | [View docs](/packages/cori-data-fcc/) |
+| tidycensus | Census API access | External |
+| sf | Spatial analysis and mapping | External |
+
+### Resources
+
+- [Geographic Crosswalks](/resources/geographic-crosswalks/) - Converting between geographic units (census blocks, tracts, counties)
+
+:::
+
+## Outputs
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Interactive Tools
+
+- [Interactive Dashboard](https://broadband-equity.ruralinnovation.us) - Explore broadband coverage by geography
+- Filterable maps and charts
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+### Research Products
+
+- [Research Report](https://ruralinnovation.us/reports/broadband-equity) - Full technical methodology and findings
+- [Blog Post: Estimating Broadband Adoption Impact](/stories/estimating-adoption-impact/) - Key insights and policy implications
+:::
+
+::::
+
+## Project Team
+
+:::: {.columns}
+
+::: {.column width="30%"}
+**Drew Rosebush**
+*Project Lead*
+
+Strategic direction and analysis design
+:::
+
+::: {.column width="3%"}
+:::
+
+::: {.column width="30%"}
+**Camden Blatchly**
+*Data Analysis*
+
+Statistical modeling and economic impact estimation
+:::
+
+::: {.column width="3%"}
+:::
+
+::: {.column width="30%"}
+**Olivier Leroy**
+*Spatial Analysis*
+
+GIS analysis and mapping
+:::
+
+::::
+
+## Related Resources
+
+::: {.callout-note icon=false}
+## Cross-References
+
+**Packages:**
+
+- [cori.data.fcc R Package](/packages/cori-data-fcc/) - Tools for working with FCC broadband data
+
+**Datasets:**
+
+- [FCC Broadband Dataset](/datasets/fcc-broadband/) - National Broadband Map documentation
+
+**Resources:**
+
+- [Geographic Crosswalks](/resources/geographic-crosswalks/) - Geographic conversion utilities
+:::
+
+## Repository
+
+View the complete code, analysis scripts, and documentation:
+
+[GitHub: ruralinnovation/broadband-equity](https://github.com/ruralinnovation/broadband-equity)

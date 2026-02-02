@@ -1,0 +1,372 @@
+---
+title: "ruraldefinitions"
+description: "R package for accessing federal rural definitions at multiple geographic levels"
+author: "Camden Blatchly"
+date: "2026-02-02"
+categories: ["R Package", "Rural Classification"]
+tags: ["USDA", "Census", "RUCA", "Rural Definitions", "Geography"]
+package:
+  name: "ruraldefinitions"
+  githubUrl: "https://github.com/ruralinnovation/ruraldefinitions"
+  installCommand: 'devtools::install_github("ruralinnovation/ruraldefinitions")'
+  status: "stable"
+  version: "0.1.0"
+  maintainer: "Camden Blatchly"
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The `ruraldefinitions` package provides easy access to federal rural definitions from multiple U.S. agencies. It aggregates seven major rural classification systems, making them readily accessible to R programmers for comparative and historical analysis.
+
+This package is essential for researchers and analysts who need consistent, well-documented rural definitions across different federal agencies' methodologies and time periods.
+
+::: callout-note
+## Why Use This Package
+
+- **One-stop access** - All major federal rural definitions in one place
+- **Standardized format** - Consistent column names and structure across definitions
+- **Historical depth** - 50+ years of rural classifications (1974-2024)
+- **Multiple geographies** - County, tract, and block-level classifications
+- **Expert guidance** - Built-in recommendations for definition selection
+:::
+
+## Installation
+
+::: panel-tabset
+## GitHub
+
+```{r}
+#| eval: false
+
+# Install devtools if you haven't already
+install.packages("devtools")
+
+# Install ruraldefinitions
+devtools::install_github("ruralinnovation/ruraldefinitions")
+```
+
+## AWS S3 Access
+
+For non-R users, CSV files are available directly:
+
+- [Download from S3](https://ruraldefinitions.s3.us-east-1.amazonaws.com)
+:::
+
+## Quick Start
+
+```{r}
+#| eval: false
+
+library(ruraldefinitions)
+
+# Access pre-loaded county-level definitions
+head(cbsa_2020)  # Core-Based Statistical Areas
+head(rucc_2023)  # Rural-Urban Continuum Codes
+
+# Download tract-level definitions from S3
+cori_tracts <- get_definition("cori", 2020)
+ruca_tracts <- get_definition("ruca", 2010)
+
+# All definitions have standardized columns:
+# - geoid: Geographic identifier
+# - name: Definition name
+# - year: Year released
+# - rural_def: Detailed classification
+# - is_rural: "Rural" or "Nonrural"
+```
+
+## Available Definitions
+
+The package provides access to **7 major federal rural definitions**:
+
+| Definition | Type | Years Available | Geographic Level |
+|-----------|------|-----------------|-----------------|
+| **CORI** | Custom hybrid definition | 2020 | Tract |
+| **RUCA** | Rural-Urban Commuting Area | 1990, 2000, 2010 | Tract |
+| **CBSA** | Core-Based Statistical Areas | 2020, 2023 | County |
+| **NCHS** | National Center for Health Statistics | 1990, 2006, 2013, 2023 | County |
+| **RUCC** | Rural-Urban Continuum Codes | 1974, 1983, 1993, 2003, 2013, 2023 | County |
+| **UIC** | Urban Influence Codes | 1993, 2003, 2013, 2024 | County |
+| **Census** | Census Bureau | 2010, 2020 | Block |
+
+## Key Functions
+
+### Data Access
+
+```{r}
+#| eval: false
+
+# Download tract-level and block-level definitions from AWS S3
+get_definition(
+  name = "cori",     # Definition type
+  year = 2020        # Year of classification
+)
+
+# Pre-loaded county-level definitions (no download needed)
+data(cbsa_2020)
+data(nchs_2023)
+data(rucc_2023)
+data(uic_2024)
+```
+
+## Expert Recommendations
+
+::: callout-tip
+## Choosing the Right Definition
+
+The package includes guidance on definition selection based on research by rural innovation experts:
+
+**For county-level analysis:**
+- Use **CBSA** or "Nonmetro" definitions
+- Best for state/regional comparisons
+- Aligns with OMB standards
+
+**For tract-level analysis:**
+- Use **CORI** definition (hybrid of Nonmetro + RUCA)
+- Captures rural tracts within metropolitan counties
+- Better for granular analysis
+
+These recommendations align with the Urban Institute's "Do No Harm Guide" for equitable data narratives.
+:::
+
+## Common Use Cases
+
+### Basic Rural Classification
+
+```{r}
+#| eval: false
+
+library(dplyr)
+
+# Get CORI rural definition
+rural_tracts <- get_definition("cori", 2020)
+
+# Filter to rural areas only
+rural_only <- rural_tracts |>
+  filter(is_rural == "Rural")
+
+# Count by classification
+rural_tracts |>
+  count(rural_def, is_rural)
+```
+
+### Comparing Definitions
+
+```{r}
+#| eval: false
+
+# Compare RUCA and CORI definitions
+ruca_2010 <- get_definition("ruca", 2010)
+cori_2020 <- get_definition("cori", 2020)
+
+# Join and compare
+comparison <- ruca_2010 |>
+  left_join(cori_2020, by = "geoid", suffix = c("_ruca", "_cori")) |>
+  count(is_rural_ruca, is_rural_cori)
+```
+
+### Historical Analysis
+
+```{r}
+#| eval: false
+
+# Track rural classification changes over time
+rucc_1993 <- rucc_1993  # Pre-loaded data
+rucc_2003 <- rucc_2003
+rucc_2013 <- rucc_2013
+rucc_2023 <- rucc_2023
+
+# Join across years
+historical <- rucc_2023 |>
+  select(geoid, rural_def_2023 = rural_def) |>
+  left_join(
+    rucc_2013 |> select(geoid, rural_def_2013 = rural_def),
+    by = "geoid"
+  ) |>
+  left_join(
+    rucc_2003 |> select(geoid, rural_def_2003 = rural_def),
+    by = "geoid"
+  )
+
+# Identify counties that changed classification
+changed <- historical |>
+  filter(rural_def_2023 != rural_def_2003)
+```
+
+### Integration with Other Data
+
+```{r}
+#| eval: false
+
+library(tidycensus)
+
+# Get Census population data
+pop_data <- get_acs(
+  geography = "tract",
+  variables = "B01001_001",
+  state = "VT",
+  year = 2020
+)
+
+# Add rural classification
+pop_rural <- pop_data |>
+  left_join(
+    get_definition("cori", 2020),
+    by = c("GEOID" = "geoid")
+  )
+
+# Calculate rural vs. urban population
+pop_rural |>
+  group_by(is_rural) |>
+  summarize(
+    total_population = sum(estimate, na.rm = TRUE)
+  )
+```
+
+## Data Structure
+
+**Standardized Format:**
+
+All definitions share a common structure:
+
+```
+geoid       - Geographic identifier (FIPS code)
+name        - Definition name (e.g., "CORI", "RUCA")
+year        - Year of classification
+rural_def   - Detailed classification (e.g., "Metropolitan", "Micropolitan")
+is_rural    - Binary: "Rural" or "Nonrural"
+```
+
+**Example:**
+
+| geoid | name | year | rural_def | is_rural |
+|-------|------|------|-----------|----------|
+| 50001020100 | CORI | 2020 | Rural | Rural |
+| 50001020200 | CORI | 2020 | Metropolitan | Nonrural |
+
+## Definition Details
+
+### CORI Definition
+
+Custom hybrid combining:
+- **Nonmetro counties** (CBSA classification)
+- **RUCA codes 4-10** (rural and small town tracts)
+
+Captures rural areas more accurately than county-level definitions alone.
+
+### RUCA (Rural-Urban Commuting Area)
+
+Census tract-level classification based on:
+- Population density
+- Urbanization
+- Daily commuting patterns
+
+10 primary codes, with secondary codes for finer distinctions.
+
+### CBSA (Core-Based Statistical Areas)
+
+OMB delineations of metro and micro areas:
+- **Metropolitan**: 50,000+ population urban core
+- **Micropolitan**: 10,000-49,999 population core
+- **Rural/Noncore**: Neither metro nor micro
+
+### RUCC (Rural-Urban Continuum Codes)
+
+USDA 9-category classification:
+- Codes 1-3: Metropolitan
+- Codes 4-9: Nonmetropolitan (varying levels of urbanization and adjacency)
+
+### NCHS (National Center for Health Statistics)
+
+6-category urban-rural classification:
+- Large central metro
+- Large fringe metro
+- Medium metro
+- Small metro
+- Micropolitan
+- Noncore
+
+### UIC (Urban Influence Codes)
+
+USDA 12-category classification based on:
+- Metro/nonmetro status
+- Population size
+- Adjacency to metro areas
+
+### Census Urban/Rural
+
+Census Bureau's official urban-rural classification:
+- Based on population density and land use
+- Block-level precision
+
+## Performance Considerations
+
+::: callout-tip
+## Loading Strategy
+
+- **County data** - Pre-loaded, instant access
+- **Tract data** - Downloads from S3 (~1-2 MB)
+- **Block data** - Large files, use selectively
+
+Cache downloaded data locally to avoid repeated S3 calls.
+:::
+
+## Data Hosting
+
+- **County-level data:** Included in the package for immediate access
+- **Tract and block-level data:** Hosted on AWS S3 and downloaded on-demand
+- **CSV Downloads:** Available directly from [AWS S3](https://ruraldefinitions.s3.us-east-1.amazonaws.com) for non-R users
+
+## Use Cases at CORI
+
+This package is used across CORI projects for:
+
+- Consistent geographic classifications
+- Rural vs. urban comparisons
+- Equity analysis
+- Historical trend analysis
+- Spatial data enrichment
+
+## Related Resources
+
+### Internal Resources
+
+- CORI research on defining rural America
+- Geographic analysis projects
+- Equity and access studies
+
+### External Links
+
+- [USDA ERS Rural Definitions](https://www.ers.usda.gov/topics/rural-economy-population/rural-classifications/)
+- [Census Urban/Rural Classification](https://www.census.gov/programs-surveys/geography/guidance/geo-areas/urban-rural.html)
+- [RUCA Data](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/)
+- [NCHS Urban-Rural Classification](https://www.cdc.gov/nchs/data_access/urban_rural.htm)
+
+## Key Features
+
+1. **Comprehensive Coverage** - Aggregates 7 different federal rural definitions spanning 50+ years (1974-2024)
+2. **Flexible Geographic Levels** - Supports county, tract, and block-level analysis
+3. **Standardized Format** - All definitions use consistent column names and structure
+4. **Easy Access** - Pre-loaded county data; on-demand loading for detailed geographies
+5. **Historical Analysis** - Multiple years available for temporal comparisons
+6. **Open License** - MIT licensed for broad reuse
+
+## Documentation
+
+- [GitHub Repository](https://github.com/ruralinnovation/ruraldefinitions)
+- [README and User Guide](https://github.com/ruralinnovation/ruraldefinitions#readme)
+- [Data Dictionary](https://github.com/ruralinnovation/ruraldefinitions/wiki/Data-Dictionary)
+
+---
+
+**Contact:** Camden Blatchly
+
+For bug reports or feature requests, please open an issue on [GitHub](https://github.com/ruralinnovation/ruraldefinitions/issues).

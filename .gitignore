@@ -33,6 +33,15 @@ vendor/bundle/
 # Quarto
 /.quarto/
 _freeze/
+_site/
+
+# Documentation/Process files (internal use only)
+QUARTO-MIGRATION.md
+WORKFLOW.md
+
+# Quarto support files (can be regenerated)
+*_files/
+_config_dev.yml
 
 # R/RStudio
 .Rproj.user
@@ -57,3 +66,5 @@ posts/12_fcc-data/
 # ideation docs/ - NEEDED for team documentation
 # posts/ - Original blog posts
 # _datasets/, _packages/, _projects/, _stories/, _resources/ - All content
+
+**/*.quarto_ipynb

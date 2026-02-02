@@ -1,37 +1,137 @@
-# Data blog for the Mapping and Data Analytics team at the Center on Rural Innovation (CORI)
+# Rural Dataverse
 
-## Getting started
+**A Jekyll/Quarto hybrid data hub for the Center on Rural Innovation's Mapping and Data Analytics team.**
 
-1. [Download Quarto](https://quarto.org/docs/download/)
-2. Clone this repository
+This site showcases datasets, R packages, projects, blog posts, and resources for rural innovation research.
 
-## Blog post workflow
+**Architecture:** Jekyll for site structure, Quarto for content rendering (Phase 1). See [QUARTO-MIGRATION.md](QUARTO-MIGRATION.md) for details.
 
-1. Draft blog post
-   1. Create a short name representing the title for your article. This should be lowercase with underscores instead of spaces. Use this name to create a new branch (`git branch -d your_branch_name`) and add a new folder in the `posts` directory (`mkdir posts/your_branch_name`).
-   2. Within the new folder, add an `index.qmd` file (where your blog post will go) and a `thumbnail.png` file (an image that will appear in the listing of recent articles; screenshots are OK, but charts/diagrams/infographics are better).
-   3. Write your blog post. Using the command line, navigate to the root folder of the blog project and run `quarto preview`  (or use the “Render” button in RStudio) to view your changes in the browser.
-2. Commit changes and publish to Github with (Draft) in the title
-3. Copy text into a google doc
-   1. Make the document title = blog post's full title
-   2. In the google doc, add a link to the blog post's folder in Github ([ex.](https://github.com/ruralinnovation/blog/tree/main/posts/awesomejq))
-4. Let Austin know that there is a blog post ready for review
-5. Austin will edit the blog post (over the next 5 days)
-   1. If you don’t see any edits/suggestions, do not assume that it’s perfect. Reach out and confirm with Austin
-6. Once Austin’s feedback is the document, action suggestions/edits (only if it makes sense)
-7. Migrate edits over to the blog’s quarto file (locally)
-8. Publish final changes:
-   1. Commit to blog post branch:
-      1. In reference to step 1 above for drafting a blog post, check out the same branch that you used to initially create the article.
-      2. Edit your blog post. Using the command line, navigate to the root folder of the blog project and run `quarto preview`  (or use the “Render” button in RStudio) to view your changes in the browser.
-         1. If you didn’t use the RStudio “Render” button to preview your changes, you now need to run `quarto render` in your terminal to output new files to the `docs` directory.
-         2. If you preview and notice that there are style issues, either fix it or flag the issue for your reviewer after you push the changes
-      3. Stage your updates (including file changes in `docs`) and commit your changes (`git commit -m “[message]”`). Push a new remote branch (`git push -u origin your_branch_name`) to Github
-   2. Create a pull request to merge blog post branch into `main`.
-      1. Have another team member review your pull request.
-      2. Merge your changes
+## Quick Start
 
+### Prerequisites
 
-## Communications with com's
+- **Quarto CLI** - [Install Quarto](https://quarto.org/docs/get-started/)
+- **R and RStudio** (optional, for R code execution)
+- **Ruby and Jekyll** (optional, for local preview with Jekyll styling)
 
-Link to G-drive: https://drive.google.com/drive/folders/1zkaHw8XEH0TPZExkmn-VOB1SITgXXPAd 
+### Local Development
+
+**Current (Phase 1): Jekyll with Quarto content**
+```bash
+bundle exec jekyll serve
+```
+View at: http://localhost:4000
+
+**Future (Phase 2): Full Quarto website**
+```bash
+quarto preview
+```
+View at: http://localhost:4444
+
+See [WORKFLOW.md](WORKFLOW.md) for detailed development instructions.
+
+## Content Structure
+
+All content lives in `posts/` organized by type:
+
+```
+posts/
+├── datasets/          # Dataset documentation pages
+│   └── qcew-employment-wages/
+│       └── index.qmd
+├── packages/          # R package documentation
+│   └── ruraldefinitions/
+│       └── index.qmd
+├── projects/          # Project portfolios
+│   └── rural-economic-outlook/
+│       └── index.qmd
+├── blog/              # Blog posts (stories)
+│   └── 01_post_name/
+│       └── index.qmd
+└── resources/         # Guides and tools
+    └── resource-name/
+        └── index.qmd
+```
+
+## Adding Content
+
+### Adding a Dataset
+
+1. Create folder: `posts/datasets/dataset-name/`
+2. Create file: `index.qmd` with YAML frontmatter:
+
+```yaml
+---
+title: "Dataset Name"
+description: "Brief description"
+date: "2026-02-02"
+categories: ["Dataset Category"]
+tags: ["tag1", "tag2"]
+dataset:
+  source: "Source Organization"
+  sourceUrl: "https://example.com"
+  updateFrequency: "Annual"
+---
+```
+
+3. Write content using Quarto markdown
+4. Render: `quarto render posts/datasets/dataset-name/index.qmd`
+
+### Adding an R Package
+
+Same structure as datasets, but use `posts/packages/package-name/index.qmd`
+
+### Adding a Project
+
+Use `posts/projects/project-name/index.qmd` with:
+
+```yaml
+usesDatasets: ["dataset-slug1", "dataset-slug2"]
+usesPackages: ["package-slug1"]
+```
+
+### Adding a Blog Post
+
+Use `posts/blog/NN_post-slug/index.qmd` where NN is next number.
+
+## Quarto Features
+
+The site uses Quarto for all content, enabling:
+
+- **Executable R code** - Code blocks that run and show output
+- **Callouts** - Highlighted boxes (note, warning, tip, important)
+- **Tabs** - Tabbed panels for organizing content
+- **Diagrams** - Mermaid diagrams and flowcharts
+- **Tables** - Auto-formatted tables from R dataframes
+- **Citations** - Bibliography management
+- **Cross-references** - Link to figures, tables, sections
+
+See the [Contributor Guide](CONTRIBUTOR-GUIDE.md) for detailed instructions.
+
+## Deployment
+
+### GitHub Pages
+
+The site deploys automatically to GitHub Pages from the `main` branch.
+
+Configuration for production:
+```yaml
+baseurl: "/blog"  # For ruralinnovation.github.io/blog
+```
+
+Use `_config_prod.yml` for production builds if needed.
+
+## Documentation
+
+- **[WORKFLOW.md](WORKFLOW.md)** - Current development workflow (start here!)
+- **[QUARTO-MIGRATION.md](QUARTO-MIGRATION.md)** - Migration details and future plans
+- **[CONTRIBUTOR-GUIDE.md](CONTRIBUTOR-GUIDE.md)** - Comprehensive guide for contributors
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Technical development documentation
+
+## Team
+
+CORI Mapping and Data Analytics Team
+
+## License
+
+Content and code licensed for CORI use.

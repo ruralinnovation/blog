@@ -1,0 +1,310 @@
+---
+title: "cori.data.fcc"
+description: "R package for accessing and analyzing FCC broadband data"
+author: "CORI MDA Team"
+date: "2025-11-20"
+categories: ["R Package", "Broadband"]
+tags: ["FCC", "Data Processing", "R", "National Broadband Map"]
+package:
+  name: "cori.data.fcc"
+  githubUrl: "https://github.com/ruralinnovation/cori.data.fcc"
+  installCommand: 'remotes::install_github("ruralinnovation/cori.data.fcc")'
+  status: "stable"
+  version: "0.2.1"
+  maintainer: "CORI MDA Team"
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The `cori.data.fcc` package provides tools for downloading, processing, and analyzing FCC broadband data in R. It simplifies access to the National Broadband Map and other FCC data sources, making it easier to conduct broadband equity and availability analysis.
+
+::: callout-note
+## Why Use This Package
+
+- **Simplified data access** - Download FCC data directly from R
+- **Standardized processing** - Consistent data cleaning and formatting
+- **Analysis tools** - Built-in functions for coverage gaps and equity analysis
+- **Integration ready** - Works seamlessly with CORI data pipelines
+:::
+
+## Installation
+
+::: panel-tabset
+## GitHub
+
+```{r}
+#| eval: false
+
+# Install remotes if you haven't already
+install.packages("remotes")
+
+# Install cori.data.fcc
+remotes::install_github("ruralinnovation/cori.data.fcc")
+```
+
+## Dependencies
+
+The package requires standard R data manipulation libraries:
+
+```{r}
+#| eval: false
+
+install.packages(c("dplyr", "tidyr", "sf", "httr"))
+```
+:::
+
+## Quick Start
+
+```{r}
+#| eval: false
+
+library(cori.data.fcc)
+
+# Download broadband availability data for a state
+data <- get_broadband_data(state = "VT")
+
+# Analyze coverage by technology type
+coverage_summary <- summarize_coverage(data, by = "technology")
+
+# Create coverage map
+plot_coverage(data, metric = "download_speed")
+```
+
+## Key Functions
+
+### Data Access
+
+```{r}
+#| eval: false
+
+# Download broadband availability data
+get_broadband_data(
+  state = "VT",           # Two-letter state code
+  geography = "tract",    # "tract", "block", or "county"
+  vintage = "latest"      # FCC data version
+)
+```
+
+### Analysis Functions
+
+```{r}
+#| eval: false
+
+# Aggregate coverage statistics
+summarize_coverage(
+  data,
+  by = "technology"      # "technology", "provider", or "speed_tier"
+)
+
+# Identify coverage gaps
+calculate_gaps(
+  data,
+  threshold = 25/3       # Download/upload speed threshold in Mbps
+)
+```
+
+### Visualization
+
+```{r}
+#| eval: false
+
+# Create coverage visualizations
+plot_coverage(
+  data,
+  metric = "download_speed",    # Metric to visualize
+  geography = "tract"            # Geographic level
+)
+```
+
+## Common Use Cases
+
+### State-Level Coverage Analysis
+
+```{r}
+#| eval: false
+
+library(dplyr)
+
+# Get Vermont broadband data
+vt_data <- get_broadband_data(state = "VT")
+
+# Calculate coverage rates
+coverage_rates <- vt_data |>
+  summarize_coverage(by = "technology") |>
+  arrange(desc(coverage_pct))
+```
+
+### Identifying Coverage Gaps
+
+```{r}
+#| eval: false
+
+# Find areas lacking 25/3 Mbps service
+gaps_25_3 <- calculate_gaps(
+  vt_data,
+  threshold = list(download = 25, upload = 3)
+)
+
+# Find areas lacking 100/20 Mbps service
+gaps_100_20 <- calculate_gaps(
+  vt_data,
+  threshold = list(download = 100, upload = 20)
+)
+```
+
+### Technology Comparison
+
+```{r}
+#| eval: false
+
+# Compare fiber vs. cable availability
+tech_comparison <- vt_data |>
+  filter(technology %in% c("Fiber", "Cable")) |>
+  group_by(technology) |>
+  summarize(
+    avg_download = mean(download_speed, na.rm = TRUE),
+    avg_upload = mean(upload_speed, na.rm = TRUE),
+    coverage_pct = sum(covered) / n() * 100
+  )
+```
+
+## Data Structure
+
+**Standard Output Format:**
+
+- One row per geographic unit per provider per technology
+- Standardized variable names
+- Geographic identifiers (GEOID)
+- Speed tiers and technology types
+
+**Typical Variables:**
+
+```
+geoid, state, county, tract, block, provider_name, technology,
+download_speed, upload_speed, covered, available_speeds
+```
+
+## Integration with CORI Workflows
+
+### With Rural Definitions
+
+```{r}
+#| eval: false
+
+library(ruraldefinitions)
+
+# Get broadband data
+broadband <- get_broadband_data(state = "VT")
+
+# Add rural classification
+broadband_rural <- broadband |>
+  left_join(
+    get_definition("ruca", 2020),
+    by = "geoid"
+  )
+
+# Compare rural vs. urban coverage
+coverage_by_rural <- broadband_rural |>
+  group_by(is_rural) |>
+  summarize_coverage()
+```
+
+### With Census Data
+
+```{r}
+#| eval: false
+
+library(tidycensus)
+
+# Get population data
+pop_data <- get_acs(
+  geography = "tract",
+  variables = "B01001_001",
+  state = "VT"
+)
+
+# Join with broadband data
+broadband_pop <- broadband |>
+  left_join(pop_data, by = "geoid") |>
+  mutate(
+    unserved_population = population * (1 - coverage_pct / 100)
+  )
+```
+
+## Use Cases at CORI
+
+This package is used in:
+
+- [Broadband Equity Analysis Project](/projects/broadband-equity/)
+- [FCC Data Overview Blog Post](/stories/fcc-data-overview/)
+- [Estimating Broadband Adoption Impact](/stories/estimating-adoption-impact/)
+- Rural broadband gap identification
+- BEAD (Broadband Equity, Access, and Deployment) planning
+
+## Data Sources
+
+The package accesses:
+
+- **FCC National Broadband Map** - Broadband availability and speed data
+- **FCC Form 477** - Provider coverage submissions (historical)
+- **BDC (Broadband Data Collection)** - Updated availability data (current)
+
+## Performance Considerations
+
+::: callout-tip
+## Optimization Tips
+
+1. **Download by state** - Reduces data transfer and processing time
+2. **Use appropriate geography** - County is faster than block for large-scale analysis
+3. **Filter early** - Subset data before complex calculations
+4. **Cache results** - Save processed data locally for repeated analysis
+:::
+
+## Known Limitations
+
+::: callout-warning
+## Important Notes
+
+- **Coverage vs. Adoption** - Data shows availability, not actual subscriptions
+- **Provider reporting** - Based on provider submissions, may contain inaccuracies
+- **Update lag** - Data may be 6-12 months behind current conditions
+- **Block-level challenges** - Census blocks can be very large in rural areas
+:::
+
+## Related Resources
+
+### Datasets
+
+- [FCC National Broadband Map](/datasets/fcc-broadband/) - Source dataset documentation
+
+### Related Packages
+
+- [ruraldefinitions](/packages/ruraldefinitions/) - Rural classification definitions
+- `tidycensus` - Census demographic data
+- `sf` - Spatial data manipulation
+
+### External Links
+
+- [FCC National Broadband Map](https://broadbandmap.fcc.gov/)
+- [FCC BDC Data Downloads](https://www.fcc.gov/BroadbandData)
+- [NTIA Broadband Resources](https://broadbandusa.ntia.doc.gov/)
+
+## Documentation
+
+- [GitHub Repository](https://github.com/ruralinnovation/cori.data.fcc)
+- [Function Reference](https://github.com/ruralinnovation/cori.data.fcc/wiki)
+- [Example Vignettes](https://github.com/ruralinnovation/cori.data.fcc/tree/main/vignettes)
+
+---
+
+**Contact:** CORI MDA Team
+
+For bug reports or feature requests, please open an issue on [GitHub](https://github.com/ruralinnovation/cori.data.fcc/issues).

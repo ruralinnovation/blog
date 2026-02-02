@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="CORI Data Team">
+<meta name="dcterms.date" content="2026-02-02">
+<meta name="description" content="Economic and demographic classifications for understanding county characteristics">
+
+<title>USDA ERS County Typology Codes – Rural Dataverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/images/Logo-Mark_Black.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-cb047e92c7285ae408a1a406cbf7f836.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-07QRVQQ5JK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../assets/fonts.css">
+<meta property="og:title" content="USDA ERS County Typology Codes – Rural Dataverse">
+<meta property="og:description" content="Economic and demographic classifications for understanding county characteristics">
+<meta property="og:site_name" content="Rural Dataverse">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/images/CORI_Logo_Cream.svg" alt="" class="navbar-logo light-content">
+    <img src="../../../assets/images/CORI_Logo_Cream.svg" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../">
+    <span class="navbar-title">Rural Dataverse</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.qmd"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../datasets.qmd"> 
+<span class="menu-text">Datasets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../packages.qmd"> 
+<span class="menu-text">R Packages</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../projects.qmd"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.qmd"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources.qmd"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.qmd"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ruralinnovation"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">USDA ERS County Typology Codes</h1>
+                  <div>
+        <div class="description">
+          Economic and demographic classifications for understanding county characteristics
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Dataset</div>
+                <div class="quarto-category">Rural Classification</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>CORI Data Team </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 2, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage">Coverage</a></li>
+  <li><a href="#key-classifications" id="toc-key-classifications" class="nav-link" data-scroll-target="#key-classifications">Key Classifications</a>
+  <ul class="collapse">
+  <li><a href="#economic-typology-6-mutually-exclusive-types" id="toc-economic-typology-6-mutually-exclusive-types" class="nav-link" data-scroll-target="#economic-typology-6-mutually-exclusive-types">Economic Typology (6 Mutually Exclusive Types)</a></li>
+  <li><a href="#persistent-poverty-binary-flag" id="toc-persistent-poverty-binary-flag" class="nav-link" data-scroll-target="#persistent-poverty-binary-flag">Persistent Poverty (Binary Flag)</a></li>
+  <li><a href="#persistent-child-poverty-binary-flag" id="toc-persistent-child-poverty-binary-flag" class="nav-link" data-scroll-target="#persistent-child-poverty-binary-flag">Persistent Child Poverty (Binary Flag)</a></li>
+  <li><a href="#low-education-binary-flag" id="toc-low-education-binary-flag" class="nav-link" data-scroll-target="#low-education-binary-flag">Low Education (Binary Flag)</a></li>
+  <li><a href="#low-employment-binary-flag" id="toc-low-employment-binary-flag" class="nav-link" data-scroll-target="#low-employment-binary-flag">Low Employment (Binary Flag)</a></li>
+  <li><a href="#population-loss-binary-flag" id="toc-population-loss-binary-flag" class="nav-link" data-scroll-target="#population-loss-binary-flag">Population Loss (Binary Flag)</a></li>
+  </ul></li>
+  <li><a href="#access" id="toc-access" class="nav-link" data-scroll-target="#access">Access</a></li>
+  <li><a href="#data-structure" id="toc-data-structure" class="nav-link" data-scroll-target="#data-structure">Data Structure</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
+  <ul class="collapse">
+  <li><a href="#economic-typology-classification" id="toc-economic-typology-classification" class="nav-link" data-scroll-target="#economic-typology-classification">Economic Typology Classification</a></li>
+  <li><a href="#persistent-poverty-methodology" id="toc-persistent-poverty-methodology" class="nav-link" data-scroll-target="#persistent-poverty-methodology">Persistent Poverty Methodology</a></li>
+  <li><a href="#thresholds-and-sensitivities" id="toc-thresholds-and-sensitivities" class="nav-link" data-scroll-target="#thresholds-and-sensitivities">Thresholds and Sensitivities</a></li>
+  </ul></li>
+  <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a>
+  <ul class="collapse">
+  <li><a href="#in-cori-projects" id="toc-in-cori-projects" class="nav-link" data-scroll-target="#in-cori-projects">In CORI Projects</a></li>
+  <li><a href="#common-applications" id="toc-common-applications" class="nav-link" data-scroll-target="#common-applications">Common Applications</a></li>
+  </ul></li>
+  <li><a href="#strengths-limitations" id="toc-strengths-limitations" class="nav-link" data-scroll-target="#strengths-limitations">Strengths &amp; Limitations</a></li>
+  <li><a href="#important-notes" id="toc-important-notes" class="nav-link" data-scroll-target="#important-notes">Important Notes</a>
+  <ul class="collapse">
+  <li><a href="#economic-typology-vs.-rural-definition" id="toc-economic-typology-vs.-rural-definition" class="nav-link" data-scroll-target="#economic-typology-vs.-rural-definition">Economic Typology vs.&nbsp;Rural Definition</a></li>
+  <li><a href="#nonspecialized-counties-majority" id="toc-nonspecialized-counties-majority" class="nav-link" data-scroll-target="#nonspecialized-counties-majority">Nonspecialized Counties (Majority)</a></li>
+  <li><a href="#persistent-poverty-concentration" id="toc-persistent-poverty-concentration" class="nav-link" data-scroll-target="#persistent-poverty-concentration">Persistent Poverty Concentration</a></li>
+  <li><a href="#recreation-counties" id="toc-recreation-counties" class="nav-link" data-scroll-target="#recreation-counties">Recreation Counties</a></li>
+  <li><a href="#using-typology-for-analysis" id="toc-using-typology-for-analysis" class="nav-link" data-scroll-target="#using-typology-for-analysis">Using Typology for Analysis</a></li>
+  </ul></li>
+  <li><a href="#related-datasets" id="toc-related-datasets" class="nav-link" data-scroll-target="#related-datasets">Related Datasets</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a>
+  <ul class="collapse">
+  <li><a href="#custom-scripts" id="toc-custom-scripts" class="nav-link" data-scroll-target="#custom-scripts">Custom Scripts</a></li>
+  </ul></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The USDA Economic Research Service (ERS) County Typology Codes classify counties into economic and demographic categories based on various characteristics. These classifications help researchers and policymakers:</p>
+<ul>
+<li>Understand county economic specialization</li>
+<li>Identify persistent challenges (poverty, education, employment)</li>
+<li>Stratify analysis by county type</li>
+<li>Target policies to specific county contexts</li>
+</ul>
+<p>The typology provides a <strong>static snapshot</strong> of county characteristics, typically updated every 10 years following the decennial census.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why Typology Codes Matter
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Mutually exclusive categories</strong> - Every county has one economic type</li>
+<li><strong>Research-validated</strong> - Widely used in rural studies</li>
+<li><strong>Persistent poverty flag</strong> - Identifies long-term challenges</li>
+<li><strong>Multiple dimensions</strong> - Economic type + social/demographic flags</li>
+<li><strong>Free and accessible</strong> - Easy download, no API needed</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="coverage" class="level2">
+<h2 class="anchored" data-anchor-id="coverage">Coverage</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Geographic Coverage</strong></p>
+<ul>
+<li>All 3,100+ U.S. counties</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Temporal Coverage</strong></p>
+<ul>
+<li>2025 edition (based on 2015-2023 data)</li>
+<li>Previous editions: 2015, 2004, 1989</li>
+<li>Updated roughly decennial</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="key-classifications" class="level2">
+<h2 class="anchored" data-anchor-id="key-classifications">Key Classifications</h2>
+<section id="economic-typology-6-mutually-exclusive-types" class="level3">
+<h3 class="anchored" data-anchor-id="economic-typology-6-mutually-exclusive-types">Economic Typology (6 Mutually Exclusive Types)</h3>
+<p>Counties classified by dominant economic activity:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Farming-Dependent</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Mining-Dependent</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Manufacturing-Dependent</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Government-Dependent</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Recreation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false" href="">Nonspecialized</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Farming contributed ≥25% of county earnings or ≥16% of employment (averaged 2017-2019)</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Mining contributed ≥13% of earnings or ≥8% of employment</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Manufacturing contributed ≥25% of earnings or ≥18% of employment</p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p>Federal/State Government contributed ≥14% of earnings</p>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p>Recreation employment ≥11% of total employment OR per capita personal income from recreation ≥11% of county income</p>
+</div>
+<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<p>Does not meet criteria for any specialized category (residual category)</p>
+<p><strong>Note:</strong> ~60-70% of counties are nonspecialized</p>
+</div>
+</div>
+</div>
+</section>
+<section id="persistent-poverty-binary-flag" class="level3">
+<h3 class="anchored" data-anchor-id="persistent-poverty-binary-flag">Persistent Poverty (Binary Flag)</h3>
+<p>Counties where <strong>≥20% of population was poor</strong> in each of the last 4 decennial censuses:</p>
+<ul>
+<li>1980, 1990, 2000, 2010 (for 2015 edition)</li>
+<li>1990, 2000, 2010, 2020 (for 2025 edition)</li>
+</ul>
+<p>Identifies counties with <strong>long-term, structural poverty</strong>, not temporary economic shocks.</p>
+</section>
+<section id="persistent-child-poverty-binary-flag" class="level3">
+<h3 class="anchored" data-anchor-id="persistent-child-poverty-binary-flag">Persistent Child Poverty (Binary Flag)</h3>
+<p>Counties where <strong>≥20% of children (age 0-17) were poor</strong> in each of the last 4 censuses.</p>
+<p>Child poverty often more severe and has longer-lasting impacts than adult poverty.</p>
+</section>
+<section id="low-education-binary-flag" class="level3">
+<h3 class="anchored" data-anchor-id="low-education-binary-flag">Low Education (Binary Flag)</h3>
+<p>Counties where:</p>
+<ul>
+<li><strong>≥20% of adults (25-64) lack high school diploma</strong> AND</li>
+<li><strong>&lt;20% have bachelor’s degree or higher</strong></li>
+</ul>
+<p>Measured as of 2015-2019 ACS (2025 edition).</p>
+</section>
+<section id="low-employment-binary-flag" class="level3">
+<h3 class="anchored" data-anchor-id="low-employment-binary-flag">Low Employment (Binary Flag)</h3>
+<p>Counties with <strong>employment/population ratio &lt;55%</strong> for working-age adults (21-64), averaged 2017-2019.</p>
+<p>Indicates weak labor market attachment beyond unemployment (includes discouraged workers, disability).</p>
+</section>
+<section id="population-loss-binary-flag" class="level3">
+<h3 class="anchored" data-anchor-id="population-loss-binary-flag">Population Loss (Binary Flag)</h3>
+<p>Counties that <strong>lost population</strong> between 2010-2020 censuses.</p>
+<p>Identifies long-term decline, not just short-term fluctuation.</p>
+</section>
+</section>
+<section id="access" class="level2">
+<h2 class="anchored" data-anchor-id="access">Access</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Direct Download</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">CORI Projects</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Excel and CSV files:</p>
+<ul>
+<li><a href="https://www.ers.usda.gov/data-products/county-typology-codes/">USDA ERS County Typology</a></li>
+</ul>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From rural-economic-outlook project</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load script: R/data_import/load_ers_typology.R</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 2025 edition, direct CSV download</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-structure" class="level2">
+<h2 class="anchored" data-anchor-id="data-structure">Data Structure</h2>
+<p><strong>County-Level (One Row per County):</strong></p>
+<pre><code>geoid, county_name, state_abbr,
+typology_2025, farming, mining, manufacturing,
+government, recreation, nonspecialized,
+persistent_poverty, persistent_child_poverty,
+low_education, low_employment, population_loss</code></pre>
+<p><strong>Binary flags:</strong> 1 = meets criteria, 0 = does not meet criteria</p>
+</section>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<section id="economic-typology-classification" class="level3">
+<h3 class="anchored" data-anchor-id="economic-typology-classification">Economic Typology Classification</h3>
+<p>Counties assigned to types using hierarchical rules:</p>
+<ol type="1">
+<li>Check farming criteria → if met, assign “Farming”</li>
+<li>If not farming, check mining → if met, assign “Mining”</li>
+<li>Continue through manufacturing, government, recreation</li>
+<li>If none met, assign “Nonspecialized”</li>
+</ol>
+<p><strong>Data Sources:</strong></p>
+<ul>
+<li>BEA Regional Economic Accounts (earnings by industry)</li>
+<li>BLS QCEW (employment by industry)</li>
+<li>Census County Business Patterns (employment)</li>
+</ul>
+</section>
+<section id="persistent-poverty-methodology" class="level3">
+<h3 class="anchored" data-anchor-id="persistent-poverty-methodology">Persistent Poverty Methodology</h3>
+<p>Using decennial census and ACS data:</p>
+<ul>
+<li>Poverty rate calculated for all persons in county</li>
+<li>Must meet 20% threshold in <strong>all 4</strong> censuses to qualify</li>
+<li>Captures structural poverty, not recession-related spikes</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Geographic Distribution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>~15% of U.S. counties meet persistent poverty criteria. Concentrated in:</p>
+<ul>
+<li><strong>Black Belt</strong> (Southeast)</li>
+<li><strong>Appalachia</strong></li>
+<li><strong>Native American reservations</strong></li>
+<li><strong>Texas border counties</strong></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="thresholds-and-sensitivities" class="level3">
+<h3 class="anchored" data-anchor-id="thresholds-and-sensitivities">Thresholds and Sensitivities</h3>
+<p>Thresholds (e.g., 25% for farming, 20% for persistent poverty) are <strong>somewhat arbitrary</strong>:</p>
+<ul>
+<li>Counties just below thresholds excluded</li>
+<li>Use as rough classification, not precise boundaries</li>
+</ul>
+</section>
+</section>
+<section id="use-cases" class="level2">
+<h2 class="anchored" data-anchor-id="use-cases">Use Cases</h2>
+<section id="in-cori-projects" class="level3">
+<h3 class="anchored" data-anchor-id="in-cori-projects">In CORI Projects</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Project</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../../projects/rural-economic-outlook/">Rural Economic Outlook</a></td>
+<td>Stratify analysis by economic type</td>
+</tr>
+<tr class="even">
+<td>Manufacturing Belt Analysis</td>
+<td>Identify manufacturing-dependent rural counties</td>
+</tr>
+<tr class="odd">
+<td>Persistent Poverty</td>
+<td>Target analysis to structurally disadvantaged counties</td>
+</tr>
+<tr class="even">
+<td>Economic Resilience</td>
+<td>Do recreation counties weather recessions differently?</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="common-applications" class="level3">
+<h3 class="anchored" data-anchor-id="common-applications">Common Applications</h3>
+<ul>
+<li>Targeting federal programs (USDA, ARC, EDA)</li>
+<li>Economic development strategy (diversification for specialized economies)</li>
+<li>Workforce development (low education counties)</li>
+<li>Research stratification (control for county type)</li>
+</ul>
+</section>
+</section>
+<section id="strengths-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="strengths-limitations">Strengths &amp; Limitations</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="strengths" class="level3">
+<h3 class="anchored" data-anchor-id="strengths">Strengths</h3>
+<ul>
+<li>Mutually exclusive categories</li>
+<li>Research-validated</li>
+<li>Persistent poverty flag</li>
+<li>Multiple dimensions</li>
+<li>Free and accessible</li>
+</ul>
+</section>
+</div><div class="column" style="width:50%;">
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>Static classification</li>
+<li>Arbitrary thresholds</li>
+<li>Mutually exclusive types (no mixed)</li>
+<li>No temporal variation</li>
+<li>Lagged data (2025 uses 2019 ACS)</li>
+</ul>
+</section>
+</div>
+</div>
+</section>
+<section id="important-notes" class="level2">
+<h2 class="anchored" data-anchor-id="important-notes">Important Notes</h2>
+<section id="economic-typology-vs.-rural-definition" class="level3">
+<h3 class="anchored" data-anchor-id="economic-typology-vs.-rural-definition">Economic Typology vs.&nbsp;Rural Definition</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Different Concepts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ERS County Typology ≠ rural definition:</p>
+<ul>
+<li><strong>Rural definition</strong> (CBSA, RUCA) = urban vs.&nbsp;rural</li>
+<li><strong>Economic typology</strong> = type of economy</li>
+</ul>
+<p><strong>Many metro counties are farming/manufacturing-dependent.</strong> Use <a href="../../../packages/ruraldefinitions/">ruraldefinitions package</a> for rural classification.</p>
+</div>
+</div>
+</section>
+<section id="nonspecialized-counties-majority" class="level3">
+<h3 class="anchored" data-anchor-id="nonspecialized-counties-majority">Nonspecialized Counties (Majority)</h3>
+<p>~60-70% of counties are “Nonspecialized”:</p>
+<ul>
+<li>Diversified economies (no single sector dominant)</li>
+<li>OR economies too small/weak to meet any threshold</li>
+</ul>
+<p><strong>Nonspecialized ≠ unimportant.</strong> Many thriving counties have diversified economies.</p>
+</section>
+<section id="persistent-poverty-concentration" class="level3">
+<h3 class="anchored" data-anchor-id="persistent-poverty-concentration">Persistent Poverty Concentration</h3>
+<p>Persistent poverty counties are <strong>geographically concentrated</strong>. These regions face <strong>structural challenges</strong> beyond economic cycles:</p>
+<ul>
+<li>Historical discrimination and disinvestment</li>
+<li>Limited infrastructure</li>
+<li>Lower educational attainment</li>
+<li>Geographic isolation</li>
+</ul>
+</section>
+<section id="recreation-counties" class="level3">
+<h3 class="anchored" data-anchor-id="recreation-counties">Recreation Counties</h3>
+<p>Recreation typology captures:</p>
+<ul>
+<li>Tourism employment (hotels, restaurants, entertainment)</li>
+<li>Outdoor recreation (skiing, beaches, national parks)</li>
+<li>Second-home income</li>
+</ul>
+<p><strong>Rural recreation counties</strong> often have:</p>
+<ul>
+<li>Higher property values</li>
+<li>Seasonal employment</li>
+<li>Income inequality (wealthy visitors vs.&nbsp;low-wage service workers)</li>
+</ul>
+</section>
+<section id="using-typology-for-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="using-typology-for-analysis">Using Typology for Analysis</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Best Practices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Stratify models</strong> - Run separate regressions for farming vs.&nbsp;manufacturing counties</li>
+<li><strong>Control variables</strong> - Include typology dummies in regressions</li>
+<li><strong>Descriptive analysis</strong> - Compare outcomes across types (e.g., “Do farming counties have lower broadband adoption?”)</li>
+<li><strong>Geographic mapping</strong> - Visualize spatial patterns of economic specialization</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="related-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="related-datasets">Related Datasets</h2>
+<ul>
+<li><a href="../../../packages/ruraldefinitions/">ruraldefinitions Package</a> - Rural/urban classification (complementary to economic type)</li>
+<li><a href="../../../datasets/qcew-employment-wages/">QCEW Employment</a> - Detailed industry employment for custom classifications</li>
+<li><a href="../../../datasets/bea-real-gdp/">BEA Regional Data</a> - Industry earnings data underlying typology</li>
+</ul>
+</section>
+<section id="r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="r-packages">R Packages</h2>
+<section id="custom-scripts" class="level3">
+<h3 class="anchored" data-anchor-id="custom-scripts">Custom Scripts</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No dedicated R package</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># CORI uses custom scripts for loading</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># From rural-economic-outlook project</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/data_import/load_ers_typology.R"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For rural classification, use:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ruraldefinitions")</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ruraldefinitions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://www.ers.usda.gov/data-products/county-typology-codes/descriptions-and-maps/">ERS Typology Documentation</a></li>
+<li><a href="https://github.com/ruralinnovation/data-rural-economic-outlook">Rural Economic Outlook Project</a></li>
+</ul>
+<hr>
+<p><strong>Last Updated:</strong> February 2, 2026 <strong>Data Coverage:</strong> 2025 edition (based on 2015-2023 data) <strong>Contact:</strong> <a href="mailto:data@ruralinnovation.us">data@ruralinnovation.us</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

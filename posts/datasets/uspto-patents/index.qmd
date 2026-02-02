@@ -1,0 +1,341 @@
+---
+title: "USPTO Patents by County"
+description: "Patent grants by inventor and assignee location for measuring innovation"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Innovation"]
+tags: ["USPTO", "Patents", "Innovation", "County-Level"]
+dataset:
+  name: "USPTO PatentsView"
+  source: "U.S. Patent and Trademark Office"
+  sourceUrl: "https://patentsview.org/"
+  accessMethod: "PatentsView API"
+  updateFrequency: "Weekly"
+  geographicLevel: "County, MSA, State, National"
+  dataFormat: ["API", "Bulk Download"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The United States Patent and Trademark Office (USPTO) grants patents for inventions. PatentsView is a data platform that makes USPTO patent data accessible for research and analysis, including geographic attribution to inventor and assignee locations.
+
+Patent counts serve as an **innovation indicator**, revealing which regions are producing new technologies, products, and processes. Patent data is especially valuable for tracking:
+
+- Regional innovation capacity
+- Technology clusters
+- University and corporate research output
+- Rural innovation ecosystems
+
+::: callout-note
+## Why Patent Data Matters
+
+- **Objective innovation measure** - Patents require rigorous examination
+- **Long time series** - Data back to 1976
+- **Technology detail** - Understand what is being invented
+- **Geographic precision** - County-level attribution
+- **Linked data** - Citations, inventors, assignees, classifications
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- County
+- Metropolitan Statistical Area
+- State
+- National
+
+(by inventor or assignee location)
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 1976-present
+- Weekly updates
+- New grants published every Tuesday
+- Universe: All U.S. utility patents
+:::
+:::
+
+## Key Variables
+
+### Patent Counts
+
+- **Total Patents** - Count of patents granted
+- **Patents by Technology Field** - CPC/IPC classification
+- **Patents by Assignee Type** - Corporate, university, government, individual
+
+### Patent Details
+
+- **Patent Number** - Unique identifier
+- **Grant Date** - Date patent was granted
+- **Filing Date** - Date application was filed (lag: 2-3 years)
+- **Inventor Location** - Geographic location of inventors
+- **Assignee Location** - Geographic location of patent owner (company, university)
+
+### Citation Metrics
+
+- **Citations Received** - How many later patents cite this patent (measure of influence)
+- **Citations Made** - Prior art references
+
+## Access
+
+::: panel-tabset
+## PatentsView API
+
+Free API (no authentication required):
+
+```{r}
+#| eval: false
+
+# Using patentsview package
+library(patentsview)
+
+# Get patents for a specific county in 2023
+patents <- search_pv(
+  query = qry_funs$and(
+    qry_funs$eq(inventor_county = "Washington"),
+    qry_funs$eq(inventor_state = "VT"),
+    qry_funs$gte(patent_date = "2023-01-01"),
+    qry_funs$lte(patent_date = "2023-12-31")
+  ),
+  fields = c("patent_number", "patent_date", "inventor_city")
+)
+```
+
+## Bulk Download
+
+Compressed data files:
+
+- [PatentsView Data Download](https://patentsview.org/download/data-download-tables)
+
+## CORI Projects
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_patent.R
+# Aggregates to county level, 2014-2024
+```
+:::
+
+## Data Structure
+
+**County Annual Format:**
+
+- One row per county per year
+- GEOID: 5-digit FIPS code
+- Patent counts by assignee location
+
+**Typical Variables:**
+
+```
+geoid, year, cnt_patent, patents_per_100k_population
+```
+
+## Methodology
+
+### Geographic Attribution
+
+Patents can be attributed to locations in multiple ways:
+
+::: columns
+::: {.column width="50%"}
+**Inventor Location**
+
+Where inventors reside (can be multiple inventors per patent)
+:::
+
+::: {.column width="50%"}
+**Assignee Location**
+
+Where patent owner is located (company HQ, university)
+:::
+:::
+
+**CORI uses assignee location** because:
+
+- Reflects where innovation benefits accrue (jobs, revenue)
+- More stable over time (inventors may move)
+- Aligns with economic development goals
+
+### Fractional Counting
+
+When multiple inventors/assignees exist:
+
+- Each location receives fractional credit
+- Example: Patent with 2 inventors in different counties → 0.5 patents counted for each county
+
+### Technology Classification
+
+Patents classified using:
+
+- **CPC (Cooperative Patent Classification)** - 250,000+ classifications
+- **IPC (International Patent Classification)** - Global standard
+- **NBER Technology Categories** - 37 high-level categories (computers, pharma, etc.)
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| Rural Innovation Analysis | Patent counts in rural vs. metro areas 2014-2024 |
+| Technology Clusters | Where is innovation concentrated? |
+| University Impact | Patents from rural-serving universities |
+| Innovation Capacity | Long-term innovation trends |
+
+### Common Applications
+
+- Economic development strategy
+- University tech transfer assessment
+- Venture capital investment targeting
+- Regional competitiveness analysis
+- STEM workforce planning
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Objective innovation measure
+- Long time series (1976+)
+- Technology detail
+- Geographic precision
+- Linked data (citations, etc.)
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Not all innovation patented
+- Industry variation
+- Quality variation
+- Lag from invention (2-3 years)
+- Low counts in rural areas
+- Assignee location bias
+:::
+:::
+
+## Important Notes
+
+### Rural Patent Patterns
+
+::: callout-warning
+## Low Rural Patent Counts
+
+Rural counties typically have **very low patent counts**:
+
+- 50% of rural counties: 0-1 patents per year
+- Patent activity concentrated in:
+  - University counties (land-grant institutions)
+  - Manufacturing hubs (ag equipment, natural resources)
+  - Military installations (defense technology)
+
+**Interpretation:** Patent counts are **not suitable** as a standalone rural innovation measure.
+:::
+
+Combine with:
+
+- [Business Dynamics Statistics](/datasets/census-bds/) - Entrepreneurship
+- [Business Formation Statistics](/datasets/census-bfs/) - Startup activity
+- Industry employment in knowledge-intensive sectors
+
+### Patents vs. Innovation
+
+Patents measure **formal, technical innovation**. Many forms of innovation are not patented:
+
+- Business model innovation
+- Process improvements
+- Service innovation
+- Open-source software
+
+Rural innovation may be **underrepresented** in patent data.
+
+### Citation Analysis
+
+Citation counts reveal patent influence:
+
+::: panel-tabset
+## Highly Cited Patents
+
+Foundational innovations with significant impact
+
+## Zero Citations
+
+Limited impact or very recent patents
+
+## Rural Context
+
+Rural patents tend to have **fewer citations** on average, potentially indicating:
+
+- Applied vs. fundamental research
+- Narrower market applications
+- Lower visibility in patenting community
+:::
+
+## Related Datasets
+
+- [Census Business Dynamics Statistics](/datasets/census-bds/) - Business formation (complementary innovation measure)
+- [QCEW Employment](/datasets/qcew-employment-wages/) - Employment in R&D-intensive industries
+- [American Community Survey](/datasets/american-community-survey/) - STEM occupations
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install packages
+install.packages("patentsview")  # R interface to PatentsView API
+```
+
+### Usage Example
+
+```{r}
+#| eval: false
+
+library(patentsview)
+
+# Search for patents in a specific technology area
+tech_patents <- search_pv(
+  query = qry_funs$and(
+    qry_funs$gte(patent_date = "2020-01-01"),
+    qry_funs$text_phrase(cpc_subgroup_id = "G06N")  # AI/ML patents
+  ),
+  fields = c("patent_number", "patent_date", "assignee_organization"),
+  endpoint = "patents"
+)
+
+# Get inventor locations
+inventor_locs <- search_pv(
+  query = qry_funs$eq(inventor_state = "VT"),
+  fields = c("patent_number", "inventor_city", "inventor_county"),
+  endpoint = "patents"
+)
+```
+
+## Additional Resources
+
+- [PatentsView Data User Guide](https://patentsview.org/documentation)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 1976-2024 (CORI uses 2014-2024)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

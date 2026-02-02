@@ -7,8 +7,8 @@ description: >-
   Explore datasets, R packages, projects, and blog posts from the CORI MDA team.
 
 # URLs
-baseurl: "/blog" # for GitHub Pages at ruralinnovation.github.io/blog
-url: "https://ruralinnovation.github.io"
+baseurl: "" # Empty for local development and custom domain
+url: "http://localhost:4000" # Local development URL
 repository: "https://github.com/ruralinnovation/blog"
 
 # Organization
@@ -29,50 +29,16 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# Collections
-collections:
-  datasets:
-    output: true
-    permalink: /datasets/:name/
-  packages:
-    output: true
-    permalink: /packages/:name/
-  projects:
-    output: true
-    permalink: /projects/:name/
-  stories:
-    output: true
-    permalink: /stories/:name/
-  resources:
-    output: true
-    permalink: /resources/:name/
+# Note: Collections now managed by Quarto
+# All content (datasets, packages, projects, blog, resources) lives in posts/ as Quarto files
+# Quarto renders to _site/, then Jekyll can optionally post-process if needed
 
-# Defaults for collections
+# Defaults
 defaults:
   - scope:
       path: ""
     values:
       layout: "default"
-  - scope:
-      type: "datasets"
-    values:
-      layout: "dataset"
-  - scope:
-      type: "packages"
-    values:
-      layout: "package"
-  - scope:
-      type: "projects"
-    values:
-      layout: "project"
-  - scope:
-      type: "stories"
-    values:
-      layout: "story"
-  - scope:
-      type: "resources"
-    values:
-      layout: "resource"
 
 # Navigation
 nav:

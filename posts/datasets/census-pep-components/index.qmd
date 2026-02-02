@@ -1,0 +1,311 @@
+---
+title: "Census PEP Components of Change"
+description: "Annual decomposition of population change into births, deaths, and migration"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Demographics"]
+tags: ["Census", "Population", "Migration", "Vital Statistics", "County-Level"]
+dataset:
+  name: "Census Population Estimates Program - Components of Change"
+  source: "U.S. Census Bureau"
+  sourceUrl: "https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-detail.html"
+  accessMethod: "Direct Download (FTP)"
+  updateFrequency: "Annual"
+  geographicLevel: "County, State, National"
+  dataFormat: ["CSV"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The Census Population Estimates Program (PEP) Components of Change dataset decomposes annual population change into its underlying drivers:
+
+- **Births** - Natural increase component
+- **Deaths** - Natural decrease component
+- **Migration** - Domestic and international migration
+
+This decomposition reveals **why** counties are growing or declining, enabling targeted policy responses. For example:
+
+- Is rural population decline due to out-migration or aging (more deaths than births)?
+- Are amenity counties growing from migration or natural increase?
+- How did pandemic mortality affect rural demographic trends?
+
+::: callout-note
+## Why Components Matter
+
+- **Decomposed change** - Understand **why** population is changing
+- **Administrative data** - Births and deaths from vital statistics (highly accurate)
+- **Complete coverage** - All counties, all years
+- **Faster than IRS migration** - Released ~12 months after reference year
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- County
+- State
+- National
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 2000-present (annual)
+- CORI uses 2007-2023
+- Released each March
+- Universe: All U.S. counties
+:::
+:::
+
+## Key Variables
+
+### Natural Change
+
+- **Births** - Total births in calendar year (from vital statistics)
+- **Deaths** - Total deaths in calendar year (from vital statistics)
+- **Natural Change** - Births minus deaths
+
+### Migration
+
+- **Domestic Migration** - Net migration from other U.S. counties
+- **International Migration** - Net migration from other countries
+- **Net Migration** - Domestic + international migration
+
+### Residual
+
+- **Residual** - Unexplained population change (census corrections, armed forces, group quarters)
+
+### Total Population Change
+
+- **Population Change** - Net change in population (natural change + net migration + residual)
+
+## Access
+
+::: panel-tabset
+## Census FTP Downloads
+
+Direct CSV downloads by vintage:
+
+- [2020-2023 Components](https://www2.census.gov/programs-surveys/popest/tables/2020-2023/counties/totals/)
+- [2010-2019 Components](https://www2.census.gov/programs-surveys/popest/tables/2010-2019/counties/totals/)
+- [2000-2009 Components](https://www2.census.gov/programs-surveys/popest/tables/2000-2009/counties/totals/)
+
+## CORI Projects
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_pep_components.R
+# Combines multiple vintage files for 2007-2023 time series
+```
+:::
+
+## Data Structure
+
+**County Annual Format:**
+
+- One row per county per year
+- GEOID: 5-digit FIPS code
+- Separate columns for each component
+
+**Typical Variables:**
+
+```
+geoid, year, births, deaths, naturalchg,
+domesticmig, internationalmig, netmig,
+residual, population_change
+```
+
+## Methodology
+
+### Component of Change Model
+
+Population in year t is calculated as:
+
+```
+Pop(t) = Pop(t-1) + Births(t) - Deaths(t) + DomesticMig(t) + IntlMig(t) + Residual(t)
+```
+
+### Data Sources by Component
+
+| Component | Primary Data Source |
+|-----------|---------------------|
+| **Births** | National Vital Statistics System (NVSS) - State birth certificates |
+| **Deaths** | NVSS - State death certificates |
+| **Domestic Migration** | **Residual estimation** - IRS tax records, Medicare enrollment, ACS |
+| **International Migration** | DHS immigration data, ACS, emigration estimates |
+
+::: callout-important
+## Domestic Migration is Estimated
+
+Domestic migration is **not directly measured**. It's estimated as a residual after accounting for births, deaths, and international migration.
+:::
+
+### Vintage Files
+
+Census releases components in "vintage" batches:
+
+- Each vintage may revise earlier years based on new census benchmarks
+- CORI combines vintages to create consistent long time series
+- Accepting most recent vintage for each year (no retroactive revisions)
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Natural increase vs. migration 2007-2023 |
+| Demographic Narratives | Why are rural counties declining? |
+| Pandemic Impact | Excess deaths 2020-2021 |
+| Migration Analysis | Complement to [IRS migration data](/datasets/irs-migration/) |
+| Aging Analysis | Natural decrease (deaths > births) in aging counties |
+
+### Common Applications
+
+- Understanding drivers of population change
+- Aging and mortality analysis
+- Migration pattern analysis
+- Policy targeting (e.g., birth rates for maternal health, deaths for healthcare access)
+- Scenario planning (what if birth rates increase?)
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Decomposed change (understand why)
+- Administrative data (births/deaths accurate)
+- Complete coverage
+- Faster than IRS migration
+- International migration included
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Domestic migration is residual (estimated)
+- No origin-destination flows
+- No migration by income
+- Group quarters challenge
+- Vintage revisions
+:::
+:::
+
+## Important Notes
+
+### Natural Increase vs. Natural Decrease
+
+::: panel-tabset
+## Natural Increase
+
+**Births > Deaths** (population growing from natural change)
+
+## Natural Decrease
+
+**Deaths > Births** (population declining from natural change)
+
+As of 2023:
+
+- **~50% of rural counties** have natural decrease
+- Driven by aging population (fewer women of childbearing age, more elderly)
+- Natural decrease is **accelerating** in rural America
+
+Even if migration is positive, natural decrease can cause overall population decline.
+:::
+
+### Pandemic Mortality Impact (2020-2021)
+
+Components data reveals COVID-19's demographic impact:
+
+- **Excess deaths:** 2020-2021 death counts 15-20% above 2019 baseline
+- Rural counties hit harder in 2021 (delta wave)
+- Natural increase/decrease dramatically worsened
+
+### Domestic Migration Estimation Challenges
+
+Domestic migration is the **most uncertain** component:
+
+- Estimated as residual after accounting for other components
+- Subject to large revisions when census data released
+- Can have negative migration even when county is attractive (if births + international migration undercounted)
+
+**Best practice:** Use [IRS migration data](/datasets/irs-migration/) for detailed migration analysis (county-to-county flows, income).
+
+### Vintage Reconciliation Strategy
+
+::: callout-tip
+## CORI's Approach
+
+CORI's `load_pep_components.R` script combines 3 vintage files:
+
+1. 2000-2009 vintage (accepted as-is)
+2. 2010-2019 vintage (accepted as-is)
+3. 2020-2023 vintage (most recent)
+
+**No retroactive revisions** - Accepting each vintage's estimates for its period prevents time series discontinuities.
+:::
+
+### Additive Components
+
+All components are **additive**:
+
+- Births, deaths, domestic migration, international migration, residual **sum** to total population change
+- Enables accounting for 100% of population change
+- Rates can be calculated using same denominator (population)
+
+## Related Datasets
+
+- [Census Population Estimates](/datasets/census-population-estimates/) - Total population (numerator for rates)
+- [IRS County-to-County Migration](/datasets/irs-migration/) - Detailed migration flows and income (complementary)
+- [National Vital Statistics System (NVSS)](https://www.cdc.gov/nchs/nvss/) - Direct access to birth/death microdata
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install packages
+install.packages("tidycensus")   # Can access components via get_estimates()
+```
+
+### Usage Example
+
+```{r}
+#| eval: false
+
+library(tidycensus)
+
+# Get components of change
+components <- get_estimates(
+  geography = "county",
+  product = "components",
+  year = 2023,
+  vintage = 2023
+)
+```
+
+## Additional Resources
+
+- [Census PEP Methodology](https://www.census.gov/programs-surveys/popest/technical-documentation/methodology.html)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 2000-2023 (CORI uses 2007-2023)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

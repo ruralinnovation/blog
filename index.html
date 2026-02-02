@@ -18,92 +18,30 @@ title: Home
   </div>
 </div>
 
-<!-- Featured Datasets -->
+<!-- Content Overview -->
 <section class="section">
   <div class="container">
-    <h2>Featured Datasets</h2>
+    <h2>What You'll Find Here</h2>
     <div class="grid">
-      {% assign featured_datasets = site.datasets | where: "featured", true | sort: "date" | reverse | limit: 3 %}
-      {% for dataset in featured_datasets %}
-        {% include components/card.html
-          title=dataset.title
-          description=dataset.description
-          url=dataset.url
-          date=dataset.date
-          categories=dataset.categories
-          badge="Dataset"
-        %}
-      {% endfor %}
-    </div>
-    <div class="section-footer">
-      <a href="{{ '/datasets/' | relative_url }}" class="btn btn-link">View All Datasets →</a>
+      <div class="card">
+        <h3>📊 Datasets</h3>
+        <p>Federal and public datasets covering employment, demographics, broadband access, business statistics, and economic indicators for rural communities.</p>
+        <a href="{{ '/datasets/' | relative_url }}" class="btn btn-link">Browse Datasets →</a>
+      </div>
+      <div class="card">
+        <h3>📦 R Packages</h3>
+        <p>Open-source R packages for accessing rural data, including tools for rural definitions, FCC broadband data, and business dynamics statistics.</p>
+        <a href="{{ '/packages/' | relative_url }}" class="btn btn-link">View Packages →</a>
+      </div>
+      <div class="card">
+        <h3>🔬 Projects</h3>
+        <p>Research projects and analyses combining multiple datasets to understand rural economic trends, broadband adoption, and community development.</p>
+        <a href="{{ '/projects/' | relative_url }}" class="btn btn-link">Explore Projects →</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- R Packages -->
-<section class="section section-alt">
-  <div class="container">
-    <h2>R Packages</h2>
-    <p>Tools for accessing and analyzing rural data in R</p>
-    <div class="grid">
-      {% assign featured_packages = site.packages | where: "featured", true | sort: "date" | reverse | limit: 3 %}
-      {% for package in featured_packages %}
-        {% include components/card.html
-          title=package.title
-          description=package.description
-          url=package.url
-          badge="R Package"
-        %}
-      {% endfor %}
-    </div>
-    <div class="section-footer">
-      <a href="{{ '/packages/' | relative_url }}" class="btn btn-link">View All Packages →</a>
-    </div>
-  </div>
-</section>
-
-<!-- Latest Blog Posts -->
-<section class="section">
-  <div class="container">
-    <h2>Latest from the Blog</h2>
-    <div class="grid">
-      {% assign recent_stories = site.stories | sort: "date" | reverse | limit: 3 %}
-      {% for story in recent_stories %}
-        {% include components/card.html
-          title=story.title
-          description=story.description
-          url=story.url
-          date=story.date
-          categories=story.categories
-          badge="Blog Post"
-        %}
-      {% endfor %}
-    </div>
-    <div class="section-footer">
-      <a href="{{ '/stories/' | relative_url }}" class="btn btn-link">View All Posts →</a>
-    </div>
-  </div>
-</section>
-
-<!-- Featured Projects -->
-<section class="section section-alt">
-  <div class="container">
-    <h2>Featured Projects</h2>
-    <div class="grid">
-      {% assign featured_projects = site.projects | where: "featured", true | sort: "date" | reverse | limit: 3 %}
-      {% for project in featured_projects %}
-        {% include components/card.html
-          title=project.title
-          description=project.description
-          url=project.url
-          categories=project.categories
-          badge="Project"
-        %}
-      {% endfor %}
-    </div>
-    <div class="section-footer">
-      <a href="{{ '/projects/' | relative_url }}" class="btn btn-link">View All Projects →</a>
-    </div>
-  </div>
-</section>
+<!-- Note: Jekyll collections removed during Quarto migration -->
+<!-- Featured content sections will be implemented via Quarto listing pages -->
+<!-- See QUARTO-MIGRATION.md for details -->

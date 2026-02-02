@@ -1,0 +1,417 @@
+---
+title: "American Community Survey (ACS) 5-Year Estimates"
+description: "Comprehensive demographic, social, economic, and housing data from the U.S. Census Bureau"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Demographics", "Labor Market", "Housing"]
+tags: ["Census", "ACS", "Demographics", "County-Level", "Survey"]
+dataset:
+  name: "American Community Survey (ACS) 5-Year Estimates"
+  source: "U.S. Census Bureau"
+  sourceUrl: "https://www.census.gov/programs-surveys/acs"
+  accessMethod: "Census API and Data Portal"
+  updateFrequency: "Annual (5-year rolling averages)"
+  geographicLevel: "County, Tract, Block Group, Place"
+  dataFormat: ["API", "CSV", "Database"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The American Community Survey (ACS) is the largest household survey in the United States, collecting detailed demographic, social, economic, and housing information from ~3.5 million households annually. The **5-year estimates** combine data from 5 consecutive years, providing reliable statistics for small geographies like counties and census tracts.
+
+ACS replaced the decennial census "long form" in 2010, providing **annual updates** on topics previously available only every 10 years.
+
+::: callout-note
+## Why ACS is Essential
+
+- **Comprehensive coverage** - 40,000+ variables across all topics
+- **Annual updates** - More frequent than decennial census
+- **Small-area estimates** - County and tract-level data
+- **National consistency** - Comparable across all geographies
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Levels**
+
+- County
+- Census Tract
+- Block Group
+- Place
+- ZIP Code Tabulation Area
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 2005-present (5-year estimates)
+- Annual updates
+- Universe: All U.S. counties
+- Sample: ~3.5M households/year
+:::
+:::
+
+## Key Variable Categories
+
+The ACS contains 40,000+ variables across 9 major subject areas:
+
+### Demographics
+- Age, sex, race, Hispanic origin
+- Household composition and relationships
+- Fertility and grandparents as caregivers
+- Marital history and veteran status
+
+### Education
+- Educational attainment (high school, bachelor's, graduate degrees)
+- School enrollment
+- Field of bachelor's degree
+
+### Labor Force & Employment
+- Labor force participation rate
+- Employment status
+- Unemployment rate
+- **Prime-age employment (25-54)** - Key economic indicator
+- Industry and occupation (22 detailed categories)
+
+### Income & Poverty
+- Median household income
+- Per capita income
+- Income by race/ethnicity
+- Poverty status
+- Public assistance receipt
+- **Gini index** - Income inequality measure
+
+### Commuting & Work
+- **Remote work rate** - Workers working from home
+- Means of transportation to work
+- Travel time to work
+- Place of work
+
+### Housing
+- Homeownership rate
+- Median home value
+- Median rent
+- **Housing cost burden** - % paying >30% of income for housing
+- Vacancy rates
+- Year structure built
+
+### Internet Access
+- Broadband subscription rates
+- Computer ownership
+- Internet access by type
+
+### Health Insurance
+- Insurance coverage rate
+- Coverage type (employer, Medicaid, Medicare, etc.)
+
+### Migration
+- Residence 1 year ago
+- Geographic mobility
+
+## CORI Standard Variables (88 Variables)
+
+From the rural-economic-outlook project, CORI regularly uses 88 ACS variables:
+
+::: panel-tabset
+## Labor Market
+
+Core metrics for workforce analysis:
+
+- Prime-age employment rate (25-54 years)
+- Self-employment rate
+- Remote work rate (working from home)
+- Unemployment rate
+- Labor force participation rate
+
+## Occupations
+
+22 detailed occupation categories:
+
+- Management
+- Business and financial operations
+- Computer and mathematical
+- Architecture and engineering
+- Life, physical, and social science
+- Community and social service
+- Legal
+- Education, training, and library
+- Arts, design, entertainment, sports, media
+- Healthcare practitioners and technical
+- Healthcare support
+- Protective service
+- Food preparation and serving
+- Building and grounds cleaning and maintenance
+- Personal care and service
+- Sales and related
+- Office and administrative support
+- Farming, fishing, and forestry
+- Construction and extraction
+- Installation, maintenance, and repair
+- Production
+- Transportation and material moving
+
+## Economic Measures
+
+- Median household income
+- Per capita income
+- Gini index (income inequality)
+- Poverty rate
+
+## Housing
+
+- Homeownership rate
+- Median home value
+- Median gross rent
+- Owner housing cost burden (>30% income)
+- Renter housing cost burden (>30% income)
+
+## Education
+
+- Bachelor's degree or higher attainment (%)
+- High school diploma or higher (%)
+:::
+
+## Access
+
+### Census API
+
+Free API access with registration at [Census API Key Signup](https://api.census.gov/data/key_signup.html):
+
+::: panel-tabset
+## tidycensus Package
+
+```{r}
+#| eval: false
+
+# Using tidycensus package
+library(tidycensus)
+
+# Get median household income for all counties in 2023
+income_data <- get_acs(
+  geography = "county",
+  variables = "B19013_001",  # Median household income
+  year = 2023,
+  survey = "acs5"
+)
+
+# Get multiple variables with descriptive names
+variables <- c(
+  median_income = "B19013_001",
+  employment_rate = "B23025_004",
+  remote_work = "B08006_017"
+)
+
+acs_data <- get_acs(
+  geography = "county",
+  variables = variables,
+  year = 2023
+)
+```
+
+## Data Portal
+
+Interactive download tool:
+
+- [data.census.gov](https://data.census.gov)
+
+## CORI Projects
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_acs5_slim.R
+# Pulls 88 standardized variables for 2013, 2018, 2023
+```
+:::
+
+## Data Structure
+
+**Standard Format:**
+
+- One row per geography per variable
+- GEOID: 5-digit (county), 11-digit (tract), 12-digit (block group)
+- Estimates with margins of error (MOE)
+
+**Typical Variables:**
+
+```
+geoid, year, variable, estimate, moe,
+variable_label, concept
+```
+
+## Methodology
+
+### Rolling 5-Year Averages
+
+The 5-year ACS (e.g., 2019-2023) represents data collected over 60 months:
+
+- Provides **larger sample size** for reliable small-area estimates
+- Data represents **average conditions** over the period, not a specific year
+- Trade-off: Less timely than 1-year estimates but more precise
+
+### Survey Design
+
+- **Continuous monthly sampling** throughout the year
+- ~3.5 million addresses sampled annually
+- Internet, mail, phone, and in-person interviews
+- Household-based (not institutional population)
+
+### Margins of Error (MOE)
+
+All ACS estimates include MOE at 90% confidence level:
+
+::: callout-important
+## Understanding Margins of Error
+
+- Small geographies have larger MOE
+- Use MOE to determine statistical significance
+- Aggregate across geographies to reduce MOE
+
+**Example:** If estimate = 1,000 and MOE = 200, we are 90% confident the true value is between 800 and 1,200.
+:::
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Labor market, housing cost burden, remote work trends |
+| Occupation Analysis | Tech jobs, professional occupations in rural areas |
+| Housing Affordability | Cost burden by rural/metro classification |
+| Educational Attainment | Bachelor's degree rates and workforce quality |
+| Income Inequality | Gini index trends over time |
+
+### Common Applications
+
+- Community needs assessment
+- Grant applications (affordable housing, workforce development)
+- Economic development planning
+- Market analysis
+- Transportation planning (commuting patterns)
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Comprehensive coverage (40,000+ variables)
+- Small-area estimates (county and tract level)
+- Annual updates
+- Detailed demographics
+- Occupation detail (500+ codes)
+- National consistency
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Survey-based (sampling error/MOE)
+- 5-year lag (2019-2023 released Dec 2024)
+- Rolling averages (not single-year snapshot)
+- Small numbers unreliable (high MOE)
+- Top-coding (high incomes/values capped)
+- Disclosure avoidance (noise added)
+:::
+:::
+
+## Important Notes
+
+### Variable Consistency Across Years
+
+::: callout-tip
+## Documented Consistency for 2013, 2018, 2023
+
+CORI has verified variable consistency:
+
+- **Underlying variable codes (B-series) remain stable** across years
+- **Label formatting changed:** "!!" separators (2013) became "::" (2018+)
+- **Terminology changes:** "at home" → "from home" (work location)
+- **Data is comparable** despite cosmetic label changes
+
+See documentation:
+
+- `/data/acs_variable_check.csv` - Verification of 88 variables
+- `/data/acs_variable_problems.csv` - Documented label inconsistencies (no data impact)
+:::
+
+### Broadband Data
+
+**Note:** CORI uses [FCC National Broadband Map](/datasets/fcc-broadband/) instead of ACS broadband variables because:
+
+- FCC provides location-level precision (addresses)
+- ACS broadband is household survey (less precise)
+- FCC updates more frequently
+
+### Cost Burden Handling
+
+Housing cost burden variables:
+
+- Calculate as % of households paying >30% of income
+- Exclude households with no/negative income (undefined burden)
+- Owner and renter burdens calculated separately
+
+## Related Datasets
+
+- [Census Population Estimates](/datasets/census-population-estimates/) - Annual population (no survey error)
+- [QCEW Employment & Wages](/datasets/qcew-employment-wages/) - Administrative employment data
+- [FCC National Broadband Map](/datasets/fcc-broadband/) - Preferred broadband source
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install packages
+install.packages("tidycensus")   # User-friendly API wrapper
+install.packages("censusapi")    # General Census API access
+```
+
+### Usage Example
+
+```{r}
+#| eval: false
+
+library(tidycensus)
+
+# Set API key (get from census.gov)
+census_api_key("YOUR_KEY_HERE", install = TRUE)
+
+# Get ACS data
+acs_data <- get_acs(
+  geography = "county",
+  variables = c(
+    median_income = "B19013_001",
+    poverty_rate = "B17001_002"
+  ),
+  year = 2023,
+  survey = "acs5",
+  state = NULL  # All states
+)
+```
+
+## Additional Resources
+
+- [ACS Technical Documentation](https://www.census.gov/programs-surveys/acs/technical-documentation.html)
+- [ACS Handbook for Data Users](https://www.census.gov/programs-surveys/acs/library/handbooks/general.html)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 2005-2023 (5-year estimates)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

@@ -1,0 +1,345 @@
+---
+title: "USDA ERS County Typology Codes"
+description: "Economic and demographic classifications for understanding county characteristics"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Rural Classification"]
+tags: ["USDA", "Economic Specialization", "Persistent Poverty", "County-Level"]
+dataset:
+  name: "USDA Economic Research Service County Typology Codes"
+  source: "U.S. Department of Agriculture, Economic Research Service"
+  sourceUrl: "https://www.ers.usda.gov/data-products/county-typology-codes/"
+  accessMethod: "Direct Download"
+  updateFrequency: "Periodic (last updated: 2025 edition)"
+  geographicLevel: "County"
+  dataFormat: ["Excel", "CSV"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The USDA Economic Research Service (ERS) County Typology Codes classify counties into economic and demographic categories based on various characteristics. These classifications help researchers and policymakers:
+
+- Understand county economic specialization
+- Identify persistent challenges (poverty, education, employment)
+- Stratify analysis by county type
+- Target policies to specific county contexts
+
+The typology provides a **static snapshot** of county characteristics, typically updated every 10 years following the decennial census.
+
+::: callout-note
+## Why Typology Codes Matter
+
+- **Mutually exclusive categories** - Every county has one economic type
+- **Research-validated** - Widely used in rural studies
+- **Persistent poverty flag** - Identifies long-term challenges
+- **Multiple dimensions** - Economic type + social/demographic flags
+- **Free and accessible** - Easy download, no API needed
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- All 3,100+ U.S. counties
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 2025 edition (based on 2015-2023 data)
+- Previous editions: 2015, 2004, 1989
+- Updated roughly decennial
+:::
+:::
+
+## Key Classifications
+
+### Economic Typology (6 Mutually Exclusive Types)
+
+Counties classified by dominant economic activity:
+
+::: panel-tabset
+## Farming-Dependent
+
+Farming contributed ≥25% of county earnings or ≥16% of employment (averaged 2017-2019)
+
+## Mining-Dependent
+
+Mining contributed ≥13% of earnings or ≥8% of employment
+
+## Manufacturing-Dependent
+
+Manufacturing contributed ≥25% of earnings or ≥18% of employment
+
+## Government-Dependent
+
+Federal/State Government contributed ≥14% of earnings
+
+## Recreation
+
+Recreation employment ≥11% of total employment OR per capita personal income from recreation ≥11% of county income
+
+## Nonspecialized
+
+Does not meet criteria for any specialized category (residual category)
+
+**Note:** ~60-70% of counties are nonspecialized
+:::
+
+### Persistent Poverty (Binary Flag)
+
+Counties where **≥20% of population was poor** in each of the last 4 decennial censuses:
+
+- 1980, 1990, 2000, 2010 (for 2015 edition)
+- 1990, 2000, 2010, 2020 (for 2025 edition)
+
+Identifies counties with **long-term, structural poverty**, not temporary economic shocks.
+
+### Persistent Child Poverty (Binary Flag)
+
+Counties where **≥20% of children (age 0-17) were poor** in each of the last 4 censuses.
+
+Child poverty often more severe and has longer-lasting impacts than adult poverty.
+
+### Low Education (Binary Flag)
+
+Counties where:
+
+- **≥20% of adults (25-64) lack high school diploma** AND
+- **<20% have bachelor's degree or higher**
+
+Measured as of 2015-2019 ACS (2025 edition).
+
+### Low Employment (Binary Flag)
+
+Counties with **employment/population ratio <55%** for working-age adults (21-64), averaged 2017-2019.
+
+Indicates weak labor market attachment beyond unemployment (includes discouraged workers, disability).
+
+### Population Loss (Binary Flag)
+
+Counties that **lost population** between 2010-2020 censuses.
+
+Identifies long-term decline, not just short-term fluctuation.
+
+## Access
+
+::: panel-tabset
+## Direct Download
+
+Excel and CSV files:
+
+- [USDA ERS County Typology](https://www.ers.usda.gov/data-products/county-typology-codes/)
+
+## CORI Projects
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_ers_typology.R
+# 2025 edition, direct CSV download
+```
+:::
+
+## Data Structure
+
+**County-Level (One Row per County):**
+
+```
+geoid, county_name, state_abbr,
+typology_2025, farming, mining, manufacturing,
+government, recreation, nonspecialized,
+persistent_poverty, persistent_child_poverty,
+low_education, low_employment, population_loss
+```
+
+**Binary flags:** 1 = meets criteria, 0 = does not meet criteria
+
+## Methodology
+
+### Economic Typology Classification
+
+Counties assigned to types using hierarchical rules:
+
+1. Check farming criteria → if met, assign "Farming"
+2. If not farming, check mining → if met, assign "Mining"
+3. Continue through manufacturing, government, recreation
+4. If none met, assign "Nonspecialized"
+
+**Data Sources:**
+
+- BEA Regional Economic Accounts (earnings by industry)
+- BLS QCEW (employment by industry)
+- Census County Business Patterns (employment)
+
+### Persistent Poverty Methodology
+
+Using decennial census and ACS data:
+
+- Poverty rate calculated for all persons in county
+- Must meet 20% threshold in **all 4** censuses to qualify
+- Captures structural poverty, not recession-related spikes
+
+::: callout-important
+## Geographic Distribution
+
+~15% of U.S. counties meet persistent poverty criteria. Concentrated in:
+
+- **Black Belt** (Southeast)
+- **Appalachia**
+- **Native American reservations**
+- **Texas border counties**
+:::
+
+### Thresholds and Sensitivities
+
+Thresholds (e.g., 25% for farming, 20% for persistent poverty) are **somewhat arbitrary**:
+
+- Counties just below thresholds excluded
+- Use as rough classification, not precise boundaries
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Stratify analysis by economic type |
+| Manufacturing Belt Analysis | Identify manufacturing-dependent rural counties |
+| Persistent Poverty | Target analysis to structurally disadvantaged counties |
+| Economic Resilience | Do recreation counties weather recessions differently? |
+
+### Common Applications
+
+- Targeting federal programs (USDA, ARC, EDA)
+- Economic development strategy (diversification for specialized economies)
+- Workforce development (low education counties)
+- Research stratification (control for county type)
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Mutually exclusive categories
+- Research-validated
+- Persistent poverty flag
+- Multiple dimensions
+- Free and accessible
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Static classification
+- Arbitrary thresholds
+- Mutually exclusive types (no mixed)
+- No temporal variation
+- Lagged data (2025 uses 2019 ACS)
+:::
+:::
+
+## Important Notes
+
+### Economic Typology vs. Rural Definition
+
+::: callout-warning
+## Different Concepts
+
+ERS County Typology ≠ rural definition:
+
+- **Rural definition** (CBSA, RUCA) = urban vs. rural
+- **Economic typology** = type of economy
+
+**Many metro counties are farming/manufacturing-dependent.** Use [ruraldefinitions package](/packages/ruraldefinitions/) for rural classification.
+:::
+
+### Nonspecialized Counties (Majority)
+
+~60-70% of counties are "Nonspecialized":
+
+- Diversified economies (no single sector dominant)
+- OR economies too small/weak to meet any threshold
+
+**Nonspecialized ≠ unimportant.** Many thriving counties have diversified economies.
+
+### Persistent Poverty Concentration
+
+Persistent poverty counties are **geographically concentrated**. These regions face **structural challenges** beyond economic cycles:
+
+- Historical discrimination and disinvestment
+- Limited infrastructure
+- Lower educational attainment
+- Geographic isolation
+
+### Recreation Counties
+
+Recreation typology captures:
+
+- Tourism employment (hotels, restaurants, entertainment)
+- Outdoor recreation (skiing, beaches, national parks)
+- Second-home income
+
+**Rural recreation counties** often have:
+
+- Higher property values
+- Seasonal employment
+- Income inequality (wealthy visitors vs. low-wage service workers)
+
+### Using Typology for Analysis
+
+::: callout-tip
+## Best Practices
+
+1. **Stratify models** - Run separate regressions for farming vs. manufacturing counties
+2. **Control variables** - Include typology dummies in regressions
+3. **Descriptive analysis** - Compare outcomes across types (e.g., "Do farming counties have lower broadband adoption?")
+4. **Geographic mapping** - Visualize spatial patterns of economic specialization
+:::
+
+## Related Datasets
+
+- [ruraldefinitions Package](/packages/ruraldefinitions/) - Rural/urban classification (complementary to economic type)
+- [QCEW Employment](/datasets/qcew-employment-wages/) - Detailed industry employment for custom classifications
+- [BEA Regional Data](/datasets/bea-real-gdp/) - Industry earnings data underlying typology
+
+## R Packages
+
+### Custom Scripts
+
+```{r}
+#| eval: false
+
+# No dedicated R package
+# CORI uses custom scripts for loading
+
+# From rural-economic-outlook project
+source("R/data_import/load_ers_typology.R")
+
+# For rural classification, use:
+# install.packages("ruraldefinitions")
+library(ruraldefinitions)
+```
+
+## Additional Resources
+
+- [ERS Typology Documentation](https://www.ers.usda.gov/data-products/county-typology-codes/descriptions-and-maps/)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 2025 edition (based on 2015-2023 data)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

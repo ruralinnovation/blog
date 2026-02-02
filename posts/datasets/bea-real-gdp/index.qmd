@@ -1,0 +1,279 @@
+---
+title: "BEA Real GDP Per Capita"
+description: "Inflation-adjusted economic output data from the Bureau of Economic Analysis"
+author: "CORI Data Team"
+date: "2026-02-02"
+categories: ["Dataset", "Economic Indicators"]
+tags: ["BEA", "GDP", "Economic Growth", "County-Level"]
+dataset:
+  name: "BEA Regional Economic Accounts - Real GDP"
+  source: "Bureau of Economic Analysis, U.S. Department of Commerce"
+  sourceUrl: "https://www.bea.gov/data/gdp/gdp-county-metro-and-other-areas"
+  accessMethod: "BEA API"
+  updateFrequency: "Annual"
+  geographicLevel: "County, MSA, State, National"
+  dataFormat: ["API", "CSV"]
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The Bureau of Economic Analysis (BEA) produces official estimates of Gross Domestic Product (GDP) at multiple geographic levels. GDP measures the total value of goods and services produced in an area, serving as the primary indicator of economic output and growth.
+
+**Real GDP** is adjusted for inflation using chain-weighted price indices, allowing for accurate comparison across time periods. BEA expresses real GDP in "chained dollars" relative to a base year (currently 2017).
+
+::: callout-note
+## Why Real GDP Matters
+
+- **Official measures** - Used in federal policy and funding decisions
+- **Inflation-adjusted** - Built-in chain-weighted deflation
+- **Industry detail** - Understand economic structure
+- **Consistent methodology** - Comparable across geographies and time
+:::
+
+## Coverage
+
+::: columns
+::: {.column width="50%"}
+**Geographic Coverage**
+
+- County
+- Metropolitan Statistical Area (MSA)
+- State
+- National
+:::
+
+::: {.column width="50%"}
+**Temporal Coverage**
+
+- 2001-present (county level)
+- Annual updates
+- Released each December for prior year
+- Universe: All U.S. counties and MSAs
+:::
+:::
+
+## Key Variables
+
+### GDP Metrics
+
+- **Real GDP** - Total economic output in chained 2017 dollars
+- **Real GDP Per Capita** - GDP divided by population (BEA's population estimates)
+- **Real GDP Growth Rate** - Year-over-year percent change
+
+### Industry Detail
+
+- **GDP by Industry** - 25+ NAICS industry categories
+- **Private vs. Government GDP** - Sectoral breakdown
+- **Goods-Producing vs. Services** - Broad economic structure
+
+## Access
+
+### BEA API
+
+Free API access with registration at [BEA API Portal](https://apps.bea.gov/api/signup/):
+
+::: panel-tabset
+## tidybea Package
+
+```{r}
+#| eval: false
+
+# Using tidybea package
+library(tidybea)
+
+# Get real GDP per capita for all counties, 2007-2023
+gdp_data <- bea_get(
+  data_set_name = "Regional",
+  table_name = "CAGDP1",
+  line_code = 3,  # Real GDP
+  year = "2007,2023",
+  geo_fips = "COUNTY"
+)
+```
+
+## Direct Download
+
+Interactive data tables available:
+
+- [GDP & Personal Income Tools](https://apps.bea.gov/itable/iTable.cfm?ReqID=70&step=1)
+
+## CORI Projects
+
+```{r}
+#| eval: false
+
+# From rural-economic-outlook project
+# Load script: R/data_import/load_bea.R
+```
+:::
+
+## Data Structure
+
+**Standard Format:**
+
+- One row per county per year
+- GEOID: 5-digit FIPS code
+- Values in thousands of chained dollars
+
+**Typical Variables:**
+
+```
+geoid, year, real_gdp_per_capita_chained_2017_dollars,
+population, real_gdp
+```
+
+## Methodology
+
+### Chain-Weighted Price Indices
+
+BEA uses chain-weighted indices instead of fixed-weight indices to account for:
+
+- Changing consumption patterns over time
+- Substitution effects when relative prices change
+- More accurate long-term comparisons
+
+::: callout-important
+## No Additional Deflation Needed
+
+Real GDP is already inflation-adjusted. **No additional CPI deflation needed.**
+:::
+
+### Industry GDP Calculation
+
+GDP by industry measures "value added":
+
+- Employee compensation
+- Taxes on production (minus subsidies)
+- Gross operating surplus (capital returns)
+
+**Not included:** Intermediate inputs (to avoid double-counting)
+
+## Use Cases
+
+### In CORI Projects
+
+| Project | Use Case |
+|---------|----------|
+| [Rural Economic Outlook](/projects/rural-economic-outlook/) | Economic growth trajectories 2007-2023 |
+| Metro vs. Rural Comparisons | GDP per capita gaps |
+| Industry Analysis | Sectoral contributions to growth |
+| Economic Momentum | Baseline (2007=100) indices |
+
+### Common Applications
+
+- Economic development planning
+- Comparing regional economic performance
+- Understanding industry composition
+- Tracking recession recovery
+
+## Strengths & Limitations
+
+::: columns
+::: {.column width="50%"}
+### Strengths
+
+- Official measures used in policy
+- Inflation-adjusted built-in
+- Industry detail available
+- Consistent methodology
+- Comparable across geography/time
+:::
+
+::: {.column width="50%"}
+### Limitations
+
+- Lagged release (~11 months)
+- County employment tables discontinued
+- Revised retroactively
+- Metropolitan bias (more reliable for larger counties)
+- Commuting flows ignored
+:::
+:::
+
+## Important Notes
+
+### BEA Employment Table Discontinuation
+
+::: callout-warning
+## Tables Discontinued After 2022
+
+As of 2023, BEA discontinued county-level employment tables:
+
+- **CAEMP25N** (Employment by NAICS industry) - Last year: 2022
+- **CAINC6N** (Compensation by NAICS industry) - Last year: 2022
+
+**Replacement:** Use [BLS QCEW data](/datasets/qcew-employment-wages/) for 2023+ employment.
+:::
+
+### Real vs. Nominal
+
+::: panel-tabset
+## Real GDP
+
+- Adjusted for inflation
+- Use for time comparisons
+- Chained 2017 dollars
+
+## Nominal GDP
+
+- Current-year dollars
+- Use for current-year shares
+- Not adjusted for inflation
+:::
+
+## Related Datasets
+
+- [BLS QCEW Employment & Wages](/datasets/qcew-employment-wages/) - Replaces BEA employment tables after 2022
+- [Census Population Estimates](/datasets/census-population-estimates/) - Population for per-capita calculations
+- [BLS CPI-U-RS](/datasets/bls-cpi/) - Alternative inflation deflator for wages
+
+## R Packages
+
+### Recommended Packages
+
+```{r}
+#| eval: false
+
+# Install packages
+install.packages("tidybea")    # Simplified BEA API access
+install.packages("bea.R")      # Official BEA R package
+```
+
+### Usage Example
+
+```{r}
+#| eval: false
+
+library(tidybea)
+
+# Set API key
+bea_key("YOUR_KEY_HERE")
+
+# Get county real GDP
+gdp_data <- bea_get(
+  data_set_name = "Regional",
+  table_name = "CAGDP1",
+  line_code = 3,
+  year = "2020,2023",
+  geo_fips = "COUNTY"
+)
+```
+
+## Additional Resources
+
+- [BEA Regional Data Methodology](https://www.bea.gov/resources/methodologies/regional-gdp-and-gdi-methodology)
+- [Rural Economic Outlook Project](https://github.com/ruralinnovation/data-rural-economic-outlook)
+
+---
+
+**Last Updated:** February 2, 2026
+**Data Coverage:** 2001-2023 (county level)
+**Contact:** [data@ruralinnovation.us](mailto:data@ruralinnovation.us)

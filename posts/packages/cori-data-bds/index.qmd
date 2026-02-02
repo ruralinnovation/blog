@@ -1,0 +1,400 @@
+---
+title: "cori.data.bds"
+description: "Access and analyze Census Bureau Business Dynamics Statistics (BDS) data covering establishment and job dynamics from 1978-2023"
+author: "Drew Rosebush"
+date: "2026-01-31"
+categories: ["R Package", "Economic Data"]
+tags: ["Census", "Business Dynamics", "Employment", "Startups", "Economic Development"]
+package:
+  name: "cori.data.bds"
+  githubUrl: "https://github.com/ruralinnovation/cori.data.bds"
+  installCommand: 'devtools::install_github("ruralinnovation/cori.data.bds")'
+  status: "stable"
+  version: "0.2.0"
+  maintainer: "Drew Rosebush"
+  featured: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Overview
+
+The `cori.data.bds` package provides tools for accessing and analyzing Census Bureau Business Dynamics Statistics (BDS) data. This comprehensive dataset covers establishment and job dynamics from 1978-2023, including:
+
+- **Establishment dynamics**: Births, deaths, entry rates, exit rates
+- **Employment dynamics**: Job creation, destruction, and net employment change
+- **Firm dynamics**: Firm counts, deaths, and transitions
+- **Multiple breakouts**: By geography, industry (NAICS), firm age, and employment size
+
+::: callout-note
+## Why Use This Package
+
+- **Simplified access** - Pre-processed data with human-readable variable names
+- **Two data sources** - Fast S3 access or direct Census API pulls
+- **Smart filtering** - Reduce data size by 99.98% using aggregation levels
+- **Performance optimized** - Efficient data structures for large-scale analysis
+:::
+
+## Installation
+
+::: panel-tabset
+## GitHub
+
+```{r}
+#| eval: false
+
+# Install from GitHub
+devtools::install_github("ruralinnovation/cori.data.bds")
+```
+
+## Requirements
+
+**Census API Key** (required for pulling data directly):
+```{r}
+#| eval: false
+
+# Get key at: http://api.census.gov/data/key_signup.html
+Sys.setenv(CENSUS_API_KEY = "your_api_key_here")
+```
+
+**S3 Access** (optional, for reading/writing processed data):
+```{r}
+#| eval: false
+
+# Install cori.db package
+remotes::install_github("ruralinnovation/cori.db")
+
+# Configure AWS CLI
+# aws configure
+```
+:::
+
+## Quick Start
+
+```{r}
+#| eval: false
+
+library(cori.data.bds)
+
+# Read processed data with human-readable names (recommended)
+data <- read_bds_from_s3(
+  geography = "county",
+  vintage = 2023,
+  years = 2020:2023,
+  aggregation_level = "base",
+  data_type = "processed"
+)
+
+# Or pull data directly from Census API
+raw_data <- pull_bds_raw(years = 2020:2023, geography = "state")
+
+# Get variable definitions
+codebook <- get_bds_codebook()
+```
+
+## Key Features
+
+### Two Data Access Methods
+
+::: panel-tabset
+## S3 (Recommended)
+
+Fast, pre-processed data with human-readable variable names:
+
+```{r}
+#| eval: false
+
+read_bds_from_s3(
+  geography = "county",
+  years = 2020:2023,
+  aggregation_level = "base",
+  data_type = "processed"
+)
+```
+
+## Census API
+
+Pull raw data directly from Census Bureau:
+
+```{r}
+#| eval: false
+
+pull_bds_raw(years = 2020:2023, geography = "state")
+```
+:::
+
+### Processed vs. Raw Data
+
+::: columns
+::: {.column width="50%"}
+**Processed Data** (Recommended):
+
+- Human-readable column names (`establishments` instead of `ESTAB`)
+- Industry labels ("Information" instead of "51")
+- Age group labels ("0 years" instead of "010")
+- Standardized `geoid` column for easy joins
+:::
+
+::: {.column width="50%"}
+**Raw Data**:
+
+- Original Census variable names
+- Requires manual lookup for codes
+- Useful for Census API compliance
+:::
+:::
+
+## Core Functions
+
+### Reading Data
+
+```{r}
+#| eval: false
+
+# Read from S3 (fast, efficient)
+read_bds_from_s3(
+  geography = "county",        # "national", "state", or "county"
+  vintage = 2023,              # Latest year in dataset
+  years = 2020:2023,           # Optional: filter specific years
+  aggregation_level = "base",  # "base", "by_industry", "by_age", "by_size", "all"
+  data_type = "processed"      # "processed" or "raw"
+)
+
+# Pull directly from Census API
+pull_bds_raw(
+  years = 2020:2023,
+  geography = "state",
+  variables = NULL  # Optional: specify variables
+)
+```
+
+### Writing Data (Admin)
+
+```{r}
+#| eval: false
+
+# Write complete dataset to S3 (runs 8-15 hours)
+write_bds_to_s3(vintage = 2023, sync_to_s3 = TRUE)
+
+# Create processed data with human-readable names
+write_bds_processed_to_s3(vintage = 2023, sync_to_s3 = TRUE)
+```
+
+### Utility Functions
+
+```{r}
+#| eval: false
+
+# Get codebook
+get_bds_codebook()
+
+# Lookup industry names
+lookup_naics("51")        # "Information"
+lookup_naics("31-33")     # "Manufacturing"
+
+# Lookup age groups
+lookup_eage("010")        # "0 years"
+lookup_eage("070")        # "6-10 years"
+
+# Lookup employment size categories
+lookup_empszes("212")     # "1-4 employees"
+lookup_empszes("253")     # "500+ employees"
+```
+
+## Aggregation Levels
+
+Filter by aggregation level to reduce data size and improve performance:
+
+| Level | Description | Typical Rows (County, 4 years) | Size |
+|-------|-------------|--------------------------------|------|
+| `base` | Grand totals only | ~12K | ~1 MB |
+| `by_industry` | Industry breakouts | ~240K | ~50 MB |
+| `by_age` | Firm age breakouts | ~63K | ~15 MB |
+| `by_size` | Employment size breakouts | ~126K | ~30 MB |
+| `all` | Everything | ~314K | ~75 MB |
+
+::: callout-important
+## Mutual Exclusivity
+
+NAICS (industry), EAGE (age), and EMPSZES (size) are **mutually exclusive** - you can only filter by ONE dimension at a time.
+:::
+
+## Common Use Cases
+
+### County Rankings
+
+```{r}
+#| eval: false
+
+library(dplyr)
+
+base_2023 <- read_bds_from_s3(
+  geography = "county",
+  years = 2023,
+  aggregation_level = "base",
+  data_type = "processed"
+)
+
+# Top counties by establishment count
+base_2023 |>
+  arrange(desc(establishments)) |>
+  head(10)
+```
+
+### Industry Analysis
+
+```{r}
+#| eval: false
+
+industry_data <- read_bds_from_s3(
+  geography = "state",
+  years = 2020:2023,
+  aggregation_level = "by_industry",
+  data_type = "processed"
+)
+
+# Industry trends
+industry_data |>
+  filter(year == 2023) |>
+  arrange(desc(establishments)) |>
+  select(geoid, industry, establishments, employees)
+```
+
+### Startup Activity
+
+```{r}
+#| eval: false
+
+age_data <- read_bds_from_s3(
+  geography = "state",
+  years = 2020:2023,
+  aggregation_level = "by_age",
+  data_type = "processed"
+)
+
+# Young firms (0-2 years old)
+startups <- age_data |>
+  filter(eage_code %in% c('010', '020', '030')) |>
+  select(year, geoid, estab_age_group, establishments, firm_deaths_in_12mos)
+```
+
+### Small Business Analysis
+
+```{r}
+#| eval: false
+
+size_data <- read_bds_from_s3(
+  geography = "county",
+  years = 2020:2023,
+  aggregation_level = "by_size",
+  data_type = "processed"
+)
+
+# Small businesses (1-19 employees)
+small_biz <- size_data |>
+  filter(empszes_code %in% c('212', '220', '230'))  # 1-4, 5-9, 10-19
+```
+
+## Key Variables
+
+### Processed Data (Human-Readable)
+
+| Variable | Description |
+|----------|-------------|
+| year | Year (1978-2023) |
+| geoid | Geographic identifier (FIPS code) |
+| industry | Human-readable industry name |
+| estab_age_group | Human-readable age group |
+| estab_size_group | Human-readable employment size label |
+| establishments | Number of establishments |
+| employees | Number of employees |
+| estab_entries_in_12mos | Establishments opened |
+| estab_exits_in_12mos | Establishments closed |
+| estab_entry_rate_in_12mos | Rate of establishment births |
+| estab_exit_rate_in_12mos | Rate of establishment exits |
+| firms | Number of firms |
+| firm_deaths_in_12mos | Firm deaths |
+| job_creation | Jobs created from births and expansions |
+| job_destruction | Jobs destroyed from closures and contractions |
+| net_job_creation | Net employment change |
+
+### Raw Data (Census Variables)
+
+| Variable | Description |
+|----------|-------------|
+| YEAR | Year (1978-2023) |
+| NAICS | Industry code ('00'=all, '51'=Information, etc.) |
+| EAGE | Age code ('001'=all, '010'=0 years, etc.) |
+| EMPSZES | Employment size code ('001'=all, '212'=1-4 employees, etc.) |
+| ESTAB | Number of establishments |
+| EMP | Number of employees |
+| ESTABS_ENTRY | Establishments opened |
+| ESTABS_EXIT | Establishments closed |
+| FIRM | Number of firms |
+| FIRMDEATH_FIRMS | Firm deaths |
+| JOB_CREATION | Jobs created |
+| JOB_DESTRUCTION | Jobs destroyed |
+| NET_JOB_CREATION | Net jobs |
+
+## Performance Tips
+
+::: callout-tip
+## Optimization Strategies
+
+1. **Use processed data** - Pre-computed labels and human-readable names
+2. **Use specific aggregation levels** - `base` is 99.98% smaller than `all`
+3. **Filter by years** - Reduces data transfer
+4. **Start with state or national** - Smaller than county for testing
+5. **Test locally first** - Use `sync_to_s3 = FALSE` when writing data
+:::
+
+## Data Coverage
+
+- **Time Period**: 1978-2023 (46 years)
+- **Geographies**: National, State, County
+- **Industries**: All NAICS sectors (2-digit through 4-digit)
+- **Firm Ages**: 0 years through 11+ years
+- **Employment Sizes**: 1-4 through 1,000+ employees
+- **Update Frequency**: Annual (Census releases new data each year)
+
+## Use Cases at CORI
+
+This package is used in:
+
+- Startup ecosystem analysis
+- Rural entrepreneurship research
+- Economic development studies
+- Regional employment trends
+- Industry composition analysis
+
+## Related Resources
+
+### Datasets
+
+- [Census Business Dynamics Statistics](/datasets/census-bds/) - Source dataset documentation
+- [Census Business Formation Statistics](/datasets/census-bfs/) - Leading indicator
+- [QCEW Employment & Wages](/datasets/qcew-employment-wages/) - Quarterly employment data
+
+### External Links
+
+- [Census BDS Homepage](https://www.census.gov/programs-surveys/bds.html)
+- [BDS Documentation](https://www.census.gov/programs-surveys/bds/documentation.html)
+- [Census API Documentation](https://www.census.gov/data/developers/data-sets/business-dynamics.html)
+
+## Documentation
+
+- [GitHub Repository](https://github.com/ruralinnovation/cori.data.bds)
+- [Full README](https://github.com/ruralinnovation/cori.data.bds/blob/main/README.md)
+- [Function Documentation](https://github.com/ruralinnovation/cori.data.bds/tree/main/man)
+- [Vignettes](https://github.com/ruralinnovation/cori.data.bds/tree/main/vignettes)
+
+---
+
+**Contact:** Drew Rosebush (drew.rosebush@ruralinnovation.us)
+
+For bug reports or feature requests, please open an issue on [GitHub](https://github.com/ruralinnovation/cori.data.bds/issues).
