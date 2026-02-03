@@ -14,24 +14,37 @@ website:
   navbar:
     logo: assets/images/CORI_Logo_Cream.svg
     logo-href: /
+    background: "#16343E"
+    foreground: white
     left:
       - text: "Home"
-        href: index.qmd
+        href: index.html
       - text: "Datasets"
-        href: datasets.qmd
+        href: posts/datasets/
       - text: "R Packages"
-        href: packages.qmd
+        href: posts/packages/
       - text: "Projects"
-        href: projects.qmd
+        href: posts/projects/
       - text: "Blog"
-        href: blog.qmd
+        href: posts/blog/
       - text: "Resources"
-        href: resources.qmd
+        href: posts/resources/
     right:
       - text: "About"
-        href: about.qmd
+        href: about.html
       - icon: github
         href: https://github.com/ruralinnovation
+
+  page-footer:
+    background: light
+    left: |
+      © 2026 Center on Rural Innovation. All rights reserved.
+      Your hub for rural innovation data, tools, research, and analysis.
+    right:
+      - text: "GitHub"
+        href: https://github.com/ruralinnovation
+      - text: "CORI Website"
+        href: https://ruralinnovation.us
 
 format:
   html:

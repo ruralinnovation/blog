@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>$if(title)$$title$ | $endif$Rural Dataverse</title>
+
+  <!-- Jekyll Styles -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/fonts.css">
+
+  <!-- Quarto Styles -->
+  $for(css)$
+  <link rel="stylesheet" href="$css$">
+  $endfor$
+
+  $if(math)$
+  $math$
+  $endif$
+
+  $for(header-includes)$
+  $header-includes$
+  $endfor$
+</head>
+<body>
+
+<!-- Jekyll Header -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="site-branding">
+        <a href="/" class="site-title">
+          <img src="/assets/images/CORI_Logo_Cream.svg" alt="CORI Logo" class="logo">
+          <span>Rural Dataverse</span>
+        </a>
+        <p class="tagline">Center on Rural Innovation - Mapping & Data Analytics</p>
+      </div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/datasets/">Datasets</a></li>
+          <li><a href="/packages/">R Packages</a></li>
+          <li><a href="/projects/">Projects</a></li>
+          <li><a href="/stories/">Blog</a></li>
+          <li><a href="/resources/">Resources</a></li>
+          <li><a href="/about/">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Quarto Content -->
+<main class="container" style="padding: 2rem 0;">
+$body$
+</main>
+
+<!-- Jekyll Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>&copy; 2026 Center on Rural Innovation. All rights reserved.</p>
+        <p class="tagline">Your hub for rural innovation data, tools, research, and analysis.</p>
+      </div>
+
+      <nav class="footer-nav">
+        <ul>
+          <li><a href="https://github.com/ruralinnovation">GitHub</a></li>
+          <li><a href="https://ruralinnovation.us">CORI Website</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+$for(include-after)$
+$include-after$
+$endfor$
+
+</body>
+</html>

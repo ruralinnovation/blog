@@ -1,0 +1,13 @@
+---
+title: "R Packages"
+description: "Open-source R packages for rural data analysis"
+listing:
+  contents: .
+  type: grid
+  categories: true
+  sort: "date desc"
+  fields: [title, description, date]
+  page-size: 12
+---
+
+Open-source R packages developed by the CORI MDA team for accessing and analyzing rural data.

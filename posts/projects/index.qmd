@@ -1,0 +1,13 @@
+---
+title: "Projects"
+description: "Research projects combining multiple datasets and tools"
+listing:
+  contents: .
+  type: grid
+  categories: true
+  sort: "date desc"
+  fields: [title, description, date, categories]
+  page-size: 12
+---
+
+Research projects and analyses that combine multiple datasets to understand rural economic trends, broadband adoption, and community development.

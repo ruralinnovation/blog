@@ -2,6 +2,8 @@
 title: "Rural Economic Outlook"
 description: "Comprehensive analysis of rural economic conditions tracking employment, wages, business formation, migration, and innovation from 2007-2024"
 date: 2026-02-02
+layout: default
+permalink: /projects/rural-economic-outlook/
 categories: ["Economic Analysis", "Rural Development", "Data Infrastructure"]
 tags: ["Employment", "Business Dynamics", "Migration", "GDP", "Entrepreneurship"]
 featured: true
@@ -23,6 +25,10 @@ usesDatasets: [
   "fcc-broadband"
 ]
 usesPackages: ["cori-data-fcc", "cori-data-bds", "ruraldefinitions"]
+format:
+  html:
+    toc: true
+    toc-location: right
 execute:
   echo: false
   warning: false
