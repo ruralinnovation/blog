@@ -1,0 +1,263 @@
+---
+title: "Debug: analysis.qmd chunk 8 facet error"
+format: html
+---
+
+## Problem
+
+`analysis.qmd` was failing at chunk 8 (lines 311-365) with:
+
+```
+Error in `combine_vars()`:
+! Faceting variables must have at least one value.
+```
+
+The root cause is that the year filter on line 210 requires `year %in% c(2017, 2018, 2022, 2023)`, but several chart variables only have data for 2024 (and some for 2019). They get dropped entirely, leaving zero rows for chunk 8's plot.
+
+The original year selection (2017, 2018, 2022, 2023) appears to deliberately bracket major economic disruption:
+
+- **2017-2018**: pre-COVID baseline period
+- **2020 Census**: decennial Census data release
+- **2022-2023**: post-COVID recovery and post-census reclassification period
+
+This design skips 2019, 2020, 2021 to avoid pandemic-distorted economic indicators. However, the underlying data has now been updated with 2024 vintage, and several variables (broadband adoption, educational attainment, tech employment, median age) only have data for 2024 or 2019, not the original target years. This creates a tension between the original methodological intent and current data availability.
+
+### Year availability by variable
+
+| Variable | Available years |
+|---|---|
+| `broadband_adoption` | 2024 only |
+| `share_ba_or_higher` | 2019, 2024 |
+| `Tradable services` | 2024 only |
+| `median_age` | 2024 only |
+| `pct_emp_in_computer_math_occupations` | 2019, 2024 |
+| `establishments` | 2010-2023 |
+| `population` | 2010-2024 |
+| `employment` | not present in data |
+
+## Reproduce: load data
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(here)
+library(readr)
+library(coriverse)
+
+i_am("posts/14_nonmetro_to_metro/analysis.qmd")
+
+rucc_1974 <- ruraldefinitions::rucc_1974 %>% mutate(rural_def = as.character(rural_def))
+rucc_2023 <- ruraldefinitions::rucc_2023 %>% mutate(rural_def = as.character(rural_def))
+
+rucc_all <- bind_rows(
+  rucc_1974,
+  ruraldefinitions::rucc_1983 %>% mutate(rural_def = as.character(rural_def)),
+  ruraldefinitions::rucc_1993 %>% mutate(rural_def = as.character(rural_def)),
+  ruraldefinitions::rucc_2003 %>% mutate(rural_def = as.character(rural_def)),
+  ruraldefinitions::rucc_2013 %>% mutate(rural_def = as.character(rural_def)),
+  rucc_2023
+) %>%
+  left_join(cori.utils::county_state_crosswalk, by = c("geoid" = "geoid_co")) %>%
+  select(-rural_def) %>%
+  pivot_wider(names_from = "year", names_prefix = "rucc_", values_from = "is_rural") %>%
+  mutate(
+    rural_to_nonrural = ifelse(rucc_1974 == "Rural" & rucc_2023 == "Nonrural", 2023, NA)
+  )
+
+nonmetro_to_metro_geoids <- rucc_all %>%
+  filter(rural_to_nonrural == 2023) %>%
+  pull(geoid)
+
+con <- connect_to_db("proj_erc")
+erc_dta <- read_db(con, "erc_data_tidy")
+DBI::dbDisconnect(con)
+
+analysis_dta <- erc_dta %>%
+  filter(metric %in% c(
+    "Median age", "Number of establishments", "Population",
+    "Quality of life", "Educational attainment", "Employment",
+    "Tech employment", "Share of employment by sector", "Broadband adoption"
+  ))
+
+sum_metrics <- c("Population", "Number of establishments", "Employment")
+weight_metrics <- c("Broadband adoption", "Tech employment",
+                    "Share of employment by sector", "Educational attainment")
+
+rucc_nonmetro_2023 <- rucc_2023 %>%
+  filter(is_rural == "Rural") %>%
+  pull(geoid) %>%
+  unique()
+
+nonmetro_to_metro_summary <- analysis_dta %>%
+  mutate(
+    category = ifelse(
+      geoid %in% nonmetro_to_metro_geoids, "Newly nonrural",
+      ifelse(geoid %in% rucc_nonmetro_2023, "Rural", "All other nonrural")
+    ),
+    weighted_value = agg_var * value
+  ) %>%
+  group_by(category, year, variable, metric) %>%
+  summarise(
+    count = n_distinct(geoid),
+    weighted_value_sum = sum(weighted_value, na.rm = TRUE),
+    total_value = sum(value, na.rm = TRUE),
+    agg_var = sum(agg_var, na.rm = TRUE),
+    value = mean(value, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    value = ifelse(metric %in% sum_metrics, total_value,
+      ifelse(metric %in% weight_metrics, weighted_value_sum / agg_var, value))
+  )
+```
+
+## Step 1: which chart_vars exist?
+
+```{r}
+chart_vars <- c(
+  "Tradable services", "establishments",
+  "pct_emp_in_computer_math_occupations", "population",
+  "broadband_adoption", "share_ba_or_higher",
+  "employment", "median_age"
+)
+
+present <- chart_vars[chart_vars %in% unique(nonmetro_to_metro_summary$variable)]
+missing <- chart_vars[!chart_vars %in% unique(nonmetro_to_metro_summary$variable)]
+
+cat("Present:", paste(present, collapse = ", "), "\n")
+cat("Missing:", paste(missing, collapse = ", "), "\n")
+```
+
+## Step 2: year availability (the key issue)
+
+```{r}
+step1 <- nonmetro_to_metro_summary %>% filter(variable %in% chart_vars)
+
+table(step1$variable, step1$year)
+```
+
+The year filter `year %in% c(2017, 2018, 2022, 2023)` only keeps `establishments`
+and `population`; everything else is dropped.
+
+## Step 3: rows surviving the year filter
+
+```{r}
+step2 <- step1 %>% filter(year %in% c(2017, 2018, 2022, 2023))
+
+cat("Rows:", nrow(step2), "\n")
+table(step2$variable)
+```
+
+## Step 4: after pivot + all downstream filters
+
+```{r}
+chrt_dta <- step2 %>%
+  select(category, year, variable, value) %>%
+  pivot_wider(names_from = "year", names_prefix = "est_", values_from = "value") %>%
+  mutate(
+    pct_chg_2023 = (est_2023 - est_2018) / est_2018,
+    pct_chg_2022 = (est_2022 - est_2017) / est_2017
+  ) %>%
+  select(category, variable, est_2022, est_2023, starts_with("pct")) %>%
+  pivot_longer(cols = c(est_2023, est_2022, starts_with("pct"))) %>%
+  filter(!is.na(value)) %>%
+  filter(!(name == "pct_chg_2023" & variable == "pct_emp_in_computer_math_occupations")) %>%
+  filter(!(name == "pct_chg_2023" & variable == "share_ba_or_higher")) %>%
+  filter(!(name == "est_2022" & variable != "Tradable services"))
+
+cat("Final chrt_dta rows:", nrow(chrt_dta), "\n")
+cat("Remaining variables:", paste(unique(chrt_dta$variable), collapse = ", "), "\n")
+```
+
+## Step 5: chunk 8 filter produces empty data
+
+```{r}
+chunk8_exclude <- c("employment", "population", "establishments",
+                    "pct_emp_in_computer_math_occupations", "median_age")
+chunk8_data <- chrt_dta %>% filter(!variable %in% chunk8_exclude)
+
+cat("Rows for chunk 8 plot:", nrow(chunk8_data), "\n")
+
+if (nrow(chunk8_data) == 0) {
+  cat("\n*** EMPTY -- this causes the facet error ***\n\n")
+  cat("Only variables surviving to this point:\n")
+  cat(paste(unique(chrt_dta$variable), collapse = ", "), "\n\n")
+  cat("Chunk 8 expected: broadband_adoption, share_ba_or_higher, Tradable services\n")
+  cat("But these were eliminated by the year filter in Step 3.\n")
+}
+```
+
+## Conclusion
+
+The underlying `erc_data_tidy` table has been updated: variables like `broadband_adoption`, `share_ba_or_higher`, `Tradable services`, and `median_age` now have data for 2024 (and some for 2019) instead of 2023 (and 2018).
+
+The year references in `analysis.qmd` line 210 (`year %in% c(2017, 2018, 2022, 2023)`) and the subsequent `est_*` / `pct_chg_*` column arithmetic (lines 218-219) need to be updated to match the years actually present in the current data.
+
+**Key decision:** The original year selection attempted to avoid pandemic-distorted data (2020-2021). The recommended fix uses `c(2018, 2019, 2023, 2024)` — which preserves the pre/post-pandemic comparison intent (2018-2019 as baseline, 2023-2024 as endpoint) while aligning with actual data availability. This keeps one year of pre-pandemic (2018) and one year of post-pandemic recovery (2019) as baselines, compared to the latest available post-census data (2023-2024).
+
+## Step 6: fix — update year references to match current data
+
+The year filter changes from `c(2017, 2018, 2022, 2023)` to `c(2018, 2019, 2023, 2024)`, and the `est_*` / `pct_chg_*` columns shift accordingly:
+
+- `est_2017` → `est_2018`, `est_2022` → `est_2023` (baseline years)
+- `est_2018` → `est_2019`, `est_2023` → `est_2024` (comparison years)
+- `pct_chg_2022` → `pct_chg_2023` (change from 2018→2023)
+- `pct_chg_2023` → `pct_chg_2024` (change from 2019→2024)
+
+```{r}
+# Updated year filter: 2018/2019 as baselines, 2023/2024 as endpoints
+step2_fixed <- step1 %>% filter(year %in% c(2018, 2019, 2023, 2024))
+
+cat("Rows with updated year filter:", nrow(step2_fixed), "\n\n")
+table(step2_fixed$variable, step2_fixed$year)
+```
+
+```{r}
+# Updated pivot + percent-change arithmetic with corrected year references
+chrt_dta_fixed <- step2_fixed %>%
+  select(category, year, variable, value) %>%
+  pivot_wider(names_from = "year", names_prefix = "est_", values_from = "value") %>%
+  mutate(
+    pct_chg_2024 = (est_2024 - est_2019) / est_2019,
+    pct_chg_2023 = (est_2023 - est_2018) / est_2018
+  ) %>%
+  select(category, variable, est_2023, est_2024, starts_with("pct")) %>%
+  pivot_longer(cols = c(est_2024, est_2023, starts_with("pct"))) %>%
+  filter(!is.na(value)) %>%
+  filter(!(name == "pct_chg_2024" & variable == "pct_emp_in_computer_math_occupations")) %>%
+  filter(!(name == "pct_chg_2024" & variable == "share_ba_or_higher")) %>%
+  filter(!(name == "est_2023" & variable != "Tradable services"))
+
+cat("Fixed chrt_dta rows:", nrow(chrt_dta_fixed), "\n")
+cat("Variables present:", paste(unique(chrt_dta_fixed$variable), collapse = ", "), "\n\n")
+table(chrt_dta_fixed$variable, chrt_dta_fixed$name)
+```
+
+```{r}
+# Verify chunk 8 filter now has data
+chunk8_exclude <- c("employment", "population", "establishments",
+                    "pct_emp_in_computer_math_occupations", "median_age")
+chunk8_fixed <- chrt_dta_fixed %>% filter(!variable %in% chunk8_exclude)
+
+cat("Rows for chunk 8 plot:", nrow(chunk8_fixed), "\n\n")
+if (nrow(chunk8_fixed) > 0) {
+  cat("SUCCESS: chunk 8 now has data\n\n")
+  table(chunk8_fixed$variable, chunk8_fixed$name)
+} else {
+  cat("STILL EMPTY — further investigation needed\n")
+}
+```
+
+## Summary of changes needed in analysis.qmd
+
+| Line | Current | Fixed |
+|---|---|---|
+| 210 | `year %in% c(2017, 2018, 2022, 2023)` | `year %in% c(2018, 2019, 2023, 2024)` |
+| 218 | `pct_chg_2023 = (est_2023 - est_2018) / est_2018` | `pct_chg_2024 = (est_2024 - est_2019) / est_2019` |
+| 219 | `pct_chg_2022 = (est_2022 - est_2017) / est_2017` | `pct_chg_2023 = (est_2023 - est_2018) / est_2018` |
+| 221 | `select(... est_2022, est_2023, ...)` | `select(... est_2023, est_2024, ...)` |
+| 223 | `cols = c(est_2023, est_2022, ...)` | `cols = c(est_2024, est_2023, ...)` |
+| 227-228 | `name == "pct_chg_2023"` (two filters) | `name == "pct_chg_2024"` |
+| 232 | `name == "est_2022"` | `name == "est_2023"` |
+
+Label text in the `recode()` call (lines 234-243) and plot titles/subtitles should also be updated to reflect the new year ranges (e.g., "2018-2023" → "2019-2024").

@@ -1,0 +1,15 @@
+# Quarto and dependencies for Python code chunks in .qmd files
+# Note: Quarto itself is installed separately via the installer
+# https://quarto.org/docs/get-started/
+
+# Python packages for Quarto execution (if using Python chunks in .qmd files)
+jupyter>=1.0.0
+ipython>=8.0.0
+pandas>=1.3.0
+numpy>=1.21.0
+matplotlib>=3.4.0
+seaborn>=0.11.0
+
+# Development and linting (optional)
+black>=22.0.0
+flake8>=4.0.0
