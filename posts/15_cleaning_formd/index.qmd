@@ -7,7 +7,7 @@ image: thumbnail.png
 lightbox: true
 ---
 
-We access raw Form D filings using the `dform` [package](https://github.com/ruralinnovation/dForm). There are two datasets: issuers and offerings. The issuers dataset describes entities which are filing an offering, while the offerings dataset describes the terms of the offerings.
+We access raw Form D filings using the `dform` [package](https://github.com/ruralinnovation/dform). There are two datasets: issuers and offerings. The issuers dataset describes entities which are filing an offering, while the offerings dataset describes the terms of the offerings.
 
 ```{r, eval=FALSE}
 formd_obj <- dForm$new()

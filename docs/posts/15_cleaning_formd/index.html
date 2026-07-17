@@ -190,7 +190,7 @@ gtag('config', 'G-07QRVQQ5JK', { 'anonymize_ip': true});
 
 
 
-<p>We access raw Form D filings using the <code>dform</code> <a href="https://github.com/ruralinnovation/dForm">package</a>. There are two datasets: issuers and offerings. The issuers dataset describes entities which are filing an offering, while the offerings dataset describes the terms of the offerings.</p>
+<p>We access raw Form D filings using the <code>dform</code> <a href="https://github.com/ruralinnovation/dform">package</a>. There are two datasets: issuers and offerings. The issuers dataset describes entities which are filing an offering, while the offerings dataset describes the terms of the offerings.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>formd_obj <span class="ot">&lt;-</span> dForm<span class="sc">$</span><span class="fu">new</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>formd_obj<span class="sc">$</span><span class="fu">load_data</span>(<span class="at">years =</span> <span class="fu">c</span>(<span class="dv">2010</span><span class="sc">:</span><span class="dv">2023</span>), <span class="at">use_cache =</span> <span class="cn">FALSE</span>, <span class="at">remove_duplicates =</span> <span class="cn">FALSE</span>)</span>
